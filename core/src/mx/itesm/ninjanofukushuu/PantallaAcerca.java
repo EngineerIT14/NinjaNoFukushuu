@@ -25,5 +25,6 @@ public class PantallaAcerca {
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
         cargarTexturas();
         fondo=new Fondo(texturaFondo);
+        //
     }
 }
