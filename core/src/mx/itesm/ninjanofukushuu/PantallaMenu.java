@@ -126,33 +126,37 @@ public class PantallaMenu implements Screen {
             camara.unproject(coordernadas); //Traduce las coordenadas
             float x = coordernadas.x;
             float y = coordernadas.y;
-            if ( verifcarBoton(x,y)==true){
-                Gdx.app.log("leerEntrada","HAY UN TAP!"); //cuando le apretan va decir esto..
-                principal.setScreen(new PantallaAcerca(principal));
+            switch ( verifcarBoton(x,y)){
+                case 4:
+                    Gdx.app.log("leerEntrada","HAY UN TAP!"); //cuando le apretan va decir esto..
+                    principal.setScreen(new PantallaAcerca(principal));
+                    break;
+                default:
+                    break;
             }
         }
     }
 
-    private boolean verifcarBoton(float x, float y) {
+    private int verifcarBoton(float x, float y) {
         Sprite spritebtnPlay = btnPLay.getSprite();
         Sprite spritebtnInstructions = btnInstructions.getSprite();
         Sprite spritebtnGallery = btnGallery.getSprite();
         Sprite spritebtnAbout = btnAbout.getSprite();
         //Verificar que la x y La y esten dentro de las dimensiones del sprite...
         if(x>=spritebtnPlay.getX() && x<=spritebtnPlay.getX()+spritebtnPlay.getWidth() && y>=spritebtnPlay.getY() && y<=spritebtnPlay.getY()+spritebtnPlay.getHeight()){
-            return true;
+            return 1;
         }
         else if(x>=spritebtnInstructions.getX() && x<=spritebtnInstructions.getX()+spritebtnInstructions.getWidth() && y>=spritebtnInstructions.getY() && y<=spritebtnInstructions.getY()+spritebtnInstructions.getHeight()){
-            return true;
+            return 2;
         }
         else if(x>=spritebtnGallery.getX() && x<=spritebtnGallery.getX()+spritebtnGallery.getWidth() && y>=spritebtnGallery.getY() && y<=spritebtnGallery.getY()+spritebtnInstructions.getHeight()){
-            return true;
+            return 3;
         }
         else if(x>=spritebtnAbout.getX() && x<=spritebtnAbout.getX()+spritebtnAbout.getWidth() && y>=spritebtnAbout.getY() && y<=spritebtnAbout.getY()+spritebtnAbout.getHeight()){
-            return true;
+            return 4;
         }
         else{
-           return false;
+           return 0;
         }
 
     }

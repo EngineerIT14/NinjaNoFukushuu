@@ -26,7 +26,7 @@ public class PantallaAcerca implements Screen {
     //Botones
     private Boton btnMia,btnNuri,btnIrvin,btnJavier, btnFer, btnRegresar;
     private Texture texturaBtnMia,texturaBtnNuri, texturaBtnIrvin,texturaBtnJavier, texturaBtnFer, texturaRegresar, texturaIrv, texturaMar, texturaJav, texturaNur, texturaFer;
-    private static final int anchoBoton = 180, altoBoton = 200, anchoBoton1 = 480 , altoBoton1 = 160;
+    private static final int anchoBoton = 180, altoBoton = 200; //anchoBoton1 = 480 , altoBoton1 = 160;
     //Presentaciones
     private Presentacion presentaciónIrvin, presentaciónMia, presentaciónJavier, presentaciónNuri, presentaciónFer;
     private  Texture texturaPresentacionIrvin, texturaPresentacionMia, texturaPresentacionJavier, texturaPresentacionNuri, texturaPresentacionFer;
@@ -59,25 +59,30 @@ public class PantallaAcerca implements Screen {
         presentaciónNuri = new Presentacion(texturaPresentacionNuri);
         presentaciónFer = new Presentacion(texturaPresentacionFer);
         //Poscicionar objetos
-        btnIrvin.setPosicion(Principal.ANCHO_MUNDO/4,Principal.ALTO_MUNDO*2/3);
-        btnMia.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO*2/3);
-        btnJavier.setPosicion(Principal.ANCHO_MUNDO*3/4,Principal.ALTO_MUNDO*2/3);
-        btnNuri.setPosicion(Principal.ANCHO_MUNDO*3/8,Principal.ALTO_MUNDO/3);
-        btnFer.setPosicion(Principal.ANCHO_MUNDO*5/8,Principal.ALTO_MUNDO/3);
-        btnRegresar.setPosicion(Principal.ANCHO_MUNDO*7/8,Principal.ALTO_MUNDO*2/5);
-        presentaciónIrvin.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
-        presentaciónMia.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
-        presentaciónJavier.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
-        presentaciónNuri.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
-        presentaciónFer.setPosicion(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
+        btnIrvin.setPosicion(Principal.ANCHO_MUNDO/4-100,Principal.ALTO_MUNDO*2/3-100);
+        btnMia.setPosicion(Principal.ANCHO_MUNDO/2-50,Principal.ALTO_MUNDO*2/3-100);
+        btnJavier.setPosicion(Principal.ANCHO_MUNDO*3/4-100,Principal.ALTO_MUNDO*2/3-100);
+        btnNuri.setPosicion(Principal.ANCHO_MUNDO*3/8-100,Principal.ALTO_MUNDO/3-100);
+        btnFer.setPosicion(Principal.ANCHO_MUNDO*5/8-100,Principal.ALTO_MUNDO/3-100);
+        btnRegresar.setPosicion(Principal.ANCHO_MUNDO*7/8-50,Principal.ALTO_MUNDO*1/5-100);
+        presentaciónIrvin.setPosicion(0-20,0-100);
+        presentaciónMia.setPosicion(0-20,0-100);
+        presentaciónJavier.setPosicion(0-20,0-100);
+        presentaciónNuri.setPosicion(0-20,0-100);
+        presentaciónFer.setPosicion(0-20,0-100);
         //Ajuste de tamaño
         btnIrvin.setTamanio(anchoBoton, altoBoton);
         btnMia.setTamanio(anchoBoton, altoBoton);
         btnJavier.setTamanio(anchoBoton,altoBoton);
         btnNuri.setTamanio(anchoBoton,altoBoton);
         btnFer.setTamanio(anchoBoton,altoBoton);
-        btnRegresar.setTamanio(anchoBoton1,altoBoton1);
-        fondo.setTamanio(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
+        btnRegresar.setTamanio(anchoBoton,altoBoton);
+        fondo.setTamanio(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO);
+        presentaciónIrvin.setTamanio(1280,880);
+        presentaciónMia.setTamanio(1280,880);
+        presentaciónJavier.setTamanio(1280,880);
+        presentaciónNuri.setTamanio(1280,880);
+        presentaciónFer.setTamanio(1280,880);
         //Batch
         batch=new SpriteBatch();
     }
@@ -85,7 +90,7 @@ public class PantallaAcerca implements Screen {
     //Crgar texturas
     private void cargarTexturas() {
         //Fondo
-        texturaFondo = new Texture(Gdx.files.internal("Abanico.png"));
+        texturaFondo = new Texture(Gdx.files.internal("BlackandWhitesun.jpg"));
         //Botones
         texturaBtnMia = new Texture((Gdx.files.internal("M.png")));
         texturaBtnNuri = new Texture((Gdx.files.internal("N.png")));
@@ -94,11 +99,11 @@ public class PantallaAcerca implements Screen {
         texturaBtnFer = new Texture((Gdx.files.internal("F.png")));
         texturaRegresar = new Texture(Gdx.files.internal("return.png"));
         //Presentaciones
-        texturaPresentacionIrvin = new Texture(Gdx.files.internal("Irv.png"));
-        texturaPresentacionMia = new Texture(Gdx.files.internal("Mar.png"));
-        texturaPresentacionJavier = new Texture(Gdx.files.internal("Jav.png"));
-        texturaPresentacionNuri = new Texture(Gdx.files.internal("Nur.png"));
-        texturaPresentacionFer = new Texture(Gdx.files.internal("Fer.png"));
+        texturaPresentacionIrvin = new Texture(Gdx.files.internal("Irvi.png"));
+        texturaPresentacionMia = new Texture(Gdx.files.internal("Mare.png"));
+        texturaPresentacionJavier = new Texture(Gdx.files.internal("Javo.png"));
+        texturaPresentacionNuri = new Texture(Gdx.files.internal("Nuria.png"));
+        texturaPresentacionFer = new Texture(Gdx.files.internal("Fercho.png"));
     }
 
     @Override
@@ -203,36 +208,40 @@ public class PantallaAcerca implements Screen {
         Sprite spriteBtnNuri = btnNuri.getSprite();
         Sprite spriteBtnFer = btnFer.getSprite();
         Sprite spriteBtnRegresar = btnRegresar.getSprite();
-        //Verificar si se toco algun botón
-        if(x>=spriteBtnIrvin.getX() && x<=spriteBtnIrvin.getX()+spriteBtnIrvin.getWidth() &&
-                y>=spriteBtnIrvin.getY() && y<=spriteBtnIrvin.getY()+spriteBtnIrvin.getHeight()){
-            return 1;
+        //Verificar si se toco algun botón y no hay una prsentación mostrada
+        if(presentaciónIrvin.getEstado() != Presentacion.Estado.APARECIDO && presentaciónMia.getEstado() != Presentacion.Estado.APARECIDO && presentaciónJavier.getEstado() != Presentacion.Estado.APARECIDO
+                && presentaciónNuri.getEstado() != Presentacion.Estado.APARECIDO && presentaciónFer.getEstado() != Presentacion.Estado.APARECIDO){
+            if(x>=spriteBtnIrvin.getX() && x<=spriteBtnIrvin.getX()+spriteBtnIrvin.getWidth() &&
+                    y>=spriteBtnIrvin.getY() && y<=spriteBtnIrvin.getY()+spriteBtnIrvin.getHeight()){
+                return 1;
+            }
+            else
+            if (x>=spriteBtnMia.getX() && x<=spriteBtnMia.getX()+spriteBtnMia.getWidth() &&
+                    y>=spriteBtnMia.getY() && y<=spriteBtnMia.getY()+spriteBtnMia.getHeight()){
+                return 2;
+            }
+            else
+            if(x>=spriteBtnJavier.getX() && x<=spriteBtnJavier.getX()+spriteBtnJavier.getWidth() &&
+                    y>=spriteBtnJavier.getY() && y<=spriteBtnJavier.getY()+spriteBtnJavier.getHeight()){
+                return 3;
+            }
+            else
+            if(x>=spriteBtnNuri.getX() && x<=spriteBtnNuri.getX()+spriteBtnNuri.getWidth() &&
+                    y>=spriteBtnNuri.getY() && y<=spriteBtnNuri.getY()+spriteBtnNuri.getHeight()){
+                return 4;
+            }
+            else
+            if(x>=spriteBtnFer.getX() && x<=spriteBtnFer.getX()+spriteBtnFer.getWidth() &&
+                    y>=spriteBtnFer.getY() && y<=spriteBtnFer.getY()+spriteBtnFer.getHeight()){
+                return 5;
+            }
+            else
+            if (x>=spriteBtnRegresar.getX() && x<=spriteBtnRegresar.getX()+spriteBtnRegresar.getWidth() &&
+                    y>=spriteBtnRegresar.getY() && y<=spriteBtnRegresar.getY()+spriteBtnRegresar.getHeight()){
+                return 6;
+            }
         }
-        else
-        if (x>=spriteBtnMia.getX() && x<=spriteBtnMia.getX()+spriteBtnMia.getWidth() &&
-                y>=spriteBtnMia.getY() && y<=spriteBtnMia.getY()+spriteBtnMia.getHeight()){
-            return 2;
-        }
-        else
-        if(x>=spriteBtnJavier.getX() && x<=spriteBtnJavier.getX()+spriteBtnJavier.getWidth() &&
-                y>=spriteBtnJavier.getY() && y<=spriteBtnJavier.getY()+spriteBtnJavier.getHeight()){
-            return 3;
-        }
-        else
-        if(x>=spriteBtnNuri.getX() && x<=spriteBtnNuri.getX()+spriteBtnNuri.getWidth() &&
-                y>=spriteBtnNuri.getY() && y<=spriteBtnNuri.getY()+spriteBtnNuri.getHeight()){
-            return 4;
-        }
-        else
-        if(x>=spriteBtnFer.getX() && x<=spriteBtnFer.getX()+spriteBtnFer.getWidth() &&
-                y>=spriteBtnFer.getY() && y<=spriteBtnFer.getY()+spriteBtnFer.getHeight()){
-            return 5;
-        }
-        else
-        if (x>=spriteBtnRegresar.getX() && x<=spriteBtnRegresar.getX()+spriteBtnRegresar.getWidth() &&
-                y>=spriteBtnRegresar.getY() && y<=spriteBtnRegresar.getY()+spriteBtnRegresar.getHeight()){
-            return 6;
-        }
+
         //Para desaparecer las presentaciones se puede seleccionar cualquiere espacio e la pantalla
         else
             if(presentaciónIrvin.getEstado()== Presentacion.Estado.APARECIDO){
