@@ -90,7 +90,7 @@ public class PantallaMenu implements Screen {
         texturaBtnInstructions = new Texture(Gdx.files.internal("botonInstructions.png"));
         texturaBtnGallery = new Texture(Gdx.files.internal("botonGallery.png"));
         texturaBtnAbout =  new Texture(Gdx.files.internal("botonAbout.png"));
-        texturaLogo = new Texture(Gdx.files.internal("logo.png"));
+        texturaLogo = new Texture(Gdx.files.internal("logo1.png"));
     }
 
     //Metodo de la clase Screen, ya fue implementado
