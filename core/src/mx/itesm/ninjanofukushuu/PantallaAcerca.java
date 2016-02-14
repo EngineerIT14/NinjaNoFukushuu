@@ -28,8 +28,9 @@ public class PantallaAcerca implements Screen {
     private Texture texturaBtnMia,texturaBtnNuri, texturaBtnIrvin,texturaBtnJavier, texturaBtnFer, texturaRegresar, texturaIrv, texturaMar, texturaJav, texturaNur, texturaFer;
     private static final int anchoBoton = 180, altoBoton = 200, anchoBoton1 = 480 , altoBoton1 = 160;
     //Presentaciones
-    private Presentación presentaciónIrvin, presentaciónMia, presentaciónJavier, presentaciónNuri, presentaciónFer;
+    private Presentacion presentaciónIrvin, presentaciónMia, presentaciónJavier, presentaciónNuri, presentaciónFer;
     private  Texture texturaPresentacionIrvin, texturaPresentacionMia, texturaPresentacionJavier, texturaPresentacionNuri, texturaPresentacionFer;
+
     public PantallaAcerca(Principal principal) {
         this.principal = principal;
     }
@@ -52,18 +53,18 @@ public class PantallaAcerca implements Screen {
         btnFer = new Boton(texturaBtnFer);
         btnRegresar = new Boton(texturaRegresar);
         //Crear presentaciones
-        presentaciónIrvin = new Presentación(texturaPresentacionIrvin);
-        presentaciónMia = new Presentación(texturaPresentacionMia);
-        presentaciónJavier = new Presentación(texturaPresentacionJavier);
-        presentaciónNuri = new Presentación(texturaPresentacionNuri);
-        presentaciónFer = new Presentación(texturaPresentacionFer);
+        presentaciónIrvin = new Presentacion(texturaPresentacionIrvin);
+        presentaciónMia = new Presentacion(texturaPresentacionMia);
+        presentaciónJavier = new Presentacion(texturaPresentacionJavier);
+        presentaciónNuri = new Presentacion(texturaPresentacionNuri);
+        presentaciónFer = new Presentacion(texturaPresentacionFer);
         //Poscicionar objetos
-        btnIrvin.setPosicion(Principal.ANCHO_MUNDO/4,Principal.ALTO_MUNDO/3);
-        btnMia.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/3);
-        btnJavier.setPosicion(Principal.ANCHO_MUNDO*3/2,Principal.ALTO_MUNDO/3);
-        btnNuri.setPosicion(Principal.ANCHO_MUNDO*3/8,Principal.ALTO_MUNDO*2/3);
-        btnFer.setPosicion(Principal.ANCHO_MUNDO*5/2,Principal.ALTO_MUNDO*2/3);
-        btnRegresar.setPosicion(Principal.ANCHO_MUNDO*7/8,Principal.ALTO_MUNDO*4/5);
+        btnIrvin.setPosicion(Principal.ANCHO_MUNDO/4,Principal.ALTO_MUNDO*2/3);
+        btnMia.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO*2/3);
+        btnJavier.setPosicion(Principal.ANCHO_MUNDO*3/4,Principal.ALTO_MUNDO*2/3);
+        btnNuri.setPosicion(Principal.ANCHO_MUNDO*3/8,Principal.ALTO_MUNDO/3);
+        btnFer.setPosicion(Principal.ANCHO_MUNDO*5/8,Principal.ALTO_MUNDO/3);
+        btnRegresar.setPosicion(Principal.ANCHO_MUNDO*7/8,Principal.ALTO_MUNDO*2/5);
         presentaciónIrvin.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
         presentaciónMia.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
         presentaciónJavier.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
@@ -76,6 +77,7 @@ public class PantallaAcerca implements Screen {
         btnNuri.setTamanio(anchoBoton,altoBoton);
         btnFer.setTamanio(anchoBoton,altoBoton);
         btnRegresar.setTamanio(anchoBoton1,altoBoton1);
+        fondo.setTamanio(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
         //Batch
         batch=new SpriteBatch();
     }
@@ -146,27 +148,27 @@ public class PantallaAcerca implements Screen {
             float y = coordernadas.y;
             switch ( verifcarBoton(x,y)){
                 case 1: //Caso para aparecer la presentación de Irvin
-                    if (presentaciónIrvin.getEstado()!=Presentación.Estado.APARECIDO){ //Estado no debe ser Aparecido
+                    if (presentaciónIrvin.getEstado()!= Presentacion.Estado.APARECIDO){ //Estado no debe ser Aparecido
                         presentaciónIrvin.aparecer();
                     }
                     break;
                 case 2: //Caso para aparecer la presentación de Mia
-                    if(presentaciónMia.getEstado() != Presentación.Estado.APARECIDO){
+                    if(presentaciónMia.getEstado() != Presentacion.Estado.APARECIDO){
                         presentaciónMia.aparecer();
                     }
                     break;
                 case 3: //Caso para aparecer la presentación de Javier
-                    if(presentaciónJavier.getEstado() != Presentación.Estado.APARECIDO){
+                    if(presentaciónJavier.getEstado() != Presentacion.Estado.APARECIDO){
                         presentaciónJavier.aparecer();
                     }
                     break;
                 case 4: //Caso para aparecer la presentación de Nuri
-                    if(presentaciónNuri.getEstado() != Presentación.Estado.APARECIDO){
+                    if(presentaciónNuri.getEstado() != Presentacion.Estado.APARECIDO){
                         presentaciónNuri.aparecer();
                     }
                     break;
                 case 5: //Caso para aparecer la presentación de Fer
-                    if(presentaciónFer.getEstado() != Presentación.Estado.APARECIDO){
+                    if(presentaciónFer.getEstado() != Presentacion.Estado.APARECIDO){
                         presentaciónFer.aparecer();
                     }
                     break;
@@ -233,31 +235,31 @@ public class PantallaAcerca implements Screen {
         }
         //Para desaparecer las presentaciones se puede seleccionar cualquiere espacio e la pantalla
         else
-            if(presentaciónIrvin.getEstado()== Presentación.Estado.APARECIDO){
+            if(presentaciónIrvin.getEstado()== Presentacion.Estado.APARECIDO){
                 if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
                     return 7;
                 }
             }
         else
-            if(presentaciónMia.getEstado() == Presentación.Estado.APARECIDO){
+            if(presentaciónMia.getEstado() == Presentacion.Estado.APARECIDO){
                 if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
                     return 8;
                 }
             }
         else
-            if(presentaciónJavier.getEstado() == Presentación.Estado.APARECIDO){
+            if(presentaciónJavier.getEstado() == Presentacion.Estado.APARECIDO){
                 if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
                     return 9;
                 }
             }
         else
-            if(presentaciónNuri.getEstado() == Presentación.Estado.APARECIDO){
+            if(presentaciónNuri.getEstado() == Presentacion.Estado.APARECIDO){
                     if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
                         return 10;
                     }
                 }
         else
-             if(presentaciónFer.getEstado() == Presentación.Estado.APARECIDO){
+             if(presentaciónFer.getEstado() == Presentacion.Estado.APARECIDO){
                  if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
                      return 11;
                  }

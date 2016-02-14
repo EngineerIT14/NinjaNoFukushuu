@@ -7,13 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /**
  * Created by Atem on 13/02/2016.
  */
-public class Presentación {
+public class Presentacion {
 
     private Sprite sprite;
     private Estado estado; //oculto, aparecidp
 
     //Constructor
-    public Presentación(Texture textura){
+    public Presentacion(Texture textura){
         sprite = new Sprite(textura);
         estado = Estado.OCULTO;
     }

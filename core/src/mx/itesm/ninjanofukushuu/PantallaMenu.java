@@ -128,6 +128,7 @@ public class PantallaMenu implements Screen {
             float y = coordernadas.y;
             if ( verifcarBoton(x,y)==true){
                 Gdx.app.log("leerEntrada","HAY UN TAP!"); //cuando le apretan va decir esto..
+                principal.setScreen(new PantallaAcerca(principal));
             }
         }
     }
