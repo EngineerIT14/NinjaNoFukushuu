@@ -26,8 +26,10 @@ public class PantallaAcerca implements Screen {
     //Botones
     private Boton btnMia,btnNuri,btnIrvin,btnJavier, btnFer, btnRegresar;
     private Texture texturaBtnMia,texturaBtnNuri, texturaBtnIrvin,texturaBtnJavier, texturaBtnFer, texturaRegresar, texturaIrv, texturaMar, texturaJav, texturaNur, texturaFer;
-    private static final int anchoBoton = 480 , altoBoton = 160;
-
+    private static final int anchoBoton = 180, altoBoton = 200, anchoBoton1 = 480 , altoBoton1 = 160;
+    //Presentaciones
+    private Presentación presentaciónIrvin, presentaciónMia, presentaciónJavier, presentaciónNuri, presentaciónFer;
+    private  Texture texturaPresentacionIrvin, texturaPresentacionMia, texturaPresentacionJavier, texturaPresentacionNuri, texturaPresentacionFer;
     public PantallaAcerca(Principal principal) {
         this.principal = principal;
     }
@@ -46,6 +48,11 @@ public class PantallaAcerca implements Screen {
         btnJavier = new Boton(texturaBtnJavier);
         btnFer = new Boton(texturaBtnFer);
         btnRegresar = new Boton(texturaRegresar);
+        presentaciónIrvin = new Presentación(texturaPresentacionIrvin);
+        presentaciónMia = new Presentación(texturaPresentacionMia);
+        presentaciónJavier = new Presentación(texturaPresentacionJavier);
+        presentaciónNuri = new Presentación(texturaPresentacionNuri);
+        presentaciónFer = new Presentación(texturaPresentacionFer);
         //Poscicionar objetos
         btnIrvin.setPosicion(Principal.ANCHO_MUNDO/4,Principal.ALTO_MUNDO/3);
         btnMia.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/3);
@@ -53,23 +60,34 @@ public class PantallaAcerca implements Screen {
         btnNuri.setPosicion(Principal.ANCHO_MUNDO*3/8,Principal.ALTO_MUNDO*2/3);
         btnFer.setPosicion(Principal.ANCHO_MUNDO*5/2,Principal.ALTO_MUNDO*2/3);
         btnRegresar.setPosicion(Principal.ANCHO_MUNDO*7/8,Principal.ALTO_MUNDO*4/5);
+        presentaciónIrvin.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
+        presentaciónMia.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
+        presentaciónJavier.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
+        presentaciónNuri.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
+        presentaciónFer.setPosicion(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         //
-        btnIrvin.setTamanio(anchoBoton,altoBoton);
-        btnMia.setTamanio(anchoBoton,altoBoton);
+        btnIrvin.setTamanio(anchoBoton, altoBoton);
+        btnMia.setTamanio(anchoBoton, altoBoton);
         btnJavier.setTamanio(anchoBoton,altoBoton);
         btnNuri.setTamanio(anchoBoton,altoBoton);
         btnFer.setTamanio(anchoBoton,altoBoton);
+        btnRegresar.setTamanio(anchoBoton1,altoBoton1);
         batch=new SpriteBatch();
     }
 
     private void cargarTexturas() {
-        texturaFondo = new Texture(Gdx.files.internal(""));
+        texturaFondo = new Texture(Gdx.files.internal("Abanico.png"));
         texturaBtnMia = new Texture((Gdx.files.internal("")));
         texturaBtnNuri = new Texture((Gdx.files.internal("")));
         texturaBtnIrvin = new Texture((Gdx.files.internal("")));
-        texturaBtnJavier = new Texture((Gdx.files.internal("")));
-        texturaBtnFer = new Texture((Gdx.files.internal("")));
+        texturaBtnJavier = new Texture((Gdx.files.internal("J.png")));
+        texturaBtnFer = new Texture((Gdx.files.internal("F.png")));
         texturaRegresar = new Texture(Gdx.files.internal(""));
+        texturaPresentacionIrvin = new Texture(Gdx.files.internal("Irv.png"));
+        texturaPresentacionMia = new Texture(Gdx.files.internal("Mar.png"));
+        texturaPresentacionJavier = new Texture(Gdx.files.internal("Jav.png"));
+        texturaPresentacionNuri = new Texture(Gdx.files.internal("Nur.png"));
+        texturaPresentacionFer = new Texture(Gdx.files.internal("Fer.png"));
     }
 
     @Override
@@ -88,6 +106,21 @@ public class PantallaAcerca implements Screen {
         btnNuri.render(batch);
         btnFer.render(batch);
         btnRegresar.render(batch);
+        if(presentaciónIrvin.actualizar()){
+            presentaciónIrvin.render(batch);
+        }
+        if(presentaciónMia.actualizar()){
+            presentaciónMia.render(batch);
+        }
+        if(presentaciónJavier.actualizar()){
+            presentaciónJavier.render(batch);
+        }
+        if(presentaciónNuri.actualizar()){
+            presentaciónNuri.render(batch);
+        }
+        if(presentaciónFer.actualizar()){
+            presentaciónFer.render(batch);
+        }
         batch.end();
     }
 
@@ -100,18 +133,47 @@ public class PantallaAcerca implements Screen {
             float y = coordernadas.y;
             switch ( verifcarBoton(x,y)){
                 case 1:
-
+                    if (presentaciónIrvin.getEstado()!=Presentación.Estado.APARECIDO){
+                        presentaciónIrvin.aparecer();
+                    }
                     break;
                 case 2:
+                    if(presentaciónMia.getEstado() != Presentación.Estado.APARECIDO){
+                        presentaciónMia.aparecer();
+                    }
                     break;
                 case 3:
+                    if(presentaciónJavier.getEstado() != Presentación.Estado.APARECIDO){
+                        presentaciónJavier.aparecer();
+                    }
                     break;
                 case 4:
+                    if(presentaciónNuri.getEstado() != Presentación.Estado.APARECIDO){
+                        presentaciónNuri.aparecer();
+                    }
                     break;
                 case 5:
+                    if(presentaciónFer.getEstado() != Presentación.Estado.APARECIDO){
+                        presentaciónFer.aparecer();
+                    }
                     break;
                 case 6:
                     principal.setScreen(new PantallaMenu(principal));
+                    break;
+                case 7:
+                    presentaciónIrvin.desaparecer();
+                    break;
+                case 8:
+                    presentaciónMia.desaparecer();
+                    break;
+                case 9:
+                    presentaciónJavier.desaparecer();
+                    break;
+                case 10:
+                    presentaciónNuri.desaparecer();
+                    break;
+                case 11:
+                    presentaciónFer.desaparecer();
                     break;
                 default:
                     break;
@@ -156,9 +218,37 @@ public class PantallaAcerca implements Screen {
                 y>=spriteBtnRegresar.getY() && y<=spriteBtnRegresar.getY()+spriteBtnRegresar.getHeight()){
             return 6;
         }
-        else{
+        else
+            if(presentaciónIrvin.getEstado()== Presentación.Estado.APARECIDO){
+                if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                    return 7;
+                }
+            }
+        else
+            if(presentaciónMia.getEstado() == Presentación.Estado.APARECIDO){
+                if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                    return 8;
+                }
+            }
+        else
+            if(presentaciónJavier.getEstado() == Presentación.Estado.APARECIDO){
+                if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                    return 9;
+                }
+            }
+        else
+            if(presentaciónNuri.getEstado() == Presentación.Estado.APARECIDO){
+                    if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                        return 10;
+                    }
+                }
+        else
+             if(presentaciónFer.getEstado() == Presentación.Estado.APARECIDO){
+                 if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                     return 11;
+                 }
+             }
             return 0;
-        }
     }
     @Override
     public void resize(int width, int height) {
@@ -183,7 +273,23 @@ public class PantallaAcerca implements Screen {
 
     @Override
     public void dispose() {
-
+        texturaIrv.dispose();
+        texturaMar.dispose();
+        texturaJav.dispose();
+        texturaNur.dispose();
+        texturaFer.dispose();
+        texturaBtnIrvin.dispose();
+        texturaBtnMia.dispose();
+        texturaBtnJavier.dispose();
+        texturaBtnNuri.dispose();
+        texturaBtnFer.dispose();
+        texturaPresentacionIrvin.dispose();
+        texturaPresentacionMia.dispose();
+        texturaPresentacionJavier.dispose();
+        texturaPresentacionNuri.dispose();
+        texturaPresentacionFer.dispose();
+        texturaRegresar.dispose();
+        texturaFondo.dispose();
     }
 
 
