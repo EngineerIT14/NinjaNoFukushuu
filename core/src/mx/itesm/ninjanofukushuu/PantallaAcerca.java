@@ -1,6 +1,7 @@
 package mx.itesm.ninjanofukushuu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  * Created by Atem on 12/02/2016.
  */
-public class PantallaAcerca {
+public class PantallaAcerca implements Screen {
 
     private final Principal principal;
     private OrthographicCamera camara;
@@ -99,6 +100,7 @@ public class PantallaAcerca {
             float y = coordernadas.y;
             switch ( verifcarBoton(x,y)){
                 case 1:
+
                     break;
                 case 2:
                     break;
@@ -163,5 +165,26 @@ public class PantallaAcerca {
         vista.update(width,height);
 
     }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
 
 }

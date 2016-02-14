@@ -21,6 +21,7 @@ Profesor: Roberto Martinez Román.
 
 public class PantallaMenu implements Screen {
 
+    private final Principal principal;
     private OrthographicCamera camara;
     private Viewport vista;
     private SpriteBatch batch;
@@ -40,6 +41,10 @@ public class PantallaMenu implements Screen {
     private Texture texturaLogo;
     private static final int anchoLogo = 700 , altoLogo = 350;
     private static final int posicionCentradaXLogo = 330 , posicionCentradaYLogo = 460;
+
+    public PantallaMenu(Principal principal) {
+        this.principal = principal;
+    }
 
     //Metodo de la clase Screen, ya fue implementado
     @Override
