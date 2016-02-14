@@ -12,24 +12,29 @@ public class Presentación {
     private Sprite sprite;
     private Estado estado; //oculto, aparecidp
 
+    //Constructor
     public Presentación(Texture textura){
         sprite = new Sprite(textura);
         estado = Estado.OCULTO;
     }
+    //Render
     public void render(SpriteBatch batch){
         sprite.draw(batch);
     }
+    //Posición
     public void setPosicion(float x, float y) {
         sprite.setPosition(x, y);
     }
+    //Tamaño
     public void setTamanio(float ancho,float alto){
         sprite.setSize(ancho, alto);
     }
-
+    //GetSprite
     public Sprite getSprite() {
         return sprite;
     }
 
+    //Metodo que regresa false para ocultar y true para aparecer, default es oculto
     public boolean actualizar() {
         switch(estado){
             case OCULTO:
@@ -41,16 +46,19 @@ public class Presentación {
         }
     }
 
+    //Get estado
     public Estado getEstado() {
         return estado;
     }
 
+    //Metodo para aparecer presentaciones
     public void aparecer() {
         if(estado != Estado.APARECIDO){
             estado =Estado.APARECIDO;
         }
     }
 
+    //Metodo para desaparecer presentaciones
     public void desaparecer() {
         if(estado != Estado.OCULTO){
             estado = Estado.OCULTO;

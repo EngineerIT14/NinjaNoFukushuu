@@ -36,18 +36,22 @@ public class PantallaAcerca implements Screen {
 
     @Override
     public void show() {
+        //Crear camara
         camara=new OrthographicCamera(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO);
         camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
         cargarTexturas();
+        //Crear fondo
         fondo=new Fondo(texturaFondo);
+        //Crear botones
         btnMia = new Boton(texturaBtnMia);
         btnNuri = new  Boton(texturaBtnNuri);
         btnIrvin = new Boton(texturaBtnIrvin);
         btnJavier = new Boton(texturaBtnJavier);
         btnFer = new Boton(texturaBtnFer);
         btnRegresar = new Boton(texturaRegresar);
+        //Crear presentaciones
         presentaciónIrvin = new Presentación(texturaPresentacionIrvin);
         presentaciónMia = new Presentación(texturaPresentacionMia);
         presentaciónJavier = new Presentación(texturaPresentacionJavier);
@@ -65,24 +69,29 @@ public class PantallaAcerca implements Screen {
         presentaciónJavier.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
         presentaciónNuri.setPosicion(Principal.ANCHO_MUNDO/2,Principal.ALTO_MUNDO/2);
         presentaciónFer.setPosicion(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
-        //
+        //Ajuste de tamaño
         btnIrvin.setTamanio(anchoBoton, altoBoton);
         btnMia.setTamanio(anchoBoton, altoBoton);
         btnJavier.setTamanio(anchoBoton,altoBoton);
         btnNuri.setTamanio(anchoBoton,altoBoton);
         btnFer.setTamanio(anchoBoton,altoBoton);
         btnRegresar.setTamanio(anchoBoton1,altoBoton1);
+        //Batch
         batch=new SpriteBatch();
     }
 
+    //Crgar texturas
     private void cargarTexturas() {
+        //Fondo
         texturaFondo = new Texture(Gdx.files.internal("Abanico.png"));
-        texturaBtnMia = new Texture((Gdx.files.internal("")));
-        texturaBtnNuri = new Texture((Gdx.files.internal("")));
-        texturaBtnIrvin = new Texture((Gdx.files.internal("")));
+        //Botones
+        texturaBtnMia = new Texture((Gdx.files.internal("M.png")));
+        texturaBtnNuri = new Texture((Gdx.files.internal("N.png")));
+        texturaBtnIrvin = new Texture((Gdx.files.internal("I.png")));
         texturaBtnJavier = new Texture((Gdx.files.internal("J.png")));
         texturaBtnFer = new Texture((Gdx.files.internal("F.png")));
-        texturaRegresar = new Texture(Gdx.files.internal(""));
+        texturaRegresar = new Texture(Gdx.files.internal("return.png"));
+        //Presentaciones
         texturaPresentacionIrvin = new Texture(Gdx.files.internal("Irv.png"));
         texturaPresentacionMia = new Texture(Gdx.files.internal("Mar.png"));
         texturaPresentacionJavier = new Texture(Gdx.files.internal("Jav.png"));
@@ -96,8 +105,9 @@ public class PantallaAcerca implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(camara.combined);
+        //Metodo pare revisar si huba touch
         leerEntrada();
-        //DIBUJAR, primero las cosas que van atras....
+        //DIBUJAR
         batch.begin();
         fondo.render(batch);
         btnIrvin.render(batch);
@@ -106,6 +116,7 @@ public class PantallaAcerca implements Screen {
         btnNuri.render(batch);
         btnFer.render(batch);
         btnRegresar.render(batch);
+        //Se dibujaran las ´resentaciones si y solo si el estado es APERECIDO
         if(presentaciónIrvin.actualizar()){
             presentaciónIrvin.render(batch);
         }
@@ -124,7 +135,9 @@ public class PantallaAcerca implements Screen {
         batch.end();
     }
 
+    //Metodo para leer entradas
     private void leerEntrada() {
+        //Hubo toque
         if (Gdx.input.justTouched()){
             Vector3 coordernadas = new Vector3();
             coordernadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -132,50 +145,50 @@ public class PantallaAcerca implements Screen {
             float x = coordernadas.x;
             float y = coordernadas.y;
             switch ( verifcarBoton(x,y)){
-                case 1:
-                    if (presentaciónIrvin.getEstado()!=Presentación.Estado.APARECIDO){
+                case 1: //Caso para aparecer la presentación de Irvin
+                    if (presentaciónIrvin.getEstado()!=Presentación.Estado.APARECIDO){ //Estado no debe ser Aparecido
                         presentaciónIrvin.aparecer();
                     }
                     break;
-                case 2:
+                case 2: //Caso para aparecer la presentación de Mia
                     if(presentaciónMia.getEstado() != Presentación.Estado.APARECIDO){
                         presentaciónMia.aparecer();
                     }
                     break;
-                case 3:
+                case 3: //Caso para aparecer la presentación de Javier
                     if(presentaciónJavier.getEstado() != Presentación.Estado.APARECIDO){
                         presentaciónJavier.aparecer();
                     }
                     break;
-                case 4:
+                case 4: //Caso para aparecer la presentación de Nuri
                     if(presentaciónNuri.getEstado() != Presentación.Estado.APARECIDO){
                         presentaciónNuri.aparecer();
                     }
                     break;
-                case 5:
+                case 5: //Caso para aparecer la presentación de Fer
                     if(presentaciónFer.getEstado() != Presentación.Estado.APARECIDO){
                         presentaciónFer.aparecer();
                     }
                     break;
-                case 6:
+                case 6: //Caso para volver al menú principal
                     principal.setScreen(new PantallaMenu(principal));
                     break;
-                case 7:
+                case 7: //Caso para desaparecer la presentación de Irvin
                     presentaciónIrvin.desaparecer();
                     break;
-                case 8:
+                case 8: //Caso para desaparecer la presentación de Mia
                     presentaciónMia.desaparecer();
                     break;
-                case 9:
+                case 9: //Caso para desaparecer la presentación de Javier
                     presentaciónJavier.desaparecer();
                     break;
-                case 10:
+                case 10: //Caso para desaparecer la presentación de Nuri
                     presentaciónNuri.desaparecer();
                     break;
-                case 11:
+                case 11: //Caso para desaparecer la presentación de Fer
                     presentaciónFer.desaparecer();
                     break;
-                default:
+                default: //Caso para no hacer nada, bonus
                     break;
             }
         }
@@ -188,7 +201,7 @@ public class PantallaAcerca implements Screen {
         Sprite spriteBtnNuri = btnNuri.getSprite();
         Sprite spriteBtnFer = btnFer.getSprite();
         Sprite spriteBtnRegresar = btnRegresar.getSprite();
-        //Verificar
+        //Verificar si se toco algun botón
         if(x>=spriteBtnIrvin.getX() && x<=spriteBtnIrvin.getX()+spriteBtnIrvin.getWidth() &&
                 y>=spriteBtnIrvin.getY() && y<=spriteBtnIrvin.getY()+spriteBtnIrvin.getHeight()){
             return 1;
@@ -218,6 +231,7 @@ public class PantallaAcerca implements Screen {
                 y>=spriteBtnRegresar.getY() && y<=spriteBtnRegresar.getY()+spriteBtnRegresar.getHeight()){
             return 6;
         }
+        //Para desaparecer las presentaciones se puede seleccionar cualquiere espacio e la pantalla
         else
             if(presentaciónIrvin.getEstado()== Presentación.Estado.APARECIDO){
                 if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
@@ -273,6 +287,7 @@ public class PantallaAcerca implements Screen {
 
     @Override
     public void dispose() {
+        //Eliminar basura
         texturaIrv.dispose();
         texturaMar.dispose();
         texturaJav.dispose();
