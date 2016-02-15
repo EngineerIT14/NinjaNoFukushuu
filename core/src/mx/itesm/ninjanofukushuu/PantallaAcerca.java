@@ -2,6 +2,8 @@ package mx.itesm.ninjanofukushuu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,7 +14,9 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /*
- * Created by Atem on 12/02/2016.
+Desarrollador = Luis Fernando
+Descripción: Esta clase representa el objeto fondo..
+Profesor: Roberto Martinez Román.
  */
 public class PantallaAcerca implements Screen {
 
@@ -33,6 +37,11 @@ public class PantallaAcerca implements Screen {
     //Presentaciones
     private Presentacion presentaciónIrvin, presentaciónMia, presentaciónJavier, presentaciónNuri, presentaciónFer;
     private  Texture texturaPresentacionIrvin, texturaPresentacionMia, texturaPresentacionJavier, texturaPresentacionNuri, texturaPresentacionFer;
+
+    //Efectos y musica de fondo
+    private Sound efectoAbrirCerrarVentana;
+
+
 
     public PantallaAcerca(Principal principal) {
         this.principal = principal;
@@ -96,6 +105,13 @@ public class PantallaAcerca implements Screen {
 
         //Batch
         batch = new SpriteBatch();
+        cargarAudio();
+    }
+
+    //Metodo para cargar los efectos de sonido y la música de fondo
+    private void cargarAudio() {
+        efectoAbrirCerrarVentana = Gdx.audio.newSound(Gdx.files.internal("abrirCerrarVentana.wav"));
+
     }
 
     //Crgar texturas
@@ -172,26 +188,31 @@ public class PantallaAcerca implements Screen {
                 case 1: //Caso para aparecer la presentación de Irvin
                     if (presentaciónIrvin.getEstado()!= Presentacion.Estado.APARECIDO){ //Estado no debe ser Aparecido
                         presentaciónIrvin.aparecer();
+                        efectoAbrirCerrarVentana.play();
                     }
                     break;
                 case 2: //Caso para aparecer la presentación de Mia
                     if(presentaciónMia.getEstado() != Presentacion.Estado.APARECIDO){
                         presentaciónMia.aparecer();
+                        efectoAbrirCerrarVentana.play();
                     }
                     break;
                 case 3: //Caso para aparecer la presentación de Javier
                     if(presentaciónJavier.getEstado() != Presentacion.Estado.APARECIDO){
                         presentaciónJavier.aparecer();
+                        efectoAbrirCerrarVentana.play();
                     }
                     break;
                 case 4: //Caso para aparecer la presentación de Nuri
                     if(presentaciónNuri.getEstado() != Presentacion.Estado.APARECIDO){
                         presentaciónNuri.aparecer();
+                        efectoAbrirCerrarVentana.play();
                     }
                     break;
                 case 5: //Caso para aparecer la presentación de Fer
                     if(presentaciónFer.getEstado() != Presentacion.Estado.APARECIDO){
                         presentaciónFer.aparecer();
+                        efectoAbrirCerrarVentana.play();
                     }
                     break;
                 case 6: //Caso para volver al menú principal
@@ -199,18 +220,23 @@ public class PantallaAcerca implements Screen {
                     break;
                 case 7: //Caso para desaparecer la presentación de Irvin
                     presentaciónIrvin.desaparecer();
+                    efectoAbrirCerrarVentana.play();
                     break;
                 case 8: //Caso para desaparecer la presentación de Mia
                     presentaciónMia.desaparecer();
+                    efectoAbrirCerrarVentana.play();
                     break;
                 case 9: //Caso para desaparecer la presentación de Javier
                     presentaciónJavier.desaparecer();
+                    efectoAbrirCerrarVentana.play();
                     break;
                 case 10: //Caso para desaparecer la presentación de Nuri
                     presentaciónNuri.desaparecer();
+                    efectoAbrirCerrarVentana.play();
                     break;
                 case 11: //Caso para desaparecer la presentación de Fer
                     presentaciónFer.desaparecer();
+                    efectoAbrirCerrarVentana.play();
                     break;
                 default: //Caso para no hacer nada, bonus
                     break;
@@ -328,6 +354,7 @@ public class PantallaAcerca implements Screen {
         texturaRegresar.dispose();
         texturaFondo.dispose();
         texturaAbanico.dispose();
+        efectoAbrirCerrarVentana.dispose();
     }
 
 
