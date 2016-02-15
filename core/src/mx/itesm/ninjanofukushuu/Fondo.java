@@ -29,5 +29,9 @@ public class Fondo {
 
         sprite.setSize(ancho, alto);
     }
+    //GetSprite
+    public Sprite getSprite() {
+        return sprite;
+    }
 
 }

@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-/**
+/*
  * Created by Atem on 12/02/2016.
  */
 public class PantallaAcerca implements Screen {
@@ -23,9 +23,12 @@ public class PantallaAcerca implements Screen {
     //Fondo
     private Fondo fondo;
     private Texture texturaFondo;
+    //Abanico
+    private Logotipo abanico;
+    private Texture texturaAbanico;
     //Botones
     private Boton btnMia,btnNuri,btnIrvin,btnJavier, btnFer, btnRegresar;
-    private Texture texturaBtnMia,texturaBtnNuri, texturaBtnIrvin,texturaBtnJavier, texturaBtnFer, texturaRegresar, texturaIrv, texturaMar, texturaJav, texturaNur, texturaFer;
+    private Texture texturaBtnMia,texturaBtnNuri, texturaBtnIrvin,texturaBtnJavier, texturaBtnFer, texturaRegresar;
     private static final int anchoBoton = 180, altoBoton = 200; //anchoBoton1 = 480 , altoBoton1 = 160;
     //Presentaciones
     private Presentacion presentaciónIrvin, presentaciónMia, presentaciónJavier, presentaciónNuri, presentaciónFer;
@@ -38,13 +41,15 @@ public class PantallaAcerca implements Screen {
     @Override
     public void show() {
         //Crear camara
-        camara=new OrthographicCamera(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO);
+        camara = new OrthographicCamera(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO);
         camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
+
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
         cargarTexturas();
         //Crear fondo
-        fondo=new Fondo(texturaFondo);
+        fondo = new Fondo(texturaFondo);
+        abanico=new Logotipo(texturaAbanico);
         //Crear botones
         btnMia = new Boton(texturaBtnMia);
         btnNuri = new  Boton(texturaBtnNuri);
@@ -52,25 +57,30 @@ public class PantallaAcerca implements Screen {
         btnJavier = new Boton(texturaBtnJavier);
         btnFer = new Boton(texturaBtnFer);
         btnRegresar = new Boton(texturaRegresar);
+
         //Crear presentaciones
+
         presentaciónIrvin = new Presentacion(texturaPresentacionIrvin);
         presentaciónMia = new Presentacion(texturaPresentacionMia);
         presentaciónJavier = new Presentacion(texturaPresentacionJavier);
         presentaciónNuri = new Presentacion(texturaPresentacionNuri);
         presentaciónFer = new Presentacion(texturaPresentacionFer);
+
         //Poscicionar objetos
-        btnIrvin.setPosicion(Principal.ANCHO_MUNDO/4-100,Principal.ALTO_MUNDO*2/3-100);
-        btnMia.setPosicion(Principal.ANCHO_MUNDO/2-50,Principal.ALTO_MUNDO*2/3-100);
-        btnJavier.setPosicion(Principal.ANCHO_MUNDO*3/4-100,Principal.ALTO_MUNDO*2/3-100);
-        btnNuri.setPosicion(Principal.ANCHO_MUNDO*3/8-100,Principal.ALTO_MUNDO/3-100);
-        btnFer.setPosicion(Principal.ANCHO_MUNDO*5/8-100,Principal.ALTO_MUNDO/3-100);
-        btnRegresar.setPosicion(Principal.ANCHO_MUNDO*7/8-50,Principal.ALTO_MUNDO*1/5-100);
-        presentaciónIrvin.setPosicion(0-20,0-100);
-        presentaciónMia.setPosicion(0-20,0-100);
-        presentaciónJavier.setPosicion(0-20,0-100);
-        presentaciónNuri.setPosicion(0-20,0-100);
-        presentaciónFer.setPosicion(0-20,0-100);
+        abanico.setPosicion(0 - 20, 0 - 35);
+        btnIrvin.setPosicion(Principal.ANCHO_MUNDO / 4 - 100, Principal.ALTO_MUNDO * 2 / 3 - 100);
+        btnMia.setPosicion(Principal.ANCHO_MUNDO / 2 - 100, Principal.ALTO_MUNDO * 2 / 3 - 100);
+        btnJavier.setPosicion(Principal.ANCHO_MUNDO * 3 / 4 - 100, Principal.ALTO_MUNDO * 2 / 3 - 100);
+        btnNuri.setPosicion(Principal.ANCHO_MUNDO * 3 / 8 - 100, Principal.ALTO_MUNDO / 3 - 100);
+        btnFer.setPosicion(Principal.ANCHO_MUNDO * 5 / 8 - 100, Principal.ALTO_MUNDO / 3 - 100);
+        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8 - 50, Principal.ALTO_MUNDO * 1 / 5 - 100);
+        presentaciónIrvin.setPosicion(0 - 20, 0 - 100);
+        presentaciónMia.setPosicion(0 - 20, 0 - 100);
+        presentaciónJavier.setPosicion(0 - 20, 0 - 100);
+        presentaciónNuri.setPosicion(0 - 20, 0 - 100);
+        presentaciónFer.setPosicion(0 - 20, 0 - 100);
         //Ajuste de tamaño
+        abanico.setTamanio(1280, 780);
         btnIrvin.setTamanio(anchoBoton, altoBoton);
         btnMia.setTamanio(anchoBoton, altoBoton);
         btnJavier.setTamanio(anchoBoton,altoBoton);
@@ -82,15 +92,18 @@ public class PantallaAcerca implements Screen {
         presentaciónMia.setTamanio(1280,880);
         presentaciónJavier.setTamanio(1280,880);
         presentaciónNuri.setTamanio(1280,880);
-        presentaciónFer.setTamanio(1280,880);
+        presentaciónFer.setTamanio(1280, 880);
+
         //Batch
-        batch=new SpriteBatch();
+        batch = new SpriteBatch();
     }
 
     //Crgar texturas
     private void cargarTexturas() {
         //Fondo
         texturaFondo = new Texture(Gdx.files.internal("BlackandWhitesun.jpg"));
+        //Abanico
+        texturaAbanico = new Texture(Gdx.files.internal("Abanico.png"));
         //Botones
         texturaBtnMia = new Texture((Gdx.files.internal("M.png")));
         texturaBtnNuri = new Texture((Gdx.files.internal("N.png")));
@@ -111,12 +124,16 @@ public class PantallaAcerca implements Screen {
         //Borrar la pantalla
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         batch.setProjectionMatrix(camara.combined);
+
         //Metodo pare revisar si huba touch
         leerEntrada();
+        //fondo.getSprite().rotate(1); No sirve...quien sabe por qué
         //DIBUJAR
         batch.begin();
         fondo.render(batch);
+        abanico.render(batch);
         btnIrvin.render(batch);
         btnMia.render(batch);
         btnJavier.render(batch);
@@ -278,7 +295,6 @@ public class PantallaAcerca implements Screen {
     @Override
     public void resize(int width, int height) {
         vista.update(width,height);
-
     }
 
     @Override
@@ -299,11 +315,6 @@ public class PantallaAcerca implements Screen {
     @Override
     public void dispose() {
         //Eliminar basura
-        texturaIrv.dispose();
-        texturaMar.dispose();
-        texturaJav.dispose();
-        texturaNur.dispose();
-        texturaFer.dispose();
         texturaBtnIrvin.dispose();
         texturaBtnMia.dispose();
         texturaBtnJavier.dispose();
@@ -316,6 +327,7 @@ public class PantallaAcerca implements Screen {
         texturaPresentacionFer.dispose();
         texturaRegresar.dispose();
         texturaFondo.dispose();
+        texturaAbanico.dispose();
     }
 
 

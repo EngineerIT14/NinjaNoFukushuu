@@ -36,6 +36,7 @@ public class Boton {
     }
 
 
+
     public Sprite getSprite() {
         return sprite;
     }

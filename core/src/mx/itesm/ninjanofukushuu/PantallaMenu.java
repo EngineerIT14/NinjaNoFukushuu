@@ -79,7 +79,6 @@ public class PantallaMenu implements Screen {
         btnAbout.setTamanio(anchoBoton, altoBoton);
         logo.setTamanio(anchoLogo, altoLogo);
 
-
         batch = new SpriteBatch();
     }
 
@@ -103,8 +102,6 @@ public class PantallaMenu implements Screen {
         batch.setProjectionMatrix(camara.combined); //Con este ajustas el batch...,en este caso, el boton, se ajusta.
 
         leerEntrada(); //Pata revisar touch
-
-
         //DIBUJAR, primero las cosas que van atras....
         batch.begin(); //comienza a dibujar
         fondo.render(batch); //SE DIBUJAN LAS COSAS AQUI EN MEDIO...
