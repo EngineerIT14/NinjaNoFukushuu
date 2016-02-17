@@ -128,10 +128,10 @@ public class PantallaMenu implements Screen {
                     Gdx.app.log("leerEntrada","HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
                     break;
                 case 2:
-                    Gdx.app.log("leerEntrada", "HAY UN TAP EN INSTRUCTIOS!"); //cuando le apretan va decir esto..
+                    Gdx.app.log("leerEntrada", "HAY UN TAP EN INSTRUCCIONES!"); //cuando le apretan va decir esto..
                     break;
                 case 3:
-                Gdx.app.log("leerEntrada","HAY UN TAP EN GALLERY!"); //cuando le apretan va decir esto..
+                Gdx.app.log("leerEntrada","HAY UN TAP EN GALLERIA!"); //cuando le apretan va decir esto..
                 break;
                 case 4:
                     Gdx.app.log("leerEntrada","HAY UN TAP! EN ABOUT"); //cuando le apretan va decir esto..

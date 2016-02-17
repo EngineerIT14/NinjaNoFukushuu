@@ -4,13 +4,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-/**
- * Created by Atem on 13/02/2016.
- */
+/*
+Desarrollador: Luis Fernando
+Descripcion: ....
+Profesor: Roberto Martinez Román.
+*/
 public class Presentacion {
 
     private Sprite sprite;
-    private Estado estado; //oculto, aparecidp
+    private Estado estado; //oculto, aparecido
 
     //Constructor
     public Presentacion(Texture textura){
