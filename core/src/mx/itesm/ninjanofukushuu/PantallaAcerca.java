@@ -96,7 +96,9 @@ public class PantallaAcerca implements Screen {
         btnNuri.setTamanio(anchoBoton,altoBoton);
         btnFer.setTamanio(anchoBoton,altoBoton);
         btnRegresar.setTamanio(anchoBoton,altoBoton);
-        fondo.setTamanio(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO);
+        fondo.setTamanio(2666, 1500);
+        fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
+        fondo.getSprite().setOrigin(2666 / 2, 1500 / 2);
         presentaciónIrvin.setTamanio(1280,880);
         presentaciónMia.setTamanio(1280,880);
         presentaciónJavier.setTamanio(1280,880);
@@ -145,7 +147,8 @@ public class PantallaAcerca implements Screen {
 
         //Metodo pare revisar si huba touch
         leerEntrada();
-        //fondo.getSprite().rotate(1); No sirve...quien sabe por qué
+
+        fondo.getSprite().rotate(.1f); //No sirve...quien sabe por qué
         //DIBUJAR
         batch.begin();
         fondo.render(batch);

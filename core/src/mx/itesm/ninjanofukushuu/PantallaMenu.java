@@ -101,6 +101,7 @@ public class PantallaMenu implements Screen {
         batch.setProjectionMatrix(camara.combined); //Con este ajustas el batch...,en este caso, el boton, se ajusta.
 
         leerEntrada(); //Pata revisar touch
+        //fondo.getSprite().rotate(.1f);
         //DIBUJAR, primero las cosas que van atras....
         batch.begin(); //comienza a dibujar
         fondo.render(batch); //SE DIBUJAN LAS COSAS AQUI EN MEDIO...
@@ -123,8 +124,17 @@ public class PantallaMenu implements Screen {
             float x = coordernadas.x;
             float y = coordernadas.y;
             switch ( verifcarBoton(x,y)){
+                case 1:
+                    Gdx.app.log("leerEntrada","HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
+                    break;
+                case 2:
+                    Gdx.app.log("leerEntrada", "HAY UN TAP EN INSTRUCTIOS!"); //cuando le apretan va decir esto..
+                    break;
+                case 3:
+                Gdx.app.log("leerEntrada","HAY UN TAP EN GALLERY!"); //cuando le apretan va decir esto..
+                break;
                 case 4:
-                    Gdx.app.log("leerEntrada","HAY UN TAP!"); //cuando le apretan va decir esto..
+                    Gdx.app.log("leerEntrada","HAY UN TAP! EN ABOUT"); //cuando le apretan va decir esto..
                     principal.setScreen(new PantallaAcerca(principal));
                     break;
                 default:
