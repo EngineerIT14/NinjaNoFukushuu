@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 /*
-Desarrollador: Irvin Emmanuel Trujillo Díaz
+Desarrolladores: Irvin Emmanuel Trujillo Díaz, Luis Fernando
 Descripción: Esta clase es la encargada de mostrar el menu principal y sus determinados botones.
 Profesor: Roberto Martinez Román.
 */
@@ -34,15 +34,14 @@ public class PantallaMenu implements Screen {
     private static final int anchoBoton = 480 , altoBoton = 160;
     private static final float posicionCentradaBotonX = 440;
 
-
-
     //LOGO
     private Logotipo logo;
     private Texture texturaLogo;
     private static final int anchoLogo = 700 , altoLogo = 350;
     private static final int posicionCentradaXLogo = 330 , posicionCentradaYLogo = 460;
 
-    public PantallaMenu(Principal principal) {
+    public PantallaMenu(Principal principal) { //Constructor
+
         this.principal = principal;
     }
 
@@ -93,7 +92,7 @@ public class PantallaMenu implements Screen {
     }
 
     //Metodo de la clase Screen, ya fue implementado
-    @Override
+    @Override//Recordar que render es automatico..
     public void render(float delta) { //ese delta es el tiempo, 60fps entonces el float seria 1/60
         //Borrar la pantalla
         Gdx.gl.glClearColor(0, 0, 0, 0); //Con este color vas a borrar
@@ -140,6 +139,7 @@ public class PantallaMenu implements Screen {
         Sprite spritebtnGallery = btnGallery.getSprite();
         Sprite spritebtnAbout = btnAbout.getSprite();
         //Verificar que la x y La y esten dentro de las dimensiones del sprite...
+        /*caso 1 = boton play, caso 2 = boton instrucciones, caso 3 = boton galería, caso 4 = boton acercaDe, caso0 = ningunBoton*/
         if(x>=spritebtnPlay.getX() && x<=spritebtnPlay.getX()+spritebtnPlay.getWidth() && y>=spritebtnPlay.getY() && y<=spritebtnPlay.getY()+spritebtnPlay.getHeight()){
             return 1;
         }
@@ -176,13 +176,27 @@ public class PantallaMenu implements Screen {
 
     }
 
+    //estos metodos sde ejecutan cuando se pasa a la otra pantalla
+
+
     @Override
     public void hide() {
 
     }
 
-    @Override
+    @Override //Se ejecuta cuanto se pasa a otra pantalla, aqui se deben de liberar los recursos **
     public void dispose() {
+        principal.dispose();
+        batch.dispose();
+        //Fondo
+        texturaFondo.dispose();
+        //Botones
+        texturaBtnPlay.dispose();
+        texturaBtnInstructions.dispose();
+        texturaBtnGallery.dispose();
+        texturaBtnAbout.dispose();
+        //LOGO
+        texturaLogo.dispose();
 
     }
 }

@@ -20,7 +20,7 @@ public class Principal extends Game  {
     @Override
     public void create () {
 
-        setScreen(new PantallaMenu(this));
+        setScreen(new PantallaMenu(this)); //Se manda el objeto...
     }
 
 
