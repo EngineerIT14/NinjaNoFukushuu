@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /*
 Desarrollador: Luis Fernando
-Descripcion: ....
+Descripcion: Objeto que tiene el propósito de servir como imagen que contenga los datos de los desarrolladores.
 Profesor: Roberto Martinez Román.
 */
 public class Presentacion {

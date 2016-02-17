@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 /*
 Desarrollador = Luis Fernando
-Descripción: Esta clase representa el objeto fondo..
+Descripción: Esta clase es la encargada de representar la pantalla de "About", donde se muestran elementos para conocer acerca de los desarrolladores
 Profesor: Roberto Martinez Román.
  */
 public class PantallaAcerca implements Screen {
@@ -96,9 +96,9 @@ public class PantallaAcerca implements Screen {
         btnNuri.setTamanio(anchoBoton,altoBoton);
         btnFer.setTamanio(anchoBoton,altoBoton);
         btnRegresar.setTamanio(anchoBoton,altoBoton);
-        fondo.setTamanio(2666, 1500);
+        fondo.setTamanio(2488, 1400);
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
-        fondo.getSprite().setOrigin(2666 / 2, 1500 / 2);
+        fondo.getSprite().setOrigin(2488 / 2, 1400 / 2);
         presentaciónIrvin.setTamanio(1280,880);
         presentaciónMia.setTamanio(1280,880);
         presentaciónJavier.setTamanio(1280,880);
