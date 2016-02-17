@@ -12,7 +12,7 @@ Descripción: Esta clase representa a un objeto boton...
 Profesor: Roberto Martinez Román.
 */
 
-//RegresandoElCambio adiosMundo
+
 
 public class Boton {
 

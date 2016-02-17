@@ -126,6 +126,7 @@ public class PantallaMenu implements Screen {
             switch ( verifcarBoton(x,y)){
                 case 1:
                     Gdx.app.log("leerEntrada","HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
+                    principal.setScreen(new PantallaJuego(principal));
                     break;
                 case 2:
                     Gdx.app.log("leerEntrada", "HAY UN TAP EN INSTRUCCIONES!"); //cuando le apretan va decir esto..
