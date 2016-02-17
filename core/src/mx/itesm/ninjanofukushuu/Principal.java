@@ -20,7 +20,7 @@ public class Principal extends Game  {
 
 
 
-
+//Hol
     @Override
     public void create () { //Se crea la pantalla
         batch = new SpriteBatch();
