@@ -92,25 +92,25 @@ public class PantallaJuego implements Screen{
             scroll.add(nuevo);
         }
         scroll.get(0).setPosicion(550,300);
-        scroll.get(1).setPosicion(800,50);
+        scroll.get(1).setPosicion(800, 50);
         scroll.get(2).setPosicion(230,630);
-        //Vidas
+        /*//Vidas
         vidas = new Array<ObjetosJuego>(3);
         for(int i =0; i<3 ;i++){
             ObjetosJuego nuevo = new ObjetosJuego(texturaVidas);
             nuevo.setTamanio(50,50);
             nuevo.setPosicion(30+i*50,650);
             vidas.add(nuevo);
-        }
+        }*/
         //Pociones
         pociones = new Array<ObjetosJuego>(2);
-        for(int i =0; i< 2;i++){
-            ObjetosJuego nuevo = new ObjetosJuego(texturaVidas);
-            nuevo.setTamanio(10,10);
+        for(int i =0; i< 2;i++) {
+            ObjetosJuego nuevo = new ObjetosJuego(texturaPocion);
+            nuevo.setTamanio(50,50);
+            pociones.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
+            pociones.get(1).setPosicion(300, 500);
             pociones.add(nuevo);
         }
-        pociones.get(0).setPosicion(1000,Principal.ALTO_MUNDO/2);
-        pociones.get(1).setPosicion(300,500);
     }
 
     @Override
@@ -187,12 +187,13 @@ public class PantallaJuego implements Screen{
         for (ObjetosJuego pocion : pociones) {
             if (jugador.b2Body.getPosition().x >= pocion.getSprite().getX() && jugador.b2Body.getPosition().x <= pocion.getSprite().getX() + pocion.getSprite().getWidth() &&
                     jugador.b2Body.getPosition().y >= pocion.getSprite().getY() && jugador.b2Body.getPosition().y <= pocion.getSprite().getY() + pocion.getSprite().getHeight()) {
+
                 pocion.quitarElemento();
+                this.hud.contadorSaludVidas += 1; //Se modifica la vida, se le suma una unidad a  las actuales..
+                System.out.println(this.hud.contadorSaludVidas);
                 pociones.pop();
-                ObjetosJuego nuevo = new ObjetosJuego(texturaVidas);
-                nuevo.setTamanio(50,50);
-                nuevo.setPosicion(vidas.get(vidas.size-1).getSprite().getX()+50,650);
-                vidas.add(nuevo);
+
+
             }
         }
     }

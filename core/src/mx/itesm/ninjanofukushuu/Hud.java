@@ -24,24 +24,20 @@ public class Hud{
     public Stage stage;
     private Viewport vista;
 
-    //Mario score/time Tracking Variables
-    private Integer worldTimer;
-    private float timeCount;
-    private Integer score;
+    //Contadores, publicos para que se puedan manipular en la pantallajuego y sumar-quitar a estas variables..
+    public Integer contadorSaludVidas;
+    public Integer contadorPergaminos;
 
     //Scene2D widgets
     private Label saludPersonaje;
-    private Label cantidadPergaminos;
+    private Label cantidadPergaminosStr;
     private Label pergaminoLabel;
-    private Label levelLabel;
-    private Label worldLabel;
     private Label saludNinjaLetrero;
 
     public Hud(SpriteBatch sb) {
         //define our tracking variables
-        worldTimer = 10;
-        timeCount = 0;
-        score = 0;
+        contadorSaludVidas = 10;
+        contadorPergaminos = 0;
 
 
         //setup the HUD vista using a new camera seperate from our gamecam
@@ -58,15 +54,15 @@ public class Hud{
 
         //define our labels using the String, and a Label style consisting of a font and colo
 
-        saludPersonaje = new Label(String.format("%02d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-        cantidadPergaminos = new Label(String.format("%02d", score), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        saludPersonaje = new Label(String.format("%02d", contadorSaludVidas), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
+        cantidadPergaminosStr = new Label(String.format("%02d", contadorPergaminos), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
         pergaminoLabel = new Label("PERGAMINOS", new Label.LabelStyle(new BitmapFont(), Color.CYAN));
         saludNinjaLetrero = new Label("SALUD ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         //AjustandoTamañoLetreros
         pergaminoLabel.setFontScale(pergaminoLabel.getFontScaleX()*2,pergaminoLabel.getFontScaleY()*2);
         saludPersonaje.setFontScale(saludPersonaje.getFontScaleX() * 2, saludPersonaje.getFontScaleY()*2);
-        cantidadPergaminos.setFontScale(cantidadPergaminos.getFontScaleX() *2, cantidadPergaminos.getFontScaleY()*2);
+        cantidadPergaminosStr.setFontScale(cantidadPergaminosStr.getFontScaleX() *2, cantidadPergaminosStr.getFontScaleY()*2);
         saludNinjaLetrero.setFontScale(saludNinjaLetrero.getFontScaleX() * 2, saludNinjaLetrero.getFontScaleY() * 2);
 
 
@@ -75,7 +71,7 @@ public class Hud{
         table.add(pergaminoLabel).expandX().padTop(10);
         table.row();
         table.add(saludPersonaje).expandX();
-        table.add(cantidadPergaminos).expandX();
+        table.add(cantidadPergaminosStr).expandX();
 
         stage.addActor(table);
     }
