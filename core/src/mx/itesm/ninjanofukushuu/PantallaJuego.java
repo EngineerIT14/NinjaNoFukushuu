@@ -1,6 +1,7 @@
 package mx.itesm.ninjanofukushuu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -31,6 +35,11 @@ public class PantallaJuego implements Screen{
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
+    private World world;
+    private Box2DDebugRenderer bodytodr;
+
+    private NinjaPrincipal jugador;
+
     //creamos constructor por default
     public PantallaJuego(Principal principal){
         this.principal= principal;
@@ -47,6 +56,10 @@ public class PantallaJuego implements Screen{
         renderer = new OrthogonalTiledMapRenderer(map);
         //camara.position.set(vista.getScreenWidth(), vista.getScreenHeight(), 0);
         camara.position.set(640, 355, 0);
+        world=new World(new Vector2(0,-10), true);//gravedad hacía abajo (obvio)
+        bodytodr=new Box2DDebugRenderer();
+        new Box2Creador(world, map);
+        jugador = new NinjaPrincipal(world);
     }
 
     @Override
@@ -55,12 +68,18 @@ public class PantallaJuego implements Screen{
     }
 
     public void handleInput(float dt){
-        if(Gdx.input.isTouched())
-            camara.position.x += 50*dt;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+                jugador.b2Body.applyLinearImpulse(new Vector2(0, 4f), jugador.b2Body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador.b2Body.getLinearVelocity().x <= 2)
+            jugador.b2Body.applyLinearImpulse(new Vector2(3f, 0), jugador.b2Body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador.b2Body.getLinearVelocity().x >= -2)
+            jugador.b2Body.applyLinearImpulse(new Vector2(-3f, 0), jugador.b2Body.getWorldCenter(), true);
     }
 
     public void update(float dt){
         handleInput(dt);
+        world.step(1/60f, 6, 2);//ajustamos el tiempo de colision
+        camara.position.x=jugador.b2Body.getPosition().x;
         camara.update();
         renderer.setView(camara);
     }
@@ -75,6 +94,7 @@ public class PantallaJuego implements Screen{
 
         batch.setProjectionMatrix(camara.combined);  //Con este ajustas el batch..., si no, no va aparecer la imagen
         renderer.render();
+        bodytodr.render(world, camara.combined);
 
         principal.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
@@ -106,8 +126,10 @@ public class PantallaJuego implements Screen{
 
     @Override //Se ejecuta cuanto se pasa a otra pantalla, aqui se deben de liberar los recursos **
     public void dispose() {
-
-
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        bodytodr.dispose();
     }
 
 
