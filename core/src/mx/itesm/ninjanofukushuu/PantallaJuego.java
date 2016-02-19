@@ -63,7 +63,7 @@ public class PantallaJuego implements Screen{
         renderer = new OrthogonalTiledMapRenderer(map);
         //camara.position.set(vista.getScreenWidth(), vista.getScreenHeight(), 0);
         camara.position.set(640, 355, 0);
-        world=new World(new Vector2(0,-10), true);//gravedad hacía abajo (obvio)
+        world=new World(new Vector2(0,-220), true);//gravedad hacía abajo (obvio)
         bodytodr=new Box2DDebugRenderer();
         new Box2Creador(world, map);
         jugador = new NinjaPrincipal(world);
@@ -76,10 +76,10 @@ public class PantallaJuego implements Screen{
 
     public void handleInput(float dt){
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
-            jugador.b2Body.applyLinearImpulse(new Vector2(0, 4f), jugador.b2Body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador.b2Body.getLinearVelocity().x <= 2)
+            jugador.b2Body.applyLinearImpulse(new Vector2(0, 20000), jugador.b2Body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador.b2Body.getLinearVelocity().x <= 100)
             jugador.b2Body.applyLinearImpulse(new Vector2(3f, 0), jugador.b2Body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador.b2Body.getLinearVelocity().x >= -2)
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador.b2Body.getLinearVelocity().x >= -100)
             jugador.b2Body.applyLinearImpulse(new Vector2(-3f, 0), jugador.b2Body.getWorldCenter(), true);
     }
 
