@@ -7,11 +7,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -52,7 +59,7 @@ public class PantallaJuego implements Screen{
         hud = new Hud(principal.batch);
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("MapaDeTierra.tmx");
+        map = mapLoader.load("MapaDeTierraV2.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
         //camara.position.set(vista.getScreenWidth(), vista.getScreenHeight(), 0);
         camara.position.set(640, 355, 0);
@@ -69,7 +76,7 @@ public class PantallaJuego implements Screen{
 
     public void handleInput(float dt){
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
-                jugador.b2Body.applyLinearImpulse(new Vector2(0, 4f), jugador.b2Body.getWorldCenter(), true);
+            jugador.b2Body.applyLinearImpulse(new Vector2(0, 4f), jugador.b2Body.getWorldCenter(), true);
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador.b2Body.getLinearVelocity().x <= 2)
             jugador.b2Body.applyLinearImpulse(new Vector2(3f, 0), jugador.b2Body.getWorldCenter(), true);
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador.b2Body.getLinearVelocity().x >= -2)
@@ -78,6 +85,7 @@ public class PantallaJuego implements Screen{
 
     public void update(float dt){
         handleInput(dt);
+
         world.step(1/60f, 6, 2);//ajustamos el tiempo de colision
         camara.position.x=jugador.b2Body.getPosition().x;
         camara.update();
