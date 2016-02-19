@@ -61,6 +61,10 @@ public class PantallaJuego implements Screen{
     private Array<ObjetosJuego> pociones;
     private Texture texturaPocion;
 
+
+    //Estado para la suma del marcador
+    private Estado estado;
+
     //creamos constructor por default
     public PantallaJuego(Principal principal){
         this.principal= principal;
@@ -95,13 +99,13 @@ public class PantallaJuego implements Screen{
         scroll.get(1).setPosicion(800, 50);
         scroll.get(2).setPosicion(230,630);
         //Vidas
-        vidas = new Array<ObjetosJuego>(3);
+        /* vidas = new Array<ObjetosJuego>(3);
         for(int i =0; i<3 ;i++){
             ObjetosJuego nuevo = new ObjetosJuego(texturaVidas);
             nuevo.setTamanio(50,50);
             nuevo.setPosicion(30+i*50,650);
             vidas.add(nuevo);
-        }
+        }*/
         //Pociones
         pociones = new Array<ObjetosJuego>(2);
         for(int i =0; i< 2;i++) {
@@ -120,6 +124,7 @@ public class PantallaJuego implements Screen{
         cargarTexturas();
         batch = new SpriteBatch();
         crearObjetos();
+        this.estado = Estado.SINSUMAR; //Inicialmente el usuario no esta sumando nada
     }
 
     private void cargarTexturas() {
@@ -161,16 +166,18 @@ public class PantallaJuego implements Screen{
         //jugador.actualizar();
         //leerEntrada();
         principal.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+
+        //dibujando
         hud.stage.draw();
         batch.begin();
         for(ObjetosJuego scrolls:scroll) {
             if(scrolls.actualizar())
                 scrolls.render(batch);
         }
-        for (ObjetosJuego vida:vidas){
+       /* for (ObjetosJuego vida:vidas){
             if(vida.actualizar())
                 vida.render(batch);
-        }
+        }*/
         for (ObjetosJuego pocion:pociones){
             if(pocion.actualizar())
                 pocion.render(batch);
@@ -180,23 +187,51 @@ public class PantallaJuego implements Screen{
     //Metodo para revomer elementos del juego
     private void recogerObjeto() {
         for (ObjetosJuego scrolls : scroll) {
+
             if (jugador.b2Body.getPosition().x >= scrolls.getSprite().getX() && jugador.b2Body.getPosition().x <= scrolls.getSprite().getX() + scrolls.getSprite().getWidth() &&
-                    jugador.b2Body.getPosition().y >= scrolls.getSprite().getY() && jugador.b2Body.getPosition().y <= scrolls.getSprite().getY() + scrolls.getSprite().getHeight()) {
-                scrolls.quitarElemento();
-                scroll.pop();
+                    jugador.b2Body.getPosition().y >= scrolls.getSprite().getY() && jugador.b2Body.getPosition().y <= scrolls.getSprite().getY() + scrolls.getSprite().getHeight() && this.estado == Estado.SINSUMAR) {
+                if(this.estado == Estado.SINSUMAR) {
+                    this.estado = Estado.SUMANDO;
+                    scrolls.quitarElemento();
+                    this.hud.contadorPergaminos += 1;
+                    System.out.println(this.hud.contadorSaludVidas);
+                    this.hud.actualizarTablaLabels(); //Para que en pantalla se vea el cambio de marcador
+                    scroll.pop();
+                }
             }
+
+            if(this.estado != Estado.SINSUMAR)
+                this.estado = Estado.SINSUMAR;
+
+
+
+
+
+
         }
         for (ObjetosJuego pocion : pociones) {
             if (jugador.b2Body.getPosition().x >= pocion.getSprite().getX() && jugador.b2Body.getPosition().x <= pocion.getSprite().getX() + pocion.getSprite().getWidth() &&
-                    jugador.b2Body.getPosition().y >= pocion.getSprite().getY() && jugador.b2Body.getPosition().y <= pocion.getSprite().getY() + pocion.getSprite().getHeight()) {
-
-                pocion.quitarElemento();
-                this.hud.contadorSaludVidas += 1; //Se modifica la vida, se le suma una unidad a  las actuales..
-                System.out.println(this.hud.contadorSaludVidas);
-                pociones.pop();
-
-
+                    jugador.b2Body.getPosition().y >= pocion.getSprite().getY() && jugador.b2Body.getPosition().y <= pocion.getSprite().getY() + pocion.getSprite().getHeight() && this.estado == Estado.SINSUMAR) {
+                if(this.estado == Estado.SINSUMAR) {
+                    this.estado = Estado.SUMANDO;
+                    pocion.quitarElemento();
+                    this.hud.contadorSaludVidas += 1; //Se modifica la vida, se le suma una unidad a  las actuales..
+                    System.out.println(this.hud.contadorSaludVidas);
+                    this.hud.actualizarTablaLabels(); //Para que en pantalla se vea el cambio de marcador
+                    pociones.pop();
+                }
             }
+            if(this.estado != Estado.SINSUMAR)
+                this.estado = Estado.SINSUMAR;
+
+
+
+
+
+
+
+
+
         }
     }
     /*private void leerEntrada() {
@@ -225,6 +260,13 @@ public class PantallaJuego implements Screen{
     @Override
     public void resume() {
 
+    }
+
+
+    //Estados
+    public  enum  Estado{
+        SUMANDO,
+        SINSUMAR
     }
 
     //estos metodos sde ejecutan cuando se pasa a la otra pantalla

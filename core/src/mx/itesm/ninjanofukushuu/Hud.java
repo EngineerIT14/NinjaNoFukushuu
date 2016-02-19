@@ -34,23 +34,35 @@ public class Hud{
     private Label pergaminoLabel;
     private Label saludNinjaLetrero;
 
+    //Tabla para almacenar los huds..
+    private Table contenedorHuds = new Table();
+
+    //Spritebatch de HUD
+    private SpriteBatch batchHUD;
+
     public Hud(SpriteBatch sb) {
-        //define our tracking variables
-        contadorSaludVidas = 10;
+
+        contadorSaludVidas = 0;
         contadorPergaminos = 0;
+
+        contenedorHuds = new Table();
+        this.batchHUD = sb;
+
+
 
 
         //setup the HUD vista using a new camera seperate from our gamecam
         //define our stage using that vista and our games spritebatch
         vista = new FitViewport(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO, new OrthographicCamera());
-        stage = new Stage(vista, sb);
 
-        //define a table used to organize our hud's labels
-        Table table = new Table();
-        //Top-Align table
-        table.top();
-        //make the table fill the entire stage
-        table.setFillParent(true);
+        stage = new Stage(vista, this.batchHUD);
+
+
+        //Top-Align contenedorHuds
+        contenedorHuds.top();
+        //make the contenedorHuds
+        //fill the entire stage
+        contenedorHuds.setFillParent(true);
 
         //define our labels using the String, and a Label style consisting of a font and colo
 
@@ -65,14 +77,56 @@ public class Hud{
         cantidadPergaminosStr.setFontScale(cantidadPergaminosStr.getFontScaleX() *2, cantidadPergaminosStr.getFontScaleY()*2);
         saludNinjaLetrero.setFontScale(saludNinjaLetrero.getFontScaleX() * 2, saludNinjaLetrero.getFontScaleY() * 2);
 
+        contenedorHuds.add(saludNinjaLetrero).expandX().padTop(10);
+        contenedorHuds.add(pergaminoLabel).expandX().padTop(10);
+        contenedorHuds.row();
+        contenedorHuds.add(saludPersonaje).expandX();
+        contenedorHuds.add(cantidadPergaminosStr).expandX();
 
 
-        table.add(saludNinjaLetrero).expandX().padTop(10);
-        table.add(pergaminoLabel).expandX().padTop(10);
-        table.row();
-        table.add(saludPersonaje).expandX();
-        table.add(cantidadPergaminosStr).expandX();
 
-        stage.addActor(table);
+        stage.addActor(contenedorHuds);
+
+    }
+
+    //Irvin Emmanuel Trujillo Díaz: para que cuando cambie nuestro marcador cambie la variable...
+    public void actualizarTablaLabels(){
+        contenedorHuds.clear(); //Borrandc el que teniamos..
+
+        contenedorHuds = new Table();
+
+        //setup the HUD vista using a new camera seperate from our gamecam
+        //define our stage using that vista and our games spritebatch
+        vista = new FitViewport(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO, new OrthographicCamera());
+        stage = new Stage(vista, this.batchHUD);
+
+
+        //Top-Align contenedorHuds
+        contenedorHuds.top();
+        //make the contenedorHuds
+        //fill the entire stage
+        contenedorHuds.setFillParent(true);
+
+        //define our labels using the String, and a Label style consisting of a font and colo
+
+        saludPersonaje = new Label(String.format("%02d", contadorSaludVidas), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
+        cantidadPergaminosStr = new Label(String.format("%02d", contadorPergaminos), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        pergaminoLabel = new Label("PERGAMINOS", new Label.LabelStyle(new BitmapFont(), Color.CYAN));
+        saludNinjaLetrero = new Label("SALUD ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+        //AjustandoTamañoLetreros
+        pergaminoLabel.setFontScale(pergaminoLabel.getFontScaleX()*2,pergaminoLabel.getFontScaleY()*2);
+        saludPersonaje.setFontScale(saludPersonaje.getFontScaleX() * 2, saludPersonaje.getFontScaleY()*2);
+        cantidadPergaminosStr.setFontScale(cantidadPergaminosStr.getFontScaleX() *2, cantidadPergaminosStr.getFontScaleY()*2);
+        saludNinjaLetrero.setFontScale(saludNinjaLetrero.getFontScaleX() * 2, saludNinjaLetrero.getFontScaleY() * 2);
+
+        contenedorHuds.add(saludNinjaLetrero).expandX().padTop(10);
+        contenedorHuds.add(pergaminoLabel).expandX().padTop(10);
+        contenedorHuds.row();
+        contenedorHuds.add(saludPersonaje).expandX();
+        contenedorHuds.add(cantidadPergaminosStr).expandX();
+
+        stage.addActor(contenedorHuds);
+
     }
 }
