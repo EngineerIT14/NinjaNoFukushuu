@@ -75,7 +75,7 @@ public class PantallaJuego implements Screen{
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("MapaDeTierraV2.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
-        //camara.position.set(vista.getScreenWidth(), vista.getScreenHeight(), 0);
+        camara.position.set(vista.getScreenWidth(), vista.getScreenHeight(), 0);
         camara.position.set(640, 355, 0);
         world=new World(new Vector2(0,-220), true);//gravedad hacía abajo (obvio)
         bodytodr=new Box2DDebugRenderer();
@@ -88,29 +88,31 @@ public class PantallaJuego implements Screen{
         scroll = new Array<ObjetosJuego>(3);
         for (int i = 0; i<3;i++) {
             ObjetosJuego nuevo = new ObjetosJuego(texturaScroll);
-            nuevo.setTamanio(10,10);
+            nuevo.setTamanio(50,50);
             scroll.add(nuevo);
         }
         scroll.get(0).setPosicion(550,300);
         scroll.get(1).setPosicion(800, 50);
         scroll.get(2).setPosicion(230,630);
-        /*//Vidas
+        //Vidas
         vidas = new Array<ObjetosJuego>(3);
         for(int i =0; i<3 ;i++){
             ObjetosJuego nuevo = new ObjetosJuego(texturaVidas);
             nuevo.setTamanio(50,50);
             nuevo.setPosicion(30+i*50,650);
             vidas.add(nuevo);
-        }*/
+        }
         //Pociones
         pociones = new Array<ObjetosJuego>(2);
         for(int i =0; i< 2;i++) {
             ObjetosJuego nuevo = new ObjetosJuego(texturaPocion);
             nuevo.setTamanio(50,50);
-            pociones.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
-            pociones.get(1).setPosicion(300, 500);
             pociones.add(nuevo);
         }
+        //Se colocan las pociones en el lugar correspondiente
+        pociones.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
+        pociones.get(1).setPosicion(300, 500);
+
     }
 
     @Override

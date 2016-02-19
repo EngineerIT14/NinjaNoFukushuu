@@ -22,7 +22,8 @@ public class Box2Creador {
         Body dody;
 
         //Darle un cuerpo a cada objeto del mapa
-        for (MapObject object:map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+                                        //Se coloca este entero ya que son el numero de capas en el archivo "tiled", ES DECIR, DE MAPADETIERRAV2, EN ESTE CASO SON 3 CAPAS..
+        for (MapObject object:map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect=((RectangleMapObject)object).getRectangle();
 
             bodef.type=BodyDef.BodyType.StaticBody;//estaticos, no se mueven al ser plataformas
