@@ -171,8 +171,10 @@ public class PantallaJuego implements Screen{
         hud.stage.draw();
         batch.begin();
         for(ObjetosJuego scrolls:scroll) {
-            if(scrolls.actualizar())
+            if(scrolls.actualizar()){
                 scrolls.render(batch);
+            }
+
         }
        /* for (ObjetosJuego vida:vidas){
             if(vida.actualizar())
@@ -187,7 +189,6 @@ public class PantallaJuego implements Screen{
     //Metodo para revomer elementos del juego
     private void recogerObjeto() {
         for (ObjetosJuego scrolls : scroll) {
-
             if (jugador.b2Body.getPosition().x >= scrolls.getSprite().getX() && jugador.b2Body.getPosition().x <= scrolls.getSprite().getX() + scrolls.getSprite().getWidth() &&
                     jugador.b2Body.getPosition().y >= scrolls.getSprite().getY() && jugador.b2Body.getPosition().y <= scrolls.getSprite().getY() + scrolls.getSprite().getHeight() && this.estado == Estado.SINSUMAR) {
                 if(this.estado == Estado.SINSUMAR) {
@@ -196,10 +197,10 @@ public class PantallaJuego implements Screen{
                     this.hud.contadorPergaminos += 1;
                     System.out.println(this.hud.contadorSaludVidas);
                     this.hud.actualizarTablaLabels(); //Para que en pantalla se vea el cambio de marcador
-                    scroll.pop();
                 }
+                scroll.removeValue(scrolls,true);
+                break;
             }
-
             if(this.estado != Estado.SINSUMAR)
                 this.estado = Estado.SINSUMAR;
 
@@ -218,22 +219,19 @@ public class PantallaJuego implements Screen{
                     this.hud.contadorSaludVidas += 1; //Se modifica la vida, se le suma una unidad a  las actuales..
                     System.out.println(this.hud.contadorSaludVidas);
                     this.hud.actualizarTablaLabels(); //Para que en pantalla se vea el cambio de marcador
-                    pociones.pop();
+
                 }
+                pociones.removeValue(pocion,true);
+                break;
             }
             if(this.estado != Estado.SINSUMAR)
                 this.estado = Estado.SINSUMAR;
 
 
-
-
-
-
-
-
-
         }
     }
+
+
     /*private void leerEntrada() {
         if(Gdx.input.justTouched()){
             Vector3 coordenadas = new Vector3();
