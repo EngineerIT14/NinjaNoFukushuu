@@ -4,6 +4,7 @@ package mx.itesm.ninjanofukushuu;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 
 /*
@@ -16,29 +17,57 @@ Profesor: Roberto Martinez Román.
 
 public class Boton {
 
-    private Sprite sprite;
+    private Sprite sprite;              // Imagen
+    private Rectangle rectColision;     // Rectangulo para verificar colisiones o touch
 
-    public Boton(Texture textura){ //Constructor.
+
+    public Boton(Texture textura) {
         sprite = new Sprite(textura);
-        sprite.setAlpha(0.9f); //La transparencia del boton, con f le pones que sea un float.
+        // El rectángulo de colisión siempre está 'sobre' el sprite
+        rectColision = new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
     }
 
-    public void render(SpriteBatch batch){ //Se ejecuta automaticamente..
+    public void render(SpriteBatch batch){ //Se ejecuta automaticamente.. dibuja el boton..
         sprite.draw(batch);
     }
 
+    public float getY() {
+        return sprite.getY();
+    }
+
+    public float getX() {
+        return sprite.getX();
+    }
+
+
     public void setPosicion(float x, float y) {
         sprite.setPosition(x, y);
+        rectColision.setPosition(x,y);
     }
 
     public void setTamanio(float ancho,float alto){
-        sprite.setSize(ancho,alto);
+        sprite.setSize(ancho, alto);
     }
 
-
+    public void setAlfa(float alfa) {
+        sprite.setAlpha(alfa);
+    }
 
     public Sprite getSprite() {
         return sprite;
     }
+
+    public boolean contiene(float x, float y) {
+        return rectColision.contains(x,y);
+    }
+
+
+    public Rectangle getRectColision() {
+        return rectColision;
+    }
+
+
+
+
 
 }

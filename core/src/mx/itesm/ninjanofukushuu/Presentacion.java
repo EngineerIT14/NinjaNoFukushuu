@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /*
+PERTENECE A: ACERCA DE
 Desarrollador: Luis Fernando
 Descripcion: Objeto que tiene el propósito de servir como imagen que contenga los datos de los desarrolladores.
 Profesor: Roberto Martinez Román.

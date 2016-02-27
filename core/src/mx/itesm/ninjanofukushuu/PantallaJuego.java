@@ -2,7 +2,9 @@ package mx.itesm.ninjanofukushuu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -22,34 +25,42 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /*
-Desarrolladores: Irvin Emmanuel Trujillo Díaz, Javier Antonio García Roque
+Desarrolladores: Irvin Emmanuel Trujillo Díaz
 Descripción: Esta clase es la encargada de mostrar el juego y su comportamiento...
 Profesor: Roberto Martinez Román.
 */
 public class PantallaJuego implements Screen{
-    private final Principal principal; //Pantalla que se muestra...
-    Texture texture;
+
+    public static final float ANCHO_MAPA = 1280;   // Como se creó en Tiled
+    public static final int TAM_CELDA = 16;
+    // Referencia al objeto de tipo Game (tiene setScreen para cambiar de pantalla).
+    private Principal plataforma;
+    //La camara y vista principal
     private OrthographicCamera camara;
     private Viewport vista;
-    private Hud hud;
+    //Objeto para dibujar en la pantalla
     private SpriteBatch batch;
+    //Mapa
+    private TiledMap mapa; //Infomracion del mapa en memoria
+    private OrthogonalTiledMapRenderer rendererMapa; //Objeto para dibujar el mapa
+    //Personaje Principal
+    private Personaje hataku; //hataku en nuestro personaje principal
+    private Texture texturaHataku;       // Aquí cargamos la imagen, en el caso de la clase, se cargo hatakuSprite.png con varios frames
+    // HUD. Los componentes en la pantalla que no se mueven
+    private OrthographicCamera camaraHUD;   // Cámara fija
+    // Botones izquierda/derecha
+    private Texture texturaBtnIzquierda;
+    private Boton btnIzquierda;
+    private Texture texturaBtnDerecha;
+    private Boton btnDerecha;
 
-
-    private TmxMapLoader mapLoader;
-    private TiledMap map;
-    private OrthogonalTiledMapRenderer renderer;
-
-    private World world;
-    private Box2DDebugRenderer bodytodr;
-
-    private NinjaPrincipal jugador;
-
-    //Scrolls
+    //Scrolls/Pergamino
     private Array<ObjetosJuego> scroll;
     private Texture texturaScroll;
 
@@ -61,193 +72,167 @@ public class PantallaJuego implements Screen{
     private Array<ObjetosJuego> pociones;
     private Texture texturaPocion;
 
+    /*//Estado para la suma del marcador
+    private Estado estado;*/
 
-    //Estado para la suma del marcador
-    private Estado estado;
-
-    //creamos constructor por default
-    public PantallaJuego(Principal principal){
-        this.principal= principal;
-
-        texture = new Texture("badlogic.jpg");
-        camara = new OrthographicCamera();
-        //vista=new StretchViewport(1200,720, camara); //imagen se apalasta o estira con la pantalla
-        vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);//Imagen permanece en su lugar estatica
-        //vista=new FitViewport(NinjaNoFukushuu.V_WIDTH,NinjaNoFukushuu.V_WIDTH, camara);//La imagen crece y se hace pequeña
-        hud = new Hud(principal.batch);
-
-        mapLoader = new TmxMapLoader();
-        map = mapLoader.load("MapaDeTierraV2.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
-        camara.position.set(vista.getScreenWidth(), vista.getScreenHeight(), 0);
-        camara.position.set(640, 355, 0);
-        world=new World(new Vector2(0,-220), true);//gravedad hacía abajo (obvio)
-        bodytodr=new Box2DDebugRenderer();
-        new Box2Creador(world, map);
-        jugador = new NinjaPrincipal(world);
-    }
-
-    private void crearObjetos() {
-        //Lista scrolles
-        scroll = new Array<ObjetosJuego>(3);
-        for (int i = 0; i<3;i++) {
-            ObjetosJuego nuevo = new ObjetosJuego(texturaScroll);
-            nuevo.setTamanio(50,50);
-            scroll.add(nuevo);
-        }
-        scroll.get(0).setPosicion(550,300);
-        scroll.get(1).setPosicion(800, 50);
-        scroll.get(2).setPosicion(230,630);
-        //Vidas
-        /* vidas = new Array<ObjetosJuego>(3);
-        for(int i =0; i<3 ;i++){
-            ObjetosJuego nuevo = new ObjetosJuego(texturaVidas);
-            nuevo.setTamanio(50,50);
-            nuevo.setPosicion(30+i*50,650);
-            vidas.add(nuevo);
-        }*/
-        //Pociones
-        pociones = new Array<ObjetosJuego>(2);
-        for(int i =0; i< 2;i++) {
-            ObjetosJuego nuevo = new ObjetosJuego(texturaPocion);
-            nuevo.setTamanio(50,50);
-            pociones.add(nuevo);
-        }
-        //Se colocan las pociones en el lugar correspondiente
-        pociones.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
-        pociones.get(1).setPosicion(300, 500);
-
+    public PantallaJuego(Principal plataforma) {
+        this.plataforma = plataforma;
     }
 
     @Override
     public void show() {
-        cargarTexturas();
-        batch = new SpriteBatch();
-        crearObjetos();
-        this.estado = Estado.SINSUMAR; //Inicialmente el usuario no esta sumando nada
-    }
-
-    private void cargarTexturas() {
-        texturaVidas = new Texture(Gdx.files.internal("life1.png"));
-        texturaScroll = new Texture(Gdx.files.internal("scroll.png"));
-        texturaPocion = new Texture(Gdx.files.internal("pocion.png"));
-    }
-
-    public void handleInput(float dt){
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
-            jugador.b2Body.applyLinearImpulse(new Vector2(0, 20000), jugador.b2Body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador.b2Body.getLinearVelocity().x <= 100)
-            jugador.b2Body.applyLinearImpulse(new Vector2(3f, 0), jugador.b2Body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador.b2Body.getLinearVelocity().x >= -100)
-            jugador.b2Body.applyLinearImpulse(new Vector2(-3f, 0), jugador.b2Body.getWorldCenter(), true);
-    }
-
-    public void update(float dt){
-        handleInput(dt);
-
-        world.step(1/60f, 6, 2);//ajustamos el tiempo de colision
-        camara.position.x=jugador.b2Body.getPosition().x;
+        // Crea la cámara/vista
+        camara = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
+        camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
-        renderer.setView(camara);
+        vista = new StretchViewport(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO, camara);
+
+        batch = new SpriteBatch();
+
+        // Cámara para HUD
+        camaraHUD = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
+        camaraHUD.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
+        camaraHUD.update();
+
+        cargarRecursos();
+        crearObjetos();
+
+        // Indicar el objeto que atiende los eventos de touch (entrada en general)
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
 
+    // Carga los recursos a través del administrador de assets
+    private void cargarRecursos() {
+        // Cargar las texturas/mapas
+        AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
+        assetManager.load("MapaDeTierraV2.tmx", TiledMap.class);  // Cargar info del mapa
+        assetManager.load("marioSprite.png", Texture.class);    // Cargar imagen
+        // Texturas de los botones
+        assetManager.load("derecha.png", Texture.class);
+        assetManager.load("izquierda.png", Texture.class);
+
+        // Se bloquea hasta que cargue todos los recursos
+        assetManager.finishLoading();
+    }
+
+    private void crearObjetos() {
+        AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
+        // Carga el mapa en memoria
+        mapa = assetManager.get("MapaDeTierraV2.tmx");
+        //mapa.getLayers().get(0).setVisible(false);
+        // Crear el objeto que dibujará el mapa
+        rendererMapa = new OrthogonalTiledMapRenderer(mapa,batch);
+        rendererMapa.setView(camara);
+        // Cargar frames
+        texturaHataku = assetManager.get("marioSprite.png");
+        // Crear el personaje
+        hataku = new Personaje(texturaHataku);
+        // Posición inicial del personaje
+        hataku.getSprite().setPosition(Principal.ANCHO_MUNDO / 10, Principal.ALTO_MUNDO * 0.90f);
+
+        // Crear los botones
+        texturaBtnIzquierda = assetManager.get("izquierda.png");
+        btnIzquierda = new Boton(texturaBtnIzquierda);
+        btnIzquierda.setPosicion(TAM_CELDA, 5 * TAM_CELDA);
+        btnIzquierda.setAlfa(0.7f); // Un poco de transparencia
+        texturaBtnDerecha = assetManager.get("derecha.png");
+        btnDerecha = new Boton(texturaBtnDerecha);
+        btnDerecha.setPosicion(6 * TAM_CELDA, 5 * TAM_CELDA);
+        btnDerecha.setAlfa(0.7f); // Un poco de transparencia
+    }
+
+    /*
+    Dibuja TODOS los elementos del juego en la pantalla.
+    Este método se está ejecutando muchas veces por segundo.
+     */
     @Override
-    public void render(float delta) {
-        update(delta);
+    public void render(float delta) { // delta es el tiempo entre frames (Gdx.graphics.getDeltaTime())
+        // Leer entrada
 
-        //Limpiar pantalla
-        Gdx.gl.glClearColor(60 / 255.0f, 181 / 255.0f, 0, .6f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        // Actualizar objetos en la pantalla
+        moverPersonaje();
+        actualizarCamara(); // Mover la cámara para que siga al personaje
 
-        batch.setProjectionMatrix(camara.combined);  //Con este ajustas el batch..., si no, no va aparecer la imagen
-        renderer.render();
-        bodytodr.render(world, camara.combined);
-        recogerObjeto();
-        //jugador.actualizar();
-        //leerEntrada();
-        principal.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        // Dibujar
+        borrarPantalla();
 
-        //dibujando
-        hud.stage.draw();
+        batch.setProjectionMatrix(camara.combined);
+
+        rendererMapa.setView(camara);
+        rendererMapa.render();  // Dibuja el mapa
+
+        // Entre begin-end dibujamos nuestros objetos en pantalla
         batch.begin();
-        for(ObjetosJuego scrolls:scroll) {
-            if(scrolls.actualizar()){
-                scrolls.render(batch);
-            }
 
-        }
-       /* for (ObjetosJuego vida:vidas){
-            if(vida.actualizar())
-                vida.render(batch);
-        }*/
-        for (ObjetosJuego pocion:pociones){
-            if(pocion.actualizar())
-                pocion.render(batch);
-        }
+        hataku.render(batch);    // Dibuja el personaje
+
         batch.end();
-    }
-    //Metodo para revomer elementos del juego
-    private void recogerObjeto() {
-        for (ObjetosJuego scrolls : scroll) {
-            if (jugador.b2Body.getPosition().x >= scrolls.getSprite().getX() && jugador.b2Body.getPosition().x <= scrolls.getSprite().getX() + scrolls.getSprite().getWidth() &&
-                    jugador.b2Body.getPosition().y >= scrolls.getSprite().getY() && jugador.b2Body.getPosition().y <= scrolls.getSprite().getY() + scrolls.getSprite().getHeight() && this.estado == Estado.SINSUMAR) {
-                if(this.estado == Estado.SINSUMAR) {
-                    this.estado = Estado.SUMANDO;
-                    scrolls.quitarElemento();
-                    this.hud.contadorPergaminos += 1;
-                    System.out.println(this.hud.contadorSaludVidas);
-                    this.hud.actualizarTablaLabels(); //Para que en pantalla se vea el cambio de marcador
-                }
-                scroll.removeValue(scrolls,true);
-                break;
-            }
-            if(this.estado != Estado.SINSUMAR)
-                this.estado = Estado.SINSUMAR;
 
+        // Dibuja el HUD
+        batch.setProjectionMatrix(camaraHUD.combined);
+        batch.begin();
+        btnIzquierda.render(batch);
+        btnDerecha.render(batch);
+        batch.end();
 
-
-
-
-
-        }
-        for (ObjetosJuego pocion : pociones) {
-            if (jugador.b2Body.getPosition().x >= pocion.getSprite().getX() && jugador.b2Body.getPosition().x <= pocion.getSprite().getX() + pocion.getSprite().getWidth() &&
-                    jugador.b2Body.getPosition().y >= pocion.getSprite().getY() && jugador.b2Body.getPosition().y <= pocion.getSprite().getY() + pocion.getSprite().getHeight() && this.estado == Estado.SINSUMAR) {
-                if(this.estado == Estado.SINSUMAR) {
-                    this.estado = Estado.SUMANDO;
-                    pocion.quitarElemento();
-                    this.hud.contadorSaludVidas += 1; //Se modifica la vida, se le suma una unidad a  las actuales..
-                    System.out.println(this.hud.contadorSaludVidas);
-                    this.hud.actualizarTablaLabels(); //Para que en pantalla se vea el cambio de marcador
-
-                }
-                pociones.removeValue(pocion,true);
-                break;
-            }
-            if(this.estado != Estado.SINSUMAR)
-                this.estado = Estado.SINSUMAR;
-
-
-        }
     }
 
-
-    /*private void leerEntrada() {
-        if(Gdx.input.justTouched()){
-            Vector3 coordenadas = new Vector3();
-            coordenadas.set(Gdx.input.getX(),Gdx.input.getY(),0);
-            camara.unproject(coordenadas); //traduce las coordenadas
-            float x = coordenadas.x;
-            float y = coordenadas.y;
-            if (x >= 0 && x <= Principal.ANCHO_MUNDO && y >= 0 && y <= Principal.ALTO_MUNDO) {
-                jugador.Saltar();
-            }
+    // Actualiza la posición de la cámara para que el personaje esté en el centro,
+    // excepto cuando esta en la primera y última parte del mundo
+    private void actualizarCamara() {
+        float posX = hataku.getX();
+        // Si está en la parte 'media'
+        if (posX>=Principal.ANCHO_MUNDO/2 && posX<=ANCHO_MAPA-Principal.ANCHO_MUNDO/2) {
+            // El personaje define el centro de la cámara
+            camara.position.set((int)posX, camara.position.y, 0);
+        } else if (posX>ANCHO_MAPA-Principal.ANCHO_MUNDO/2) {    // Si está en la última mitad
+            // La cámara se queda media pantalla antes del fin del mundo  :)
+            camara.position.set(ANCHO_MAPA-Principal.ANCHO_MUNDO/2, camara.position.y, 0);
         }
-    }*/
+        camara.update();
+    }
+
+    /*
+    Mueve el personaje en Y hasta que se encuentre sobre un bloque
+     */
+    private void moverPersonaje() {
+        switch (hataku.getEstado()) {
+            case INICIANDO:
+                // Los bloques en el mapa son de 16x16
+                // Calcula la celda donde estaría después de moverlo
+                int celdaX = (int)(hataku.getX()/ TAM_CELDA);
+                int celdaY = (int)((hataku.getY()+hataku.VELOCIDAD_Y)/ TAM_CELDA);
+                // Recuperamos la celda en esta posición
+                // La capa 0 es el fondo
+                TiledMapTileLayer capa = (TiledMapTileLayer)mapa.getLayers().get(1);
+                TiledMapTileLayer.Cell celda = capa.getCell(celdaX, celdaY);
+                // probar si la celda está ocupada
+                if (celda==null) {
+                    // Celda vacía, entonces el personaje puede avazar
+                    hataku.actualizar();
+                } else {
+                    // Dejarlo sobre la celda que lo detiene
+                    hataku.setPosicion(hataku.getX(), (celdaY+1)* TAM_CELDA);
+                    hataku.setEstado(Personaje.Estado.QUIETO);
+                }
+                break;
+            case MOV_DERECHA:       // Siempre se mueve
+            case MOV_IZQUIERDA:
+                hataku.actualizar();
+                break;
+        }
+
+    }
+
+    private void borrarPantalla() {
+        //Gdx.gl.glClearColor(1, 1, 1, 1);    // Color de fondo
+        Gdx.gl.glClearColor(107 / 255f, 140f / 255, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
 
     @Override
     public void resize(int width, int height) {
-        vista.update(width, height);
+        vista.update(width,height);
     }
 
     @Override
@@ -260,31 +245,54 @@ public class PantallaJuego implements Screen{
 
     }
 
-
-    //Estados
-    public  enum  Estado{
-        SUMANDO,
-        SINSUMAR
-    }
-
-    //estos metodos sde ejecutan cuando se pasa a la otra pantalla
-
-
     @Override
     public void hide() {
 
     }
 
-    @Override //Se ejecuta cuanto se pasa a otra pantalla, aqui se deben de liberar los recursos **
+    // Libera los assets
+    @Override
     public void dispose() {
-        map.dispose();
-        renderer.dispose();
-        world.dispose();
-        bodytodr.dispose();
-        texturaPocion.dispose();
-        texturaScroll.dispose();
-        texturaVidas.dispose();
+        texturaHataku.dispose();
+        mapa.dispose();
+        texturaBtnDerecha.dispose();
+        texturaBtnIzquierda.dispose();
     }
 
+    /*
+    Clase utilizada para manejar los eventos de touch en la pantalla
+     */
+    public class ProcesadorEntrada extends InputAdapter
+    {
+        private Vector3 coordenadas = new Vector3();
+        private float x, y;     // Las coordenadas en la pantalla virtual
+        /*
+        Se ejecuta cuando el usuario pone un dedo sobre la pantalla, los dos primeros parámetros
+        son las coordenadas relativas a la pantalla física (0,0) en la esquina superior izquierda
+        pointer - es el número de dedo que se pone en la pantalla, el primero es 0
+        button - el botón del mouse
+         */
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            transformarCoordenadas(screenX, screenY);
+            // Preguntar si está dentro del botón derecho
+            if (btnDerecha.contiene(x,y)) {
+                // Tocó el botón derecha, hacer que el personaje se mueva a la derecha
+                hataku.setEstado(Personaje.Estado.MOV_DERECHA);
+            } else if (btnIzquierda.contiene(x,y)) {
+                // Tocó el botón izquierda, hacer que el personaje se mueva a la izquierda
+                hataku.setEstado(Personaje.Estado.MOV_IZQUIERDA);
+            }
+            return true;    // Indica que ya procesó el evento
+        }
 
+        private void transformarCoordenadas(int screenX, int screenY) {
+            // Transformar las coordenadas de la pantalla física a la cámara HUD
+            coordenadas.set(screenX, screenY, 0);
+            camaraHUD.unproject(coordenadas);
+            // Obtiene las coordenadas relativas a la pantalla virtual
+            x = coordenadas.x;
+            y = coordenadas.y;
+        }
+    }
 }
