@@ -31,7 +31,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /*
-Desarrolladores: Irvin Emmanuel Trujillo Díaz
+Desarrolladores: Irvin Emmanuel Trujillo Díaz y Luis Fernando
 Descripción: Esta clase es la encargada de mostrar el juego y su comportamiento...
 Profesor: Roberto Martinez Román.
 */
