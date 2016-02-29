@@ -72,6 +72,7 @@ public class PantallaJuego implements Screen{
     private Array<ObjetosJuego> pociones;
     private Texture texturaPocion;
 
+
     /*//Estado para la suma del marcador
     private Estado estado;*/
 
@@ -113,6 +114,9 @@ public class PantallaJuego implements Screen{
 
         // Se bloquea hasta que cargue todos los recursos
         assetManager.finishLoading();
+        //Textura Objetos
+        texturaScroll = new Texture(Gdx.files.internal("scroll.png"));
+        texturaPocion = new Texture(Gdx.files.internal("pocion.png"));
     }
 
     private void crearObjetos() {
@@ -139,6 +143,26 @@ public class PantallaJuego implements Screen{
         btnDerecha = new Boton(texturaBtnDerecha);
         btnDerecha.setPosicion(6 * TAM_CELDA, 5 * TAM_CELDA);
         btnDerecha.setAlfa(0.7f); // Un poco de transparencia
+        //Lista scrolles
+        scroll = new Array<ObjetosJuego>(3);
+        for (int i = 0; i<3;i++) {
+            ObjetosJuego nuevo = new ObjetosJuego(texturaScroll);
+            nuevo.setTamanio(50,50);
+            scroll.add(nuevo);
+        }
+        scroll.get(0).setPosicion(550,300);
+        scroll.get(1).setPosicion(800, 50);
+        scroll.get(2).setPosicion(230, 630);
+        //Pociones
+        pociones = new Array<ObjetosJuego>(2);
+        for(int i =0; i< 2;i++) {
+            ObjetosJuego nuevo = new ObjetosJuego(texturaPocion);
+            nuevo.setTamanio(50,50);
+            pociones.add(nuevo);
+        }
+        //Se colocan las pociones en el lugar correspondiente
+        pociones.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
+        pociones.get(1).setPosicion(300, 500);
     }
 
     /*
@@ -161,12 +185,25 @@ public class PantallaJuego implements Screen{
         rendererMapa.setView(camara);
         rendererMapa.render();  // Dibuja el mapa
 
+        recogerObjeto();
         // Entre begin-end dibujamos nuestros objetos en pantalla
         batch.begin();
 
         hataku.render(batch);    // Dibuja el personaje
 
-        batch.end();
+        //Dibujar scrolls
+        for (ObjetosJuego scrolls : scroll) {
+            if (scrolls.actualizar()) {
+                scrolls.render(batch);
+            }
+        }
+        //Dibujar pociones
+        for (ObjetosJuego pocion : pociones) {
+            if (pocion.actualizar())
+                pocion.render(batch);
+        }
+
+            batch.end();
 
         // Dibuja el HUD
         batch.setProjectionMatrix(camaraHUD.combined);
@@ -175,6 +212,29 @@ public class PantallaJuego implements Screen{
         btnDerecha.render(batch);
         batch.end();
 
+    }
+
+    private void recogerObjeto() {
+        //Recogerscrolls al tocarlos
+        for (ObjetosJuego scrolls : scroll) {
+            if(hataku.getSprite().getX()>= scrolls.getSprite().getX() && hataku.getSprite().getX()<= scrolls.getSprite().getX() + scrolls.getSprite().getWidth()
+                    && hataku.getSprite().getY() >= scrolls.getSprite().getY() && hataku.getSprite().getY() <= scrolls.getSprite().getHeight() + scrolls.getSprite().getY()){
+                if(scrolls.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
+                    scrolls.quitarElemento();
+                }
+                break;
+            }
+        }
+        //Recoger pociones al tocarlas
+        for (ObjetosJuego pocion : pociones) {
+            if(hataku.getSprite().getX()>= pocion.getSprite().getX() && hataku.getSprite().getX()<= pocion.getSprite().getX() + pocion.getSprite().getWidth()
+                    && hataku.getSprite().getY() >= pocion.getSprite().getY() && hataku.getSprite().getY() <= pocion.getSprite().getHeight() + pocion.getSprite().getY()){
+                if(pocion.getEstado() != ObjetosJuego.Estado.DESAPARECIDO){
+                    pocion.quitarElemento();
+                }
+                break;
+            }
+        }
     }
 
     // Actualiza la posición de la cámara para que el personaje esté en el centro,
@@ -257,6 +317,8 @@ public class PantallaJuego implements Screen{
         mapa.dispose();
         texturaBtnDerecha.dispose();
         texturaBtnIzquierda.dispose();
+        texturaPocion.dispose();
+        texturaScroll.dispose();
     }
 
     /*
