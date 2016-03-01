@@ -96,9 +96,9 @@ public class PantallaAcerca implements Screen {
         btnNuri.setTamanio(anchoBoton,altoBoton);
         btnFer.setTamanio(anchoBoton,altoBoton);
         btnRegresar.setTamanio(anchoBoton,altoBoton);
-        fondo.setTamanio(2488, 1400);
+        fondo.setTamanio(1500, 1500);
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
-        fondo.getSprite().setOrigin(2488 / 2, 1400 / 2);
+        fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
         presentaciónIrvin.setTamanio(1280,880);
         presentaciónMia.setTamanio(1280,880);
         presentaciónJavier.setTamanio(1280,880);
@@ -119,7 +119,7 @@ public class PantallaAcerca implements Screen {
     //Crgar texturas
     private void cargarTexturas() {
         //Fondo
-        texturaFondo = new Texture(Gdx.files.internal("BlackandWhitesun.jpg"));
+        texturaFondo = new Texture(Gdx.files.internal("Fondo.jpg"));
         //Abanico
         texturaAbanico = new Texture(Gdx.files.internal("Abanico.png"));
         //Botones
