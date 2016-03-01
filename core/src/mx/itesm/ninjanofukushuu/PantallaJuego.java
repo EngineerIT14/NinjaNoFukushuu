@@ -1,5 +1,5 @@
 package mx.itesm.ninjanofukushuu;
-
+ 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -31,7 +31,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /*
-Desarrolladores: Irvin Emmanuel Trujillo Díaz y Luis Fernando
+Desarrolladores: Irvin Emmanuel Trujillo Díaz, Javier García Roque y Luis Fernando
 Descripción: Esta clase es la encargada de mostrar el juego y su comportamiento...
 Profesor: Roberto Martinez Román.
 */
@@ -72,6 +72,10 @@ public class PantallaJuego implements Screen{
     private Array<ObjetosJuego> pociones;
     private Texture texturaPocion;
 
+    private int Pergaminos;
+    private int Vida;
+    private Texto texto;
+
 
     /*//Estado para la suma del marcador
     private Estado estado;*/
@@ -97,6 +101,7 @@ public class PantallaJuego implements Screen{
 
         cargarRecursos();
         crearObjetos();
+        texto = new Texto();
 
         // Indicar el objeto que atiende los eventos de touch (entrada en general)
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
@@ -184,13 +189,10 @@ public class PantallaJuego implements Screen{
 
         rendererMapa.setView(camara);
         rendererMapa.render();  // Dibuja el mapa
-
         recogerObjeto();
         // Entre begin-end dibujamos nuestros objetos en pantalla
         batch.begin();
-
         hataku.render(batch);    // Dibuja el personaje
-
         //Dibujar scrolls
         for (ObjetosJuego scrolls : scroll) {
             if (scrolls.actualizar()) {
@@ -202,14 +204,21 @@ public class PantallaJuego implements Screen{
             if (pocion.actualizar())
                 pocion.render(batch);
         }
+        // Mostrar pergaminos
+        texto.mostrarMensaje(batch, "Pergaminos: "+Pergaminos,
+                0.8f *Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO*0.96f);
 
-            batch.end();
+        // Mostrar vida
+        texto.mostrarMensaje(batch, "Vida: " + Vida,
+                0.1f * Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO * 0.96f);
 
-        // Dibuja el HUD
+        batch.end();
+        //Dibuja el HUD
         batch.setProjectionMatrix(camaraHUD.combined);
         batch.begin();
         btnIzquierda.render(batch);
         btnDerecha.render(batch);
+
         batch.end();
 
     }
@@ -220,6 +229,7 @@ public class PantallaJuego implements Screen{
             if(hataku.getSprite().getX()>= scrolls.getSprite().getX() && hataku.getSprite().getX()<= scrolls.getSprite().getX() + scrolls.getSprite().getWidth()
                     && hataku.getSprite().getY() >= scrolls.getSprite().getY() && hataku.getSprite().getY() <= scrolls.getSprite().getHeight() + scrolls.getSprite().getY()){
                 if(scrolls.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
+                    Pergaminos++;
                     scrolls.quitarElemento();
                 }
                 break;
@@ -230,6 +240,7 @@ public class PantallaJuego implements Screen{
             if(hataku.getSprite().getX()>= pocion.getSprite().getX() && hataku.getSprite().getX()<= pocion.getSprite().getX() + pocion.getSprite().getWidth()
                     && hataku.getSprite().getY() >= pocion.getSprite().getY() && hataku.getSprite().getY() <= pocion.getSprite().getHeight() + pocion.getSprite().getY()){
                 if(pocion.getEstado() != ObjetosJuego.Estado.DESAPARECIDO){
+                    Vida++;
                     pocion.quitarElemento();
                 }
                 break;
