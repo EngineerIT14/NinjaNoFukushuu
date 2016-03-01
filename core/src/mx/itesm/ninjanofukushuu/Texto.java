@@ -1,3 +1,4 @@
+package mx.itesm.ninjanofukushuu;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -5,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /*
-Desarrolladores: Javier García Roque.
+Desarrolladores: Roberto Martinez Roman y Javier García Roque.
 Descripción: Clase donde se ponen las especificaciones del texto
 Profesor: Roberto Martinez Román.
 */
