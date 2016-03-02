@@ -1,5 +1,5 @@
 package mx.itesm.ninjanofukushuu;
-
+ 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -33,7 +33,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /*
 Desarrolladores: Irvin Emmanuel Trujillo Díaz, Javier García Roque y Luis Fernando
 Descripción: Esta clase es la encargada de mostrar el juego y su comportamiento...
-Profesor: Roberto Martinez Román. .
+Profesor: Roberto Martinez Román.
 */
 public class PantallaJuego implements Screen{
 
@@ -59,6 +59,9 @@ public class PantallaJuego implements Screen{
     private Boton btnIzquierda;
     private Texture texturaBtnDerecha;
     private Boton btnDerecha;
+    // Botón saltar
+    private Texture texturaSalto;
+    private Boton btnSalto;
 
     //Scrolls/Pergamino
     private Array<ObjetosJuego> scroll;
@@ -75,6 +78,10 @@ public class PantallaJuego implements Screen{
     private int Pergaminos;
     private int Vida;
     private Texto texto;
+
+    // Estados del juego
+    private EstadosJuego estadoJuego;
+
 
 
     /*//Estado para la suma del marcador
@@ -105,6 +112,8 @@ public class PantallaJuego implements Screen{
 
         // Indicar el objeto que atiende los eventos de touch (entrada en general)
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
+
+        estadoJuego = EstadosJuego.JUGANDO;
     }
 
     // Carga los recursos a través del administrador de assets
@@ -116,6 +125,7 @@ public class PantallaJuego implements Screen{
         // Texturas de los botones
         assetManager.load("derecha.png", Texture.class);
         assetManager.load("izquierda.png", Texture.class);
+        assetManager.load("salto.png", Texture.class);
 
         // Se bloquea hasta que cargue todos los recursos
         assetManager.finishLoading();
@@ -148,6 +158,10 @@ public class PantallaJuego implements Screen{
         btnDerecha = new Boton(texturaBtnDerecha);
         btnDerecha.setPosicion(6 * TAM_CELDA, 5 * TAM_CELDA);
         btnDerecha.setAlfa(0.7f); // Un poco de transparencia
+        texturaSalto = assetManager.get("salto.png");
+        btnSalto = new Boton(texturaSalto);
+        btnSalto.setPosicion(Principal.ANCHO_MUNDO - 5 * TAM_CELDA, 5 * TAM_CELDA);
+        btnSalto.setAlfa(0.7f);
         //Lista scrolles
         scroll = new Array<ObjetosJuego>(3);
         for (int i = 0; i<3;i++) {
@@ -205,8 +219,8 @@ public class PantallaJuego implements Screen{
                 pocion.render(batch);
         }
         // Mostrar pergaminos
-        texto.mostrarMensaje(batch, "Pergaminos: "+Pergaminos,
-                0.8f *Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO*0.96f);
+        texto.mostrarMensaje(batch, "Pergaminos: " + Pergaminos,
+                0.8f * Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO * 0.96f);
 
         // Mostrar vida
         texto.mostrarMensaje(batch, "Vida: " + Vida,
@@ -218,6 +232,7 @@ public class PantallaJuego implements Screen{
         batch.begin();
         btnIzquierda.render(batch);
         btnDerecha.render(batch);
+        btnSalto.render(batch);
 
         batch.end();
 
@@ -267,7 +282,7 @@ public class PantallaJuego implements Screen{
     Mueve el personaje en Y hasta que se encuentre sobre un bloque
      */
     private void moverPersonaje() {
-        switch (hataku.getEstado()) {
+        switch (hataku.getEstadoMovimiento()) {
             case INICIANDO:
                 // Los bloques en el mapa son de 16x16
                 // Calcula la celda donde estaría después de moverlo
@@ -280,11 +295,11 @@ public class PantallaJuego implements Screen{
                 // probar si la celda está ocupada
                 if (celda==null) {
                     // Celda vacía, entonces el personaje puede avazar
-                    hataku.actualizar();
+                    hataku.caer();
                 } else {
                     // Dejarlo sobre la celda que lo detiene
                     hataku.setPosicion(hataku.getX(), (celdaY+1)* TAM_CELDA);
-                    hataku.setEstado(Personaje.Estado.QUIETO);
+                    hataku.setEstado(Personaje.EstadoMovimiento.QUIETO);
                 }
                 break;
             case MOV_DERECHA:       // Siempre se mueve
@@ -292,7 +307,35 @@ public class PantallaJuego implements Screen{
                 hataku.actualizar();
                 break;
         }
-
+        // Prueba si debe caer por llegar a un espacio vacío
+        if ( hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.INICIANDO
+                && (hataku.getEstadoSalto() != Personaje.EstadoSalto.SUBIENDO) ) {
+            // Calcula la celda donde estaría después de moverlo
+            int celdaX = (int) (hataku.getX() / TAM_CELDA);
+            int celdaY = (int) ((hataku.getY() + hataku.VELOCIDAD_Y) / TAM_CELDA);
+            // Recuperamos la celda en esta posición
+            // La capa 0 es el fondo
+            TiledMapTileLayer capa = (TiledMapTileLayer) mapa.getLayers().get(1);
+            TiledMapTileLayer.Cell celdaAbajo = capa.getCell(celdaX, celdaY);
+            TiledMapTileLayer.Cell celdaDerecha = capa.getCell(celdaX+1, celdaY);
+            // probar si la celda está ocupada
+            if ( celdaAbajo==null && celdaDerecha==null ) {
+                // Celda vacía, entonces el personaje puede avanzar
+                hataku.caer();
+                hataku.setEstadoSalto(Personaje.EstadoSalto.CAIDA_LIBRE);
+            } else {
+                // Dejarlo sobre la celda que lo detiene
+                hataku.setPosicion(hataku.getX(), (celdaY + 1) * TAM_CELDA);
+                hataku.setEstadoSalto(Personaje.EstadoSalto.EN_PISO);
+            }
+        }
+        // Saltar
+        switch (hataku.getEstadoSalto()) {
+            case SUBIENDO:
+            case BAJANDO:
+                hataku.actualizarSalto();    // Actualizar posición en 'y'
+                break;
+        }
     }
 
     private void borrarPantalla() {
@@ -348,13 +391,32 @@ public class PantallaJuego implements Screen{
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
-            // Preguntar si está dentro del botón derecho
-            if (btnDerecha.contiene(x,y)) {
+            if (estadoJuego==EstadosJuego.JUGANDO) {
+                // Preguntar si las coordenadas están sobre el botón derecho
+                if (btnDerecha.contiene(x, y) && hataku.getEstadoMovimiento() != Personaje.EstadoMovimiento.INICIANDO) {
+                    // Tocó el botón derecha, hacer que el personaje se mueva a la derecha
+                    hataku.setEstado(Personaje.EstadoMovimiento.MOV_DERECHA);
+                } else if (btnIzquierda.contiene(x, y) && hataku.getEstadoMovimiento() != Personaje.EstadoMovimiento.INICIANDO) {
+                    // Tocó el botón izquierda, hacer que el personaje se mueva a la izquierda
+                    hataku.setEstado(Personaje.EstadoMovimiento.MOV_IZQUIERDA);
+                } else if (btnSalto.contiene(x, y)) {
+                    // Tocó el botón saltar
+                    hataku.saltar();
+                }
+            }
+            return true;    // Indica que ya procesó el evento
+        }
+
+        /*
+       Se ejecuta cuando el usuario QUITA el dedo de la pantalla.
+        */
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            transformarCoordenadas(screenX, screenY);
+            // Preguntar si las coordenadas son de algún botón para DETENER el movimiento
+            if ( hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.INICIANDO && (btnDerecha.contiene(x, y) || btnIzquierda.contiene(x,y)) ) {
                 // Tocó el botón derecha, hacer que el personaje se mueva a la derecha
-                hataku.setEstado(Personaje.Estado.MOV_DERECHA);
-            } else if (btnIzquierda.contiene(x,y)) {
-                // Tocó el botón izquierda, hacer que el personaje se mueva a la izquierda
-                hataku.setEstado(Personaje.Estado.MOV_IZQUIERDA);
+                hataku.setEstado(Personaje.EstadoMovimiento.QUIETO);
             }
             return true;    // Indica que ya procesó el evento
         }
@@ -367,5 +429,12 @@ public class PantallaJuego implements Screen{
             x = coordenadas.x;
             y = coordenadas.y;
         }
+    }
+
+    public enum EstadosJuego {
+        GANO,
+        JUGANDO,
+        PAUSADO,
+        PERDIO
     }
 }
