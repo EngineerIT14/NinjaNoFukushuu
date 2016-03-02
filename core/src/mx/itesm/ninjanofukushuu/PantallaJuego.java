@@ -1,5 +1,5 @@
 package mx.itesm.ninjanofukushuu;
- 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -33,7 +33,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /*
 Desarrolladores: Irvin Emmanuel Trujillo Díaz, Javier García Roque y Luis Fernando
 Descripción: Esta clase es la encargada de mostrar el juego y su comportamiento...
-Profesor: Roberto Martinez Román.
+Profesor: Roberto Martinez Román. .
 */
 public class PantallaJuego implements Screen{
 

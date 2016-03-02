@@ -27,9 +27,9 @@ public class PantallaAcerca implements Screen {
     //Fondo
     private Fondo fondo;
     private Texture texturaFondo;
-    //Abanico
+   /* //Abanico
     private Logotipo abanico;
-    private Texture texturaAbanico;
+    private Texture texturaAbanico;*/
     //Botones
     private Boton btnMia,btnNuri,btnIrvin,btnJavier, btnFer, btnRegresar;
     private Texture texturaBtnMia,texturaBtnNuri, texturaBtnIrvin,texturaBtnJavier, texturaBtnFer, texturaRegresar;
@@ -58,7 +58,7 @@ public class PantallaAcerca implements Screen {
         cargarTexturas();
         //Crear fondo
         fondo = new Fondo(texturaFondo);
-        abanico=new Logotipo(texturaAbanico);
+       // abanico=new Logotipo(texturaAbanico);
         //Crear botones
         btnMia = new Boton(texturaBtnMia);
         btnNuri = new  Boton(texturaBtnNuri);
@@ -76,7 +76,7 @@ public class PantallaAcerca implements Screen {
         presentaciónFer = new Presentacion(texturaPresentacionFer);
 
         //Poscicionar objetos
-        abanico.setPosicion(0 - 20, 0 - 35);
+       // abanico.setPosicion(0 - 20, 0 - 35);
         btnIrvin.setPosicion(Principal.ANCHO_MUNDO / 4 - 100, Principal.ALTO_MUNDO * 2 / 3 - 100);
         btnMia.setPosicion(Principal.ANCHO_MUNDO / 2 - 100, Principal.ALTO_MUNDO * 2 / 3 - 100);
         btnJavier.setPosicion(Principal.ANCHO_MUNDO * 3 / 4 - 100, Principal.ALTO_MUNDO * 2 / 3 - 100);
@@ -89,7 +89,7 @@ public class PantallaAcerca implements Screen {
         presentaciónNuri.setPosicion(0 - 20, 0 - 100);
         presentaciónFer.setPosicion(0 - 20, 0 - 100);
         //Ajuste de tamaño
-        abanico.setTamanio(1280, 780);
+        //abanico.setTamanio(1280, 780);
         btnIrvin.setTamanio(anchoBoton, altoBoton);
         btnMia.setTamanio(anchoBoton, altoBoton);
         btnJavier.setTamanio(anchoBoton,altoBoton);
@@ -121,7 +121,7 @@ public class PantallaAcerca implements Screen {
         //Fondo
         texturaFondo = new Texture(Gdx.files.internal("Fondo.jpg"));
         //Abanico
-        texturaAbanico = new Texture(Gdx.files.internal("Abanico.png"));
+        //texturaAbanico = new Texture(Gdx.files.internal("Abanico.png"));
         //Botones
         texturaBtnMia = new Texture((Gdx.files.internal("M.png")));
         texturaBtnNuri = new Texture((Gdx.files.internal("N.png")));
@@ -152,7 +152,7 @@ public class PantallaAcerca implements Screen {
         //DIBUJAR
         batch.begin();
         fondo.render(batch);
-        abanico.render(batch);
+        //abanico.render(batch);
         btnIrvin.render(batch);
         btnMia.render(batch);
         btnJavier.render(batch);
@@ -356,7 +356,7 @@ public class PantallaAcerca implements Screen {
         texturaPresentacionFer.dispose();
         texturaRegresar.dispose();
         texturaFondo.dispose();
-        texturaAbanico.dispose();
+        //texturaAbanico.dispose();
         efectoAbrirCerrarVentana.dispose();
     }
 
