@@ -31,8 +31,8 @@ public class PantallaMenu implements Screen {
     //Botones
     private Boton btnPLay,btnInstructions,btnGallery,btnAbout;
     private Texture texturaBtnPlay,texturaBtnInstructions,texturaBtnGallery,texturaBtnAbout; //Textura, se administran los recursos...
-    private static final int anchoBoton = 480 , altoBoton = 160;
-    private static final float posicionCentradaBotonX = 440;
+    private static final int anchoBoton = 400 , altoBoton = 160;
+    private static final float posicionYBotonJugarInstrucciones = Principal.ALTO_MUNDO/2-150, posicionYBotonGalleryAbout = Principal.ALTO_MUNDO/2 -330   ; //Posicion en y...
 
     //LOGO
     private Logotipo logo;
@@ -64,19 +64,19 @@ public class PantallaMenu implements Screen {
         logo = new Logotipo(texturaLogo);
 
         //Colocando posición de botones.
-        btnPLay.setPosicion(posicionCentradaBotonX,Principal.ALTO_MUNDO/2 - 30); //Se va restando de 120 en 120... para dar un espacio.
-        btnInstructions.setPosicion(posicionCentradaBotonX,Principal.ALTO_MUNDO/2 - 150);
-        btnGallery.setPosicion(posicionCentradaBotonX,Principal.ALTO_MUNDO/2 - 270);
-        btnAbout.setPosicion(posicionCentradaBotonX,Principal.ALTO_MUNDO / 2 - 390);
-        logo.setPosicion( posicionCentradaXLogo, posicionCentradaYLogo );
+        btnInstructions.setPosicion(295,PantallaMenu.posicionYBotonJugarInstrucciones);
+        btnPLay.setPosicion(675, PantallaMenu.posicionYBotonJugarInstrucciones);
+        btnGallery.setPosicion(15,PantallaMenu.posicionYBotonGalleryAbout);
+        btnAbout.setPosicion(880,PantallaMenu.posicionYBotonGalleryAbout);
+        logo.setPosicion( PantallaMenu.posicionCentradaXLogo, PantallaMenu.posicionCentradaYLogo );
 
         //ajustando el tamaño
         fondo.setTamanio(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO);
         btnPLay.setTamanio(anchoBoton, altoBoton);
-        btnInstructions.setTamanio(anchoBoton, altoBoton);
-        btnGallery.setTamanio(anchoBoton, altoBoton);
-        btnAbout.setTamanio(anchoBoton, altoBoton);
-        logo.setTamanio(anchoLogo, altoLogo);
+        btnInstructions.setTamanio(anchoBoton-10, altoBoton);
+        btnGallery.setTamanio(anchoBoton+10, altoBoton); //Se le modifico el ancho a gallery para que se vea estético..
+        btnAbout.setTamanio(anchoBoton+10, altoBoton);
+        logo.setTamanio(anchoLogo-10, altoLogo);
 
         batch = new SpriteBatch();
     }
