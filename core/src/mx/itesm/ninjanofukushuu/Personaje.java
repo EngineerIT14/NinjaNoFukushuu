@@ -115,7 +115,7 @@ public class Personaje
     // Actualiza la posición en 'y', está saltando
     public void actualizarSalto() {
         // Ejecutar movimiento vertical
-        float y = V0 * tiempoSalto - G_2 * tiempoSalto * tiempoSalto;  // Desplazamiento desde que inició el salto
+        float y = V0 * tiempoSalto - G_2 * tiempoSalto * tiempoSalto;  // Desplazamiento desde que inició el salto y se calcula la altura, formula de fisica.., note que G_2 es negativo ya que por física, la gravedad te atrae...
         if (tiempoSalto > tiempoVuelo / 2) { // Llegó a la altura máxima?
             // Inicia caída
             estadoSalto = EstadoSalto.BAJANDO;
@@ -167,7 +167,7 @@ public class Personaje
             tiempoSalto = 0;
             yInicial = sprite.getY();
             estadoSalto = EstadoSalto.SUBIENDO;
-            tiempoVuelo = 2 * V0 / G;
+            tiempoVuelo = 2 * V0 / G; //Se establece un tiempo de vuelo, un tiempo maximo.., en fisica, el tiempo es igual a la velocidad inicial sobre la gravedad.. en caida libre...
         }
     }
 
