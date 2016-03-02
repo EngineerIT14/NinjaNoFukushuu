@@ -181,7 +181,7 @@ public class Personaje
         MOV_IZQUIERDA,
         MOV_DERECHA,
     }
-
+//..
     public enum EstadoSalto {
         EN_PISO,
         SUBIENDO,
