@@ -8,8 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-/**
-
+/*
  Descripcion:  Representa el personaje en pantalla
  Profesor: Roberto Martinez Román.
  */
