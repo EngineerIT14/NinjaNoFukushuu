@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /*
-Desarrolladores: Roberto Martinez Roman y Javier García Roque.
+Desarrolladores: Roberto Martinez Roman, Javier García Roque e Irvin Emmanuel Trujillo Díaz.
 Descripción: Clase donde se ponen las especificaciones del texto
 Profesor: Roberto Martinez Román.
 */
@@ -14,17 +14,34 @@ Profesor: Roberto Martinez Román.
 public class Texto
 {
     private BitmapFont font;
+    private float posicionX,posicionY;
 
-    public Texto() {
+
+    public Texto(float posicionx, float posiciony) {
         font = new BitmapFont();
         font.setColor(Color.YELLOW);
         font.getData().scale(1.5f);
+        this.posicionX = posicionx;
+        this.posicionY = posiciony;
     }
 
-    public void mostrarMensaje(SpriteBatch batch, String mensaje, float x, float y) {
+    public void mostrarMensaje(SpriteBatch batch, String mensaje) { //se recibe la posicion donde se desea mostrar el texto, el batch y el mensaje
         GlyphLayout glyp = new GlyphLayout();
         glyp.setText(font, mensaje);
         float anchoTexto = glyp.width;
-        font.draw(batch,glyp,x-anchoTexto/2,y);
+        font.draw(batch,glyp,this.posicionX-anchoTexto/2,this.posicionY);
+    }
+
+    public void modificarCoordenadas(float x,float y){
+        this.posicionX = x;
+        this.posicionY = y;
+    }
+
+    public float getX(){
+        return this.posicionX;
+    }
+
+    public float getY(){
+        return this.posicionY;
     }
 }

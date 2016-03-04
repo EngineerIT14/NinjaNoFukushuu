@@ -49,24 +49,38 @@ public class PantallaJuego implements Screen{
     private Texture texturaSalto;
     private Boton btnSalto;
 
+
+    //ITEMS
+
     //Scrolls/Pergamino
     private Array<ObjetosJuego> scroll;
     private Texture texturaScroll;
-
-    //Vidas
-    private Array<ObjetosJuego> vidas;
-    private Texture texturaVidas;
 
     //Pociones
     private Array<ObjetosJuego> pociones;
     private Texture texturaPocion;
 
-    private int Pergaminos;
-    private int Vida;
-    private Texto texto;
+    //HUD, MARCADORES DE VIDA Y PERGAMINOS..
+
+    //VIDAS QUE SE MUESTRAN EN EL HUD.
+
+    private Array<ObjetosJuego> vidas;
+    private Texture texturaVidas;
+
+    //Marcadores
+    private int marcadorPergaminos;
+    private int marcadorVidas;
+    private Texto textoMarcadorPergaminos; //Texto para mostrar el marcador de vidas y marcador de pergaminos.
+    private Texto textoMarcadorVidas;
 
     // Estados del juego
     private EstadosJuego estadoJuego;
+
+
+    //Variable para indicar si numero de nivel y hacer el cambio en el numero de vidas, ya que hataku tiene su armadura completa en el nivel 4 y las vidas deben aumentar a 5, esta variable es nuestra bandera...
+    private boolean flag = false;
+    private int numeroNivel = 1;
+
 
 
 
@@ -92,9 +106,11 @@ public class PantallaJuego implements Screen{
         camaraHUD.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camaraHUD.update();
 
-        cargarRecursos();
-        crearObjetos();
-        texto = new Texto();
+
+
+        this.cargarRecursos();
+        this.crearObjetos();
+
 
         // Indicar el objeto que atiende los eventos de touch (entrada en general)
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
@@ -115,9 +131,14 @@ public class PantallaJuego implements Screen{
 
         // Se bloquea hasta que cargue todos los recursos
         assetManager.finishLoading();
-        //Textura Objetos
+        //Textura Objetos que estan en la pantalla
         texturaScroll = new Texture(Gdx.files.internal("scroll.png"));
         texturaPocion = new Texture(Gdx.files.internal("pocion.png"));
+
+        //****************************************************************//
+        //nota: se debe cosniderar que la imagen de vidas va cambiar cuando el ninja obtenga una parte de la armadura, recomiendo usar un switch y usar una bandera (boolean) cuando se pase el nivel y deppendiendo de la bandera cargar el archivo de imagenn correspondiente
+        //Por ahora no lo implemento ya que estamos trabajando en el primer nivel.
+        texturaVidas = new Texture(Gdx.files.internal("life1.png"));
     }
 
     private void crearObjetos() {
@@ -140,34 +161,94 @@ public class PantallaJuego implements Screen{
         btnIzquierda = new Boton(texturaBtnIzquierda);
         btnIzquierda.setPosicion(TAM_CELDA, 5 * TAM_CELDA);
         btnIzquierda.setAlfa(0.7f); // Un poco de transparencia
+
         texturaBtnDerecha = assetManager.get("derecha.png");
         btnDerecha = new Boton(texturaBtnDerecha);
         btnDerecha.setPosicion(6 * TAM_CELDA, 5 * TAM_CELDA);
         btnDerecha.setAlfa(0.7f); // Un poco de transparencia
-        texturaSalto = assetManager.get("salto.png");
+
+        texturaSalto = assetManager.get("salto.png"); //boton para saltar... carga su imagen
         btnSalto = new Boton(texturaSalto);
         btnSalto.setPosicion(Principal.ANCHO_MUNDO - 5 * TAM_CELDA, 5 * TAM_CELDA);
         btnSalto.setAlfa(0.7f);
-        //Lista scrolles
-        scroll = new Array<ObjetosJuego>(3);
+
+        //Se crean objetos que son textos que se muestran en el HUD.
+        this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO * 0.96f);
+        this.textoMarcadorPergaminos= new Texto(0.8f * Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO * 0.96f); //mandamos la posicion que queremos por default.
+
+
+        //Lista scrolles: en todos los niveles solo hay 3 scroll
+        this.scroll = new Array<ObjetosJuego>(3);
         for (int i = 0; i<3;i++) {
-            ObjetosJuego nuevo = new ObjetosJuego(texturaScroll);
+            ObjetosJuego nuevo = new ObjetosJuego(this.texturaScroll);
             nuevo.setTamanio(50,50);
-            scroll.add(nuevo);
+            this.scroll.add(nuevo);
         }
-        scroll.get(0).setPosicion(550,300);
-        scroll.get(1).setPosicion(800, 50);
-        scroll.get(2).setPosicion(230, 630);
-        //Pociones
-        pociones = new Array<ObjetosJuego>(2);
+        this.scroll.get(0).setPosicion(550,300);
+        this.scroll.get(1).setPosicion(800, 50);
+        this.scroll.get(2).setPosicion(230, 630);
+
+        //Pociones: En todos los niveles solo hay 2 pociones.
+        this.pociones = new Array<ObjetosJuego>(2);
         for(int i =0; i< 2;i++) {
-            ObjetosJuego nuevo = new ObjetosJuego(texturaPocion);
+            ObjetosJuego nuevo = new ObjetosJuego(this.texturaPocion);
             nuevo.setTamanio(50,50);
-            pociones.add(nuevo);
+            this.pociones.add(nuevo);
         }
+
         //Se colocan las pociones en el lugar correspondiente
-        pociones.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
-        pociones.get(1).setPosicion(300, 500);
+        this.pociones.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
+        this.pociones.get(1).setPosicion(300, 500);
+
+        //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
+
+        //Vidas: El numero de vidas cambia cuando se tiene la armadura completa, por lo que. al llegar all ultimo de nivel se debe de moficiar la variable globa de vidas, aumentando la vidas del persoonaje a 5.
+        if(this.numeroNivel == 4){ //El nivel 4 es donde hataku enfrenta al jefe final, por lo que, sus vidas aumentan...
+            this.flag = true;
+        }
+        else{
+           this.flag = false; //no estoy en el nivel 4.
+        }
+
+        //Si es el nivel 4 se deben de poner 5 vidas
+        if(this.flag) {
+            this.vidas =  new Array<ObjetosJuego>(5);
+            for(int i = 0; i<5; i++) {
+                ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
+                nuevo.setTamanio(50,50);
+                this.vidas.add(nuevo);
+            }
+
+            //Se colocan las vidas en el lugar correspondiente
+           /* this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
+            this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
+            this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
+            this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
+            this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);*/
+
+
+
+
+
+        }
+        else{ //entonces no estoy en el nivel 4, se deben de poner 3 vidas.
+            this.vidas =  new Array<ObjetosJuego>(3);
+            for(int i = 0; i<3; i++) {
+                ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
+                nuevo.setTamanio(80,80);
+                this.vidas.add(nuevo);
+            }
+
+            this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX()+100,this.textoMarcadorVidas.getY()-50);
+            this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX()+170,this.textoMarcadorVidas.getY()-50);
+            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+240,this.textoMarcadorVidas.getY()-50);
+
+
+        }
+
+
+
+
     }
 
     /*
@@ -204,13 +285,20 @@ public class PantallaJuego implements Screen{
             if (pocion.actualizar())
                 pocion.render(batch);
         }
+
+        //Dibujar iconos vidas
+        for (ObjetosJuego vida : this.vidas) {
+            if (vida.actualizar()) {
+                vida.render(batch);
+            }
+        }
+
+
         // Mostrar pergaminos
-        texto.mostrarMensaje(batch, "Pergaminos: " + Pergaminos,
-                0.8f * Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO * 0.96f);
+        this.textoMarcadorPergaminos.mostrarMensaje(batch, "Pergaminos: " + this.marcadorPergaminos);
 
         // Mostrar vida
-        texto.mostrarMensaje(batch, "Vida: " + Vida,
-                0.1f * Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO * 0.96f);
+        this.textoMarcadorVidas.mostrarMensaje(batch, "Vida: " + this.marcadorVidas);
 
         batch.end();
         //Dibuja el HUD
@@ -230,7 +318,7 @@ public class PantallaJuego implements Screen{
             if(hataku.getSprite().getX()>= scrolls.getSprite().getX() && hataku.getSprite().getX()<= scrolls.getSprite().getX() + scrolls.getSprite().getWidth()
                     && hataku.getSprite().getY() >= scrolls.getSprite().getY() && hataku.getSprite().getY() <= scrolls.getSprite().getHeight() + scrolls.getSprite().getY()){
                 if(scrolls.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
-                    Pergaminos++;
+                    this.marcadorPergaminos++;
                     scrolls.quitarElemento();
                 }
                 break;
@@ -241,7 +329,7 @@ public class PantallaJuego implements Screen{
             if(hataku.getSprite().getX()>= pocion.getSprite().getX() && hataku.getSprite().getX()<= pocion.getSprite().getX() + pocion.getSprite().getWidth()
                     && hataku.getSprite().getY() >= pocion.getSprite().getY() && hataku.getSprite().getY() <= pocion.getSprite().getHeight() + pocion.getSprite().getY()){
                 if(pocion.getEstado() != ObjetosJuego.Estado.DESAPARECIDO){
-                    Vida++;
+                    this.marcadorVidas++;
                     pocion.quitarElemento();
                 }
                 break;
@@ -359,6 +447,7 @@ public class PantallaJuego implements Screen{
         texturaBtnIzquierda.dispose();
         texturaPocion.dispose();
         texturaScroll.dispose();
+        // texturaVidas.dispose(); //EN DUDA SI SE DEBE DE ELIMIAR, YA QUE SI QUEREMOS QUE ,LAS VIDAS ACTUALES SIGAN EM EL SIGUIENTE NIVEL, LAS CARAS DEBEN DE SER LAS MISMAS A LAS VIDAS.. , si quisieramos que las vidas regresen a 3 al pasar el nivel, entonces si se deben de elimar la textura de vidas.
     }
 
     /*
