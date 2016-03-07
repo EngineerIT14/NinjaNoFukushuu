@@ -148,7 +148,7 @@ public class PantallaAcerca implements Screen {
         //Metodo pare revisar si huba touch
         leerEntrada();
 
-        fondo.getSprite().rotate(.1f); //No sirve...quien sabe por qué
+        fondo.getSprite().rotate(.1f);
         //DIBUJAR
         batch.begin();
         fondo.render(batch);
