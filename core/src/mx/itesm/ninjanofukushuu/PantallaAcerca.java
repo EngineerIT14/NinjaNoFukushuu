@@ -82,7 +82,7 @@ public class PantallaAcerca implements Screen {
         btnJavier.setPosicion(Principal.ANCHO_MUNDO * 3 / 4 - 100, Principal.ALTO_MUNDO * 2 / 3 - 100);
         btnNuri.setPosicion(Principal.ANCHO_MUNDO * 3 / 8 - 100, Principal.ALTO_MUNDO / 3 - 100);
         btnFer.setPosicion(Principal.ANCHO_MUNDO * 5 / 8 - 100, Principal.ALTO_MUNDO / 3 - 100);
-        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8 - 50, Principal.ALTO_MUNDO * 1 / 5 - 100);
+        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8 , Principal.ALTO_MUNDO * 1 / 5 -150);
         presentaciónIrvin.setPosicion(0 - 20, 0 - 100);
         presentaciónMia.setPosicion(0 - 20, 0 - 100);
         presentaciónJavier.setPosicion(0 - 20, 0 - 100);
@@ -95,7 +95,7 @@ public class PantallaAcerca implements Screen {
         btnJavier.setTamanio(anchoBoton,altoBoton);
         btnNuri.setTamanio(anchoBoton,altoBoton);
         btnFer.setTamanio(anchoBoton,altoBoton);
-        btnRegresar.setTamanio(anchoBoton,altoBoton);
+        btnRegresar.setTamanio(anchoBoton-50,altoBoton-50);
         fondo.setTamanio(1500, 1500);
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);

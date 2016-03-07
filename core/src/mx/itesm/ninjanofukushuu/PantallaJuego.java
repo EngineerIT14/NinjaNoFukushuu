@@ -49,6 +49,9 @@ public class PantallaJuego implements Screen{
     private Texture texturaSalto;
     private Boton btnSalto;
 
+    //tamañoBotones
+    private static int TAMANIO_BOTON = 69;
+
 
     //ITEMS
 
@@ -159,18 +162,23 @@ public class PantallaJuego implements Screen{
         // Crear los botones
         texturaBtnIzquierda = assetManager.get("izquierda.png");
         btnIzquierda = new Boton(texturaBtnIzquierda);
-        btnIzquierda.setPosicion(TAM_CELDA, 5 * TAM_CELDA);
+        btnIzquierda.setPosicion(TAM_CELDA*3,TAM_CELDA/5);
         btnIzquierda.setAlfa(0.7f); // Un poco de transparencia
+        btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON+20, PantallaJuego.TAMANIO_BOTON);
 
         texturaBtnDerecha = assetManager.get("derecha.png");
         btnDerecha = new Boton(texturaBtnDerecha);
-        btnDerecha.setPosicion(6 * TAM_CELDA, 5 * TAM_CELDA);
+        btnDerecha.setPosicion(TAM_CELDA*10, TAM_CELDA/5);
         btnDerecha.setAlfa(0.7f); // Un poco de transparencia
+        btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON+20, PantallaJuego.TAMANIO_BOTON);
 
         texturaSalto = assetManager.get("salto.png"); //boton para saltar... carga su imagen
         btnSalto = new Boton(texturaSalto);
-        btnSalto.setPosicion(Principal.ANCHO_MUNDO - 5 * TAM_CELDA, 5 * TAM_CELDA);
+        btnSalto.setPosicion(Principal.ANCHO_MUNDO - 5 * TAM_CELDA, 30 + TAM_CELDA);
         btnSalto.setAlfa(0.7f);
+        btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON);
+
+
 
         //Se crean objetos que son textos que se muestran en el HUD.
         this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO * 0.96f);
