@@ -96,7 +96,7 @@ public class PantallaAcerca implements Screen {
         btnNuri.setTamanio(anchoBoton,altoBoton);
         btnFer.setTamanio(anchoBoton,altoBoton);
         btnRegresar.setTamanio(anchoBoton-50,altoBoton-50);
-        fondo.setTamanio(1500, 1500);
+
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
         presentaciónIrvin.setTamanio(1280,880);
