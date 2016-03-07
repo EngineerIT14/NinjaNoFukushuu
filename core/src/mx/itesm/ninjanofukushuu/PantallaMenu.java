@@ -3,6 +3,7 @@ package mx.itesm.ninjanofukushuu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -40,6 +41,10 @@ public class PantallaMenu implements Screen {
     private static final int anchoLogo = 700 , altoLogo = 350;
     private static final int posicionCentradaXLogo = 330 , posicionCentradaYLogo = 460;
 
+    //Efectos y musica de fondo
+    private Sound efectoClick;
+
+
     public PantallaMenu(Principal principal) { //Constructor
 
         this.principal = principal;
@@ -55,6 +60,7 @@ public class PantallaMenu implements Screen {
 
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara); //Se va ajustar la vista
         cargarTexturas();
+        cargarAudio();
         //Creando objetos...
         fondo = new Fondo(texturaFondo);
         btnPLay = new Boton(texturaBtnPlay);
@@ -90,6 +96,13 @@ public class PantallaMenu implements Screen {
         texturaBtnAbout =  new Texture(Gdx.files.internal("botonAbout.png"));
         texturaLogo = new Texture(Gdx.files.internal("Title.png"));
     }
+
+    //Metodo para cargar los efectos de sonido y la música de fondo
+    private void cargarAudio() {
+        this.efectoClick = Gdx.audio.newSound(Gdx.files.internal("sonidoVentana.wav"));
+
+    }
+
 
     //Metodo de la clase Screen, ya fue implementado
     @Override//Recordar que render es automatico..
@@ -127,6 +140,7 @@ public class PantallaMenu implements Screen {
                 case 1:
                     Gdx.app.log("leerEntrada","HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
                     principal.setScreen(new PantallaJuego(principal));
+                    this.efectoClick.play();
                     break;
                 case 2:
                     Gdx.app.log("leerEntrada", "HAY UN TAP EN INSTRUCCIONES!"); //cuando le apretan va decir esto..
@@ -137,6 +151,7 @@ public class PantallaMenu implements Screen {
                 case 4:
                     Gdx.app.log("leerEntrada","HAY UN TAP! EN ABOUT"); //cuando le apretan va decir esto..
                     principal.setScreen(new PantallaAcerca(principal));
+                    this.efectoClick.play();
                     break;
                 default:
                     break;
@@ -209,6 +224,8 @@ public class PantallaMenu implements Screen {
         texturaBtnAbout.dispose();
         //LOGO
         texturaLogo.dispose();
+        //sonido
+        this.efectoClick.dispose();
 
     }
 }

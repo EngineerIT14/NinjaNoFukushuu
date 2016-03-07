@@ -27,9 +27,9 @@ public class PantallaAcerca implements Screen {
     //Fondo
     private Fondo fondo;
     private Texture texturaFondo;
-   /* //Abanico
-    private Logotipo abanico;
-    private Texture texturaAbanico;*/
+    /* //Abanico
+     private Logotipo abanico;
+     private Texture texturaAbanico;*/
     //Botones
     private Boton btnMia,btnNuri,btnIrvin,btnJavier, btnFer, btnRegresar;
     private Texture texturaBtnMia,texturaBtnNuri, texturaBtnIrvin,texturaBtnJavier, texturaBtnFer, texturaRegresar;
@@ -39,7 +39,7 @@ public class PantallaAcerca implements Screen {
     private  Texture texturaPresentacionIrvin, texturaPresentacionMia, texturaPresentacionJavier, texturaPresentacionNuri, texturaPresentacionFer;
 
     //Efectos y musica de fondo
-    private Sound efectoAbrirCerrarVentana;
+    private Sound efectoClick;
 
 
 
@@ -58,7 +58,7 @@ public class PantallaAcerca implements Screen {
         cargarTexturas();
         //Crear fondo
         fondo = new Fondo(texturaFondo);
-       // abanico=new Logotipo(texturaAbanico);
+        // abanico=new Logotipo(texturaAbanico);
         //Crear botones
         btnMia = new Boton(texturaBtnMia);
         btnNuri = new  Boton(texturaBtnNuri);
@@ -76,7 +76,7 @@ public class PantallaAcerca implements Screen {
         presentaciónFer = new Presentacion(texturaPresentacionFer);
 
         //Poscicionar objetos
-       // abanico.setPosicion(0 - 20, 0 - 35);
+        // abanico.setPosicion(0 - 20, 0 - 35);
         btnIrvin.setPosicion(Principal.ANCHO_MUNDO / 4 - 100, Principal.ALTO_MUNDO * 2 / 3 - 100);
         btnMia.setPosicion(Principal.ANCHO_MUNDO / 2 - 100, Principal.ALTO_MUNDO * 2 / 3 - 100);
         btnJavier.setPosicion(Principal.ANCHO_MUNDO * 3 / 4 - 100, Principal.ALTO_MUNDO * 2 / 3 - 100);
@@ -112,7 +112,7 @@ public class PantallaAcerca implements Screen {
 
     //Metodo para cargar los efectos de sonido y la música de fondo
     private void cargarAudio() {
-        efectoAbrirCerrarVentana = Gdx.audio.newSound(Gdx.files.internal("sonidoVentana.wav"));
+        efectoClick = Gdx.audio.newSound(Gdx.files.internal("sonidoVentana.wav"));
 
     }
 
@@ -191,55 +191,56 @@ public class PantallaAcerca implements Screen {
                 case 1: //Caso para aparecer la presentación de Irvin
                     if (presentaciónIrvin.getEstado()!= Presentacion.Estado.APARECIDO){ //Estado no debe ser Aparecido
                         presentaciónIrvin.aparecer();
-                        efectoAbrirCerrarVentana.play();
+                        efectoClick.play();
                     }
                     break;
                 case 2: //Caso para aparecer la presentación de Mia
                     if(presentaciónMia.getEstado() != Presentacion.Estado.APARECIDO){
                         presentaciónMia.aparecer();
-                        efectoAbrirCerrarVentana.play();
+                        efectoClick.play();
                     }
                     break;
                 case 3: //Caso para aparecer la presentación de Javier
                     if(presentaciónJavier.getEstado() != Presentacion.Estado.APARECIDO){
                         presentaciónJavier.aparecer();
-                        efectoAbrirCerrarVentana.play();
+                        efectoClick.play();
                     }
                     break;
                 case 4: //Caso para aparecer la presentación de Nuri
                     if(presentaciónNuri.getEstado() != Presentacion.Estado.APARECIDO){
                         presentaciónNuri.aparecer();
-                        efectoAbrirCerrarVentana.play();
+                        efectoClick.play();
                     }
                     break;
                 case 5: //Caso para aparecer la presentación de Fer
                     if(presentaciónFer.getEstado() != Presentacion.Estado.APARECIDO){
                         presentaciónFer.aparecer();
-                        efectoAbrirCerrarVentana.play();
+                        efectoClick.play();
                     }
                     break;
                 case 6: //Caso para volver al menú principal
                     principal.setScreen(new PantallaMenu(principal));
+                    this.efectoClick.play();
                     break;
                 case 7: //Caso para desaparecer la presentación de Irvin
                     presentaciónIrvin.desaparecer();
-                    efectoAbrirCerrarVentana.play();
+                    efectoClick.play();
                     break;
                 case 8: //Caso para desaparecer la presentación de Mia
                     presentaciónMia.desaparecer();
-                    efectoAbrirCerrarVentana.play();
+                    efectoClick.play();
                     break;
                 case 9: //Caso para desaparecer la presentación de Javier
                     presentaciónJavier.desaparecer();
-                    efectoAbrirCerrarVentana.play();
+                    efectoClick.play();
                     break;
                 case 10: //Caso para desaparecer la presentación de Nuri
                     presentaciónNuri.desaparecer();
-                    efectoAbrirCerrarVentana.play();
+                    efectoClick.play();
                     break;
                 case 11: //Caso para desaparecer la presentación de Fer
                     presentaciónFer.desaparecer();
-                    efectoAbrirCerrarVentana.play();
+                    efectoClick.play();
                     break;
                 default: //Caso para no hacer nada, bonus
                     break;
@@ -290,36 +291,36 @@ public class PantallaAcerca implements Screen {
 
         //Para desaparecer las presentaciones se puede seleccionar cualquiere espacio e la pantalla
         else
-            if(presentaciónIrvin.getEstado()== Presentacion.Estado.APARECIDO){
-                if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
-                    return 7;
-                }
+        if(presentaciónIrvin.getEstado()== Presentacion.Estado.APARECIDO){
+            if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                return 7;
             }
+        }
         else
-            if(presentaciónMia.getEstado() == Presentacion.Estado.APARECIDO){
-                if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
-                    return 8;
-                }
+        if(presentaciónMia.getEstado() == Presentacion.Estado.APARECIDO){
+            if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                return 8;
             }
+        }
         else
-            if(presentaciónJavier.getEstado() == Presentacion.Estado.APARECIDO){
-                if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
-                    return 9;
-                }
+        if(presentaciónJavier.getEstado() == Presentacion.Estado.APARECIDO){
+            if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                return 9;
             }
+        }
         else
-            if(presentaciónNuri.getEstado() == Presentacion.Estado.APARECIDO){
-                    if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
-                        return 10;
-                    }
-                }
+        if(presentaciónNuri.getEstado() == Presentacion.Estado.APARECIDO){
+            if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                return 10;
+            }
+        }
         else
-             if(presentaciónFer.getEstado() == Presentacion.Estado.APARECIDO){
-                 if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
-                     return 11;
-                 }
-             }
-            return 0;
+        if(presentaciónFer.getEstado() == Presentacion.Estado.APARECIDO){
+            if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                return 11;
+            }
+        }
+        return 0;
     }
     @Override
     public void resize(int width, int height) {
@@ -361,7 +362,7 @@ public class PantallaAcerca implements Screen {
         texturaRegresar.dispose();
         texturaFondo.dispose();
         //texturaAbanico.dispose();
-        efectoAbrirCerrarVentana.dispose();
+        efectoClick.dispose();
     }
 
 
