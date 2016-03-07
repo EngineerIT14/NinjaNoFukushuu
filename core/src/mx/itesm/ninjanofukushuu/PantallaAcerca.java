@@ -344,6 +344,10 @@ public class PantallaAcerca implements Screen {
     @Override
     public void dispose() {
         //Eliminar basura
+        principal.dispose();
+        batch.dispose();
+
+        //texturas
         texturaBtnIrvin.dispose();
         texturaBtnMia.dispose();
         texturaBtnJavier.dispose();

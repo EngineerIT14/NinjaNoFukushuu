@@ -197,6 +197,7 @@ public class PantallaMenu implements Screen {
 
     @Override //Se ejecuta cuanto se pasa a otra pantalla, aqui se deben de liberar los recursos **
     public void dispose() {
+
         principal.dispose();
         batch.dispose();
         //Fondo
