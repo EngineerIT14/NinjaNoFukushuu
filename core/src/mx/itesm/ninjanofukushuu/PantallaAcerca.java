@@ -112,7 +112,7 @@ public class PantallaAcerca implements Screen {
 
     //Metodo para cargar los efectos de sonido y la música de fondo
     private void cargarAudio() {
-        efectoAbrirCerrarVentana = Gdx.audio.newSound(Gdx.files.internal("abrirCerrarVentana.wav"));
+        efectoAbrirCerrarVentana = Gdx.audio.newSound(Gdx.files.internal("sonidoVentana.wav"));
 
     }
 
