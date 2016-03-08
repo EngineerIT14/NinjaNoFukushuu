@@ -2,6 +2,7 @@ package mx.itesm.ninjanofukushuu;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -151,20 +152,30 @@ public class PantallaMenu implements Screen {
             float y = coordernadas.y;
             switch ( verifcarBoton(x,y)){
                 case 1:
-                    Gdx.app.log("leerEntrada","HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
-                    principal.setScreen(new PantallaJuego(principal));
+                    Gdx.app.log("leerEntrada", "HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
                     this.efectoClick.play();
+
+
+                 //   this.btnPLay.setAlfa(.5f); //se hace transparente al presionarse..
+                    principal.setScreen(new PantallaJuego(principal));
                     break;
                 case 2:
                     Gdx.app.log("leerEntrada", "HAY UN TAP EN INSTRUCCIONES!"); //cuando le apretan va decir esto..
+                   // this.btnInstructions.setAlfa(.5f);  //al presionarse se hace transparente
+
+                    this.efectoClick.play();
+
                     break;
                 case 3:
-                Gdx.app.log("leerEntrada","HAY UN TAP EN GALLERIA!"); //cuando le apretan va decir esto..
-                break;
-                case 4:
-                    Gdx.app.log("leerEntrada","HAY UN TAP! EN ABOUT"); //cuando le apretan va decir esto..
-                    principal.setScreen(new PantallaAcerca(principal));
+                    Gdx.app.log("leerEntrada", "HAY UN TAP EN GALLERIA!"); //cuando le apretan va decir esto..
+                    //this.btnGallery.setAlfa(.5f);  //al presionarse se hace transparente
                     this.efectoClick.play();
+                    break;
+                case 4:
+                    //this.btnAbout.setAlfa(.5f);
+                    Gdx.app.log("leerEntrada", "HAY UN TAP! EN ABOUT"); //cuando le apretan va decir esto..
+                    this.efectoClick.play();
+                    principal.setScreen(new PantallaAcerca(principal));
                     break;
                 default:
                     break;
@@ -214,6 +225,12 @@ public class PantallaMenu implements Screen {
     public void resume() {
 
     }
+
+
+
+
+
+
 
     //estos metodos sde ejecutan cuando se pasa a la otra pantalla
 

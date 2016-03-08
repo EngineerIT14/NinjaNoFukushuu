@@ -220,8 +220,9 @@ public class PantallaAcerca implements Screen {
                     }
                     break;
                 case 6: //Caso para volver al menú principal
-                    principal.setScreen(new PantallaMenu(principal,true)); //se manda true porque se esta escuchando la cancion, es decir, ya hay un objeto cancion reproduciendose..
                     this.efectoClick.play();
+                    principal.setScreen(new PantallaMenu(principal,true)); //se manda true porque se esta escuchando la cancion, es decir, ya hay un objeto cancion reproduciendose..
+
                     break;
                 case 7: //Caso para desaparecer la presentación de Irvin
                     presentaciónIrvin.desaparecer();

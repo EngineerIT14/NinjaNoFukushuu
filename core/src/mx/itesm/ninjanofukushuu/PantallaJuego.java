@@ -193,19 +193,19 @@ public class PantallaJuego implements Screen{
         btnIzquierda = new Boton(texturaBtnIzquierda);
         btnIzquierda.setPosicion(TAM_CELDA*2,TAM_CELDA/5);
         btnIzquierda.setAlfa(0.7f); // Un poco de transparencia
-        btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON + 20, PantallaJuego.TAMANIO_BOTON);
+        btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON + 20, PantallaJuego.TAMANIO_BOTON+20);
 
         texturaBtnDerecha = assetManager.get("derecha.png");
         btnDerecha = new Boton(texturaBtnDerecha);
         btnDerecha.setPosicion(TAM_CELDA*8, TAM_CELDA/5);
         btnDerecha.setAlfa(0.7f); // Un poco de transparencia
-        btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON + 20, PantallaJuego.TAMANIO_BOTON);
+        btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON + 20, PantallaJuego.TAMANIO_BOTON+20);
 
         texturaSalto = assetManager.get("salto.png"); //boton para saltar... carga su imagen
         btnSalto = new Boton(texturaSalto);
         btnSalto.setPosicion(Principal.ANCHO_MUNDO-7 * TAM_CELDA, 100 + TAM_CELDA);
         btnSalto.setAlfa(0.7f);
-        btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON);
+        btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON+20);
 
 
 
@@ -223,7 +223,7 @@ public class PantallaJuego implements Screen{
         }
 
         //Posiciones pergamino nivel tierra
-        this.scroll.get(0).setPosicion(50,310); //pergamino de en medio...
+        this.scroll.get(0).setPosicion(50,325); //pergamino de en medio...
         this.scroll.get(1).setPosicion(750, 53); //pergamino de hasta abajo
         this.scroll.get(2).setPosicion(630, 85); //pergamino que está en precipicio
 
@@ -407,7 +407,6 @@ public class PantallaJuego implements Screen{
                         this.marcadorVidas++;
                         this.efectoTomarVida.play(); //suena efecto
                         ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
-                        nuevo.setTamanio(80,80);
                         this.vidas.add(nuevo);
                         nuevo.setPosicion(vidas.get(vidas.size-2).getSprite().getX()+70,this.textoMarcadorVidas.getY()-50);
                         pocion.quitarElemento();
@@ -423,6 +422,7 @@ public class PantallaJuego implements Screen{
                     && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight() + Enemigo.getSprite().getY()){
                 if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
                     this.marcadorVidas--;
+                    vidas.removeIndex(0);
                     Enemigo.quitarElemento();
                 }
                 break;
