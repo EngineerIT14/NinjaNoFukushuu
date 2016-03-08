@@ -138,9 +138,9 @@ public class PantallaJuego implements Screen{
 
     private void cargarAudio() {
         this.efectoSaltoHataku = Gdx.audio.newSound(Gdx.files.internal("efectoSaltoHataku.wav"));
-        this.efectoSaltoHataku.setVolume(70,70);
+        this.efectoSaltoHataku.setVolume(70, 70);
         this.efectoTomarVida = Gdx.audio.newSound(Gdx.files.internal("efectoVida.wav"));
-        this.efectoTomarVida.setVolume(70,70);
+        this.efectoTomarVida.setVolume(70, 70);
         this.efectoTomarPergamino = Gdx.audio.newSound(Gdx.files.internal("efectoPergamino.wav"));
         this.efectoTomarPergamino.setVolume(70,70);
 
@@ -503,10 +503,34 @@ public class PantallaJuego implements Screen{
             case SUBIENDO:
             case BAJANDO:
                 hataku.actualizarSalto();    // Actualizar posición en 'y'
+                probarChoqueParedesSalto();
                 break;
         }
     }
 
+    private void probarChoqueParedesSalto() {
+        Personaje.EstadoSalto estado = hataku.getEstadoSalto();
+        // Quitar porque este método sólo se llama cuando se está moviendo
+        if ( estado!= Personaje.EstadoSalto.BAJANDO){
+            return;
+        }
+        float px = hataku.getX();    // Posición actual
+        // Posición después de actualizar
+        px = hataku.getEstadoMovimiento()==Personaje.EstadoMovimiento.MOV_DERECHA? px+Personaje.VELOCIDAD_X:
+                px- Personaje.VELOCIDAD_Y;
+        int celdaX = (int)(px/TAM_CELDA);   // Casilla del personaje en X
+        if (hataku.getEstadoMovimiento()== Personaje.EstadoMovimiento.MOV_DERECHA) {
+            celdaX++;   // Casilla del lado derecho
+        }
+        int celdaY = (int)(hataku.getY()/TAM_CELDA); // Casilla del personaje en Y
+        TiledMapTileLayer capaPlataforma = (TiledMapTileLayer) mapa.getLayers().get(1);
+        if ( capaPlataforma.getCell(celdaX,celdaY) != null ) {
+            // Colisionará, dejamos de moverlo
+            hataku.setEstado(Personaje.EstadoMovimiento.QUIETO);
+        } else {
+            hataku.actualizar();
+        }
+    }
 
 
     private void borrarPantalla() {
