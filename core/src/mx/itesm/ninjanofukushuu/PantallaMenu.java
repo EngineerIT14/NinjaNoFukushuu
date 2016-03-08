@@ -3,6 +3,7 @@ package mx.itesm.ninjanofukushuu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -43,11 +44,13 @@ public class PantallaMenu implements Screen {
 
     //Efectos y musica de fondo
     private Sound efectoClick;
+    private Music musicaFondo;
+    private boolean banderaCancionJuego; //Esta bandera sirve para que se vuelva a crear el objeto de musicaFondo cuando regresas al menu principal y se interrumpa la que esta actualmente.
 
 
-    public PantallaMenu(Principal principal) { //Constructor
-
+    public PantallaMenu(Principal principal,boolean banderaCancionJuego) { //Constructor
         this.principal = principal;
+        this.banderaCancionJuego = banderaCancionJuego;
     }
 
     //Metodo de la clase Screen, ya fue implementado
@@ -100,6 +103,16 @@ public class PantallaMenu implements Screen {
     //Metodo para cargar los efectos de sonido y la música de fondo
     private void cargarAudio() {
         this.efectoClick = Gdx.audio.newSound(Gdx.files.internal("sonidoVentana.wav"));
+        this.efectoClick.setVolume(70,70);
+
+        //Musica de fondo
+        if(!this.banderaCancionJuego) { //si es falsa, entonces no se esta escuchando nada....
+            this.musicaFondo = Gdx.audio.newMusic(Gdx.files.internal("musicaJuegoPrincipal.wav"));
+            this.musicaFondo.setLooping(true);
+            this.musicaFondo.setVolume(70);
+            this.musicaFondo.play();
+        }
+
 
     }
 
@@ -226,6 +239,6 @@ public class PantallaMenu implements Screen {
         texturaLogo.dispose();
         //sonido
         this.efectoClick.dispose();
-
+        //NOTA: LA MUSICA DE FONDO NO SE LIBER, YA QUE QUEREMOS QUE SE SIGA ESCUCHANDO..
     }
 }

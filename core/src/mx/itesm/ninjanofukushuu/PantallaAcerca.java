@@ -113,6 +113,7 @@ public class PantallaAcerca implements Screen {
     //Metodo para cargar los efectos de sonido y la música de fondo
     private void cargarAudio() {
         efectoClick = Gdx.audio.newSound(Gdx.files.internal("sonidoVentana.wav"));
+        this.efectoClick.setVolume(70,70);
 
     }
 
@@ -219,7 +220,7 @@ public class PantallaAcerca implements Screen {
                     }
                     break;
                 case 6: //Caso para volver al menú principal
-                    principal.setScreen(new PantallaMenu(principal));
+                    principal.setScreen(new PantallaMenu(principal,true)); //se manda true porque se esta escuchando la cancion, es decir, ya hay un objeto cancion reproduciendose..
                     this.efectoClick.play();
                     break;
                 case 7: //Caso para desaparecer la presentación de Irvin
