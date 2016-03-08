@@ -393,6 +393,7 @@ public class PantallaJuego implements Screen{
             case MOV_DERECHA:       // Siempre se mueve
             case MOV_IZQUIERDA:
                 hataku.actualizar();
+                probarChoqueParedes();      // Prueba si debe moverse
                 break;
         }
         // Prueba si debe caer por llegar a un espacio vacío
@@ -426,6 +427,8 @@ public class PantallaJuego implements Screen{
         }
     }
 
+
+
     private void borrarPantalla() {
         //Gdx.gl.glClearColor(1, 1, 1, 1);    // Color de fondo
         Gdx.gl.glClearColor(107 / 255f, 140f / 255, 1, 1);
@@ -434,7 +437,7 @@ public class PantallaJuego implements Screen{
 
     @Override
     public void resize(int width, int height) {
-        vista.update(width,height);
+        vista.update(width, height);
     }
 
     @Override
@@ -442,6 +445,29 @@ public class PantallaJuego implements Screen{
 
     }
 
+    private void probarChoqueParedes() {
+        Personaje.EstadoMovimiento estado = hataku.getEstadoMovimiento();
+        // Quitar porque este método sólo se llama cuando se está moviendo
+        if ( estado!= Personaje.EstadoMovimiento.MOV_DERECHA && estado!=Personaje.EstadoMovimiento.MOV_IZQUIERDA){
+            return;
+        }
+        float px = hataku.getX();    // Posición actual
+        // Posición después de actualizar
+        px = hataku.getEstadoMovimiento()==Personaje.EstadoMovimiento.MOV_DERECHA? px+Personaje.VELOCIDAD_X:
+                px- Personaje.VELOCIDAD_Y;
+        int celdaX = (int)(px/TAM_CELDA);   // Casilla del personaje en X
+        if (hataku.getEstadoMovimiento()== Personaje.EstadoMovimiento.MOV_DERECHA) {
+            celdaX++;   // Casilla del lado derecho
+        }
+        int celdaY = (int)(hataku.getY()/TAM_CELDA); // Casilla del personaje en Y
+        TiledMapTileLayer capaPlataforma = (TiledMapTileLayer) mapa.getLayers().get(1);
+        if ( capaPlataforma.getCell(celdaX,celdaY) != null ) {
+            // Colisionará, dejamos de moverlo
+            hataku.setEstado(Personaje.EstadoMovimiento.QUIETO);
+        } else {
+            hataku.actualizar();
+        }
+    }
     @Override
     public void resume() {
 

@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Personaje
 {
     public static final float VELOCIDAD_Y = -2f;   // Velocidad de caída
-    private static final float VELOCIDAD_X = 2;
+    public static final float VELOCIDAD_X = 2;
     private Sprite sprite;  // Sprite cuando no se mueve
 
     // Animación
