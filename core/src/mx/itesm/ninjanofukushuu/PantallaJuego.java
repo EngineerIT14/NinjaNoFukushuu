@@ -1,5 +1,5 @@
 package mx.itesm.ninjanofukushuu;
- 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
@@ -58,6 +58,10 @@ public class PantallaJuego implements Screen{
     //Scrolls/Pergamino
     private Array<ObjetosJuego> scroll;
     private Texture texturaScroll;
+
+    //Enemigos
+    private Array<ObjetosJuego> enemigoN1;
+    private Texture texturaEN1;
 
     //Pociones
     private Array<ObjetosJuego> pociones;
@@ -137,6 +141,7 @@ public class PantallaJuego implements Screen{
         //Textura Objetos que estan en la pantalla
         texturaScroll = new Texture(Gdx.files.internal("scroll.png"));
         texturaPocion = new Texture(Gdx.files.internal("pocion.png"));
+        texturaEN1=new Texture(Gdx.files.internal("TierraE.png"));
 
         //****************************************************************//
         //nota: se debe cosniderar que la imagen de vidas va cambiar cuando el ninja obtenga una parte de la armadura, recomiendo usar un switch y usar una bandera (boolean) cuando se pase el nivel y deppendiendo de la bandera cargar el archivo de imagenn correspondiente
@@ -208,6 +213,20 @@ public class PantallaJuego implements Screen{
         this.pociones.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
         this.pociones.get(1).setPosicion(300, 500);
 
+        //Enemigos: 4 enemigos en el primer nivel
+        this.enemigoN1= new Array<ObjetosJuego>(3);
+        for(int i =0; i< 4;i++) {
+            ObjetosJuego nuevo = new ObjetosJuego(this.texturaEN1);
+            nuevo.setTamanio(60,90);
+            this.enemigoN1.add(nuevo);
+        }
+
+        //Se colocan los enemigos en su lugar correspondiente
+        this.enemigoN1.get(0).setPosicion(900, 568);
+        this.enemigoN1.get(1).setPosicion(200, 310);
+        this.enemigoN1.get(2).setPosicion(710, 292);
+        this.enemigoN1.get(3).setPosicion(900, .01f);
+
         //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
 
         //Vidas: El numero de vidas cambia cuando se tiene la armadura completa, por lo que. al llegar all ultimo de nivel se debe de moficiar la variable globa de vidas, aumentando la vidas del persoonaje a 5.
@@ -215,7 +234,7 @@ public class PantallaJuego implements Screen{
             this.flag = true;
         }
         else{
-           this.flag = false; //no estoy en el nivel 4.
+            this.flag = false; //no estoy en el nivel 4.
         }
 
         //Si es el nivel 4 se deben de poner 5 vidas
@@ -294,6 +313,11 @@ public class PantallaJuego implements Screen{
                 pocion.render(batch);
         }
 
+        for (ObjetosJuego Enemigo : enemigoN1) {
+            if (Enemigo.actualizar())
+                Enemigo.render(batch);
+        }
+
         //Dibujar iconos vidas
         for (ObjetosJuego vida : this.vidas) {
             if (vida.actualizar()) {
@@ -342,13 +366,26 @@ public class PantallaJuego implements Screen{
                         ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                         nuevo.setTamanio(80,80);
                         this.vidas.add(nuevo);
-                       nuevo.setPosicion(vidas.get(vidas.size-2).getSprite().getX()+70,this.textoMarcadorVidas.getY()-50);
+                        nuevo.setPosicion(vidas.get(vidas.size-2).getSprite().getX()+70,this.textoMarcadorVidas.getY()-50);
                         pocion.quitarElemento();
                     }
                     break;
                 }
             }
         }
+
+        //mata enemigos al toque
+        for (ObjetosJuego Enemigo : enemigoN1) {
+            if(hataku.getSprite().getX()>= Enemigo.getSprite().getX() && hataku.getSprite().getX()<= Enemigo.getSprite().getX() + Enemigo.getSprite().getWidth()
+                    && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight() + Enemigo.getSprite().getY()){
+                if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
+                    this.marcadorVidas--;
+                    Enemigo.quitarElemento();
+                }
+                break;
+            }
+        }
+
     }
 
     // Actualiza la posición de la cámara para que el personaje esté en el centro,
