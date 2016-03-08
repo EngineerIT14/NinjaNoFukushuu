@@ -241,7 +241,7 @@ public class PantallaJuego implements Screen{
         }
         else{ //entonces no estoy en el nivel 4, se deben de poner 3 vidas.
             this.vidas =  new Array<ObjetosJuego>(3);
-            for(int i = 0; i<2; i++) {
+            for(int i = 0; i<3; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                 nuevo.setTamanio(80,80);
                 this.vidas.add(nuevo);
@@ -249,7 +249,7 @@ public class PantallaJuego implements Screen{
 
             this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX()+100,this.textoMarcadorVidas.getY()-50);
             this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX()+170,this.textoMarcadorVidas.getY()-50);
-            //this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+240,this.textoMarcadorVidas.getY()-50);
+            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+240,this.textoMarcadorVidas.getY()-50);
 
 
         }
@@ -336,7 +336,7 @@ public class PantallaJuego implements Screen{
         for (ObjetosJuego pocion : pociones) {
             if(hataku.getSprite().getX()>= pocion.getSprite().getX() && hataku.getSprite().getX()<= pocion.getSprite().getX() + pocion.getSprite().getWidth()
                     && hataku.getSprite().getY() >= pocion.getSprite().getY() && hataku.getSprite().getY() <= pocion.getSprite().getHeight() + pocion.getSprite().getY()){
-                if(vidas.size<=3) {
+                if(vidas.size<3) {
                     if (pocion.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
                         this.marcadorVidas++;
                         ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
