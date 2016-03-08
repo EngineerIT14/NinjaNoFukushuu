@@ -165,7 +165,7 @@ public class PantallaJuego implements Screen{
         this.texturaScroll = new Texture(Gdx.files.internal("scroll.png"));
         this.texturaPocion = new Texture(Gdx.files.internal("pocion.png"));
         this.texturaEN1=new Texture(Gdx.files.internal("TierraE.png"));
-        this.texturaTemplo = new Texture(Gdx.files.internal("TemploVerde.png"));
+        this.texturaTemplo = new Texture(Gdx.files.internal("temploVerde.png"));
 
         //****************************************************************//
         //nota: se debe cosniderar que la imagen de vidas va cambiar cuando el ninja obtenga una parte de la armadura, recomiendo usar un switch y usar una bandera (boolean) cuando se pase el nivel y deppendiendo de la bandera cargar el archivo de imagenn correspondiente
