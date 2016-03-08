@@ -189,7 +189,7 @@ public class PantallaJuego implements Screen{
         this.scroll = new Array<ObjetosJuego>(3);
         for (int i = 0; i<3;i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaScroll);
-            nuevo.setTamanio(50,50);
+            //nuevo.setTamanio(20,50); //Irvin ya ajusto el tamaño en photoshop..
             this.scroll.add(nuevo);
         }
         this.scroll.get(0).setPosicion(550,300);
@@ -200,7 +200,7 @@ public class PantallaJuego implements Screen{
         this.pociones = new Array<ObjetosJuego>(2);
         for(int i =0; i< 2;i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaPocion);
-            nuevo.setTamanio(50,50);
+           // nuevo.setTamanio(50,50); //Irvin ya ajusto el tamaño de las imagenes en photoshop
             this.pociones.add(nuevo);
         }
 
@@ -223,7 +223,7 @@ public class PantallaJuego implements Screen{
             this.vidas =  new Array<ObjetosJuego>(5);
             for(int i = 0; i<5; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
-                nuevo.setTamanio(50,50);
+                //nuevo.setTamanio(80,80);
                 this.vidas.add(nuevo);
             }
 
@@ -243,7 +243,7 @@ public class PantallaJuego implements Screen{
             this.vidas =  new Array<ObjetosJuego>(3);
             for(int i = 0; i<3; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
-                nuevo.setTamanio(80,80);
+                //nuevo.setTamanio(70,70); //Irvin ya ajusto el tamaño de las vidas en photoshop..
                 this.vidas.add(nuevo);
             }
 
