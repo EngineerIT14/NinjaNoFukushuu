@@ -578,7 +578,7 @@ public class PantallaJuego implements Screen{
         this.texturaEN1.dispose();
         this.texturaTemplo.dispose();
 
-        //sonidos
+        //sonidos (efectos)
         this.efectoSaltoHataku.dispose();
         this.efectoTomarVida.dispose();
         this.efectoTomarPergamino.dispose();
