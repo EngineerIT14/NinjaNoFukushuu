@@ -56,8 +56,7 @@ public class Personaje
 
     // Dibuja el personaje
     public void render(SpriteBatch batch) {
-
-        // Dibuja el personaje dependiendo del estado
+        // Dibuja el personaje dependiendo del estadoMovimiento
         switch (estadoMovimiento) {
             case MOV_DERECHA:
             case MOV_IZQUIERDA:
@@ -65,6 +64,7 @@ public class Personaje
                 timerAnimacion += Gdx.graphics.getDeltaTime();
                 // Obtiene el frame que se debe mostrar (de acuerdo al timer)
                 TextureRegion region = animacion.getKeyFrame(timerAnimacion);
+                // Dirección correcta
                 if (estadoMovimiento==EstadoMovimiento.MOV_IZQUIERDA) {
                     if (!region.isFlipX()) {
                         region.flip(true,false);

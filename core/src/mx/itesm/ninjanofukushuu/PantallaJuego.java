@@ -218,7 +218,7 @@ public class PantallaJuego implements Screen{
         this.scroll = new Array<ObjetosJuego>(3);
         for (int i = 0; i<3;i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaScroll);
-            //nuevo.setTamanio(20,50); //Irvin ya ajusto el tamaño en photoshop..
+            nuevo.setTamanio(15,40);
             this.scroll.add(nuevo);
         }
 
@@ -231,7 +231,7 @@ public class PantallaJuego implements Screen{
         this.pociones = new Array<ObjetosJuego>(2);
         for(int i =0; i< 2;i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaPocion);
-           // nuevo.setTamanio(50,50); //Irvin ya ajusto el tamaño de las imagenes en photoshop
+            nuevo.setTamanio(30,40);
             this.pociones.add(nuevo);
         }
 
@@ -516,15 +516,14 @@ public class PantallaJuego implements Screen{
         }
         float px = hataku.getX();    // Posición actual
         // Posición después de actualizar
-        px = hataku.getEstadoMovimiento()==Personaje.EstadoMovimiento.MOV_DERECHA? px+Personaje.VELOCIDAD_X:
-                px- Personaje.VELOCIDAD_Y;
+        px = hataku.getEstadoMovimiento()==Personaje.EstadoMovimiento.MOV_DERECHA? px+Personaje.VELOCIDAD_X: px- Personaje.VELOCIDAD_Y;
         int celdaX = (int)(px/TAM_CELDA);   // Casilla del personaje en X
         if (hataku.getEstadoMovimiento()== Personaje.EstadoMovimiento.MOV_DERECHA) {
             celdaX++;   // Casilla del lado derecho
         }
         int celdaY = (int)(hataku.getY()/TAM_CELDA); // Casilla del personaje en Y
         TiledMapTileLayer capaPlataforma = (TiledMapTileLayer) mapa.getLayers().get(1);
-        if ( capaPlataforma.getCell(celdaX,celdaY) != null ) {
+        if ( capaPlataforma.getCell(celdaX,celdaY+2) != null ) { //se le suma 2 para saber si va chocar desde antes..
             // Colisionará, dejamos de moverlo
             hataku.setEstadoSalto(Personaje.EstadoSalto.BAJANDO);
         } else {
