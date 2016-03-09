@@ -2,6 +2,7 @@ package mx.itesm.ninjanofukushuu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -55,7 +56,8 @@ public class PantallaAcerca implements Screen {
         camara.update();
 
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
-        cargarTexturas();
+        this.crearObjetos();
+
         //Crear fondo
         fondo = new Fondo(texturaFondo);
         // abanico=new Logotipo(texturaAbanico);
@@ -95,7 +97,7 @@ public class PantallaAcerca implements Screen {
         btnJavier.setTamanio(anchoBoton,altoBoton);
         btnNuri.setTamanio(anchoBoton,altoBoton);
         btnFer.setTamanio(anchoBoton,altoBoton);
-        btnRegresar.setTamanio(anchoBoton-50,altoBoton-50);
+        btnRegresar.setTamanio(anchoBoton - 50, altoBoton - 50);
 
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
@@ -107,35 +109,34 @@ public class PantallaAcerca implements Screen {
 
         //Batch
         batch = new SpriteBatch();
-        cargarAudio();
     }
 
-    //Metodo para cargar los efectos de sonido y la música de fondo
-    private void cargarAudio() {
-        efectoClick = Gdx.audio.newSound(Gdx.files.internal("sonidoVentana.wav"));
-        this.efectoClick.setVolume(70,70);
 
-    }
 
-    //Crgar texturas
-    private void cargarTexturas() {
+    //crea los objetos de textura y audio
+    private void crearObjetos(){
+        AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
         //Fondo
-        texturaFondo = new Texture(Gdx.files.internal("Fondo.jpg"));
+        texturaFondo = assetManager.get("Fondo.jpg");
         //Abanico
         //texturaAbanico = new Texture(Gdx.files.internal("Abanico.png"));
         //Botones
-        texturaBtnMia = new Texture((Gdx.files.internal("M.png")));
-        texturaBtnNuri = new Texture((Gdx.files.internal("N.png")));
-        texturaBtnIrvin = new Texture((Gdx.files.internal("I.png")));
-        texturaBtnJavier = new Texture((Gdx.files.internal("J.png")));
-        texturaBtnFer = new Texture((Gdx.files.internal("F.png")));
-        texturaRegresar = new Texture(Gdx.files.internal("return.png"));
+        texturaBtnMia = assetManager.get("M.png");
+        texturaBtnNuri = assetManager.get("N.png");
+        texturaBtnIrvin = assetManager.get("I.png");
+        texturaBtnJavier = assetManager.get("J.png");
+        texturaBtnFer = assetManager.get("F.png");
+        texturaRegresar = assetManager.get("return.png");
         //Presentaciones
-        texturaPresentacionIrvin = new Texture(Gdx.files.internal("Irvi.png"));
-        texturaPresentacionMia = new Texture(Gdx.files.internal("Mare.png"));
-        texturaPresentacionJavier = new Texture(Gdx.files.internal("Javo.png"));
-        texturaPresentacionNuri = new Texture(Gdx.files.internal("Nuria.png"));
-        texturaPresentacionFer = new Texture(Gdx.files.internal("Fercho.png"));
+        texturaPresentacionIrvin = assetManager.get("Irvi.png");
+        texturaPresentacionMia = assetManager.get("Mare.png");
+        texturaPresentacionJavier = assetManager.get("Javo.png");
+        texturaPresentacionNuri = assetManager.get("Nuria.png");
+        texturaPresentacionFer = assetManager.get("Fercho.png");
+
+        efectoClick = assetManager.get("sonidoVentana.wav");
+        this.efectoClick.setVolume(70,70);
+
     }
 
     @Override

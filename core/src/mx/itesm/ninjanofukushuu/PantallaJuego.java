@@ -123,12 +123,7 @@ public class PantallaJuego implements Screen{
         camaraHUD.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camaraHUD.update();
 
-
-
-        this.cargarRecursos();
         this.crearObjetos();
-        this.cargarAudio();
-
 
         // Indicar el objeto que atiende los eventos de touch (entrada en general)
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
@@ -136,44 +131,10 @@ public class PantallaJuego implements Screen{
         estadoJuego = EstadosJuego.JUGANDO;
     }
 
-    private void cargarAudio() {
-        this.efectoSaltoHataku = Gdx.audio.newSound(Gdx.files.internal("efectoSaltoHataku.wav"));
-        this.efectoSaltoHataku.setVolume(70, 70);
-        this.efectoTomarVida = Gdx.audio.newSound(Gdx.files.internal("efectoVida.wav"));
-        this.efectoTomarVida.setVolume(70, 70);
-        this.efectoTomarPergamino = Gdx.audio.newSound(Gdx.files.internal("efectoPergamino.wav"));
-        this.efectoTomarPergamino.setVolume(70,70);
 
+  //los recursos se cargan en la pantallaCargando
 
-
-    }
-
-    // Carga los recursos a través del administrador de assets
-    private void cargarRecursos() {
-        // Cargar las texturas/mapas
-        AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
-        assetManager.load("MapaDeTierraV2.tmx", TiledMap.class);  // Cargar info del mapa
-        assetManager.load("marioSprite.png", Texture.class);    // Cargar imagen
-        // Texturas de los botones
-        assetManager.load("derecha.png", Texture.class);
-        assetManager.load("izquierda.png", Texture.class);
-        assetManager.load("salto.png", Texture.class);
-
-        // Se bloquea hasta que cargue todos los recursos
-        assetManager.finishLoading();
-        //Textura Objetos que estan en la pantalla
-        this.texturaScroll = new Texture(Gdx.files.internal("scroll.png"));
-        this.texturaPocion = new Texture(Gdx.files.internal("pocion.png"));
-        this.texturaEN1=new Texture(Gdx.files.internal("TierraE.png"));
-        this.texturaTemplo = new Texture(Gdx.files.internal("temploVerde.png"));
-
-        //****************************************************************//
-        //nota: se debe cosniderar que la imagen de vidas va cambiar cuando el ninja obtenga una parte de la armadura, recomiendo usar un switch y usar una bandera (boolean) cuando se pase el nivel y deppendiendo de la bandera cargar el archivo de imagenn correspondiente
-        //Por ahora no lo implemento ya que estamos trabajando en el primer nivel.
-        texturaVidas = new Texture(Gdx.files.internal("life1.png"));
-    }
-
-    private void crearObjetos() {
+    private void crearObjetos(){
         AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
         // Carga el mapa en memoria
         mapa = assetManager.get("MapaDeTierraV2.tmx");
@@ -188,24 +149,47 @@ public class PantallaJuego implements Screen{
         // Posición inicial del personaje
         hataku.getSprite().setPosition(Principal.ANCHO_MUNDO / 10, Principal.ALTO_MUNDO * 0.90f);
 
+        //Textura Objetos que estan en la pantalla
+        this.texturaScroll = assetManager.get("scroll.png");
+        this.texturaPocion = assetManager.get("pocion.png");
+        this.texturaEN1=assetManager.get("TierraE.png");
+        this.texturaTemplo = assetManager.get("temploVerde.png");
+
+        //****************************************************************//
+        //nota: se debe cosniderar que la imagen de vidas va cambiar cuando el ninja obtenga una parte de la armadura, recomiendo usar un switch y usar una bandera (boolean) cuando se pase el nivel y deppendiendo de la bandera cargar el archivo de imagenn correspondiente
+        //Por ahora no lo implemento ya que estamos trabajando en el primer nivel.
+        this.texturaVidas = assetManager.get("life1.png");
+
+
+        //Musica y efectos se obtienen y se ajusta el volumen
+        this.efectoSaltoHataku = assetManager.get("efectoSaltoHataku.wav");
+        this.efectoSaltoHataku.setVolume(70, 70);
+        this.efectoTomarVida = assetManager.get("efectoVida.wav");
+        this.efectoTomarVida.setVolume(70, 70);
+        this.efectoTomarPergamino = assetManager.get("efectoPergamino.wav");
+        this.efectoTomarPergamino.setVolume(70, 70);
+
+
+
         // Crear los botones
         texturaBtnIzquierda = assetManager.get("izquierda.png");
         btnIzquierda = new Boton(texturaBtnIzquierda);
-        btnIzquierda.setPosicion(TAM_CELDA*2,TAM_CELDA/5);
+        btnIzquierda.setPosicion(TAM_CELDA * 2, TAM_CELDA / 5);
         btnIzquierda.setAlfa(0.7f); // Un poco de transparencia
         btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON + 20, PantallaJuego.TAMANIO_BOTON+20);
 
         texturaBtnDerecha = assetManager.get("derecha.png");
         btnDerecha = new Boton(texturaBtnDerecha);
-        btnDerecha.setPosicion(TAM_CELDA*8, TAM_CELDA/5);
+        btnDerecha.setPosicion(TAM_CELDA * 8, TAM_CELDA / 5);
         btnDerecha.setAlfa(0.7f); // Un poco de transparencia
-        btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON + 20, PantallaJuego.TAMANIO_BOTON+20);
+        btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON + 20, PantallaJuego.TAMANIO_BOTON + 20);
 
-        texturaSalto = assetManager.get("salto.png"); //boton para saltar... carga su imagen
+        texturaSalto =  assetManager.get("salto.png"); //boton para saltar... carga su imagen
         btnSalto = new Boton(texturaSalto);
-        btnSalto.setPosicion(Principal.ANCHO_MUNDO-7 * TAM_CELDA, 100 + TAM_CELDA);
+        btnSalto.setPosicion(Principal.ANCHO_MUNDO - 7 * TAM_CELDA, 100 + TAM_CELDA);
         btnSalto.setAlfa(0.7f);
-        btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON+20);
+        btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON + 20);
+
 
 
 
@@ -311,9 +295,6 @@ public class PantallaJuego implements Screen{
 
 
         }
-
-
-
 
     }
 
@@ -607,10 +588,9 @@ public class PantallaJuego implements Screen{
         this.efectoTomarPergamino.dispose();
 
 
+
         // texturaVidas.dispose(); //EN DUDA SI SE DEBE DE ELIMIAR, YA QUE SI QUEREMOS QUE ,LAS VIDAS ACTUALES SIGAN EM EL SIGUIENTE NIVEL, LAS CARAS DEBEN DE SER LAS MISMAS A LAS VIDAS.. , si quisieramos que las vidas regresen a 3 al pasar el nivel, entonces si se deben de elimar la textura de vidas.
     }
-
-
 
     /*
     Clase utilizada para manejar los eventos de touch en la pantalla

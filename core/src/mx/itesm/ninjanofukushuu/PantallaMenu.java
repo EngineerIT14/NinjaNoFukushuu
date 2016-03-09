@@ -2,7 +2,6 @@ package mx.itesm.ninjanofukushuu;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -63,8 +62,10 @@ public class PantallaMenu implements Screen {
         camara.update();
 
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara); //Se va ajustar la vista
-        cargarTexturas();
-        cargarAudio();
+
+        //this.crearObjetos();
+        this.cargarTexturas();
+        this.cargarAudio();
         //Creando objetos...
         fondo = new Fondo(texturaFondo);
         btnPLay = new Boton(texturaBtnPlay);
@@ -150,32 +151,34 @@ public class PantallaMenu implements Screen {
             camara.unproject(coordernadas); //Traduce las coordenadas
             float x = coordernadas.x;
             float y = coordernadas.y;
+
             switch ( verifcarBoton(x,y)){
+                //en la pantalla cargando determinara que cargar... se manda el numero correspondiente para saber que se va cargar en esa clase..
                 case 1:
                     Gdx.app.log("leerEntrada", "HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
                     this.efectoClick.play();
-
-
-                 //   this.btnPLay.setAlfa(.5f); //se hace transparente al presionarse..
-                    principal.setScreen(new PantallaJuego(principal));
+                    principal.setScreen(new PantallaCargando(1,principal));
                     break;
                 case 2:
                     Gdx.app.log("leerEntrada", "HAY UN TAP EN INSTRUCCIONES!"); //cuando le apretan va decir esto..
                    // this.btnInstructions.setAlfa(.5f);  //al presionarse se hace transparente
-
                     this.efectoClick.play();
+                    principal.setScreen(new PantallaCargando(2,principal));
+
 
                     break;
                 case 3:
                     Gdx.app.log("leerEntrada", "HAY UN TAP EN GALLERIA!"); //cuando le apretan va decir esto..
                     //this.btnGallery.setAlfa(.5f);  //al presionarse se hace transparente
                     this.efectoClick.play();
+                    principal.setScreen(new PantallaCargando(3,principal));
+
                     break;
                 case 4:
                     //this.btnAbout.setAlfa(.5f);
                     Gdx.app.log("leerEntrada", "HAY UN TAP! EN ABOUT"); //cuando le apretan va decir esto..
                     this.efectoClick.play();
-                    principal.setScreen(new PantallaAcerca(principal));
+                    principal.setScreen(new PantallaCargando(4,principal));
                     break;
                 default:
                     break;
