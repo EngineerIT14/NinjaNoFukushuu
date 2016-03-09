@@ -511,7 +511,7 @@ public class PantallaJuego implements Screen{
     private void probarChoqueParedesSalto() {
         Personaje.EstadoSalto estado = hataku.getEstadoSalto();
         // Quitar porque este método sólo se llama cuando se está moviendo
-        if ( estado!= Personaje.EstadoSalto.BAJANDO){
+        if ( estado!= Personaje.EstadoSalto.SUBIENDO){
             return;
         }
         float px = hataku.getX();    // Posición actual
@@ -526,7 +526,7 @@ public class PantallaJuego implements Screen{
         TiledMapTileLayer capaPlataforma = (TiledMapTileLayer) mapa.getLayers().get(1);
         if ( capaPlataforma.getCell(celdaX,celdaY) != null ) {
             // Colisionará, dejamos de moverlo
-            hataku.setEstado(Personaje.EstadoMovimiento.QUIETO);
+            hataku.setEstadoSalto(Personaje.EstadoSalto.BAJANDO);
         } else {
             hataku.actualizar();
         }
