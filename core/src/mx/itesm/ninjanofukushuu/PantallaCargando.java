@@ -15,8 +15,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import javax.xml.soap.Text;
-
 /**
  * Descripción: Pantala intermedia entre el menú y el juego
  * Profesor: Roberto Martinez Román
@@ -147,8 +145,7 @@ public class PantallaCargando implements Screen
 
     private void actualizar() {
 
-        if (assetManager.update()) {
-            // Terminó la carga, cambiar de pantalla
+        if (assetManager.update()) {// Terminó la carga, cambiar de pantalla
             switch(this.pantallaCargar){//dependiendo que se cargo, cambiamos la pantalla...
                 case 0: break;
                 case 1:
