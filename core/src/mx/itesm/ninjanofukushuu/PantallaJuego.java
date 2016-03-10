@@ -132,7 +132,7 @@ public class PantallaJuego implements Screen{
     }
 
 
-  //los recursos se cargan en la pantallaCargando
+    //los recursos se cargan en la pantallaCargando
 
     private void crearObjetos(){
         AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
@@ -289,9 +289,9 @@ public class PantallaJuego implements Screen{
                 this.vidas.add(nuevo);
             }
 
-            this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX()+100,this.textoMarcadorVidas.getY()-50);
-            this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX()+170,this.textoMarcadorVidas.getY()-50);
-            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+240,this.textoMarcadorVidas.getY()-50);
+            this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX()+40,this.textoMarcadorVidas.getY()-50);
+            this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX()+110,this.textoMarcadorVidas.getY()-50);
+            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+180,this.textoMarcadorVidas.getY()-50);
 
 
         }
@@ -352,7 +352,7 @@ public class PantallaJuego implements Screen{
         this.textoMarcadorPergaminos.mostrarMensaje(batch, "Pergaminos: " + this.marcadorPergaminos);
 
         // Mostrar vida
-        this.textoMarcadorVidas.mostrarMensaje(batch, "Vida: " + this.marcadorVidas);
+        this.textoMarcadorVidas.mostrarMensaje(batch, "Vida: ");
 
         batch.end();
         //Dibuja el HUD
@@ -620,7 +620,7 @@ public class PantallaJuego implements Screen{
                     // Tocó el botón saltar
                     hataku.saltar();
                     efectoSaltoHataku.play();
-            }
+                }
             }
             return true;    // Indica que ya procesó el evento
         }
