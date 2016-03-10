@@ -3,6 +3,7 @@ package mx.itesm.ninjanofukushuu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -63,9 +64,10 @@ public class PantallaMenu implements Screen {
 
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara); //Se va ajustar la vista
 
-        //this.crearObjetos();
-        this.cargarTexturas();
-        this.cargarAudio();
+        this.cargarAudioJuego();
+        this.crearObjetos();
+
+
         //Creando objetos...
         fondo = new Fondo(texturaFondo);
         btnPLay = new Boton(texturaBtnPlay);
@@ -92,21 +94,27 @@ public class PantallaMenu implements Screen {
         batch = new SpriteBatch();
     }
 
-    private void cargarTexturas() {
 
-        texturaFondo = new Texture(Gdx.files.internal("fondoMenu.png"));
-        texturaBtnPlay = new Texture(Gdx.files.internal("botonPlay.png"));
-        texturaBtnInstructions = new Texture(Gdx.files.internal("botonInstructions.png"));
-        texturaBtnGallery = new Texture(Gdx.files.internal("botonGallery.png"));
-        texturaBtnAbout =  new Texture(Gdx.files.internal("botonAbout.png"));
-        texturaLogo = new Texture(Gdx.files.internal("Title.png"));
-    }
+    //Obtener las texturas cargadas en la pantallaCargando.java
+    private void crearObjetos(){
+        AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
 
-    //Metodo para cargar los efectos de sonido y la música de fondo
-    private void cargarAudio() {
-        this.efectoClick = Gdx.audio.newSound(Gdx.files.internal("sonidoVentana.wav"));
+        texturaFondo = assetManager.get("fondoMenu.png");
+        texturaBtnPlay =  assetManager.get("botonPlay.png");
+        texturaBtnInstructions =  assetManager.get("botonInstructions.png");
+        texturaBtnGallery = assetManager.get("botonGallery.png");
+        texturaBtnAbout =  assetManager.get("botonAbout.png");
+        texturaLogo = assetManager.get("Title.png");
+
+        //sonido
+        this.efectoClick = assetManager.get("sonidoVentana.wav");
         this.efectoClick.setVolume(70,70);
 
+    }
+
+
+    //Metodo para cargar la musica del juego
+    private void cargarAudioJuego() {
         //Musica de fondo
         if(!this.banderaCancionJuego) { //si es falsa, entonces no se esta escuchando nada....
             this.musicaFondo = Gdx.audio.newMusic(Gdx.files.internal("musicaJuegoPrincipal.wav"));
@@ -114,8 +122,6 @@ public class PantallaMenu implements Screen {
             this.musicaFondo.setVolume(70);
             this.musicaFondo.play();
         }
-
-
     }
 
 
@@ -157,13 +163,13 @@ public class PantallaMenu implements Screen {
                 case 1:
                     Gdx.app.log("leerEntrada", "HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
                     this.efectoClick.play();
-                    principal.setScreen(new PantallaCargando(1,principal));
+                    principal.setScreen(new PantallaCargando(1,principal,true));  //se manda true porque ya esta la cancion reproduciendose
                     break;
                 case 2:
                     Gdx.app.log("leerEntrada", "HAY UN TAP EN INSTRUCCIONES!"); //cuando le apretan va decir esto..
                    // this.btnInstructions.setAlfa(.5f);  //al presionarse se hace transparente
                     this.efectoClick.play();
-                    principal.setScreen(new PantallaCargando(2,principal));
+                    principal.setScreen(new PantallaCargando(2,principal,true));
 
 
                     break;
@@ -171,14 +177,14 @@ public class PantallaMenu implements Screen {
                     Gdx.app.log("leerEntrada", "HAY UN TAP EN GALLERIA!"); //cuando le apretan va decir esto..
                     //this.btnGallery.setAlfa(.5f);  //al presionarse se hace transparente
                     this.efectoClick.play();
-                    principal.setScreen(new PantallaCargando(3,principal));
+                    principal.setScreen(new PantallaCargando(3,principal,true));
 
                     break;
                 case 4:
                     //this.btnAbout.setAlfa(.5f);
                     Gdx.app.log("leerEntrada", "HAY UN TAP! EN ABOUT"); //cuando le apretan va decir esto..
                     this.efectoClick.play();
-                    principal.setScreen(new PantallaCargando(4,principal));
+                    principal.setScreen(new PantallaCargando(4,principal,true));
                     break;
                 default:
                     break;

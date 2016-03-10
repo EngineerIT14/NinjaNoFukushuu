@@ -33,7 +33,7 @@ public class Principal extends Game  {
         // Agregamos un loader para los mapas
         assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         // Pantalla inicial
-        setScreen(new PantallaMenu(this,false)); //Se envia falso ya que no se esta escuchando ningun musica ahorita..
+        setScreen(new PantallaCargando(0,this,false)); //Se envia falso ya que no se esta escuchando ningun musica ahorita.. se envia 0 ya que se quiere cargar la pantalla principal
     }
 
     // Método accesor de assetManager

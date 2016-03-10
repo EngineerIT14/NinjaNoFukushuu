@@ -35,6 +35,7 @@ public class PantallaCargando implements Screen
     private AssetManager assetManager;  // Asset manager principal
 
     private int pantallaCargar; //aqui se va almacenar un numero que indicara que pantalla va cargar
+    private boolean banderaMusicaFondo; //Para saber que en la clase pantallaMenu al cargarse, que bandera se manda y no se reprodusca la cancion de fondo más de 1 vez si esta ya puesta..
                                 /*
                                 * 1: elementos juego
                                 * 2: elementos instrucciones
@@ -42,9 +43,10 @@ public class PantallaCargando implements Screen
                                 * 4: elementos acerca de
                                 * */
 
-    public PantallaCargando(Integer nivel,Principal plataforma) {
+    public PantallaCargando(Integer pantalla,Principal plataforma, boolean banderaMusicaFondo) {
         this.plataforma = plataforma;
-        this.pantallaCargar = nivel;
+        this.pantallaCargar = pantalla;
+        this.banderaMusicaFondo = banderaMusicaFondo;
         this.assetManager = plataforma.getAssetManager();
     }
 
@@ -79,7 +81,17 @@ public class PantallaCargando implements Screen
                                 * 4: elementos acerca de
             */
         switch(pantallaCargar) {
-            case 0: break;
+            case 0: //Pantalla Menu
+                    assetManager.load("fondoMenu.png", Texture.class);    // Cargar imagen
+                    assetManager.load("botonPlay.png", Texture.class);    // Cargar imagen
+                    assetManager.load("botonInstructions.png", Texture.class);    // Cargar imagen
+                    assetManager.load("botonGallery.png", Texture.class);    // Cargar imagen
+                    assetManager.load("botonAbout.png", Texture.class);    // Cargar imagen
+                    assetManager.load("Title.png", Texture.class);    // Cargar imagen
+                    assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
+
+                    break;
+
             case 1: //Pantalla Juego
                     assetManager.load("MapaDeTierraV2.tmx", TiledMap.class);  // Cargar info del mapa
                     assetManager.load("marioSprite.png", Texture.class);    // Cargar imagen
@@ -147,12 +159,14 @@ public class PantallaCargando implements Screen
 
         if (assetManager.update()) {// Terminó la carga, cambiar de pantalla
             switch(this.pantallaCargar){//dependiendo que se cargo, cambiamos la pantalla...
-                case 0: break;
+                case 0:
+                    plataforma.setScreen(new PantallaMenu(this.plataforma,this.banderaMusicaFondo));
+                    break;
                 case 1:
-                    plataforma.setScreen(new PantallaJuego(plataforma));
+                    plataforma.setScreen(new PantallaJuego(this.plataforma));
                     break;
                 case 4:
-                    plataforma.setScreen(new PantallaAcerca(plataforma));
+                    plataforma.setScreen(new PantallaAcerca(this.plataforma));
                     break;
                 default: break;
             }
