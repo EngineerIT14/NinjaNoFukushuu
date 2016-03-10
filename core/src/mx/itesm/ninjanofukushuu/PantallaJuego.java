@@ -556,43 +556,6 @@ public class PantallaJuego implements Screen{
             hataku.actualizar();
         }
     }
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    // Libera los assets
-    @Override
-    public void dispose() {
-        this.plataforma.dispose();
-        this.batch.dispose();
-        this.mapa.dispose();
-
-        this.rendererMapa.dispose();
-        //texturas
-        this.texturaHataku.dispose();
-        this.texturaBtnDerecha.dispose();
-        this.texturaBtnIzquierda.dispose();
-        this.texturaSalto.dispose();
-        this.texturaVidas.dispose();
-        this.texturaPocion.dispose();
-        this.texturaScroll.dispose();
-
-        this.texturaEN1.dispose();
-        this.texturaTemplo.dispose();
-
-        //sonidos (efectos)
-        this.efectoSaltoHataku.dispose();
-        this.efectoTomarVida.dispose();
-        this.efectoTomarPergamino.dispose();
-
-        // texturaVidas.dispose(); //EN DUDA SI SE DEBE DE ELIMIAR, YA QUE SI QUEREMOS QUE ,LAS VIDAS ACTUALES SIGAN EM EL SIGUIENTE NIVEL, LAS CARAS DEBEN DE SER LAS MISMAS A LAS VIDAS.. , si quisieramos que las vidas regresen a 3 al pasar el nivel, entonces si se deben de elimar la textura de vidas.
-    }
 
     /*
     Clase utilizada para manejar los eventos de touch en la pantalla
@@ -653,6 +616,47 @@ public class PantallaJuego implements Screen{
             y = coordenadas.y;
         }
     }
+
+    //Se ejecutan de manera automatica cuando nos movemos de pantalla...
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    // Libera los assets
+    @Override
+    public void dispose() {
+        this.plataforma.dispose();
+        this.batch.dispose();
+        this.mapa.dispose();
+
+
+        this.rendererMapa.dispose();
+        //texturas
+        this.texturaHataku.dispose();
+        this.texturaBtnDerecha.dispose();
+        this.texturaBtnIzquierda.dispose();
+        this.texturaSalto.dispose();
+        this.texturaVidas.dispose();
+        this.texturaPocion.dispose();
+        this.texturaScroll.dispose();
+        texturaVidas.dispose();
+        this.texturaEN1.dispose();
+        this.texturaTemplo.dispose();
+
+        //sonidos (efectos)
+        this.efectoSaltoHataku.dispose();
+        this.efectoTomarVida.dispose();
+        this.efectoTomarPergamino.dispose();
+
+
+    }
+
 
     public enum EstadosJuego {
         GANO,

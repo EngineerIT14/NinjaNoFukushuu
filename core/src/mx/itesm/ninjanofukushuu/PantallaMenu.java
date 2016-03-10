@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.InputAdapter; //Este es para el touchUp y touchDown...
 
 
 /*
@@ -32,6 +33,7 @@ public class PantallaMenu implements Screen {
     private Fondo fondo;
     private Texture texturaFondo;
     //Botones
+    private OrthographicCamera camaraHUD;   // Cámara Botones
     private Boton btnPLay,btnInstructions,btnGallery,btnAbout;
     private Texture texturaBtnPlay,texturaBtnInstructions,texturaBtnGallery,texturaBtnAbout; //Textura, se administran los recursos...
     private static final int anchoBoton = 400 , altoBoton = 160;
@@ -47,6 +49,9 @@ public class PantallaMenu implements Screen {
     private Sound efectoClick;
     private Music musicaFondo;
     private boolean banderaCancionJuego; //Esta bandera sirve para que se vuelva a crear el objeto de musicaFondo cuando regresas al menu principal y se interrumpa la que esta actualmente.
+
+    //Dependiendo el caso,  sabemos que PANTALLA CARGAR, esto se hace en touchUp.
+    // /*caso 1 = boton play, caso 2 = boton instrucciones, caso 3 = boton galería, caso 4 = boton acercaDe, caso0 = ningunBoton*/
 
 
     public PantallaMenu(Principal principal,boolean banderaCancionJuego) { //Constructor
@@ -64,6 +69,15 @@ public class PantallaMenu implements Screen {
 
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara); //Se va ajustar la vista
 
+
+        //CamaraHUD para botones
+        camaraHUD = new OrthographicCamera(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
+        camaraHUD.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
+        camaraHUD.update();
+
+        // Indicar el objeto que atiende los eventos de touch (entrada en general)
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
+
         this.cargarAudioJuego();
         this.crearObjetos();
 
@@ -80,7 +94,7 @@ public class PantallaMenu implements Screen {
         btnPLay.setPosicion(675, PantallaMenu.posicionYBotonJugarInstrucciones);
         btnGallery.setPosicion(15,PantallaMenu.posicionYBotonGalleryAbout);
         btnAbout.setPosicion(880,PantallaMenu.posicionYBotonGalleryAbout);
-        logo.setPosicion( PantallaMenu.posicionCentradaXLogo, PantallaMenu.posicionCentradaYLogo );
+        logo.setPosicion(PantallaMenu.posicionCentradaXLogo, PantallaMenu.posicionCentradaYLogo);
 
         //ajustando el tamaño
         fondo.setTamanio(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO);
@@ -91,8 +105,8 @@ public class PantallaMenu implements Screen {
         logo.setTamanio(anchoLogo-10, altoLogo);
 
         batch = new SpriteBatch();
-    }
 
+    }
 
     //Obtener las texturas cargadas en la pantallaCargando.java
     private void crearObjetos(){
@@ -110,7 +124,6 @@ public class PantallaMenu implements Screen {
 
     }
 
-
     //Metodo para cargar la musica del juego
     private void cargarAudioJuego() {
         //Musica de fondo
@@ -122,7 +135,6 @@ public class PantallaMenu implements Screen {
         }
     }
 
-
     //Metodo de la clase Screen, ya fue implementado
     @Override//Recordar que render es automatico..
     public void render(float delta) { //ese delta es el tiempo, 60fps entonces el float seria 1/60
@@ -132,12 +144,17 @@ public class PantallaMenu implements Screen {
 
         batch.setProjectionMatrix(camara.combined); //Con este ajustas el batch...,en este caso, el boton, se ajusta.
 
-        leerEntrada(); //Pata revisar touch
+
         //fondo.getSprite().rotate(.1f);
         //DIBUJAR, primero las cosas que van atras....
         batch.begin(); //comienza a dibujar
         fondo.render(batch); //SE DIBUJAN LAS COSAS AQUI EN MEDIO...
         logo.render(batch);
+        batch.end();
+
+        //Dibuja el HUD, que es para los botones
+        batch.setProjectionMatrix(camaraHUD.combined);
+        batch.begin();
         btnPLay.render(batch);
         btnInstructions.render(batch);
         btnGallery.render(batch);
@@ -147,80 +164,15 @@ public class PantallaMenu implements Screen {
     }
 
 
-
-    private void leerEntrada() {
-        if (Gdx.input.justTouched()){ //Si el usuario toco la pantalla...
-            Vector3 coordernadas = new Vector3();
-            coordernadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camara.unproject(coordernadas); //Traduce las coordenadas
-            float x = coordernadas.x;
-            float y = coordernadas.y;
-
-            switch ( verifcarBoton(x,y)){
-                //en la pantalla cargando determinara que cargar... se manda el numero correspondiente para saber que se va cargar en esa clase..
-                case 1:
-                    Gdx.app.log("leerEntrada", "HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
-                    this.efectoClick.play();
-                    principal.setScreen(new PantallaCargando(1,principal,true));  //se manda true porque ya esta la cancion reproduciendose
-                    break;
-                case 2:
-                    Gdx.app.log("leerEntrada", "HAY UN TAP EN INSTRUCCIONES!"); //cuando le apretan va decir esto..
-                   // this.btnInstructions.setAlfa(.5f);  //al presionarse se hace transparente
-                    this.efectoClick.play();
-                    principal.setScreen(new PantallaCargando(2,principal,true));
-
-
-                    break;
-                case 3:
-                    Gdx.app.log("leerEntrada", "HAY UN TAP EN GALLERIA!"); //cuando le apretan va decir esto..
-                    //this.btnGallery.setAlfa(.5f);  //al presionarse se hace transparente
-                    this.efectoClick.play();
-                    principal.setScreen(new PantallaCargando(3,principal,true));
-
-                    break;
-                case 4:
-                    //this.btnAbout.setAlfa(.5f);
-                    Gdx.app.log("leerEntrada", "HAY UN TAP! EN ABOUT"); //cuando le apretan va decir esto..
-                    this.efectoClick.play();
-                    principal.setScreen(new PantallaCargando(4,principal,true));
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    private int verifcarBoton(float x, float y) {
-        Sprite spritebtnPlay = btnPLay.getSprite();
-        Sprite spritebtnInstructions = btnInstructions.getSprite();
-        Sprite spritebtnGallery = btnGallery.getSprite();
-        Sprite spritebtnAbout = btnAbout.getSprite();
-        //Verificar que la x y La y esten dentro de las dimensiones del sprite...
-        /*caso 1 = boton play, caso 2 = boton instrucciones, caso 3 = boton galería, caso 4 = boton acercaDe, caso0 = ningunBoton*/
-        if(x>=spritebtnPlay.getX() && x<=spritebtnPlay.getX()+spritebtnPlay.getWidth() && y>=spritebtnPlay.getY() && y<=spritebtnPlay.getY()+spritebtnPlay.getHeight()){
-            return 1;
-        }
-        else if(x>=spritebtnInstructions.getX() && x<=spritebtnInstructions.getX()+spritebtnInstructions.getWidth() && y>=spritebtnInstructions.getY() && y<=spritebtnInstructions.getY()+spritebtnInstructions.getHeight()){
-            return 2;
-        }
-        else if(x>=spritebtnGallery.getX() && x<=spritebtnGallery.getX()+spritebtnGallery.getWidth() && y>=spritebtnGallery.getY() && y<=spritebtnGallery.getY()+spritebtnInstructions.getHeight()){
-            return 3;
-        }
-        else if(x>=spritebtnAbout.getX() && x<=spritebtnAbout.getX()+spritebtnAbout.getWidth() && y>=spritebtnAbout.getY() && y<=spritebtnAbout.getY()+spritebtnAbout.getHeight()){
-            return 4;
-        }
-        else{
-           return 0;
-        }
-
-    }
+    /*REVISION DE TOUCH*/
+    //se elimino metodo leer entrada, ahora eso es de touchDown
+    //Se eliminó el método de verificarBoton... ahora se usa touchUp, touchDown...
 
     //Métodos de la clase screen.
     @Override
     public void resize(int width, int height) {
         vista.update(width,height); //Actualizate!!!!
     }
-
 
 
     @Override
@@ -235,7 +187,97 @@ public class PantallaMenu implements Screen {
 
 
 
+    //Clase utilizada para manejar los eventos de touch en la pantalla
+    public class ProcesadorEntrada extends InputAdapter {
+        private Vector3 coordenadas = new Vector3();
+        private float x, y;     // Las coordenadas en la pantalla virtual
+        private boolean banderaBotonPlay = false, banderaBotonInstructions = false, banderaBotonGallery = false, banderaBotonAbout = false; //Banderas que nos sirven para saber si el boton está transparente o no además que nos ayudan para la segunda condicion de touchUp.
+        /*
+        Se ejecuta cuando el usuario pone un dedo sobre la pantalla, los dos primeros parámetros
+        son las coordenadas relativas a la pantalla física (0,0) en la esquina superior izquierda
+        pointer - es el número de dedo que se pone en la pantalla, el primero es 0
+        button - el botón del mouse
+         */
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
+            transformarCoordenadas(screenX, screenY);
+
+            if (btnPLay.contiene(x, y) ) {
+                btnPLay.setAlfa(.5f);
+                this.banderaBotonPlay = true; //el boton está transparente, entonces activo la bandera..
+            }
+            else if (btnInstructions.contiene(x, y)) {
+                btnInstructions.setAlfa(.5f);  //al presionarse se hace transparente
+                this.banderaBotonInstructions = true;
+            }
+            else if (btnGallery.contiene(x, y) ) {
+                btnGallery.setAlfa(.5f);
+                this.banderaBotonGallery = true;
+            }
+            else if (btnAbout.contiene(x, y) ) {
+                btnAbout.setAlfa(.5f);
+                this.banderaBotonAbout = true;
+            }
+            return true;    // Indica que ya procesó el evento
+        }
+
+        //Se ejecuta cuando el usuario QUITA el dedo de la pantalla.
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            transformarCoordenadas(screenX, screenY);
+
+            // Preguntar si las coordenadas son de cierto lugar de donde se quito el dedo
+            //caso 1 = boton play, caso 2 = boton instrucciones, caso 3 = boton galería, caso 4 = boton acercaDe, caso0 = ningunBoton
+
+            //en la pantalla cargando determinara que cargar... se manda el numero correspondiente para saber que se va cargar en esa clase..
+            if (btnPLay.contiene(x, y) &&  this.banderaBotonPlay) {
+                Gdx.app.log("leerEntrada", "HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
+                efectoClick.play(); //efecto de sonido
+                principal.setScreen(new PantallaCargando(1,principal,true));  //se manda true porque ya esta la cancion reproduciendose
+
+            }
+            else if (btnInstructions.contiene(x, y) && this.banderaBotonInstructions) {
+                Gdx.app.log("leerEntrada", "HAY UN TAP EN INSTRUCCIONES!"); //cuando le apretan va decir esto..
+                efectoClick.play();
+                principal.setScreen(new PantallaCargando(2,principal,true)); //se manda true porque ya esta la cancion reproduciendose
+            }
+            else if (btnGallery.contiene(x, y) && this.banderaBotonGallery ) {
+                Gdx.app.log("leerEntrada", "HAY UN TAP EN GALLERIA!"); //cuando le apretan va decir esto..
+                efectoClick.play();
+                principal.setScreen(new PantallaCargando(3,principal,true));//se manda true porque ya esta la cancion reproduciendose
+            }
+            else if (btnAbout.contiene(x, y) && this.banderaBotonAbout ) {
+                Gdx.app.log("leerEntrada", "HAY UN TAP! EN ABOUT"); //cuando le apretan va decir esto..
+                efectoClick.play();
+                principal.setScreen(new PantallaCargando(4,principal,true)); //se manda true porque ya esta la cancion reproduciendose
+            }
+            else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
+                banderaBotonPlay = false;
+                btnPLay.setAlfa(1);
+                banderaBotonInstructions = false;
+                btnInstructions.setAlfa(1);
+                banderaBotonGallery = false;
+                btnGallery.setAlfa(1);
+                banderaBotonAbout = false;
+                btnAbout.setAlfa(1);
+
+
+
+            }
+
+            return true;    // Indica que ya procesó el evento
+        }
+
+        private void transformarCoordenadas(int screenX, int screenY) {
+            // Transformar las coordenadas de la pantalla física a la cámara
+            coordenadas.set(screenX, screenY, 0);
+            camaraHUD.unproject(coordenadas); //camaraHUD es para los botones
+            // Obtiene las coordenadas relativas a la pantalla virtual
+            x = coordenadas.x;
+            y = coordenadas.y;
+        }
+    }
 
 
 
@@ -263,6 +305,7 @@ public class PantallaMenu implements Screen {
         texturaLogo.dispose();
         //sonido
         this.efectoClick.dispose();
+
         //NOTA: LA MUSICA DE FONDO NO SE LIBER, YA QUE QUEREMOS QUE SE SIGA ESCUCHANDO..
     }
 }
