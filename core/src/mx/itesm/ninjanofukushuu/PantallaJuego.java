@@ -165,7 +165,7 @@ public class PantallaJuego implements Screen{
         this.efectoSaltoHataku = assetManager.get("efectoSaltoHataku.wav");
         this.efectoSaltoHataku.setVolume(70, 70);
         this.efectoTomarVida = assetManager.get("efectoVida.wav");
-        this.efectoTomarVida.setVolume(70, 70);
+        this.efectoTomarVida.setVolume(600, 600);
 
         this.efectoTomarPergamino = assetManager.get("efectoPergamino.wav");
         this.efectoTomarPergamino.setVolume(70, 70);
