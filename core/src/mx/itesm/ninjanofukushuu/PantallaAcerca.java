@@ -1,6 +1,7 @@
 package mx.itesm.ninjanofukushuu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -54,9 +55,13 @@ public class PantallaAcerca implements Screen {
         camara = new OrthographicCamera(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO);
         camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
+        // Indicar el objeto que atiende los eventos de touch (entrada en general)
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
         this.crearObjetos();
+
+
 
         //Crear fondo
         fondo = new Fondo(texturaFondo);
@@ -147,8 +152,7 @@ public class PantallaAcerca implements Screen {
 
         batch.setProjectionMatrix(camara.combined);
 
-        //Metodo pare revisar si huba touch
-        leerEntrada();
+        this.leerEntrada();
 
         fondo.getSprite().rotate(.1f);
         //DIBUJAR
@@ -179,6 +183,12 @@ public class PantallaAcerca implements Screen {
         }
         batch.end();
     }
+
+
+    /*REVISION DE TOUCH*/
+    //se elimino metodo leerentrada, ahora eso es de touchDown
+    //Se eliminó el método de verificarBoton... ahora se usa touchUp, touchDown...
+
 
     //Metodo para leer entradas
     private void leerEntrada() {
@@ -325,6 +335,22 @@ public class PantallaAcerca implements Screen {
         }
         return 0;
     }
+
+    //Clase utilizada para manejar los eventos de touch en la pantalla, la coloco porque se estaban dando problemas con pantall Menu. (Se estaban quedando registradas las localizaciones de los botones de la pantalla menu en pantalla acerca de..)
+    public class ProcesadorEntrada extends InputAdapter {
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            return true;    // Indica que ya procesó el evento
+        }
+        //Se ejecuta cuando el usuario QUITA el dedo de la pantalla.
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            return true;    // Indica que ya procesó el evento
+        }
+
+    }
+
+
     @Override
     public void resize(int width, int height) {
         vista.update(width,height);
