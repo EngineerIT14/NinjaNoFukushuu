@@ -211,14 +211,15 @@ public class PantallaMenu implements Screen {
                 btnInstructions.setAlfa(.5f);  //al presionarse se hace transparente
                 this.banderaBotonInstructions = true;
             }
-            else if (btnGallery.contiene(x, y) ) {
-                btnGallery.setAlfa(.5f);
-                this.banderaBotonGallery = true;
-            }
             else if (btnAbout.contiene(x, y) ) {
                 btnAbout.setAlfa(.5f);
                 this.banderaBotonAbout = true;
             }
+            else if (btnGallery.contiene(x, y) ) {
+                btnGallery.setAlfa(.5f);
+                this.banderaBotonGallery = true;
+            }
+
             return true;    // Indica que ya procesó el evento
         }
 
@@ -242,15 +243,15 @@ public class PantallaMenu implements Screen {
                 efectoClick.play();
                 principal.setScreen(new PantallaCargando(2,principal,true)); //se manda true porque ya esta la cancion reproduciendose
             }
-            else if (btnGallery.contiene(x, y) && this.banderaBotonGallery ) {
-                Gdx.app.log("leerEntrada", "HAY UN TAP EN GALLERIA!"); //cuando le apretan va decir esto..
-                efectoClick.play();
-                principal.setScreen(new PantallaCargando(3,principal,true));//se manda true porque ya esta la cancion reproduciendose
-            }
             else if (btnAbout.contiene(x, y) && this.banderaBotonAbout ) {
                 Gdx.app.log("leerEntrada", "HAY UN TAP! EN ABOUT"); //cuando le apretan va decir esto..
                 efectoClick.play();
                 principal.setScreen(new PantallaCargando(4,principal,true)); //se manda true porque ya esta la cancion reproduciendose
+            }
+            else if (btnGallery.contiene(x, y) && this.banderaBotonGallery ) {
+                Gdx.app.log("leerEntrada", "HAY UN TAP EN GALLERIA!"); //cuando le apretan va decir esto..
+                efectoClick.play();
+                principal.setScreen(new PantallaCargando(3,principal,true));//se manda true porque ya esta la cancion reproduciendose
             }
             else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
                 banderaBotonPlay = false;
@@ -262,10 +263,7 @@ public class PantallaMenu implements Screen {
                 banderaBotonAbout = false;
                 btnAbout.setAlfa(1);
 
-
-
             }
-
             return true;    // Indica que ya procesó el evento
         }
 
