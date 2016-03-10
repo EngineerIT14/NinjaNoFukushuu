@@ -41,7 +41,7 @@ public class PantallaMenu implements Screen {
     private Logotipo logo;
     private Texture texturaLogo;
     private static final int anchoLogo = 700 , altoLogo = 350;
-    private static final int posicionCentradaXLogo = 330 , posicionCentradaYLogo = 460;
+    private static final int posicionCentradaXLogo = 330 , posicionCentradaYLogo = 380;
 
     //Efectos y musica de fondo
     private Sound efectoClick;
@@ -66,7 +66,6 @@ public class PantallaMenu implements Screen {
 
         this.cargarAudioJuego();
         this.crearObjetos();
-
 
         //Creando objetos...
         fondo = new Fondo(texturaFondo);
@@ -105,7 +104,6 @@ public class PantallaMenu implements Screen {
         texturaBtnGallery = assetManager.get("botonGallery.png");
         texturaBtnAbout =  assetManager.get("botonAbout.png");
         texturaLogo = assetManager.get("Title.png");
-
         //sonido
         this.efectoClick = assetManager.get("sonidoVentana.wav");
         this.efectoClick.setVolume(70,70);
