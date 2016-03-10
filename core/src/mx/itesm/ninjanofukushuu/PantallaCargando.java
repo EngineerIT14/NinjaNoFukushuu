@@ -61,9 +61,17 @@ public class PantallaCargando implements Screen
         batch = new SpriteBatch();
 
         // Cargar recursos
-        assetManager.load("cargando.png", Texture.class);
-        assetManager.finishLoading();
-        texturaCargando = assetManager.get("cargando.png");
+
+        if(!this.banderaMusicaFondo) { //si la banderaMusica es falsa, lo que nos quiere decir es que por primera vez se carga la pantalla, entonces se esta iniciando la APP, por lo que debe de mostrar el logo del equipoRocket y del tec.. recordar que apartir de la pantalllaMenu es donde se manda true  como argumentos..
+            assetManager.load("logoRocket.png", Texture.class);
+            assetManager.finishLoading();
+            texturaCargando = assetManager.get("logoRocket.png");
+        }
+        else{
+            assetManager.load("cargando.png", Texture.class);
+            assetManager.finishLoading();
+            texturaCargando = assetManager.get("cargando.png");
+        }
         spriteCargando = new Sprite(texturaCargando);
         spriteCargando.setPosition(Principal.ANCHO_MUNDO / 2 - spriteCargando.getWidth() / 2,
                 Principal.ALTO_MUNDO / 2 - spriteCargando.getHeight() / 2);
@@ -144,8 +152,10 @@ public class PantallaCargando implements Screen
 
         // Dibujar
         borrarPantalla();
-        //gira la imagen cargando
-        spriteCargando.setRotation(spriteCargando.getRotation() + 15);
+
+        //gira la imagen cargando cuando no sea la primer pantalla
+        if(banderaMusicaFondo == true) //al inicial la APP, se esta mandando como argumento falso ya que no se esta reproduciendo la musica antes.. por ende, cuando es true, estas cargando las otras pantallas, porm lo que debe de girar la imagen..
+            spriteCargando.setRotation(spriteCargando.getRotation() + 15);
 
         batch.setProjectionMatrix(camara.combined);
 
