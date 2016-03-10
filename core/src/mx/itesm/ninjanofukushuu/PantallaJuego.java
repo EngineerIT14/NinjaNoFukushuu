@@ -147,7 +147,8 @@ public class PantallaJuego implements Screen{
         // Crear el personaje
         hataku = new Personaje(texturaHataku);
         // Posición inicial del personaje
-        hataku.getSprite().setPosition(Principal.ANCHO_MUNDO / 10, Principal.ALTO_MUNDO * 0.90f);
+        if(this.numeroNivel == 1) //en el nivel tierra
+            hataku.getSprite().setPosition(50, 100);
 
         //Textura Objetos que estan en la pantalla
         this.texturaScroll = assetManager.get("scroll.png");
