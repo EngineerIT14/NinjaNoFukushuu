@@ -190,7 +190,7 @@ public class PantallaJuego implements Screen{
         btnSalto = new Boton(texturaSalto);
         btnSalto.setPosicion(Principal.ANCHO_MUNDO - 7 * TAM_CELDA, 100 + TAM_CELDA);
         btnSalto.setAlfa(0.7f);
-        btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON + 20);
+        btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON+20, PantallaJuego.TAMANIO_BOTON + 20);
 
 
 
@@ -311,6 +311,7 @@ public class PantallaJuego implements Screen{
         // Actualizar objetos en la pantalla
         moverPersonaje();
         actualizarCamara(); // Mover la cámara para que siga al personaje
+
 
         // Dibujar
         borrarPantalla();
@@ -489,6 +490,7 @@ public class PantallaJuego implements Screen{
                 probarChoqueParedesSalto();
                 break;
         }
+
     }
 
     private void probarChoqueParedesSalto() {
@@ -589,8 +591,6 @@ public class PantallaJuego implements Screen{
         this.efectoTomarVida.dispose();
         this.efectoTomarPergamino.dispose();
 
-
-
         // texturaVidas.dispose(); //EN DUDA SI SE DEBE DE ELIMIAR, YA QUE SI QUEREMOS QUE ,LAS VIDAS ACTUALES SIGAN EM EL SIGUIENTE NIVEL, LAS CARAS DEBEN DE SER LAS MISMAS A LAS VIDAS.. , si quisieramos que las vidas regresen a 3 al pasar el nivel, entonces si se deben de elimar la textura de vidas.
     }
 
@@ -618,10 +618,13 @@ public class PantallaJuego implements Screen{
                 } else if (btnIzquierda.contiene(x, y) && hataku.getEstadoMovimiento() != Personaje.EstadoMovimiento.INICIANDO) {
                     // Tocó el botón izquierda, hacer que el personaje se mueva a la izquierda
                     hataku.setEstado(Personaje.EstadoMovimiento.MOV_IZQUIERDA);
-                } else if (btnSalto.contiene(x, y)) {
+                } else if (btnSalto.contiene(x, y) ) {
                     // Tocó el botón saltar
+                    if(Personaje.EstadoSalto.EN_PISO == hataku.getEstadoSalto()) //Para que solamente suene una vez el sonido de salto
+                        efectoSaltoHataku.play();
                     hataku.saltar();
-                    efectoSaltoHataku.play();
+
+
                 }
             }
             return true;    // Indica que ya procesó el evento
