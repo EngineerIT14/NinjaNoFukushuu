@@ -166,6 +166,7 @@ public class PantallaJuego implements Screen{
         this.efectoSaltoHataku.setVolume(70, 70);
         this.efectoTomarVida = assetManager.get("efectoVida.wav");
         this.efectoTomarVida.setVolume(70, 70);
+
         this.efectoTomarPergamino = assetManager.get("efectoPergamino.wav");
         this.efectoTomarPergamino.setVolume(70, 70);
 
@@ -403,7 +404,7 @@ public class PantallaJuego implements Screen{
                     && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight() + Enemigo.getSprite().getY()){
                 if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
                     this.marcadorVidas--;
-                    vidas.removeIndex(0);
+                    vidas.removeIndex(vidas.size-1);
                     Enemigo.quitarElemento();
                 }
                 break;
