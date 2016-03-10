@@ -29,9 +29,7 @@ public class PantallaAcerca implements Screen {
     //Fondo
     private Fondo fondo;
     private Texture texturaFondo;
-    /* //Abanico
-     private Logotipo abanico;
-     private Texture texturaAbanico;*/
+
     //Botones
     private Boton btnMia,btnNuri,btnIrvin,btnJavier, btnFer, btnRegresar;
     private Texture texturaBtnMia,texturaBtnNuri, texturaBtnIrvin,texturaBtnJavier, texturaBtnFer, texturaRegresar;
@@ -55,8 +53,6 @@ public class PantallaAcerca implements Screen {
         camara = new OrthographicCamera(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO);
         camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
-        // Indicar el objeto que atiende los eventos de touch (entrada en general)
-        Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
         this.crearObjetos();
@@ -183,11 +179,6 @@ public class PantallaAcerca implements Screen {
         }
         batch.end();
     }
-
-
-    /*REVISION DE TOUCH*/
-    //se elimino metodo leerentrada, ahora eso es de touchDown
-    //Se eliminó el método de verificarBoton... ahora se usa touchUp, touchDown...
 
 
     //Metodo para leer entradas
@@ -336,19 +327,6 @@ public class PantallaAcerca implements Screen {
         return 0;
     }
 
-    //Clase utilizada para manejar los eventos de touch en la pantalla, la coloco porque se estaban dando problemas con pantall Menu. (Se estaban quedando registradas las localizaciones de los botones de la pantalla menu en pantalla acerca de..)
-    public class ProcesadorEntrada extends InputAdapter {
-        @Override
-        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            return true;    // Indica que ya procesó el evento
-        }
-        //Se ejecuta cuando el usuario QUITA el dedo de la pantalla.
-        @Override
-        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            return true;    // Indica que ya procesó el evento
-        }
-
-    }
 
 
     @Override

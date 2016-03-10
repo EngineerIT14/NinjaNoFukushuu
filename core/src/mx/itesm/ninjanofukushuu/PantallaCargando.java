@@ -3,6 +3,7 @@ package mx.itesm.ninjanofukushuu;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
@@ -57,8 +58,12 @@ public class PantallaCargando implements Screen
         camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
         vista = new StretchViewport(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO, camara);
-
         batch = new SpriteBatch();
+
+        // Indicar el objeto que atiende los eventos de touch (entrada en general)
+        // Clase utilizada para manejar los eventos de touch en la pantalla, la coloco porque se estaban dando problemas al aparecer la pantalla cargando, ya que se quedaban registrado los botones del menu principal y el usuario si presionaba algo en pantallla cargando crasheaba...
+        //Se resetea con esta configuracion de procesadorEntradar();
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
         // Cargar recursos
 
@@ -208,6 +213,23 @@ public class PantallaCargando implements Screen
 
     }
 
+    //Clase utilizada para manejar los eventos de touch en la pantalla, la coloco porque se estaban dando problemas al aparecer la pantalla cargando, ya que se quedaban registrado los botones del menu principal y el usuario si presionaba algo en pantallla cargando crasheaba...
+    //Se resetea con esta configuracion el touch...
+    public class ProcesadorEntrada extends InputAdapter {
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            return true;    // Indica que ya procesó el evento
+        }
+        //Se ejecuta cuando el usuario QUITA el dedo de la pantalla.
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            return true;    // Indica que ya procesó el evento
+        }
+
+    }
+
+
+
     @Override
     public void hide() {
 
@@ -215,7 +237,9 @@ public class PantallaCargando implements Screen
 
     @Override
     public void dispose() {
+        plataforma.dispose();
         texturaCargando.dispose();
+        batch.dispose();
         // Los assets de PantallaJuego se liberan en el método dispose de PantallaJuego
     }
 }
