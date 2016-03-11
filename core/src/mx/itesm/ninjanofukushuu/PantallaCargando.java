@@ -154,6 +154,14 @@ public class PantallaCargando implements Screen
                     assetManager.load("efectoPergamino.wav",Sound.class);
                     assetManager.load("efectoDanio.wav",Sound.class);
                     break;
+            case 2:
+                    assetManager.load("N.jpg",Texture.class);
+                    assetManager.load("return.png",Texture.class);
+                    break;
+            case 3:
+                    assetManager.load("M.jpg", Texture.class);
+                    assetManager.load("return.png",Texture.class);
+                    break;
 
             case 4: //Pantalla acerca de.
                     assetManager.load("Fondo.jpg",Texture.class);
@@ -209,6 +217,12 @@ public class PantallaCargando implements Screen
                     break;
                 case 1:
                     plataforma.setScreen(new PantallaJuego(this.plataforma));
+                    break;
+                case 2:
+                    plataforma.setScreen(new PantallaInstrucciones(this.plataforma));
+                    break;
+                case 3:
+                    plataforma.setScreen(new PantallaGaleria(this.plataforma));
                     break;
                 case 4:
                     plataforma.setScreen(new PantallaAcerca(this.plataforma));
