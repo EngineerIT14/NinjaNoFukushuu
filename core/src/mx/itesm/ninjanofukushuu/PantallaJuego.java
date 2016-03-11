@@ -567,6 +567,7 @@ public class PantallaJuego implements Screen{
     {
         private Vector3 coordenadas = new Vector3();
         private float x, y;     // Las coordenadas en la pantalla virtual
+        private boolean banderaBotonDerecha = false, banderaBotonIzquierda = false, banderaBotonSaltar = false; //Nos sirven para saber si lo debemos de regresar de tamaño y quitarle la trasnparencia cuando han sido presionados, esto se hace  en touchUp
 
 
         /*
@@ -584,12 +585,14 @@ public class PantallaJuego implements Screen{
                     // Tocó el botón derecha, hacer que el personaje se mueva a la derecha
                     btnDerecha.setAlfa(.5f);
                     btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON-5); //lo hago más pequeño
+                    this.banderaBotonDerecha = true; //fue presionado le boton, indico aquí que fue preisonado.
                     hataku.setEstado(Personaje.EstadoMovimiento.MOV_DERECHA);
 
                 } else if (btnIzquierda.contiene(x, y) && hataku.getEstadoMovimiento() != Personaje.EstadoMovimiento.INICIANDO) {
                     // Tocó el botón izquierda, hacer que el personaje se mueva a la izquierda
                     btnIzquierda.setAlfa(.5f);
                     btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON-5); //lo hago más pequeño
+                    this.banderaBotonIzquierda = true;
                     hataku.setEstado(Personaje.EstadoMovimiento.MOV_IZQUIERDA);
                 } else if (btnSalto.contiene(x, y) ) {
                     // Tocó el botón saltar
@@ -598,6 +601,7 @@ public class PantallaJuego implements Screen{
 
                     btnSalto.setAlfa(.5f);
                     btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON-5); //lo hago más pequeño
+                    this.banderaBotonSaltar = true;
                     hataku.saltar();
                 }
             }
@@ -611,16 +615,39 @@ public class PantallaJuego implements Screen{
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
             // Preguntar si las coordenadas son de algún botón para DETENER el movimiento
-            if ( hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.INICIANDO && (btnDerecha.contiene(x, y) || btnIzquierda.contiene(x,y)) || btnSalto.contiene(x,y) ) {
+            if ( hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.INICIANDO && (btnDerecha.contiene(x, y) || btnIzquierda.contiene(x,y))) {
                 // Tocó el botón derecha, hacer que el personaje se mueva a la derecha
                 hataku.setEstado(Personaje.EstadoMovimiento.QUIETO);
-                btnDerecha.setAlfa(.7f);
-                btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON ); //lo hago más pequeño
-                btnIzquierda.setAlfa(.7f);
-                btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //lo hago más pequeño
-                btnSalto.setAlfa(.7f);
-                btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON); //lo hago más pequeño
+                //Ajusto tamaño y transprencia
+                if(banderaBotonDerecha) {
+                    btnDerecha.setAlfa(.7f);
+                    btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se rgresa a posicion original
+                    banderaBotonDerecha = false;
+                }
+                if(banderaBotonIzquierda) {
+                    btnIzquierda.setAlfa(.7f);
+                    btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se regresa a posicion original
+                    banderaBotonIzquierda = false;
+                }
+
+                if (banderaBotonSaltar) {
+                    btnSalto.setAlfa(.7f);
+                    btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se regresa a posicion orignal
+                    banderaBotonDerecha = false;
+                }
+
+
             }
+
+            if( hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.INICIANDO && btnSalto.contiene(x,y)){
+                if (banderaBotonSaltar) {
+                    btnSalto.setAlfa(.7f);
+                    btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se regresa a posicion orignal
+                    banderaBotonDerecha = false;
+                }
+
+            }
+
             return true;    // Indica que ya procesó el evento
         }
 
