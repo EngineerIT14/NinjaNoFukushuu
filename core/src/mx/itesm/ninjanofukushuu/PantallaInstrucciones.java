@@ -27,7 +27,7 @@ public class PantallaInstrucciones implements Screen {
     //Fondo
     private Fondo fondo;
     private Texture texturaFondo;
-    private Texture texturaImagenNinjaFondo;
+
 
     private Boton btnRegresar;
     private Texture texturaRegresar;
