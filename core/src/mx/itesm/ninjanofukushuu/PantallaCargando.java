@@ -32,6 +32,16 @@ public class PantallaCargando implements Screen
     // Imagen cargando
     private Texture texturaCargando;
     private Sprite spriteCargando;
+    //Fondo de la textura  (la base blanca)
+    private Texture texturaFondoCargando;
+    private Sprite spriteFondoCargando;
+
+    //Textura cargando...
+    private  Texture texturaLetrasLoading;
+    private Sprite spriteLetrasLoading;
+
+
+
 
     private AssetManager assetManager;  // Asset manager principal
 
@@ -73,13 +83,28 @@ public class PantallaCargando implements Screen
             texturaCargando = assetManager.get("logoRocket.png");
         }
         else{
+            assetManager.load("fondoCargando.png", Texture.class);
             assetManager.load("cargando.png", Texture.class);
+            assetManager.load("LOADING2.png",Texture.class);
             assetManager.finishLoading();
             texturaCargando = assetManager.get("cargando.png");
+            this.texturaFondoCargando = assetManager.get("fondoCargando.png");
+            this.texturaLetrasLoading = assetManager.get("LOADING2.png");
+
+
+            spriteFondoCargando = new Sprite(this.texturaFondoCargando);
+            spriteFondoCargando.setPosition(Principal.ANCHO_MUNDO / 2 - spriteFondoCargando.getWidth() / 2,
+                    Principal.ALTO_MUNDO / 2 - spriteFondoCargando.getHeight() / 2);
+
+            spriteLetrasLoading = new Sprite(this.texturaLetrasLoading);
+            spriteLetrasLoading.setPosition(Principal.ANCHO_MUNDO / 2 - spriteLetrasLoading.getWidth() / 2,
+                    Principal.ALTO_MUNDO / 2 - spriteLetrasLoading.getHeight() / 2 -300);
+
         }
         spriteCargando = new Sprite(texturaCargando);
         spriteCargando.setPosition(Principal.ANCHO_MUNDO / 2 - spriteCargando.getWidth() / 2,
-                Principal.ALTO_MUNDO / 2 - spriteCargando.getHeight() / 2);
+                                    Principal.ALTO_MUNDO / 2 - spriteCargando.getHeight() / 2);
+
 
         cargarRecursos();
     }
@@ -159,14 +184,19 @@ public class PantallaCargando implements Screen
         borrarPantalla();
 
         //gira la imagen cargando cuando no sea la primer pantalla
-        if(banderaMusicaFondo == true) //al inicial la APP, se esta mandando como argumento falso ya que no se esta reproduciendo la musica antes.. por ende, cuando es true, estas cargando las otras pantallas, porm lo que debe de girar la imagen..
-            spriteCargando.setRotation(spriteCargando.getRotation() + 15);
+        if(banderaMusicaFondo == true) //al iniciar la APP, se esta mandando como argumento falso ya que no se esta reproduciendo la musica antes.. por ende, cuando es true, estas cargando las otras pantallas, porm lo que debe de girar la imagen..
+            spriteCargando.setRotation(spriteCargando.getRotation() -5);
 
         batch.setProjectionMatrix(camara.combined);
 
         // Entre begin-end dibujamos nuestros objetos en pantalla
         batch.begin();
+        if(banderaMusicaFondo == true) { //al iniciar la APP, se esta mandando como argumento falso ya que no se esta reproduciendo la musica antes.. por ende, cuando es true, estas cargando las otras pantallas,
+            spriteFondoCargando.draw(batch);
+            spriteLetrasLoading.draw(batch);
+        }
         spriteCargando.draw(batch);
+
         batch.end();
     }
 
@@ -193,7 +223,7 @@ public class PantallaCargando implements Screen
     }
 
     private void borrarPantalla() {
-        Gdx.gl.glClearColor(0.42f, 0.55f, 1, 1);    // r, g, b, alpha
+        Gdx.gl.glClearColor(0, 0, 0, 0);    // r, g, b, alpha  //color NEGRO
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
