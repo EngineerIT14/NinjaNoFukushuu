@@ -89,7 +89,7 @@ public class PantallaJuego implements Screen{
     private EstadosJuego estadoJuego;
 
     //Efectos del juego
-    private Sound efectoSaltoHataku, efectoTomarVida, efectoTomarPergamino;
+    private Sound efectoSaltoHataku, efectoTomarVida, efectoTomarPergamino, efectoDanio;
 
 
 
@@ -166,10 +166,12 @@ public class PantallaJuego implements Screen{
         this.efectoSaltoHataku = assetManager.get("efectoSaltoHataku.wav");
         this.efectoSaltoHataku.setVolume(70, 70);
         this.efectoTomarVida = assetManager.get("efectoVida.wav");
-        this.efectoTomarVida.setVolume(600, 600);
-
+        this.efectoTomarVida.setVolume(70, 70);
         this.efectoTomarPergamino = assetManager.get("efectoPergamino.wav");
         this.efectoTomarPergamino.setVolume(70, 70);
+        this.efectoDanio = assetManager.get("efectoDanio.wav");
+        this.efectoTomarPergamino.setVolume(70, 70);
+
 
 
 
@@ -204,14 +206,14 @@ public class PantallaJuego implements Screen{
         this.scroll = new Array<ObjetosJuego>(3);
         for (int i = 0; i<3;i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaScroll);
-            nuevo.setTamanio(15,40);
+            nuevo.setTamanio(12,35);
             this.scroll.add(nuevo);
         }
 
         //Posiciones pergamino nivel tierra
-        this.scroll.get(0).setPosicion(50,325); //pergamino de en medio...
-        this.scroll.get(1).setPosicion(750, 53); //pergamino de hasta abajo
-        this.scroll.get(2).setPosicion(630, 85); //pergamino que está en precipicio
+        this.scroll.get(0).setPosicion(50,340); //pergamino de en medio...
+        this.scroll.get(1).setPosicion(747, 45 ); //pergamino de hasta abajo
+        this.scroll.get(2).setPosicion(630, 73); //pergamino que está en precipicio
 
         //Pociones: En todos los niveles solo hay 2 pociones.
         this.pociones = new Array<ObjetosJuego>(2);
@@ -222,8 +224,8 @@ public class PantallaJuego implements Screen{
         }
 
         //Se colocan las pociones en el lugar correspondiente,
-        this.pociones.get(0).setPosicion(950, Principal.ALTO_MUNDO / 2 -70);
-        this.pociones.get(1).setPosicion(650, 230);
+        this.pociones.get(0).setPosicion(940, Principal.ALTO_MUNDO / 2 -40);
+        this.pociones.get(1).setPosicion(650, 240);
 
         //Enemigos: 5 enemigos en el primer nivel
         this.enemigoN1= new Array<ObjetosJuego>(5);
@@ -385,7 +387,7 @@ public class PantallaJuego implements Screen{
         //Recoger pociones al tocarlas
         for (ObjetosJuego pocion : pociones) {
             if(hataku.getSprite().getX()>= pocion.getSprite().getX() && hataku.getSprite().getX()<= pocion.getSprite().getX() + pocion.getSprite().getWidth()
-                    && hataku.getSprite().getY() >= pocion.getSprite().getY() && hataku.getSprite().getY() <= pocion.getSprite().getHeight() + pocion.getSprite().getY()){
+                    && hataku.getSprite().getY() >= pocion.getSprite().getY() && hataku.getSprite().getY()+1 <= pocion.getSprite().getHeight() + pocion.getSprite().getY()){
                 if(vidas.size<3) {
                     if (pocion.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
                         this.marcadorVidas++;
@@ -406,6 +408,7 @@ public class PantallaJuego implements Screen{
                     && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight() + Enemigo.getSprite().getY()){
                 if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
                     this.marcadorVidas--;
+                    this.efectoDanio.play();
                     vidas.removeIndex(vidas.size-1);
                     Enemigo.quitarElemento();
                 }
@@ -653,6 +656,7 @@ public class PantallaJuego implements Screen{
         this.efectoSaltoHataku.dispose();
         this.efectoTomarVida.dispose();
         this.efectoTomarPergamino.dispose();
+        this.efectoDanio.dispose();
 
 
     }

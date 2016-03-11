@@ -124,10 +124,10 @@ public class PantallaCargando implements Screen
                     //caritaVida
                     assetManager.load("life1.png", Texture.class);
                     //sonidos
-
                     assetManager.load("efectoSaltoHataku.wav",Sound.class);
                     assetManager.load("efectoVida.wav",Sound.class);
                     assetManager.load("efectoPergamino.wav",Sound.class);
+                    assetManager.load("efectoDanio.wav",Sound.class);
                     break;
 
             case 4: //Pantalla acerca de.
