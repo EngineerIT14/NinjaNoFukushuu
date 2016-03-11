@@ -253,6 +253,7 @@ public class PantallaMenu implements Screen {
                 principal.setScreen(new PantallaCargando(3,principal,true));//se manda true porque ya esta la cancion reproduciendose
             }
             else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
+                // se le quita la transparencia...
                 banderaBotonPlay = false;
                 btnPLay.setAlfa(1);
                 banderaBotonInstructions = false;

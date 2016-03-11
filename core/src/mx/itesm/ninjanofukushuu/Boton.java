@@ -18,13 +18,13 @@ Profesor: Roberto Martinez Román.
 public class Boton {
 
     private Sprite sprite;              // Imagen
-    private Rectangle rectColision;     // Rectangulo para verificar colisiones o touch
+    //private Rectangle rectColision;     // Rectangulo para verificar colisiones o touch
 
 
     public Boton(Texture textura) {
         sprite = new Sprite(textura);
         // El rectángulo de colisión siempre está 'sobre' el sprite
-        rectColision = new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+        //rectColision = new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
     }
 
     public void render(SpriteBatch batch){ //Se ejecuta automaticamente.. dibuja el boton..
@@ -42,7 +42,7 @@ public class Boton {
 
     public void setPosicion(float x, float y) {
         sprite.setPosition(x, y);
-        rectColision.setPosition(x,y);
+        //rectColision.setPosition(x,y);
     }
 
     public void setTamanio(float ancho,float alto){
@@ -57,14 +57,14 @@ public class Boton {
         return sprite;
     }
 
-    public boolean contiene(float x, float y) {
-        return rectColision.contains(x,y);
+    public boolean contiene(float x, float y) { //Para verificar el touch
+        return  this.getX() <= x && this.getX() + sprite.getWidth() >= x && this.getY() <= y && this.getY() + sprite.getHeight() >= y;
     }
 
 
-    public Rectangle getRectColision() {
+    /*public Rectangle getRectColision() {
         return rectColision;
-    }
+    }*/
 
 
 
