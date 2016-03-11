@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  * Descripción: Pantala intermedia entre el menú y el juego
  * Profesor: Roberto Martinez Román
+ * Autores: Javier e Irvin Emmanuel Trujillo Díaz
  */
 public class PantallaCargando implements Screen
 {
