@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
- * Created by DELL on 10/03/2016.
+ * Created by Javier Antonio García Roque  on 10/03/2016.
  */
 public class PantallaGaleria implements Screen {
     private final Principal principal;
