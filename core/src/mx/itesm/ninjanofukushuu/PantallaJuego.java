@@ -475,7 +475,6 @@ public class PantallaJuego implements Screen{
                 break;
             case MOV_DERECHA:       // Siempre se mueve
             case MOV_IZQUIERDA:
-                hataku.actualizar();
                 probarChoqueParedes();      // Prueba si debe moverse
                 break;
         }
@@ -561,7 +560,7 @@ public class PantallaJuego implements Screen{
         float px = hataku.getX();    // Posición actual
         // Posición después de actualizar
         px = hataku.getEstadoMovimiento()==Personaje.EstadoMovimiento.MOV_DERECHA? px+Personaje.VELOCIDAD_X:
-                px- Personaje.VELOCIDAD_Y;
+                px- Personaje.VELOCIDAD_X;
         int celdaX = (int)(px/TAM_CELDA);   // Casilla del personaje en X
         if (hataku.getEstadoMovimiento()== Personaje.EstadoMovimiento.MOV_DERECHA) {
             celdaX++;   // Casilla del lado derecho
