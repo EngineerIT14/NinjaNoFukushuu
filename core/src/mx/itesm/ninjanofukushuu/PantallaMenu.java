@@ -190,7 +190,8 @@ public class PantallaMenu implements Screen {
     public class ProcesadorEntrada extends InputAdapter {
         private Vector3 coordenadas = new Vector3();
         private float x, y;     // Las coordenadas en la pantalla virtual
-        private boolean banderaBotonPlay = false, banderaBotonInstructions = false, banderaBotonGallery = false, banderaBotonAbout = false; //Banderas que nos sirven para saber si el boton está transparente o no además que nos ayudan para la segunda condicion de touchUp.
+
+        private boolean banderaBotonPlay = false, banderaBotonInstructions = false, banderaBotonGallery = false, banderaBotonAbout = false; //Banderas que nos sirven para saber si el boton está transparente y  pequeño o  no además que nos ayudan para la segunda condicion de touchUp.
         /*
         Se ejecuta cuando el usuario pone un dedo sobre la pantalla, los dos primeros parámetros
         son las coordenadas relativas a la pantalla física (0,0) en la esquina superior izquierda
@@ -204,18 +205,22 @@ public class PantallaMenu implements Screen {
 
             if (btnPLay.contiene(x, y) ) {
                 btnPLay.setAlfa(.5f);
+                btnPLay.setTamanio(anchoBoton,altoBoton-15); //Lo hago más pequeño
                 this.banderaBotonPlay = true; //el boton está transparente, entonces activo la bandera..
             }
             else if (btnInstructions.contiene(x, y)) {
                 btnInstructions.setAlfa(.5f);  //al presionarse se hace transparente
+                btnInstructions.setTamanio(anchoBoton-10,altoBoton-15); //Lo hago más pequeño
                 this.banderaBotonInstructions = true;
             }
             else if (btnAbout.contiene(x, y) ) {
                 btnAbout.setAlfa(.5f);
+                btnAbout.setTamanio(anchoBoton+10,altoBoton-15); //Lo hago más pequeño
                 this.banderaBotonAbout = true;
             }
             else if (btnGallery.contiene(x, y) ) {
                 btnGallery.setAlfa(.5f);
+                btnGallery.setTamanio(anchoBoton+10,altoBoton-15); //Lo hago más pequeño
                 this.banderaBotonGallery = true;
             }
 
@@ -253,15 +258,20 @@ public class PantallaMenu implements Screen {
                 principal.setScreen(new PantallaCargando(3,principal,true));//se manda true porque ya esta la cancion reproduciendose
             }
             else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
-                // se le quita la transparencia...
+                // se le quita la transparencia y se regresa a su tamaño original
+                //el -10, +10 +10 es porque así estan los botones originales con el tamaño correspondiente
                 banderaBotonPlay = false;
                 btnPLay.setAlfa(1);
+                btnPLay.setTamanio(anchoBoton, altoBoton); //tamaño original
                 banderaBotonInstructions = false;
                 btnInstructions.setAlfa(1);
+                btnInstructions.setTamanio(anchoBoton-10, altoBoton); //tamaño original
                 banderaBotonGallery = false;
                 btnGallery.setAlfa(1);
+                btnGallery.setTamanio(anchoBoton+10, altoBoton); //tamaño orginal
                 banderaBotonAbout = false;
                 btnAbout.setAlfa(1);
+                btnAbout.setTamanio(anchoBoton+10,altoBoton); //tamaño orginal
 
             }
             return true;    // Indica que ya procesó el evento
