@@ -667,6 +667,38 @@ public class PantallaJuego implements Screen{
             return true;    // Indica que ya procesó el evento
         }
 
+        // Se ejecuta cuando el usuario MUEVE el dedo sobre la pantalla
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+            transformarCoordenadas(screenX, screenY);
+            // Acaba de salir de las fechas (y no es el botón de salto)
+            if (x<Principal.ANCHO_MUNDO/2 && hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.QUIETO) {
+                if (!btnIzquierda.contiene(x, y) && !btnDerecha.contiene(x, y) ) {
+                    hataku.setEstado(Personaje.EstadoMovimiento.QUIETO);
+                    //Ajusto tamaño y transprencia
+                    if(banderaBotonDerecha) {
+                        btnDerecha.setAlfa(.7f);
+                        btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se rgresa a posicion original
+                        banderaBotonSaltar = false;
+                    }
+                    if(banderaBotonIzquierda) {
+                        btnIzquierda.setAlfa(.7f);
+                        btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se regresa a posicion original
+                        banderaBotonIzquierda = false;
+                    }
+                }
+                if (!btnSalto.contiene(x,y)){
+                    if (banderaBotonSaltar) {
+                        btnSalto.setAlfa(.7f);
+                        btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se regresa a posicion orignal
+                        banderaBotonSaltar = false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         private void transformarCoordenadas(int screenX, int screenY) {
             // Transformar las coordenadas de la pantalla física a la cámara HUD
             coordenadas.set(screenX, screenY, 0);
