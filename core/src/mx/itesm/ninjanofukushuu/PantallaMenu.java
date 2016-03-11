@@ -30,7 +30,9 @@ public class PantallaMenu implements Screen {
     private SpriteBatch batch;
     //Fondo
     private Fondo fondo;
+    private Fondo fondo1; //este rota
     private Texture texturaFondo;
+    private Texture textureFondo1;
     //Botones
     private OrthographicCamera camaraHUD;   // Cámara Botones
     private Boton btnPLay,btnInstructions,btnGallery,btnAbout;
@@ -81,6 +83,7 @@ public class PantallaMenu implements Screen {
         this.crearObjetos();
 
         //Creando objetos...
+        fondo1 = new Fondo(textureFondo1);
         fondo = new Fondo(texturaFondo);
         btnPLay = new Boton(texturaBtnPlay);
         btnInstructions  = new Boton(texturaBtnInstructions);
@@ -96,13 +99,15 @@ public class PantallaMenu implements Screen {
         logo.setPosicion(PantallaMenu.posicionCentradaXLogo, PantallaMenu.posicionCentradaYLogo);
 
         //ajustando el tamaño
-        fondo.setTamanio(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO);
+        fondo.setTamanio(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
         btnPLay.setTamanio(anchoBoton, altoBoton);
         btnInstructions.setTamanio(anchoBoton-10, altoBoton);
         btnGallery.setTamanio(anchoBoton+10, altoBoton); //Se le modifico el ancho a gallery para que se vea estético..
         btnAbout.setTamanio(anchoBoton+10, altoBoton);
         logo.setTamanio(anchoLogo-10, altoLogo);
 
+        fondo1.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
+        fondo1.getSprite().setOrigin(1500 / 2, 1500 / 2);
         batch = new SpriteBatch();
 
     }
@@ -110,8 +115,8 @@ public class PantallaMenu implements Screen {
     //Obtener las texturas cargadas en la pantallaCargando.java
     private void crearObjetos(){
         AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
-
-        texturaFondo = assetManager.get("fondoMenu.png");
+        textureFondo1 = assetManager.get("FONDOMIL2.jpg");
+        texturaFondo = assetManager.get("NINJAH3.png");
         texturaBtnPlay =  assetManager.get("botonPlay.png");
         texturaBtnInstructions =  assetManager.get("botonInstructions.png");
         texturaBtnGallery = assetManager.get("botonGallery.png");
@@ -143,10 +148,11 @@ public class PantallaMenu implements Screen {
 
         batch.setProjectionMatrix(camara.combined); //Con este ajustas el batch...,en este caso, el boton, se ajusta.
 
-
+        fondo1.getSprite().rotate(.1f);
         //fondo.getSprite().rotate(.1f);
         //DIBUJAR, primero las cosas que van atras....
         batch.begin(); //comienza a dibujar
+        fondo1.render(batch);
         fondo.render(batch); //SE DIBUJAN LAS COSAS AQUI EN MEDIO...
         logo.render(batch);
         batch.end();

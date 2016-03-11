@@ -79,9 +79,9 @@ public class PantallaCargando implements Screen
         // Cargar recursos
 
         if(!this.banderaMusicaFondo) { //si la banderaMusica es falsa, lo que nos quiere decir es que por primera vez se carga la pantalla, entonces se esta iniciando la APP, por lo que debe de mostrar el logo del equipoRocket y del tec.. recordar que apartir de la pantalllaMenu es donde se manda true  como argumentos..
-            assetManager.load("logoRocket.png", Texture.class);
+            assetManager.load("logoRocket.jpg", Texture.class);
             assetManager.finishLoading();
-            texturaCargando = assetManager.get("logoRocket.png");
+            texturaCargando = assetManager.get("logoRocket.jpg");
         }
         else{
             assetManager.load("fondoCargando.png", Texture.class);
@@ -121,7 +121,8 @@ public class PantallaCargando implements Screen
             */
         switch(pantallaCargar) {
             case 0: //Pantalla Menu
-                    assetManager.load("fondoMenu.png", Texture.class);    // Cargar imagen
+                    assetManager.load("NINJAH3.png", Texture.class);    // Cargar imagen
+                    assetManager.load("FONDOMIL2.jpg", Texture.class);    // Cargar imagen
                     assetManager.load("botonPlay.png", Texture.class);    // Cargar imagen
                     assetManager.load("botonInstructions.png", Texture.class);    // Cargar imagen
                     assetManager.load("botonGallery.png", Texture.class);    // Cargar imagen
