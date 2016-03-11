@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /*
-Desarrollador = Luis Fernando
+Desarrolladores = Luis Fernando e Irvin Emmanuel Trujillo Díaz
 Descripción: Esta clase es la encargada de representar la pantalla de "About", donde se muestran elementos para conocer acerca de los desarrolladores
 Profesor: Roberto Martinez Román.
  */

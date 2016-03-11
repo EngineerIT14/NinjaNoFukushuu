@@ -157,10 +157,12 @@ public class PantallaCargando implements Screen
             case 2:
                     assetManager.load("N.jpg",Texture.class);
                     assetManager.load("return.png",Texture.class);
+                    assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
                     break;
             case 3:
                     assetManager.load("M.jpg", Texture.class);
                     assetManager.load("return.png",Texture.class);
+                    assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
                     break;
 
             case 4: //Pantalla acerca de.

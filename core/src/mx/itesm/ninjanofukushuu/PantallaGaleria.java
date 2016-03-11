@@ -1,6 +1,7 @@
 package mx.itesm.ninjanofukushuu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
@@ -14,7 +15,8 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
- * Created by Javier Antonio García Roque  on 10/03/2016.
+ Pantalla galeria donde se mostrara el arte desbloqueado mediante los pergaminos...
+ Autores: Javier e Irvin Emmanuel Trujillo Díaz
  */
 public class PantallaGaleria implements Screen {
     private final Principal principal;
@@ -28,6 +30,8 @@ public class PantallaGaleria implements Screen {
     private Boton btnRegresar;
     private Texture texturaRegresar;
     private static final int anchoBoton = 180, altoBoton = 200; //anchoBoton1 = 480 , altoBoton1 = 160;
+    //Efectos
+    private Sound efectoClick;
 
     public PantallaGaleria(Principal principal) {
         this.principal = principal;
@@ -42,13 +46,16 @@ public class PantallaGaleria implements Screen {
 
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
         this.crearObjetos();
+        // Indicar el objeto que atiende los eventos de touch (entrada en general)
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
+
 
         //Crear fondo
         fondo = new Fondo(texturaFondo);
 
         btnRegresar = new Boton(texturaRegresar);
         btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8 , Principal.ALTO_MUNDO * 1 / 5 -150);
-        btnRegresar.setTamanio(anchoBoton - 50, altoBoton - 50);
+        btnRegresar.setTamanio(anchoBoton, altoBoton );
         //Batch
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
@@ -63,6 +70,7 @@ public class PantallaGaleria implements Screen {
         //Fondo
         texturaFondo = assetManager.get("M.jpg");
         texturaRegresar = assetManager.get("return.png");
+        this.efectoClick = assetManager.get("sonidoVentana.wav");
     }
 
     @Override
@@ -72,7 +80,6 @@ public class PantallaGaleria implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
-        this.leerEntrada();
         //DIBUJAR
         batch.begin();
         fondo.render(batch);
@@ -81,30 +88,71 @@ public class PantallaGaleria implements Screen {
     }
 
 
-    private void leerEntrada() {
-        //Hubo toque
-        if (Gdx.input.justTouched()) {
-            Vector3 coordernadas = new Vector3();
-            coordernadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camara.unproject(coordernadas);
-            float x = coordernadas.x;
-            float y = coordernadas.y;
-            switch (verifcarBoton(x, y)) {
-                case 1: //Caso para aparecer la presentación de Irvin
-                    principal.setScreen(new PantallaMenu(principal, true)); //se manda true porque se esta escuchando la cancion, es decir, ya hay un objeto cancion reproduciendose..
-                    break;
-            }
-        }}
 
-    private int verifcarBoton(float x, float y) {
-        Sprite spriteBtnRegresar = btnRegresar.getSprite();
-        //Verificar si se toco algun botón y no hay una prsentación mostrada
-        if (x>=spriteBtnRegresar.getX() && x<=spriteBtnRegresar.getX()+spriteBtnRegresar.getWidth() &&
-                y>=spriteBtnRegresar.getY() && y<=spriteBtnRegresar.getY()+spriteBtnRegresar.getHeight()){
-            return 1;
+     /*REVISION DE TOUCH*/
+    //se elimino metodo leer entrada, ahora eso es de touchDown
+    //Se eliminó el método de verificarBoton... ahora se usa touchUp, touchDown...
+
+
+    //Clase utilizada para manejar los eventos de touch en la pantalla
+    public class ProcesadorEntrada extends InputAdapter {
+        private Vector3 coordenadas = new Vector3();
+        private float x, y;     // Las coordenadas en la pantalla virtual
+
+        private boolean banderaBotonRegresar = false;
+        /*
+        Se ejecuta cuando el usuario pone un dedo sobre la pantalla, los dos primeros parámetros
+        son las coordenadas relativas a la pantalla física (0,0) en la esquina superior izquierda
+        pointer - es el número de dedo que se pone en la pantalla, el primero es 0
+        button - el botón del mouse
+         */
+
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            transformarCoordenadas(screenX, screenY);
+
+            if (btnRegresar.contiene(x,y)){
+                btnRegresar.setAlfa(.5f);
+                btnRegresar.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                this.banderaBotonRegresar = true;
+            }
+
+            return true;    // Indica que ya procesó el evento
         }
-        return 0;
+
+        //Se ejecuta cuando el usuario QUITA el dedo de la pantalla.
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            transformarCoordenadas(screenX, screenY);
+
+            // Preguntar si las coordenadas son de cierto lugar de donde se quito el dedo
+
+            //en la pantalla cargando determinara que cargar... se manda el numero correspondiente para saber que se va cargar en esa clase..
+            if (btnRegresar.contiene(x, y) &&  this.banderaBotonRegresar) {
+                efectoClick.play(); //efecto de sonido
+                principal.setScreen(new PantallaCargando(0,principal,true));  //se manda true porque ya esta la cancion reproduciendose
+            }
+
+            else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
+                // se le quita la transparencia y se regresa a su tamaño original
+                banderaBotonRegresar = false;
+                btnRegresar.setAlfa(1);
+                btnRegresar.setTamanio(anchoBoton,altoBoton); //tamaño orginal
+            }
+            return true;    // Indica que ya procesó el evento
+        }
+
+        private void transformarCoordenadas(int screenX, int screenY) {
+            // Transformar las coordenadas de la pantalla física a la cámara
+            coordenadas.set(screenX, screenY, 0);
+            camara.unproject(coordenadas); //camaraHUD es para los botones
+            // Obtiene las coordenadas relativas a la pantalla virtual
+            x = coordenadas.x;
+            y = coordenadas.y;
+        }
     }
+
+
 
     @Override
     public void resize(int width, int height) {
