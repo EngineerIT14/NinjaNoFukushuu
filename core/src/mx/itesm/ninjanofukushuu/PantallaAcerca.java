@@ -4,12 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -35,7 +33,7 @@ public class PantallaAcerca implements Screen {
     private Texture texturaBtnMia,texturaBtnNuri, texturaBtnIrvin,texturaBtnJavier, texturaBtnFer, texturaRegresar;
     private static final int anchoBoton = 180, altoBoton = 200; //anchoBoton1 = 480 , altoBoton1 = 160;
     //Presentaciones
-    private Presentacion presentaciónIrvin, presentaciónMia, presentaciónJavier, presentaciónNuri, presentaciónFer;
+    private Presentacion presentacionIrvin, presentacionMia, presentacionJavier, presentacionNuri, presentacionFer;
     private  Texture texturaPresentacionIrvin, texturaPresentacionMia, texturaPresentacionJavier, texturaPresentacionNuri, texturaPresentacionFer;
 
     //Efectos y musica de fondo
@@ -53,15 +51,17 @@ public class PantallaAcerca implements Screen {
         camara = new OrthographicCamera(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO);
         camara.position.set(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2, 0);
         camara.update();
-
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
+
         this.crearObjetos();
+        //Batch
+        batch = new SpriteBatch();
 
-
+        // Indicar el objeto que atiende los eventos de touch (entrada en general)
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
         //Crear fondo
         fondo = new Fondo(texturaFondo);
-        // abanico=new Logotipo(texturaAbanico);
         //Crear botones
         btnMia = new Boton(texturaBtnMia);
         btnNuri = new  Boton(texturaBtnNuri);
@@ -72,11 +72,11 @@ public class PantallaAcerca implements Screen {
 
         //Crear presentaciones
 
-        presentaciónIrvin = new Presentacion(texturaPresentacionIrvin);
-        presentaciónMia = new Presentacion(texturaPresentacionMia);
-        presentaciónJavier = new Presentacion(texturaPresentacionJavier);
-        presentaciónNuri = new Presentacion(texturaPresentacionNuri);
-        presentaciónFer = new Presentacion(texturaPresentacionFer);
+        presentacionIrvin = new Presentacion(texturaPresentacionIrvin);
+        presentacionMia = new Presentacion(texturaPresentacionMia);
+        presentacionJavier = new Presentacion(texturaPresentacionJavier);
+        presentacionNuri = new Presentacion(texturaPresentacionNuri);
+        presentacionFer = new Presentacion(texturaPresentacionFer);
 
         //Poscicionar objetos
         // abanico.setPosicion(0 - 20, 0 - 35);
@@ -86,33 +86,29 @@ public class PantallaAcerca implements Screen {
         btnNuri.setPosicion(Principal.ANCHO_MUNDO * 3 / 8 - 100, Principal.ALTO_MUNDO / 3 - 100);
         btnFer.setPosicion(Principal.ANCHO_MUNDO * 5 / 8 - 100, Principal.ALTO_MUNDO / 3 - 100);
         btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8 , Principal.ALTO_MUNDO * 1 / 5 -150);
-        presentaciónIrvin.setPosicion(0 - 20, 0 - 100);
-        presentaciónMia.setPosicion(0 - 20, 0 - 100);
-        presentaciónJavier.setPosicion(0 - 20, 0 - 100);
-        presentaciónNuri.setPosicion(0 - 20, 0 - 100);
-        presentaciónFer.setPosicion(0 - 20, 0 - 100);
+        presentacionIrvin.setPosicion(0 - 20, 0 - 100);
+        presentacionMia.setPosicion(0 - 20, 0 - 100);
+        presentacionJavier.setPosicion(0 - 20, 0 - 100);
+        presentacionNuri.setPosicion(0 - 20, 0 - 100);
+        presentacionFer.setPosicion(0 - 20, 0 - 100);
         //Ajuste de tamaño
         //abanico.setTamanio(1280, 780);
         btnIrvin.setTamanio(anchoBoton, altoBoton);
         btnMia.setTamanio(anchoBoton, altoBoton);
         btnJavier.setTamanio(anchoBoton,altoBoton);
-        btnNuri.setTamanio(anchoBoton,altoBoton);
-        btnFer.setTamanio(anchoBoton,altoBoton);
-        btnRegresar.setTamanio(anchoBoton - 50, altoBoton - 50);
+        btnNuri.setTamanio(anchoBoton, altoBoton);
+        btnFer.setTamanio(anchoBoton, altoBoton);
+        btnRegresar.setTamanio(anchoBoton , altoBoton );
 
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
-        presentaciónIrvin.setTamanio(1280,880);
-        presentaciónMia.setTamanio(1280,880);
-        presentaciónJavier.setTamanio(1280,880);
-        presentaciónNuri.setTamanio(1280,880);
-        presentaciónFer.setTamanio(1280, 880);
+        presentacionIrvin.setTamanio(1280, 880);
+        presentacionMia.setTamanio(1280,880);
+        presentacionJavier.setTamanio(1280, 880);
+        presentacionNuri.setTamanio(1280,880);
+        presentacionFer.setTamanio(1280, 880);
 
-        //Batch
-        batch = new SpriteBatch();
     }
-
-
 
     //crea los objetos de textura y audio
     private void crearObjetos(){
@@ -148,8 +144,6 @@ public class PantallaAcerca implements Screen {
 
         batch.setProjectionMatrix(camara.combined);
 
-        this.leerEntrada();
-
         fondo.getSprite().rotate(.1f);
         //DIBUJAR
         batch.begin();
@@ -162,171 +156,202 @@ public class PantallaAcerca implements Screen {
         btnFer.render(batch);
         btnRegresar.render(batch);
         //Se dibujaran las ´resentaciones si y solo si el estado es APERECIDO
-        if(presentaciónIrvin.actualizar()){
-            presentaciónIrvin.render(batch);
+        if(presentacionIrvin.actualizar()){
+            presentacionIrvin.render(batch);
         }
-        if(presentaciónMia.actualizar()){
-            presentaciónMia.render(batch);
+        if(presentacionMia.actualizar()){
+            presentacionMia.render(batch);
         }
-        if(presentaciónJavier.actualizar()){
-            presentaciónJavier.render(batch);
+        if(presentacionJavier.actualizar()){
+            presentacionJavier.render(batch);
         }
-        if(presentaciónNuri.actualizar()){
-            presentaciónNuri.render(batch);
+        if(presentacionNuri.actualizar()){
+            presentacionNuri.render(batch);
         }
-        if(presentaciónFer.actualizar()){
-            presentaciónFer.render(batch);
+        if(presentacionFer.actualizar()){
+            presentacionFer.render(batch);
         }
         batch.end();
     }
 
 
-    //Metodo para leer entradas
-    private void leerEntrada() {
-        //Hubo toque
-        if (Gdx.input.justTouched()){
-            Vector3 coordernadas = new Vector3();
-            coordernadas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camara.unproject(coordernadas);
-            float x = coordernadas.x;
-            float y = coordernadas.y;
-            switch ( verifcarBoton(x,y)){
-                case 1: //Caso para aparecer la presentación de Irvin
-                    if (presentaciónIrvin.getEstado()!= Presentacion.Estado.APARECIDO){ //Estado no debe ser Aparecido
-                        presentaciónIrvin.aparecer();
-                        efectoClick.play();
-                    }
-                    break;
-                case 2: //Caso para aparecer la presentación de Mia
-                    if(presentaciónMia.getEstado() != Presentacion.Estado.APARECIDO){
-                        presentaciónMia.aparecer();
-                        efectoClick.play();
-                    }
-                    break;
-                case 3: //Caso para aparecer la presentación de Javier
-                    if(presentaciónJavier.getEstado() != Presentacion.Estado.APARECIDO){
-                        presentaciónJavier.aparecer();
-                        efectoClick.play();
-                    }
-                    break;
-                case 4: //Caso para aparecer la presentación de Nuri
-                    if(presentaciónNuri.getEstado() != Presentacion.Estado.APARECIDO){
-                        presentaciónNuri.aparecer();
-                        efectoClick.play();
-                    }
-                    break;
-                case 5: //Caso para aparecer la presentación de Fer
-                    if(presentaciónFer.getEstado() != Presentacion.Estado.APARECIDO){
-                        presentaciónFer.aparecer();
-                        efectoClick.play();
-                    }
-                    break;
-                case 6: //Caso para volver al menú principal
-                    this.efectoClick.play();
-                    principal.setScreen(new PantallaMenu(principal,true)); //se manda true porque se esta escuchando la cancion, es decir, ya hay un objeto cancion reproduciendose..
+     /*REVISION DE TOUCH*/
+    //se elimino metodo leer entrada, ahora eso es de touchDown
+    //Se eliminó el método de verificarBoton... ahora se usa touchUp, touchDown...
 
-                    break;
-                case 7: //Caso para desaparecer la presentación de Irvin
-                    presentaciónIrvin.desaparecer();
-                    efectoClick.play();
-                    break;
-                case 8: //Caso para desaparecer la presentación de Mia
-                    presentaciónMia.desaparecer();
-                    efectoClick.play();
-                    break;
-                case 9: //Caso para desaparecer la presentación de Javier
-                    presentaciónJavier.desaparecer();
-                    efectoClick.play();
-                    break;
-                case 10: //Caso para desaparecer la presentación de Nuri
-                    presentaciónNuri.desaparecer();
-                    efectoClick.play();
-                    break;
-                case 11: //Caso para desaparecer la presentación de Fer
-                    presentaciónFer.desaparecer();
-                    efectoClick.play();
-                    break;
-                default: //Caso para no hacer nada, bonus
-                    break;
+    //Clase utilizada para manejar los eventos de touch en la pantalla
+    public class ProcesadorEntrada extends InputAdapter {
+        private Vector3 coordenadas = new Vector3();
+        private float x, y;     // Las coordenadas en la pantalla virtual
+
+        private boolean banderaBotonIrvin = false, banderaBotonMia = false, banderaBotonJavier = false, banderaBotonNuri = false, banderaBotonFer = false, banderaBotonRegresar = false;  //Banderas que nos sirven para saber si el boton está transparente y  pequeño o  no además que nos ayudan para la segunda condicion de touchUp.
+        /*
+        Se ejecuta cuando el usuario pone un dedo sobre la pantalla, los dos primeros parámetros
+        son las coordenadas relativas a la pantalla física (0,0) en la esquina superior izquierda
+        pointer - es el número de dedo que se pone en la pantalla, el primero es 0
+        button - el botón del mouse
+         */
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+            //caso cuando no hay ninguna ventana emerge abierta...
+            if(presentacionIrvin.getEstado() != Presentacion.Estado.APARECIDO && presentacionMia.getEstado() != Presentacion.Estado.APARECIDO && presentacionJavier.getEstado() != Presentacion.Estado.APARECIDO
+                    && presentacionNuri.getEstado() != Presentacion.Estado.APARECIDO && presentacionFer.getEstado() !=  Presentacion.Estado.APARECIDO) {
+
+                transformarCoordenadas(screenX, screenY);
+                if (btnIrvin.contiene(x, y)) {
+                    btnIrvin.setAlfa(.5f); //al presionarse se hace transparente
+                    btnIrvin.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                    this.banderaBotonIrvin = true; //el boton está transparente, entonces activo la bandera..
+                }
+                else if (btnMia.contiene(x, y)) {
+                    btnMia.setAlfa(.5f);  //al presionarse se hace transparente
+                    btnMia.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                    this.banderaBotonMia = true;
+                }
+                else if (btnJavier.contiene(x, y)) {
+                    btnJavier.setAlfa(.5f);
+                    btnJavier.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                    this.banderaBotonJavier = true;
+                }
+                else if (btnNuri.contiene(x, y)) {
+                    btnNuri.setAlfa(.5f);
+                    btnNuri.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                    this.banderaBotonNuri = true;
+                }
+                else if (btnFer.contiene(x,y)){
+                    btnFer.setAlfa(.5f);
+                    btnFer.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                    this.banderaBotonFer = true;
+                }
+                else if (btnRegresar.contiene(x,y)){
+                    btnRegresar.setAlfa(.5f);
+                    btnRegresar.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                    this.banderaBotonRegresar = true;
+                }
+                return true;    // Indica que ya procesó el evento
             }
+
+            //caso cuando esta una ventana emergente abierta..
+            //Para desaparecer las presentaciones se puede seleccionar cualquiere espacio e la pantalla
+            else
+                if(presentacionIrvin.getEstado()== Presentacion.Estado.APARECIDO){
+                    if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                        banderaBotonIrvin = false;
+                        btnIrvin.setAlfa(1);
+                        btnIrvin.setTamanio(anchoBoton, altoBoton); //tamaño original
+                        presentacionIrvin.desaparecer();
+                        efectoClick.play();
+                    }
+                }
+                else if(presentacionMia.getEstado() == Presentacion.Estado.APARECIDO){
+                    if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                        banderaBotonMia = false;
+                        btnMia.setAlfa(1);
+                        btnMia.setTamanio(anchoBoton, altoBoton); //tamaño original
+                        presentacionMia.desaparecer();
+                        efectoClick.play();
+                    }
+                }
+                else if(presentacionJavier.getEstado() == Presentacion.Estado.APARECIDO){
+                    if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                        banderaBotonJavier = false;
+                        btnJavier.setAlfa(1);
+                        btnJavier.setTamanio(anchoBoton,altoBoton); //tamaño orginal
+                        presentacionJavier.desaparecer();
+                        efectoClick.play();
+                    }
+                }
+                else if(presentacionNuri.getEstado() == Presentacion.Estado.APARECIDO){
+                    if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                        banderaBotonNuri = false;
+                        btnNuri.setAlfa(1);
+                        btnNuri.setTamanio(anchoBoton, altoBoton); //tamaño orginal
+                        presentacionNuri.desaparecer();
+                        efectoClick.play();
+                    }
+                }
+                else if(presentacionFer.getEstado() == Presentacion.Estado.APARECIDO){
+                    if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
+                        banderaBotonFer = false;
+                        btnFer.setAlfa(1);
+                        btnFer.setTamanio(anchoBoton,altoBoton); //tamaño orginal
+                        presentacionFer.desaparecer();
+                        efectoClick.play();
+                    }
+                }
+                return true;    // Indica que ya procesó el evento
+        }
+
+        //Se ejecuta cuando el usuario QUITA el dedo de la pantalla.
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            transformarCoordenadas(screenX, screenY);
+
+            // Preguntar si las coordenadas son de cierto lugar de donde se quito el dedo
+            if (btnIrvin.contiene(x, y) &&  this.banderaBotonIrvin) {
+                presentacionIrvin.aparecer();
+                efectoClick.play(); //efecto de sonido
+
+            }
+            else if (btnMia.contiene(x, y) && this.banderaBotonMia) {
+                presentacionMia.aparecer();
+                efectoClick.play();
+
+            }
+            else if (btnJavier.contiene(x, y) && this.banderaBotonJavier ) {
+                presentacionJavier.aparecer();
+                efectoClick.play();
+            }
+            else if (btnNuri.contiene(x, y) && this.banderaBotonNuri ) {
+                presentacionNuri.aparecer();
+                efectoClick.play();
+
+            }
+            else if (btnFer.contiene(x, y) && this.banderaBotonFer ) {
+                presentacionFer.aparecer();
+                efectoClick.play();
+
+            }
+            else if (btnRegresar.contiene(x, y) && this.banderaBotonRegresar ) {
+                efectoClick.play();
+                principal.setScreen(new PantallaMenu(principal,true)); //se manda true porque se esta escuchando la cancion, es decir, ya hay un objeto cancion reproduciendose..
+            }
+            else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones... entonces cancelo su selecciona
+                // se le quita la transparencia y se regresa a su tamaño original de los botones
+
+                banderaBotonIrvin = false;
+                btnIrvin.setAlfa(1);
+                btnIrvin.setTamanio(anchoBoton, altoBoton); //tamaño original
+                banderaBotonMia = false;
+                btnMia.setAlfa(1);
+                btnMia.setTamanio(anchoBoton, altoBoton); //tamaño original
+                banderaBotonJavier = false;
+                btnJavier.setAlfa(1);
+                btnJavier.setTamanio(anchoBoton,altoBoton); //tamaño orginal
+                banderaBotonNuri = false;
+                btnNuri.setAlfa(1);
+                btnNuri.setTamanio(anchoBoton, altoBoton); //tamaño orginal
+                banderaBotonFer = false;
+                btnFer.setAlfa(1);
+                btnFer.setTamanio(anchoBoton,altoBoton); //tamaño orginal
+                banderaBotonRegresar = false;
+                btnRegresar.setAlfa(1);
+                btnRegresar.setTamanio(anchoBoton,altoBoton); //tamaño orginal
+
+            }
+            return true;    // Indica que ya procesó el evento
+        }
+
+        private void transformarCoordenadas(int screenX, int screenY) {
+            // Transformar las coordenadas de la pantalla física a la cámara
+            coordenadas.set(screenX, screenY, 0);
+            camara.unproject(coordenadas); //camaraHUD es para los botones
+            // Obtiene las coordenadas relativas a la pantalla virtual
+            x = coordenadas.x;
+            y = coordenadas.y;
         }
     }
-
-    private int verifcarBoton(float x, float y) {
-        Sprite spriteBtnIrvin = btnIrvin.getSprite();
-        Sprite spriteBtnMia = btnMia.getSprite();
-        Sprite spriteBtnJavier = btnJavier.getSprite();
-        Sprite spriteBtnNuri = btnNuri.getSprite();
-        Sprite spriteBtnFer = btnFer.getSprite();
-        Sprite spriteBtnRegresar = btnRegresar.getSprite();
-        //Verificar si se toco algun botón y no hay una prsentación mostrada
-        if(presentaciónIrvin.getEstado() != Presentacion.Estado.APARECIDO && presentaciónMia.getEstado() != Presentacion.Estado.APARECIDO && presentaciónJavier.getEstado() != Presentacion.Estado.APARECIDO
-                && presentaciónNuri.getEstado() != Presentacion.Estado.APARECIDO && presentaciónFer.getEstado() != Presentacion.Estado.APARECIDO){
-            if(x>=spriteBtnIrvin.getX() && x<=spriteBtnIrvin.getX()+spriteBtnIrvin.getWidth() &&
-                    y>=spriteBtnIrvin.getY() && y<=spriteBtnIrvin.getY()+spriteBtnIrvin.getHeight()){
-                return 1;
-            }
-            else
-            if (x>=spriteBtnMia.getX() && x<=spriteBtnMia.getX()+spriteBtnMia.getWidth() &&
-                    y>=spriteBtnMia.getY() && y<=spriteBtnMia.getY()+spriteBtnMia.getHeight()){
-                return 2;
-            }
-            else
-            if(x>=spriteBtnJavier.getX() && x<=spriteBtnJavier.getX()+spriteBtnJavier.getWidth() &&
-                    y>=spriteBtnJavier.getY() && y<=spriteBtnJavier.getY()+spriteBtnJavier.getHeight()){
-                return 3;
-            }
-            else
-            if(x>=spriteBtnNuri.getX() && x<=spriteBtnNuri.getX()+spriteBtnNuri.getWidth() &&
-                    y>=spriteBtnNuri.getY() && y<=spriteBtnNuri.getY()+spriteBtnNuri.getHeight()){
-                return 4;
-            }
-            else
-            if(x>=spriteBtnFer.getX() && x<=spriteBtnFer.getX()+spriteBtnFer.getWidth() &&
-                    y>=spriteBtnFer.getY() && y<=spriteBtnFer.getY()+spriteBtnFer.getHeight()){
-                return 5;
-            }
-            else
-            if (x>=spriteBtnRegresar.getX() && x<=spriteBtnRegresar.getX()+spriteBtnRegresar.getWidth() &&
-                    y>=spriteBtnRegresar.getY() && y<=spriteBtnRegresar.getY()+spriteBtnRegresar.getHeight()){
-                return 6;
-            }
-        }
-
-        //Para desaparecer las presentaciones se puede seleccionar cualquiere espacio e la pantalla
-        else
-        if(presentaciónIrvin.getEstado()== Presentacion.Estado.APARECIDO){
-            if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
-                return 7;
-            }
-        }
-        else
-        if(presentaciónMia.getEstado() == Presentacion.Estado.APARECIDO){
-            if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
-                return 8;
-            }
-        }
-        else
-        if(presentaciónJavier.getEstado() == Presentacion.Estado.APARECIDO){
-            if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
-                return 9;
-            }
-        }
-        else
-        if(presentaciónNuri.getEstado() == Presentacion.Estado.APARECIDO){
-            if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
-                return 10;
-            }
-        }
-        else
-        if(presentaciónFer.getEstado() == Presentacion.Estado.APARECIDO){
-            if(x>=0 && x<=Principal.ANCHO_MUNDO && y>=0 && y<=Principal.ALTO_MUNDO){
-                return 11;
-            }
-        }
-        return 0;
-    }
-
 
 
     @Override
@@ -370,6 +395,7 @@ public class PantallaAcerca implements Screen {
         texturaFondo.dispose();
         //texturaAbanico.dispose();
         efectoClick.dispose();
+
     }
 
 

@@ -208,6 +208,7 @@ public class PantallaMenu implements Screen {
                 btnPLay.setTamanio(anchoBoton,altoBoton-15); //Lo hago más pequeño
                 this.banderaBotonPlay = true; //el boton está transparente, entonces activo la bandera..
             }
+            //el -10, +10 +10 es porque así estan los botones originales con el tamaño correspondiente
             else if (btnInstructions.contiene(x, y)) {
                 btnInstructions.setAlfa(.5f);  //al presionarse se hace transparente
                 btnInstructions.setTamanio(anchoBoton-10,altoBoton-15); //Lo hago más pequeño
