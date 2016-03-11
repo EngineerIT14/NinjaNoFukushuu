@@ -39,6 +39,14 @@ public class Boton {
         return sprite.getX();
     }
 
+    public float getAncho(){
+        return sprite.getWidth();
+    }
+
+    public float getAlto(){
+        return sprite.getHeight();
+    }
+
 
     public void setPosicion(float x, float y) {
         sprite.setPosition(x, y);
@@ -58,7 +66,7 @@ public class Boton {
     }
 
     public boolean contiene(float x, float y) { //Para verificar el touch
-        return  this.getX() <= x && this.getX() + sprite.getWidth() >= x && this.getY() <= y && this.getY() + sprite.getHeight() >= y;
+        return  this.getX() <= x && this.getX() + this.getAncho() >= x && this.getY() <= y && this.getY() + this.getAlto() >= y;
     }
 
 
