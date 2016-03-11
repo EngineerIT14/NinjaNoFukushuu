@@ -76,12 +76,12 @@ public class PantallaJuego implements Screen{
 
     //VIDAS QUE SE MUESTRAN EN EL HUD.
 
+    //Tambien nos va servir de marcador...
     private Array<ObjetosJuego> vidas;
     private Texture texturaVidas;
 
     //Marcadores
     private int marcadorPergaminos;
-    private int marcadorVidas;
     private Texto textoMarcadorPergaminos; //Texto para mostrar el marcador de vidas y marcador de pergaminos.
     private Texto textoMarcadorVidas;
 
@@ -212,8 +212,8 @@ public class PantallaJuego implements Screen{
 
         //Posiciones pergamino nivel tierra
         this.scroll.get(0).setPosicion(50,340); //pergamino de en medio...
-        this.scroll.get(1).setPosicion(747, 45 ); //pergamino de hasta abajo
-        this.scroll.get(2).setPosicion(630, 73); //pergamino que está en precipicio
+        this.scroll.get(1).setPosicion(745, 32 ); //pergamino de hasta abajo
+        this.scroll.get(2).setPosicion(627, 76); //pergamino que está en precipicio
 
         //Pociones: En todos los niveles solo hay 2 pociones.
         this.pociones = new Array<ObjetosJuego>(2);
@@ -236,11 +236,11 @@ public class PantallaJuego implements Screen{
         }
 
         //Se colocan los enemigos en su lugar correspondiente, en el nivel de TIERRA
-        this.enemigoN1.get(0).setPosicion(900, 515); //samurai parte superior
-        this.enemigoN1.get(1).setPosicion(430, 275);  //Samurai centro
-        this.enemigoN1.get(2).setPosicion(790, 308); //Samurai Escalon
-        this.enemigoN1.get(3).setPosicion(960, 135); //Samurai escalon
-        this.enemigoN1.get(4).setPosicion(450, 515); //Samurai parte superio
+        this.enemigoN1.get(0).setPosicion(900, 519); //samurai parte superior
+        this.enemigoN1.get(1).setPosicion(470, 280);  //Samurai centro
+        this.enemigoN1.get(2).setPosicion(790, 295); //Samurai Escalon
+        this.enemigoN1.get(3).setPosicion(960, 120); //Samurai escalon
+        this.enemigoN1.get(4).setPosicion(570, 503); //Samurai parte superior
 
         //Aqui se piensa poner un switch evaluando una variable de nivel,  de eso va dependar donde se va colocar el templo
         //templos, son 3.
@@ -251,7 +251,7 @@ public class PantallaJuego implements Screen{
             this.templos.add(nuevo);
         }
 
-        this.templos.get(0).setPosicion(230, 540); //temploTierra
+        this.templos.get(0).setPosicion(230, 510); //temploTierra
 
 
         //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
@@ -314,9 +314,11 @@ public class PantallaJuego implements Screen{
         moverPersonaje();
         actualizarCamara(); // Mover la cámara para que siga al personaje
 
-
         // Dibujar
         borrarPantalla();
+
+        //Para verificar si el usuario ya perdio...
+        perderJuego();
 
         batch.setProjectionMatrix(camara.combined);
 
@@ -371,6 +373,20 @@ public class PantallaJuego implements Screen{
 
     }
 
+    private void perderJuego() {//Método para verificar si el usuario ya perdio
+
+        //el usuario perdio sus vidas
+        if (this.vidas.size == 0){
+            plataforma.setScreen(new PantallaCargando(0,plataforma,true)); //nos regresa a la pantalla principal.
+        }
+
+        //el usuario cayo en un precipcio
+        if (this.hataku.getY()<-50){
+            plataforma.setScreen(new PantallaCargando(0,plataforma,true)); //nos regresa a la pantalla principal.
+
+        }
+    }
+
     private void recogerObjeto() {
         //Recogerscrolls al tocarlos
         for (ObjetosJuego scrolls : scroll) {
@@ -390,7 +406,7 @@ public class PantallaJuego implements Screen{
                     && hataku.getSprite().getY() >= pocion.getSprite().getY() && hataku.getSprite().getY()+1 <= pocion.getSprite().getHeight() + pocion.getSprite().getY()){
                 if(vidas.size<3) {
                     if (pocion.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
-                        this.marcadorVidas++;
+
                         this.efectoTomarVida.play(); //suena efecto
                         ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                         this.vidas.add(nuevo);
@@ -407,7 +423,7 @@ public class PantallaJuego implements Screen{
             if(hataku.getSprite().getX()>= Enemigo.getSprite().getX() && hataku.getSprite().getX()<= Enemigo.getSprite().getX() + Enemigo.getSprite().getWidth()
                     && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight() + Enemigo.getSprite().getY()){
                 if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
-                    this.marcadorVidas--;
+
                     this.efectoDanio.play();
                     vidas.removeIndex(vidas.size-1);
                     Enemigo.quitarElemento();
