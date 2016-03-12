@@ -198,8 +198,8 @@ public class PantallaJuego implements Screen{
 
 
         //Se crean objetos que son textos que se muestran en el HUD.
-        this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO * 0.96f);
-        this.textoMarcadorPergaminos= new Texto(0.8f * Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO * 0.96f); //mandamos la posicion que queremos por default.
+        this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO * 0.96f+20);
+        this.textoMarcadorPergaminos= new Texto(50+0.8f * Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO * 0.96f+20); //mandamos la posicion que queremos por default.
 
 
         //Lista scrolles: en todos los niveles solo hay 3 scroll
@@ -293,9 +293,9 @@ public class PantallaJuego implements Screen{
                 this.vidas.add(nuevo);
             }
 
-            this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX()+40,this.textoMarcadorVidas.getY()-50);
-            this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX()+110,this.textoMarcadorVidas.getY()-50);
-            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+180,this.textoMarcadorVidas.getY()-50);
+            this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX()+80,this.textoMarcadorVidas.getY()-65);
+            this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX()+150,this.textoMarcadorVidas.getY()-65);
+            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+220,this.textoMarcadorVidas.getY()-65);
 
 
         }
@@ -356,10 +356,10 @@ public class PantallaJuego implements Screen{
 
 
         // Mostrar pergaminos
-        this.textoMarcadorPergaminos.mostrarMensaje(batch, "Pergaminos: " + this.marcadorPergaminos);
+        this.textoMarcadorPergaminos.mostrarMensaje(batch, "Scrolls: " + this.marcadorPergaminos);
 
         // Mostrar vida
-        this.textoMarcadorVidas.mostrarMensaje(batch, "Vida: ");
+        this.textoMarcadorVidas.mostrarMensaje(batch, "Health: ");
 
         batch.end();
         //Dibuja el HUD

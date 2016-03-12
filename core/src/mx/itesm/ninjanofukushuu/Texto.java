@@ -1,5 +1,6 @@
 package mx.itesm.ninjanofukushuu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -18,9 +19,9 @@ public class Texto
 
 
     public Texto(float posicionx, float posiciony) {
-        font = new BitmapFont();
-        font.setColor(Color.YELLOW);
-        font.getData().scale(1.5f);
+        font = new BitmapFont(Gdx.files.internal("naftalene.fnt"));
+        font.setColor(Color.CORAL);
+
         this.posicionX = posicionx;
         this.posicionY = posiciony;
     }
