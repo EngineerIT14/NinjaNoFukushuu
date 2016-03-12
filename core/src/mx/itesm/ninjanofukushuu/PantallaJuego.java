@@ -570,8 +570,9 @@ public class PantallaJuego implements Screen{
         if ( capaPlataforma.getCell(celdaX,celdaY) != null ) {
             // Colisionará, dejamos de moverlo
             hataku.setEstado(Personaje.EstadoMovimiento.QUIETO);
-        } else {
-            hataku.actualizar();
+        }
+        else {
+            hataku.actualizar(); //Hataku debe moverse,,
         }
     }
 
