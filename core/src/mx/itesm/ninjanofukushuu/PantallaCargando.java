@@ -143,6 +143,7 @@ public class PantallaCargando implements Screen
                     //Textura objetos
                     assetManager.load("scroll.png", Texture.class);
                     assetManager.load("pocion.png", Texture.class);
+                    assetManager.load("llama1.png", Texture.class);
 
                     //Textura enemigo
                     assetManager.load("TierraE.png", Texture.class);

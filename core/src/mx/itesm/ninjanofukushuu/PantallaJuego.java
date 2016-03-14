@@ -80,6 +80,11 @@ public class PantallaJuego implements Screen{
     private Array<ObjetosJuego> vidas;
     private Texture texturaVidas;
 
+
+    //Ataque
+    private  Array<ObjetosJuego> ataques;
+    private Texture texturaAtaque;
+
     //Marcadores
     private int marcadorPergaminos;
     private Texto textoMarcadorPergaminos; //Texto para mostrar el marcador de vidas y marcador de pergaminos.
@@ -96,7 +101,8 @@ public class PantallaJuego implements Screen{
 
     //Variable para indicar si numero de nivel y hacer el cambio en el numero de vidas, ya que hataku tiene su armadura completa en el nivel 4 y las vidas deben aumentar a 5, esta variable es nuestra bandera...
     private boolean flag = false;
-    private int numeroNivel = 1;
+    private int numeroNivel = 1 ;
+    private int ataqueFlag;
 
 
 
@@ -154,6 +160,7 @@ public class PantallaJuego implements Screen{
         this.texturaScroll = assetManager.get("scroll.png");
         this.texturaPocion = assetManager.get("pocion.png");
         this.texturaEN1=assetManager.get("TierraE.png");
+        this.texturaAtaque=assetManager.get("llama1.png");
         this.texturaTemplo = assetManager.get("temploVerde.png");
 
         //****************************************************************//
@@ -241,6 +248,15 @@ public class PantallaJuego implements Screen{
         this.enemigoN1.get(2).setPosicion(790, 295); //Samurai Escalon
         this.enemigoN1.get(3).setPosicion(960, 120); //Samurai escalon
         this.enemigoN1.get(4).setPosicion(570, 503); //Samurai parte superior
+
+        //Colocar los ataque en su posicion
+        this.ataques = new Array<ObjetosJuego>(5);
+        for (ObjetosJuego enemigo: enemigoN1){
+            ObjetosJuego nuevo = new ObjetosJuego(this.texturaAtaque);
+            nuevo.setTamanio(30, 30);
+            this.ataques.add(nuevo);
+            nuevo.setPosicion(enemigo.getSprite().getX()+15,enemigo.getSprite().getY()+25);
+        }
 
         //Aqui se piensa poner un switch evaluando una variable de nivel,  de eso va dependar donde se va colocar el templo
         //templos, son 3.
@@ -351,6 +367,13 @@ public class PantallaJuego implements Screen{
                 vida.render(batch);
             }
         }
+        ataqueFlag=0;
+        //Dibujar ataques
+        for (ObjetosJuego ataque:ataques){
+            ataque.render(batch);
+            atacarEnemigo(ataque);
+            ataqueFlag++;
+        }
 
         this.templos.get(0).render(batch);//temploTierra
 
@@ -371,6 +394,20 @@ public class PantallaJuego implements Screen{
 
         batch.end();
 
+    }
+
+    private void atacarEnemigo(ObjetosJuego ataque) {
+        if(ataque.getEstadoAtaque()==ObjetosJuego.EstadoAtaque.DISPONIBLE){
+            if (hataku.getSprite().getX()<ataque.getSprite().getX()){
+                ataque.mandarIzquierda();
+            }
+            else {
+                ataque.mandarDerecha();
+            }
+        }
+        else{
+            ataque.actualizarAtaque(enemigoN1.get(ataqueFlag).getSprite().getX() + 15, enemigoN1.get(ataqueFlag).getSprite().getY() + 25);
+        }
     }
 
     private void perderJuego() {//Método para verificar si el usuario ya perdio
@@ -429,6 +466,17 @@ public class PantallaJuego implements Screen{
                     Enemigo.quitarElemento();
                 }
                 break;
+            }
+        }
+
+        //tomar daño de ataque enemigos
+        for (ObjetosJuego ataque: ataques){
+            if(hataku.getSprite().getX()>= ataque.getSprite().getX() && hataku.getSprite().getX()<= ataque.getSprite().getX() + ataque.getSprite().getWidth()
+                    && hataku.getSprite().getY() >= ataque.getSprite().getY() && hataku.getSprite().getY() <= ataque.getSprite().getHeight() + ataque.getSprite().getY()){
+                if (ataque.getEstadoAtaque() != ObjetosJuego.EstadoAtaque.OCULTO){
+                    ataque.ocultar();
+                    vidas.removeIndex(vidas.size-1);
+                }
             }
         }
 
