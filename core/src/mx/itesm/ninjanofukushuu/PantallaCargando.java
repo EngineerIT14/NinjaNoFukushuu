@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  * Descripción: Pantala intermedia entre el menú y el juego
  * Profesor: Roberto Martinez Román
- * Autores: Javier e Irvin Emmanuel Trujillo Díaz
+ * Autores: Javier García e Irvin Emmanuel Trujillo Díaz
  */
 public class PantallaCargando implements Screen
 {
@@ -40,9 +40,6 @@ public class PantallaCargando implements Screen
     //Textura cargando...
     private  Texture texturaLetrasLoading;
     private Sprite spriteLetrasLoading;
-
-    //Banderas para determinar si los botones de galeriae estan desbloqueados
-    private boolean banderaArteTierra = true, banderaArteAgua = false, banderaArteFuego = false;
 
 
 
@@ -146,7 +143,6 @@ public class PantallaCargando implements Screen
                     //Textura objetos
                     assetManager.load("scroll.png", Texture.class);
                     assetManager.load("pocion.png", Texture.class);
-                    assetManager.load("llama1.png", Texture.class);
 
                     //Textura enemigo
                     assetManager.load("TierraE.png", Texture.class);
@@ -166,14 +162,8 @@ public class PantallaCargando implements Screen
                     assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
                     break;
             case 3:
-                    assetManager.load("M.jpg", Texture.class); //fondo de la pantalla
-                    assetManager.load("galeriaEarth.png",Texture.class);
-                    assetManager.load("galeriaEarthLock.png",Texture.class);
-                    assetManager.load("galeriaFire.png",Texture.class);
-                    assetManager.load("galeriaFireLock.png",Texture.class);
-                    assetManager.load("galeriaWater.png",Texture.class);
-                    assetManager.load("galeriaWaterLock.png",Texture.class);
-                    assetManager.load("return.png",Texture.class); //imagen boton return
+                    assetManager.load("M.jpg", Texture.class);
+                    assetManager.load("return.png",Texture.class);
                     assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
                     break;
 
@@ -191,6 +181,11 @@ public class PantallaCargando implements Screen
                     assetManager.load("Nuria.png",Texture.class);
                     assetManager.load("Fercho.png",Texture.class);
                     assetManager.load("sonidoVentana.wav",Sound.class);
+                    break;
+            case 5:
+                    assetManager.load("SN.jpg",Texture.class);
+                    assetManager.load("return.png",Texture.class);
+                    assetManager.load("sonidoVentana.wav", Sound.class);
                     break;
             default: break;
         }
@@ -236,10 +231,13 @@ public class PantallaCargando implements Screen
                     plataforma.setScreen(new PantallaInstrucciones(this.plataforma));
                     break;
                 case 3:
-                    plataforma.setScreen(new PantallaGaleria(this.plataforma,banderaArteTierra,banderaArteAgua,banderaArteFuego));
+                    plataforma.setScreen(new PantallaGaleria(this.plataforma));
                     break;
                 case 4:
                     plataforma.setScreen(new PantallaAcerca(this.plataforma));
+                    break;
+                case 5:
+                    plataforma.setScreen(new SeleccionDeNivel(this.plataforma));
                     break;
                 default: break;
             }
