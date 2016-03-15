@@ -17,7 +17,7 @@ import com.badlogic.gdx.InputAdapter; //Este es para el touchUp y touchDown...
 
 
 /*
-Desarrolladores: Irvin Emmanuel Trujillo Díaz, Luis Fernando
+Desarrolladores: Irvin Emmanuel Trujillo Díaz, Luis Fernando, Javier García Roque
 Descripción: Esta clase es la encargada de mostrar el menu principal y sus determinados botones.
 Profesor: Roberto Martinez Román.
 */
@@ -246,7 +246,7 @@ public class PantallaMenu implements Screen {
             if (btnPLay.contiene(x, y) &&  this.banderaBotonPlay) {
                 Gdx.app.log("leerEntrada", "HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
                 efectoClick.play(); //efecto de sonido
-                principal.setScreen(new PantallaCargando(1,principal,true));  //se manda true porque ya esta la cancion reproduciendose
+                principal.setScreen(new PantallaCargando(5,principal,true));  //se manda true porque ya esta la cancion reproduciendose
 
             }
             else if (btnInstructions.contiene(x, y) && this.banderaBotonInstructions) {
