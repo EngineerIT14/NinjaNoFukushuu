@@ -369,9 +369,11 @@ public class PantallaJuego implements Screen{
         }
         ataqueFlag=0;
         //Dibujar ataques
-        for (ObjetosJuego ataque:ataques){
+        for (int i=0;i<ataques.size;i++){
+            ObjetosJuego ataque=ataques.get(i);
+            ObjetosJuego enemigo=enemigoN1.get(i);
             ataque.render(batch);
-            atacarEnemigo(ataque);
+            atacarEnemigo(ataque, enemigo);
             ataqueFlag++;
         }
 
@@ -396,17 +398,21 @@ public class PantallaJuego implements Screen{
 
     }
 
-    private void atacarEnemigo(ObjetosJuego ataque) {
-        if(ataque.getEstadoAtaque()==ObjetosJuego.EstadoAtaque.DISPONIBLE){
-            if (hataku.getSprite().getX()<ataque.getSprite().getX()){
-                ataque.mandarIzquierda();
-            }
-            else {
-                ataque.mandarDerecha();
+    private void atacarEnemigo(ObjetosJuego ataque, ObjetosJuego enemigo) {
+        if(enemigo.getEstado()==ObjetosJuego.Estado.ENMAPA) {
+            if (ataque.getEstadoAtaque() == ObjetosJuego.EstadoAtaque.DISPONIBLE) {
+                if (hataku.getSprite().getX() < ataque.getSprite().getX()) {
+                    ataque.mandarIzquierda();
+                } else {
+                    ataque.mandarDerecha();
+                }
+            } else {
+                ataque.actualizarAtaque(enemigoN1.get(ataqueFlag).getSprite().getX() + 15, enemigoN1.get(ataqueFlag).getSprite().getY() + 25);
             }
         }
-        else{
-            ataque.actualizarAtaque(enemigoN1.get(ataqueFlag).getSprite().getX() + 15, enemigoN1.get(ataqueFlag).getSprite().getY() + 25);
+        else {
+            ataque.ocultar();
+            ataque.actualizarAtaque(ataque.getSprite().getX(),ataque.getSprite().getY());
         }
     }
 
@@ -447,7 +453,7 @@ public class PantallaJuego implements Screen{
                         this.efectoTomarVida.play(); //suena efecto
                         ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                         this.vidas.add(nuevo);
-                        nuevo.setPosicion(vidas.get(vidas.size-2).getSprite().getX()+70,this.textoMarcadorVidas.getY()-50);
+                        nuevo.setPosicion(vidas.get(vidas.size-2).getSprite().getX()+70,this.textoMarcadorVidas.getY()-65);
                         pocion.quitarElemento();
                     }
                     break;
