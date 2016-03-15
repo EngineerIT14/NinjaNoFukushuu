@@ -41,6 +41,9 @@ public class PantallaCargando implements Screen
     private  Texture texturaLetrasLoading;
     private Sprite spriteLetrasLoading;
 
+    //Banderas para determinar si los botones de galeriae estan desbloqueados
+    private boolean banderaArteTierra = true, banderaArteAgua = false, banderaArteFuego = false;
+
 
 
 
@@ -163,8 +166,14 @@ public class PantallaCargando implements Screen
                     assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
                     break;
             case 3:
-                    assetManager.load("M.jpg", Texture.class);
-                    assetManager.load("return.png",Texture.class);
+                    assetManager.load("M.jpg", Texture.class); //fondo de la pantalla
+                    assetManager.load("galeriaEarth.png",Texture.class);
+                    assetManager.load("galeriaEarthLock.png",Texture.class);
+                    assetManager.load("galeriaFire.png",Texture.class);
+                    assetManager.load("galeriaFireLock.png",Texture.class);
+                    assetManager.load("galeriaWater.png",Texture.class);
+                    assetManager.load("galeriaWaterLock.png",Texture.class);
+                    assetManager.load("return.png",Texture.class); //imagen boton return
                     assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
                     break;
 
@@ -227,7 +236,7 @@ public class PantallaCargando implements Screen
                     plataforma.setScreen(new PantallaInstrucciones(this.plataforma));
                     break;
                 case 3:
-                    plataforma.setScreen(new PantallaGaleria(this.plataforma));
+                    plataforma.setScreen(new PantallaGaleria(this.plataforma,banderaArteTierra,banderaArteAgua,banderaArteFuego));
                     break;
                 case 4:
                     plataforma.setScreen(new PantallaAcerca(this.plataforma));

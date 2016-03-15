@@ -296,10 +296,6 @@ public class PantallaJuego implements Screen{
             this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
             this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);*/
 
-
-
-
-
         }
         else{ //entonces no estoy en el nivel 4, se deben de poner 3 vidas.
             this.vidas =  new Array<ObjetosJuego>(3);
@@ -308,12 +304,9 @@ public class PantallaJuego implements Screen{
                 //nuevo.setTamanio(70,70); //Irvin ya ajusto el tamaño de las vidas en photoshop..
                 this.vidas.add(nuevo);
             }
-
             this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX()+80,this.textoMarcadorVidas.getY()-65);
             this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX()+150,this.textoMarcadorVidas.getY()-65);
             this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+220,this.textoMarcadorVidas.getY()-65);
-
-
         }
 
     }
