@@ -197,9 +197,9 @@ public class PantallaJuego implements Screen{
 
         texturaSalto =  assetManager.get("salto.png"); //boton para saltar... carga su imagen
         btnSalto = new Boton(texturaSalto);
-        btnSalto.setPosicion(Principal.ANCHO_MUNDO - 7 * TAM_CELDA, 100 + TAM_CELDA);
+        btnSalto.setPosicion(Principal.ANCHO_MUNDO -8* TAM_CELDA, 100 + TAM_CELDA);
         btnSalto.setAlfa(0.7f);
-        btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON );
+        btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON+8 );
 
 
 
@@ -475,6 +475,7 @@ public class PantallaJuego implements Screen{
                     && hataku.getSprite().getY() >= ataque.getSprite().getY() && hataku.getSprite().getY() <= ataque.getSprite().getHeight() + ataque.getSprite().getY()){
                 if (ataque.getEstadoAtaque() != ObjetosJuego.EstadoAtaque.OCULTO){
                     ataque.ocultar();
+                    this.efectoDanio.play();
                     vidas.removeIndex(vidas.size-1);
                 }
             }
@@ -788,6 +789,7 @@ public class PantallaJuego implements Screen{
         texturaVidas.dispose();
         this.texturaEN1.dispose();
         this.texturaTemplo.dispose();
+        this.texturaAtaque.dispose();
 
         //sonidos (efectos)
         this.efectoSaltoHataku.dispose();
