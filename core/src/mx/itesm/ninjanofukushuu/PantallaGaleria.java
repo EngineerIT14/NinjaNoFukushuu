@@ -309,6 +309,8 @@ public class PantallaGaleria implements Screen {
 
         texturaRegresar.dispose();
         texturaFondo.dispose();
+        efectoClick.dispose();
+        sonidoBloqueado.dispose();
 
     }
 
