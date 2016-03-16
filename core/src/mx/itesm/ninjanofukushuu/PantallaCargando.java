@@ -43,7 +43,7 @@ public class PantallaCargando implements Screen
     private Sprite spriteLetrasLoading;
 
     //Banderas para determinar si los botones de galeriae estan desbloqueados, son publicos ya que se modifican en la pantalla juego..
-    public static boolean banderaArteTierra = false, banderaArteAgua = false, banderaArteFuego = false;
+    public static boolean banderaArteTierra = false, banderaArteAgua = false, banderaArteFuego = false; //Son public static para que sean manipuladas en otras clases..
 
     //Progreso de la partida
     public static Preferences partidaGuardada; //guardar el progreso del usuario..., es publica para que se pueda ir modificando en las otras clases...
@@ -68,6 +68,12 @@ public class PantallaCargando implements Screen
         this.pantallaCargar = pantalla;
         this.banderaMusicaFondo = banderaMusicaFondo;
         this.assetManager = plataforma.getAssetManager();
+        PantallaCargando.partidaGuardada =  Gdx.app.getPreferences("partidaGuardada"); //Para crear (en caso de que no este) o cargar la partida...
+        //por default banderas estan en falso..                         //lave        boolean
+        PantallaCargando.banderaArteTierra = partidaGuardada.getBoolean("arteTierra", false);
+        PantallaCargando.banderaArteAgua = partidaGuardada.getBoolean("arteAgua", false);
+        PantallaCargando.banderaArteFuego = partidaGuardada.getBoolean("arteFuego", false);
+
     }
 
     @Override
@@ -181,6 +187,7 @@ public class PantallaCargando implements Screen
 
                     assetManager.load("return.png",Texture.class);
                     assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
+                    assetManager.load("bloqueado.wav",Sound.class);
                     break;
 
             case 4: //Pantalla acerca de.

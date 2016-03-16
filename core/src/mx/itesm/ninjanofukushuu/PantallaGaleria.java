@@ -48,7 +48,7 @@ public class PantallaGaleria implements Screen {
 
     private static final int anchoBoton = 180, altoBoton = 200; //anchoBoton1 = 480 , altoBoton1 = 160;
     //Efectos
-    private Sound efectoClick;
+    private Sound efectoClick, sonidoBloqueado;
 
     public PantallaGaleria(Principal principal, boolean banderaPergaminosTierra, boolean banderaPergaminosAgua, boolean banderaPergaminosFuego) {
         this.principal = principal;
@@ -124,6 +124,7 @@ public class PantallaGaleria implements Screen {
         this.texturaGaleriaFuegoBloqueada =  assetManager.get("galeriaFireLock.png");
         this.texturaRegresar = assetManager.get("return.png");
         this.efectoClick = assetManager.get("sonidoVentana.wav");
+        this.sonidoBloqueado = assetManager.get("bloqueado.wav");
     }
 
     @Override
@@ -168,18 +169,24 @@ public class PantallaGaleria implements Screen {
                 btnGaleriaTierra.setAlfa(.5f);
                 btnGaleriaTierra.setTamanio(300, 285); //Lo hago más pequeño
                 this.banderaBotonGaleriaTierra = true;
+                if(!banderaPergaminosTierra) //esta bloqueado
+                    sonidoBloqueado.play();
             }
 
             if (btnGaleriaAgua.contiene(x,y)){
                 btnGaleriaAgua.setAlfa(.5f);
                 btnGaleriaAgua.setTamanio(300, 285); //Lo hago más pequeño
                 this.banderaBotonGaleriaAgua = true;
+                if(!banderaPergaminosAgua)// esta bloqueado
+                    sonidoBloqueado.play();
             }
 
             if (btnGaleriaFuego.contiene(x,y)){
                 btnGaleriaFuego.setAlfa(.5f);
                 btnGaleriaFuego.setTamanio(300, 285); //Lo hago más pequeño
                 this.banderaBotonGaleriaFuego = true;
+                if(!banderaPergaminosFuego) // esta bloqueado
+                    sonidoBloqueado.play();
             }
 
 
@@ -239,6 +246,7 @@ public class PantallaGaleria implements Screen {
 
             else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
                 // se le quita la transparencia y se regresa a su tamaño original
+                //niveles bloqueados
                 banderaBotonGaleriaTierra = false;
                 btnGaleriaTierra.setAlfa(1);
                 btnGaleriaTierra.setTamanio(300, 300); //tamaño original

@@ -256,7 +256,7 @@ public class PantallaJuego implements Screen{
         this.ataques = new Array<ObjetosJuego>(5);
         for (ObjetosJuego enemigo: enemigoN1){
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaAtaque);
-            nuevo.setTamanio(30, 30);
+            //nuevo.setTamanio(30, 30);
             this.ataques.add(nuevo);
             nuevo.setPosicion(enemigo.getSprite().getX()+15,enemigo.getSprite().getY()+25);
         }
@@ -447,16 +447,24 @@ public class PantallaJuego implements Screen{
 
     private void liberarArte() {
         if(this.marcadorPergaminos == 3 && this.numeroNivel == 1){
-            PantallaCargando.banderaArteTierra = true;
+            //PantallaCargando.banderaArteTierra = true;
+            PantallaCargando.partidaGuardada.putBoolean("arteTierra", true); //se guarda el progreso y se desbloquea la galeria de arte de tierra,,
+            PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
+
         }
 
         else if(this.marcadorPergaminos == 3 && this.numeroNivel == 2){
-            PantallaCargando.banderaArteAgua = true;
+            //PantallaCargando.banderaArteAgua = true;
+            PantallaCargando.partidaGuardada.putBoolean("arteAgua", true); //se guarda el progreso y se desbloquea la galeria de arte de agua..
+            PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
+
+
         }
 
         else if(this.marcadorPergaminos == 3 && this.numeroNivel == 3){
-            PantallaCargando.banderaArteFuego = true;
-
+            //PantallaCargando.banderaArteFuego = true;
+            PantallaCargando.partidaGuardada.getBoolean("arteFuego", true); // se guarda el progreso y se desbloquea la galeria de arte de fuego
+            PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
         }
     }
 
