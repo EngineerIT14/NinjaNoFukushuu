@@ -28,7 +28,9 @@ public class PantallaMenu implements Screen {
     private OrthographicCamera camara;
     private Viewport vista;
     private SpriteBatch batch;
+
     //Fondo
+
     private Fondo fondo;
     private Fondo fondo1; //este rota
     private Texture texturaFondo;

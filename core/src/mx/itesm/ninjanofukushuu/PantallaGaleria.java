@@ -31,17 +31,17 @@ public class PantallaGaleria implements Screen {
     private Boton btnGaleriaTierra;
     private Texture texturaGaleriaTierraDesbloqueada;
     private Texture texturaGaleriaTierraBloqueada;
-    private boolean banderaTierra; //Bandera para saber que textura y el comprotamiendo del boton hacer...
+    private boolean banderaPergaminosTierra; //Bandera para saber que textura y el comprotamiendo del boton hacer...
 
     private Boton btnGaleriaAgua;
     private Texture texturaGaleriaAguaDesbloqueada;
     private Texture texturaGaleriaAguaBloqueada;
-    private boolean banderaAgua; //Bandera para saber que textura y el comprotamiendo del boton hacer...
+    private boolean banderaPergaminosAgua; //Bandera para saber que textura y el comprotamiendo del boton hacer...
 
     private Boton btnGaleriaFuego;
     private Texture texturaGaleriaFuegoDesbloqueada;
     private Texture texturaGaleriaFuegoBloqueada;
-    private boolean banderaFuego; //Bandera para saber que textura y el comprotamiendo del boton hacer...
+    private boolean banderaPergaminosFuego; //Bandera para saber que textura y el comprotamiendo del boton hacer...
 
     private Boton btnRegresar;
     private Texture texturaRegresar;
@@ -50,12 +50,12 @@ public class PantallaGaleria implements Screen {
     //Efectos
     private Sound efectoClick;
 
-    public PantallaGaleria(Principal principal, boolean banderaTierra, boolean banderaAgua, boolean banderaFuego) {
+    public PantallaGaleria(Principal principal, boolean banderaPergaminosTierra, boolean banderaPergaminosAgua, boolean banderaPergaminosFuego) {
         this.principal = principal;
         //LAS BANDERAS SON FUDAMENTALES YA QUE INDICAN QUE TEXTURA CARGAR (BLOQUEDO O DESBLOQUEADO) Y EL COMPROTAMIENTO DEL BOTON...
-        this.banderaTierra = banderaTierra;
-        this.banderaAgua = banderaAgua;
-        this.banderaFuego = banderaFuego;
+        this.banderaPergaminosTierra = banderaPergaminosTierra;
+        this.banderaPergaminosAgua = banderaPergaminosAgua;
+        this.banderaPergaminosFuego = banderaPergaminosFuego;
     }
 
     @Override
@@ -75,14 +75,14 @@ public class PantallaGaleria implements Screen {
 
         //botones
         //NOTA: AQUI  VA DEPENDER DE LA BANDERA, PARA SABER QUE TEXTURA CARGAR...
-        if(banderaTierra) //entonces el usuario ya junto los 3 pergaminos del nivel tierra
+        if(banderaPergaminosTierra) //entonces el usuario ya junto los 3 pergaminos del nivel tierra
             this.btnGaleriaTierra = new Boton(texturaGaleriaTierraDesbloqueada);
         else
            this.btnGaleriaTierra =  new Boton(texturaGaleriaTierraBloqueada);
 
         btnGaleriaTierra.setPosicion(Principal.ANCHO_MUNDO / 4 - 100, Principal.ALTO_MUNDO * 2 / 3 - 200);
 
-        if(banderaAgua) //entonces el usuario ya junto los 3 pergaminos del nivel agua
+        if(banderaPergaminosAgua) //entonces el usuario ya junto los 3 pergaminos del nivel agua
             this.btnGaleriaAgua = new Boton(texturaGaleriaAguaDesbloqueada);
         else
             this.btnGaleriaAgua = new Boton(texturaGaleriaAguaBloqueada);
@@ -91,7 +91,7 @@ public class PantallaGaleria implements Screen {
 
 
 
-        if(banderaFuego)  //entonces el usuario ya junto los 3 pergaminos del nivel fuego
+        if(banderaPergaminosFuego)  //entonces el usuario ya junto los 3 pergaminos del nivel fuego
             this.btnGaleriaFuego =  new Boton(texturaGaleriaFuegoDesbloqueada);
         else
             this.btnGaleriaFuego =  new Boton(texturaGaleriaFuegoBloqueada);
@@ -201,8 +201,8 @@ public class PantallaGaleria implements Screen {
 
             // Preguntar si las coordenadas son de cierto lugar de donde se quito el dedo
 
-            if (btnGaleriaTierra.contiene(x,y) && this.banderaBotonGaleriaTierra && banderaTierra ){
-                //banderaTierra indica que el boton esta desbloqueado porque el usuario ya junto los 3 pergaminos.. en el nivel tierra
+            if (btnGaleriaTierra.contiene(x,y) && this.banderaBotonGaleriaTierra && banderaPergaminosTierra ){
+                //banderaPergaminosTierra indica que el boton esta desbloqueado porque el usuario ya junto los 3 pergaminos.. en el nivel tierra
                 // si no entra al if el boton está bloqueado, no hace ningun sonido
                 banderaBotonGaleriaTierra = false;
                 btnGaleriaTierra.setAlfa(1);
@@ -210,7 +210,7 @@ public class PantallaGaleria implements Screen {
                 efectoClick.play(); //efecto de sonido
             }
 
-            else if (btnGaleriaAgua.contiene(x,y) && this.banderaBotonGaleriaAgua && banderaAgua){
+            else if (btnGaleriaAgua.contiene(x,y) && this.banderaBotonGaleriaAgua && banderaPergaminosAgua){
                 // bandera agua indica que el boton esta desbloqueado porque el usuario ya junto los 3 pergaminos.. en el nivel agua
                 // si no entra al if el boton está bloqueado, no hace ningun sonido
                 banderaBotonGaleriaAgua = false;
@@ -220,8 +220,8 @@ public class PantallaGaleria implements Screen {
 
             }
 
-            else if (btnGaleriaFuego.contiene(x,y) && this.banderaBotonGaleriaFuego && banderaFuego ){
-                //banderaFuego indica que el boton esta desbloqueado porque el usuario ya junto los 3 pergaminos.. en el nivel fuego
+            else if (btnGaleriaFuego.contiene(x,y) && this.banderaBotonGaleriaFuego && banderaPergaminosFuego ){
+                //banderaPergaminosFuego indica que el boton esta desbloqueado porque el usuario ya junto los 3 pergaminos.. en el nivel fuego
                 // si no entra al if el boton está bloqueado, no hace ningun sonido
                 efectoClick.play(); //efecto de sonido
                 banderaBotonGaleriaFuego = false;

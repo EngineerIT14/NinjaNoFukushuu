@@ -4,6 +4,7 @@ package mx.itesm.ninjanofukushuu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
@@ -41,8 +42,11 @@ public class PantallaCargando implements Screen
     private  Texture texturaLetrasLoading;
     private Sprite spriteLetrasLoading;
 
-    //Banderas para determinar si los botones de galeriae estan desbloqueados
-    private boolean banderaArteTierra = true, banderaArteAgua = false, banderaArteFuego = false;
+    //Banderas para determinar si los botones de galeriae estan desbloqueados, son publicos ya que se modifican en la pantalla juego..
+    public static boolean banderaArteTierra = false, banderaArteAgua = false, banderaArteFuego = false;
+
+    //Progreso de la partida
+    public static Preferences partidaGuardada; //guardar el progreso del usuario..., es publica para que se pueda ir modificando en las otras clases...
 
 
 
@@ -117,12 +121,11 @@ public class PantallaCargando implements Screen
     // Carga los recursos a través del administrador de assets (siguiente pantalla)
     private void cargarRecursos() {
         // Carga los recursos de la siguiente pantalla
-           /*       * 0: Menu principal.
+        /*       * 0: Menu principal.
                      * 1: elementos juego
                        * 2: elementos instrucciones
                             * 3: elementos galeria de arte
-                                * 4: elementos acerca de
-            */
+                                * 4: elementos acerca de */
         switch(pantallaCargar) {
             case 0: //Pantalla Menu
                     assetManager.load("NINJAH3.png", Texture.class);    // Cargar imagen
@@ -160,6 +163,7 @@ public class PantallaCargando implements Screen
                     assetManager.load("efectoVida.wav",Sound.class);
                     assetManager.load("efectoPergamino.wav",Sound.class);
                     assetManager.load("efectoDanio.wav",Sound.class);
+                    assetManager.load("puertaTemplo.wav",Sound.class);
                     break;
             case 2:
                     assetManager.load("N.jpg",Texture.class);
@@ -286,11 +290,13 @@ public class PantallaCargando implements Screen
     public class ProcesadorEntrada extends InputAdapter {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
             return true;    // Indica que ya procesó el evento
         }
         //Se ejecuta cuando el usuario QUITA el dedo de la pantalla.
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+
             return true;    // Indica que ya procesó el evento
         }
 

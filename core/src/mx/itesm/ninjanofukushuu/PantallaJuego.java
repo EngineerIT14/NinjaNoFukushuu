@@ -94,14 +94,14 @@ public class PantallaJuego implements Screen{
     private EstadosJuego estadoJuego;
 
     //Efectos del juego
-    private Sound efectoSaltoHataku, efectoTomarVida, efectoTomarPergamino, efectoDanio;
+    private Sound efectoSaltoHataku, efectoTomarVida, efectoTomarPergamino, efectoDanio, efectoPuertaTemplo;
 
 
 
 
     //Variable para indicar si numero de nivel y hacer el cambio en el numero de vidas, ya que hataku tiene su armadura completa en el nivel 4 y las vidas deben aumentar a 5, esta variable es nuestra bandera...
     private boolean flag = false;
-    private int numeroNivel = 1 ;
+    private int numeroNivel = 1 ; //nivel 1 tierra, nivel 2 agua, nivel 3 fuego
     private int ataqueFlag;
 
 
@@ -178,6 +178,9 @@ public class PantallaJuego implements Screen{
         this.efectoTomarPergamino.setVolume(70, 70);
         this.efectoDanio = assetManager.get("efectoDanio.wav");
         this.efectoTomarPergamino.setVolume(70, 70);
+        this.efectoPuertaTemplo = assetManager.get("puertaTemplo.wav");
+        this.efectoPuertaTemplo.setVolume(70, 70);
+
 
 
 
@@ -326,8 +329,14 @@ public class PantallaJuego implements Screen{
         // Dibujar
         borrarPantalla();
 
+        // Para verificar si el usuario ya tomo los 3 pergaminos y liberar el boton de galeria de arte...
+        liberarArte();
+
         //Para verificar si el usuario ya perdio...
         perderJuego();
+
+        //Para verificar si el usuario ya gano...
+        ganarJuego();
 
         batch.setProjectionMatrix(camara.combined);
 
@@ -389,6 +398,66 @@ public class PantallaJuego implements Screen{
 
         batch.end();
 
+    }
+
+    private void ganarJuego() {
+
+        //System.out.println(this.hataku.getY());
+        //temploTierra
+        System.out.println(this.hataku.getX());
+        if(258 == this.hataku.getX() &&  512 <= this.hataku.getY() && this.numeroNivel == 1){ //258  y 512 es la posicion del templo, lo identifique con el system.out.println
+
+            this.numeroNivel = 2;
+            this.marcadorPergaminos = 0;
+            this.efectoPuertaTemplo.play();
+            //en este caso, como aun no hay otra pantalla, nos regresa al menu principal...
+            plataforma.setScreen(new PantallaCargando(0, plataforma, true));
+
+        }
+
+        /*
+        // temploAgua
+
+        if(this.templos.get(1).getSprite().getX() == this.hataku.getX() &&
+                this.templos.get(1).getSprite().getY() == this.hataku.getY() && this.numeroNivel == 2){
+
+            this.numeroNivel = 3;
+            this.marcadorPergaminos = 0;
+            this.efectoPuertaTemplo.play();
+            //en este caso, como aun no hay otra pantalla, nos regresa al menu principal...
+            plataforma.setScreen(new PantallaCargando(0, plataforma, true));
+
+        }
+
+
+        //temploFuego
+
+        if(this.templos.get(2).getSprite().getX() == this.hataku.getX() &&
+                this.templos.get(2).getSprite().getY() == this.hataku.getY() && this.numeroNivel == 3){
+
+            this.efectoPuertaTemplo.play();
+            this.marcadorPergaminos = 0;
+
+            //en este caso, como aun no hay otra pantalla, nos regresa al menu principal...
+            plataforma.setScreen(new PantallaCargando(0, plataforma, true));
+
+        }
+        */
+    }
+
+    private void liberarArte() {
+        if(this.marcadorPergaminos == 3 && this.numeroNivel == 1){
+            PantallaCargando.banderaArteTierra = true;
+        }
+
+        else if(this.marcadorPergaminos == 3 && this.numeroNivel == 2){
+            PantallaCargando.banderaArteAgua = true;
+        }
+
+        else if(this.marcadorPergaminos == 3 && this.numeroNivel == 3){
+            PantallaCargando.banderaArteFuego = true;
+
+        }
     }
 
     private void atacarEnemigo(ObjetosJuego ataque, ObjetosJuego enemigo) {
@@ -795,6 +864,7 @@ public class PantallaJuego implements Screen{
         this.efectoTomarVida.dispose();
         this.efectoTomarPergamino.dispose();
         this.efectoDanio.dispose();
+        this.efectoPuertaTemplo.dispose();
 
 
     }
