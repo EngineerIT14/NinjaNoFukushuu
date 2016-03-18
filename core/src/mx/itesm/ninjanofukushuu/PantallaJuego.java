@@ -504,7 +504,9 @@ public class PantallaJuego implements Screen{
         //Recogerscrolls al tocarlos
         for (ObjetosJuego scrolls : scroll) {
             if(hataku.getSprite().getX()>= scrolls.getSprite().getX() && hataku.getSprite().getX()<= scrolls.getSprite().getX() + scrolls.getSprite().getWidth()
-                    && hataku.getSprite().getY() >= scrolls.getSprite().getY() && hataku.getSprite().getY() <= scrolls.getSprite().getHeight() + scrolls.getSprite().getY()){
+                    && hataku.getSprite().getY() >= scrolls.getSprite().getY() && hataku.getSprite().getY() <= scrolls.getSprite().getHeight() + scrolls.getSprite().getY() ||
+                    hataku.getSprite().getX()+hataku.getSprite().getWidth()>= scrolls.getSprite().getX() && hataku.getSprite().getX()+hataku.getSprite().getWidth()<= scrolls.getSprite().getX() + scrolls.getSprite().getWidth()
+                            && hataku.getSprite().getY()+hataku.getSprite().getHeight() >= scrolls.getSprite().getY() && hataku.getSprite().getY()+hataku.getSprite().getHeight() <= scrolls.getSprite().getHeight() + scrolls.getSprite().getY()){
                 if(scrolls.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
                     this.marcadorPergaminos++;
                     this.efectoTomarPergamino.play(); //suena efecto
@@ -516,7 +518,9 @@ public class PantallaJuego implements Screen{
         //Recoger pociones al tocarlas
         for (ObjetosJuego pocion : pociones) {
             if(hataku.getSprite().getX()>= pocion.getSprite().getX() && hataku.getSprite().getX()<= pocion.getSprite().getX() + pocion.getSprite().getWidth()
-                    && hataku.getSprite().getY() >= pocion.getSprite().getY() && hataku.getSprite().getY()+1 <= pocion.getSprite().getHeight() + pocion.getSprite().getY()){
+                    && hataku.getSprite().getY() >= pocion.getSprite().getY() && hataku.getSprite().getY() <= pocion.getSprite().getHeight() + pocion.getSprite().getY() ||
+                    hataku.getSprite().getX()+hataku.getSprite().getWidth()>= pocion.getSprite().getX() && hataku.getSprite().getX()+hataku.getSprite().getWidth()<= pocion.getSprite().getX() + pocion.getSprite().getWidth()
+                            && hataku.getSprite().getY()+hataku.getSprite().getHeight() >= pocion.getSprite().getY() && hataku.getSprite().getY()+hataku.getSprite().getHeight() <= pocion.getSprite().getHeight() + pocion.getSprite().getY()){
                 if(vidas.size<3) {
                     if (pocion.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
 
@@ -547,8 +551,14 @@ public class PantallaJuego implements Screen{
 
         //tomar daño de ataque enemigos
         for (ObjetosJuego ataque: ataques){
-            if(hataku.getSprite().getX()>= ataque.getSprite().getX() && hataku.getSprite().getX()<= ataque.getSprite().getX() + ataque.getSprite().getWidth()
-                    && hataku.getSprite().getY() >= ataque.getSprite().getY() && hataku.getSprite().getY() <= ataque.getSprite().getHeight() + ataque.getSprite().getY()){
+            if(ataque.getSprite().getX()<= hataku.getSprite().getX()+hataku.getSprite().getWidth() && ataque.getSprite().getX()>= hataku.getSprite().getX()
+                    && ataque.getSprite().getY()+ataque.getSprite().getHeight()<=hataku.getSprite().getY()+hataku.getSprite().getHeight() && ataque.getSprite().getY()+ataque.getSprite().getHeight()>=hataku.getSprite().getY() ||
+                    ataque.getSprite().getX()<= hataku.getSprite().getX()+hataku.getSprite().getWidth() && ataque.getSprite().getX()>= hataku.getSprite().getX()
+                            && ataque.getSprite().getY()<=hataku.getSprite().getY()+hataku.getSprite().getHeight() && ataque.getSprite().getY()>=hataku.getSprite().getY() ||
+                    ataque.getSprite().getX()+ataque.getSprite().getWidth()<= hataku.getSprite().getX()+hataku.getSprite().getWidth() && ataque.getSprite().getX()+ataque.getSprite().getWidth()>= hataku.getSprite().getX()
+                            && ataque.getSprite().getY()+ataque.getSprite().getHeight()<=hataku.getSprite().getY()+hataku.getSprite().getHeight() && ataque.getSprite().getY()+ataque.getSprite().getHeight()>=hataku.getSprite().getY() ||
+                    ataque.getSprite().getX()+ataque.getSprite().getWidth()<= hataku.getSprite().getX()+hataku.getSprite().getWidth() && ataque.getSprite().getX()+ataque.getSprite().getWidth()>= hataku.getSprite().getX()
+                            && ataque.getSprite().getY()<=hataku.getSprite().getY()+hataku.getSprite().getHeight() && ataque.getSprite().getY()>=hataku.getSprite().getY()){
                 if (ataque.getEstadoAtaque() != ObjetosJuego.EstadoAtaque.OCULTO){
                     ataque.ocultar();
                     this.efectoDanio.play();
