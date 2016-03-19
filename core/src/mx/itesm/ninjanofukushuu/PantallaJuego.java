@@ -210,7 +210,7 @@ public class PantallaJuego implements Screen{
 
         //Se crean objetos que son textos que se muestran en el HUD.
         this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_CAMARA, Principal.ALTO_CAMARA * 0.96f+20);
-        this.textoMarcadorPergaminos= new Texto(50+0.8f * Principal.ANCHO_CAMARA, Principal.ALTO_CAMARA * 0.96f+20); //mandamos la posicion que queremos por default.
+        this.textoMarcadorPergaminos= new Texto(50+0.70f * Principal.ANCHO_CAMARA, Principal.ALTO_CAMARA * 0.96f+20); //mandamos la posicion que queremos por default.
 
 
         //Lista scrolles: en todos los niveles solo hay 3 scroll
@@ -308,9 +308,9 @@ public class PantallaJuego implements Screen{
                 //nuevo.setTamanio(70,70); //Irvin ya ajusto el tamaño de las vidas en photoshop..
                 this.vidas.add(nuevo);
             }
-            this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX()+80,this.textoMarcadorVidas.getY()-65);
-            this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX()+150,this.textoMarcadorVidas.getY()-65);
-            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+220,this.textoMarcadorVidas.getY()-65);
+            this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX()+95,this.textoMarcadorVidas.getY()-65);
+            this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX()+165,this.textoMarcadorVidas.getY()-65);
+            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+235,this.textoMarcadorVidas.getY()-65);
         }
 
     }
@@ -322,7 +322,7 @@ public class PantallaJuego implements Screen{
     @Override
     public void render(float delta) { // delta es el tiempo entre frames (Gdx.graphics.getDeltaTime())
         // Leer entrada
-
+        Gdx.app.log("",hataku.getY()+"");
         // Actualizar objetos en la pantalla
         moverPersonaje();
         actualizarCamara(); // Mover la cámara para que siga al personaje
@@ -535,8 +535,8 @@ public class PantallaJuego implements Screen{
 
         //mata enemigos al toque
         for (ObjetosJuego Enemigo : enemigoN1) {
-            if(hataku.getSprite().getX()>= Enemigo.getSprite().getX() && hataku.getSprite().getX()<= Enemigo.getSprite().getX() + Enemigo.getSprite().getWidth()
-                    && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight() + Enemigo.getSprite().getY()){
+            if(hataku.getSprite().getX()>= Enemigo.getSprite().getX() && hataku.getSprite().getX()<= Enemigo.getSprite().getX() + Enemigo.getSprite().getWidth()-10
+                    && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight()-5 + Enemigo.getSprite().getY()){
                 if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
 
                     this.efectoDanio.play();
@@ -580,10 +580,10 @@ public class PantallaJuego implements Screen{
             // La cámara se queda media pantalla antes del fin del mundo  :)
             camara.position.set(ANCHO_MAPA-Principal.ANCHO_CAMARA/2, camara.position.y, 0);
         }
-        if (posY>=Principal.ALTO_CAMARA/2 && posY<=ANCHO_MAPA-Principal.ALTO_CAMARA/2) {
+        if (posY>=Principal.ALTO_CAMARA/2 && posY<= Principal.ALTO_MUNDO-Principal.ALTO_CAMARA/2) {
             // El personaje define el centro de la cámara
             camara.position.set(camara.position.x, (int)posY, 0);
-        } else if (posY>ANCHO_MAPA-Principal.ALTO_CAMARA/2) {    // Si está en la última mitad
+        } else if (posY>=Principal.ALTO_MUNDO-Principal.ALTO_CAMARA/2) {    // Si está en la última mitad
             // La cámara se queda media pantalla antes del fin del mundo  :)
             camara.position.set(camara.position.x, Principal.ALTO_MUNDO-Principal.ALTO_CAMARA/2, 0);
         }
