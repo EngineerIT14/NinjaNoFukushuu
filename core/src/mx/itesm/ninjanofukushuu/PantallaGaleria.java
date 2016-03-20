@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  Pantalla galeria donde se mostrara el arte desbloqueado mediante los pergaminos, tambien muestra el boton si es bloqueado o desbloqueado
  Autores: Irvin Emmanuel Trujillo Díaz
  preferencias para guardar las banderas..
-**/
+ **/
 public class PantallaGaleria implements Screen {
     private final Principal principal;
     private OrthographicCamera camara;
@@ -78,7 +78,7 @@ public class PantallaGaleria implements Screen {
         if(banderaPergaminosTierra) //entonces el usuario ya junto los 3 pergaminos del nivel tierra
             this.btnGaleriaTierra = new Boton(texturaGaleriaTierraDesbloqueada);
         else
-           this.btnGaleriaTierra =  new Boton(texturaGaleriaTierraBloqueada);
+            this.btnGaleriaTierra =  new Boton(texturaGaleriaTierraBloqueada);
 
         btnGaleriaTierra.setPosicion(Principal.ANCHO_MUNDO / 4 - 100, Principal.ALTO_MUNDO * 2 / 3 - 200);
 
@@ -316,3 +316,5 @@ public class PantallaGaleria implements Screen {
 
 
 }
+
+//
