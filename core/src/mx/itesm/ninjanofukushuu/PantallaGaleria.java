@@ -15,10 +15,10 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
- Pantalla galeria donde se mostrara el arte desbloqueado mediante los pergaminos...
- Autores: Javier e Irvin Emmanuel Trujillo Díaz
- preferencias para guardar las banderas.. diccionario objeto
- */
+ Pantalla galeria donde se mostrara el arte desbloqueado mediante los pergaminos, tambien muestra el boton si es bloqueado o desbloqueado
+ Autores: Irvin Emmanuel Trujillo Díaz
+ preferencias para guardar las banderas..
+**/
 public class PantallaGaleria implements Screen {
     private final Principal principal;
     private OrthographicCamera camara;
