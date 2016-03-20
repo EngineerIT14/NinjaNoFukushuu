@@ -49,12 +49,9 @@ public class PantallaImagen {
     //Efectos
     private Sound efectoHoja;
 
-    public PantallaImagen(Principal principal, boolean banderaPergaminosTierra, boolean banderaPergaminosAgua, boolean banderaPergaminosFuego) {
+    public PantallaImagen(Principal principal) {
         this.principal = principal;
-        //LAS BANDERAS SON FUDAMENTALES YA QUE INDICAN QUE TEXTURA CARGAR (BLOQUEDO O DESBLOQUEADO) Y EL COMPROTAMIENTO DEL BOTON...
-        this.banderaPergaminosTierra = banderaPergaminosTierra;
-        this.banderaPergaminosAgua = banderaPergaminosAgua;
-        this.banderaPergaminosFuego = banderaPergaminosFuego;
+
     }
 
 
