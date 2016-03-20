@@ -21,7 +21,7 @@ public class Texto
     public Texto(float posicionx, float posiciony) {
         font = new BitmapFont(Gdx.files.internal("naftalene.fnt"));
         font.setColor(Color.CORAL);
-
+        font.getData().scale(0.001f);
         this.posicionX = posicionx;
         this.posicionY = posiciony;
     }
@@ -30,7 +30,7 @@ public class Texto
         GlyphLayout glyp = new GlyphLayout();
         glyp.setText(font, mensaje);
         float anchoTexto = glyp.width;
-        font.draw(batch,glyp,this.posicionX-anchoTexto/2,this.posicionY);
+        font.draw(batch,glyp,this.posicionX-anchoTexto/3,this.posicionY);
     }
 
     public void modificarCoordenadas(float x,float y){

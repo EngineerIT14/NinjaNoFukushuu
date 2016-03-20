@@ -63,6 +63,15 @@ public class ObjetosJuego {
         switch (estadoAtaque){
             case DERECHA:
                 ataquex += velocidad;
+                if (estadoAtaque==estadoAtaque.DERECHA) {
+                    if (!sprite.isFlipX()) {
+                        sprite.flip(true,false);
+                    }
+                } else {
+                    if (sprite.isFlipX()) {
+                        sprite.flip(true,false);
+                    }
+                }
                 if (ataquex>=distancia){
                     ataquex=0;
                     estadoAtaque=EstadoAtaque.OCULTO;
