@@ -470,8 +470,12 @@ public class PantallaJuego implements Screen{
             if (ataque.getEstadoAtaque() == ObjetosJuego.EstadoAtaque.DISPONIBLE) {
                 if (hataku.getSprite().getX() < ataque.getSprite().getX()) {
                     ataque.mandarIzquierda();
+                    if(enemigo.getSprite().isFlipX())
+                        enemigo.getSprite().flip(true,false); //para que se voltee
                 } else {
                     ataque.mandarDerecha();
+                    if(!enemigo.getSprite().isFlipX())
+                        enemigo.getSprite().flip(true,false); //para que se voltee
                 }
             } else {
                 ataque.actualizarAtaque(enemigoN1.get(ataqueFlag).getSprite().getX() + 15, enemigoN1.get(ataqueFlag).getSprite().getY() + 25);
@@ -801,9 +805,7 @@ public class PantallaJuego implements Screen{
                     btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se regresa a posicion orignal
                     banderaBotonDerecha = false;
                 }
-
             }
-
             return true;    // Indica que ya procesó el evento
         }
 
@@ -894,9 +896,6 @@ public class PantallaJuego implements Screen{
 
 
     public enum EstadosJuego {
-        GANO,
         JUGANDO,
-        PAUSADO,
-        PERDIO
     }
 }

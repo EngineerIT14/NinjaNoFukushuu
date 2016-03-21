@@ -64,14 +64,12 @@ public class ObjetosJuego {
             case DERECHA:
                 ataquex += velocidad;
                 if (estadoAtaque==estadoAtaque.DERECHA) {
-                    if (!sprite.isFlipX()) {
-                        sprite.flip(true,false);
-                    }
-                } else {
-                    if (sprite.isFlipX()) {
-                        sprite.flip(true,false);
+                    if (!sprite.isFlipX()) { //se voltea el ataque..
+                        sprite.flip(true, false);
                     }
                 }
+
+
                 if (ataquex>=distancia){
                     ataquex=0;
                     estadoAtaque=EstadoAtaque.OCULTO;
@@ -82,6 +80,13 @@ public class ObjetosJuego {
                 sprite.setSize(ancho,alto);
                 break;
             case IZQUIERDA:
+                if (estadoAtaque==estadoAtaque.IZQUIERDA) {
+                    if (sprite.isFlipX()) { // se voltea el ataqye
+                        sprite.flip(true,false);
+                    }
+                }
+
+
                 ataquex -= velocidad;
                 if (ataquex<-distancia){
                     ataquex=0;

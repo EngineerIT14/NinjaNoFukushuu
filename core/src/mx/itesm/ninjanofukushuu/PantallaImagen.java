@@ -456,7 +456,7 @@ public class PantallaImagen implements Screen {
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 6:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/vidaArte.png");
+                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/fondoArteTierra.png");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     default:break;
