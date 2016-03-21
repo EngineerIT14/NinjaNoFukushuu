@@ -50,7 +50,7 @@ public class PantallaMenu implements Screen {
 
     //Efectos y musica de fondo
     private Sound efectoClick;
-    private Music musicaFondo;
+    private static Music musicaFondo;
     public static float volumen = .5f; //volumen para reproducir sonidos...
     private boolean banderaCancionJuego; //Esta bandera sirve para que se vuelva a crear el objeto de musicaFondo cuando regresas al menu principal y se interrumpa la que esta actualmente.
 
@@ -147,6 +147,7 @@ public class PantallaMenu implements Screen {
             this.musicaFondo.setVolume(PantallaMenu.volumen);
 
         }
+
     }
 
     //Metodo de la clase Screen, ya fue implementado
