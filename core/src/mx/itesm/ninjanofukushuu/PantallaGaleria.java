@@ -172,7 +172,7 @@ public class PantallaGaleria implements Screen {
                 btnGaleriaTierra.setTamanio(300, 285); //Lo hago más pequeño
                 this.banderaBotonGaleriaTierra = true;
                 if(!banderaPergaminosTierra) //esta bloqueado
-                    sonidoBloqueado.play();
+                    sonidoBloqueado.play(PantallaMenu.volumen);
             }
 
             if (btnGaleriaAgua.contiene(x,y)){
@@ -180,7 +180,7 @@ public class PantallaGaleria implements Screen {
                 btnGaleriaAgua.setTamanio(300, 285); //Lo hago más pequeño
                 this.banderaBotonGaleriaAgua = true;
                 if(!banderaPergaminosAgua)// esta bloqueado
-                    sonidoBloqueado.play();
+                    sonidoBloqueado.play(PantallaMenu.volumen);
             }
 
             if (btnGaleriaFuego.contiene(x,y)){
@@ -188,7 +188,7 @@ public class PantallaGaleria implements Screen {
                 btnGaleriaFuego.setTamanio(300, 285); //Lo hago más pequeño
                 this.banderaBotonGaleriaFuego = true;
                 if(!banderaPergaminosFuego) // esta bloqueado
-                    sonidoBloqueado.play();
+                    sonidoBloqueado.play(PantallaMenu.volumen);
             }
 
 
@@ -217,7 +217,7 @@ public class PantallaGaleria implements Screen {
                 banderaBotonGaleriaTierra = false;
                 btnGaleriaTierra.setAlfa(1);
                 btnGaleriaTierra.setTamanio(300, 300); //tamaño original
-                efectoClick.play(); //efecto de sonido
+                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 // ya se cargaron previamente las imagenes necesarias...
                 principal.setScreen(new PantallaImagen(principal, 1)); //galeria de arte de tierra..
 
@@ -229,14 +229,14 @@ public class PantallaGaleria implements Screen {
                 banderaBotonGaleriaAgua = false;
                 btnGaleriaAgua.setAlfa(1);
                 btnGaleriaAgua.setTamanio(300, 300); //tamaño original
-                efectoClick.play(); //efecto de sonido
+                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
 
             }
 
             else if (btnGaleriaFuego.contiene(x,y) && this.banderaBotonGaleriaFuego && banderaPergaminosFuego ){
                 //banderaPergaminosFuego indica que el boton esta desbloqueado porque el usuario ya junto los 3 pergaminos.. en el nivel fuego
                 // si no entra al if el boton está bloqueado, no hace ningun sonido, se reproduce el sonido de bloqueado en touchDown..
-                efectoClick.play(); //efecto de sonido
+                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 banderaBotonGaleriaFuego = false;
                 btnGaleriaFuego.setAlfa(1);
                 btnGaleriaFuego.setTamanio(300, 300); //tamaño orginal
@@ -246,7 +246,7 @@ public class PantallaGaleria implements Screen {
 
             //en la pantalla cargando determinara que cargar... se manda el numero correspondiente para saber que se va cargar en esa clase..
             else if (btnRegresar.contiene(x, y) &&  this.banderaBotonRegresar) {
-                efectoClick.play(); //efecto de sonido
+                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 principal.setScreen(new PantallaCargando(0,principal,true));  //se manda true porque ya esta la cancion reproduciendose
             }
 

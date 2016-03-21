@@ -23,6 +23,7 @@ public class Principal extends Game  {
     public static final float ALTO_MUNDO = 720;
     public static final float ANCHO_CAMARA = 640;
     public static final float ALTO_CAMARA = 480;
+    public static boolean sonidoConMute = false; //para saber si el usuario le puso mute a los efectos del juego..
 
     // Administra la carga de los assets del juego
     private final AssetManager assetManager = new AssetManager();

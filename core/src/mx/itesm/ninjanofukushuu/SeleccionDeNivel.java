@@ -138,8 +138,7 @@ public class SeleccionDeNivel implements  Screen{
         Se ejecuta cuando el usuario pone un dedo sobre la pantalla, los dos primeros parámetros
         son las coordenadas relativas a la pantalla física (0,0) en la esquina superior izquierda
         pointer - es el número de dedo que se pone en la pantalla, el primero es 0
-        button - el botón del mouse
-         */
+        button - el botón del mouse*/
 
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -163,7 +162,7 @@ public class SeleccionDeNivel implements  Screen{
                 btnNivelDos.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
                 this.banderaBotonNivel2 = true;
                 if(!PantallaCargando.banderaNivelAguaDesbloqueado)
-                    sonidoBloqueado.play();
+                    sonidoBloqueado.play(PantallaMenu.volumen);
             }
 
             if (btnNivelTres.contiene(x, y)) {
@@ -171,7 +170,7 @@ public class SeleccionDeNivel implements  Screen{
                 btnNivelTres.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
                 this.banderaBotonNivel3 = true;
                 if(!PantallaCargando.banderaNivelFuegoDesbloqueado)
-                    sonidoBloqueado.play();
+                    sonidoBloqueado.play(PantallaMenu.volumen);
             }
 
             return true;    // Indica que ya procesó el evento
@@ -186,19 +185,19 @@ public class SeleccionDeNivel implements  Screen{
 
             //en la pantalla cargando determinara que cargar... se manda el numero correspondiente para saber que se va cargar en esa clase..
             if (btnRegresar.contiene(x, y) && this.banderaBotonRegresar) {
-                efectoClick.play(); //efecto de sonido
+                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 principal.setScreen(new PantallaCargando(0, principal, true));  //se manda true porque ya esta la cancion reproduciendose
             }
             if (btnNivelUno.contiene(x, y) && this.banderaBotonNivel1) {
-                efectoClick.play(); //efecto de sonido
+                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 principal.setScreen(new PantallaCargando(5, principal, true));  //nivel de tierra..
             }
             if (btnNivelDos.contiene(x, y) && this.banderaBotonNivel2 && PantallaCargando.banderaNivelAguaDesbloqueado) {
-                efectoClick.play(); //efecto de sonido
+                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 principal.setScreen(new PantallaCargando(6, principal, true));  //nivel de agua.. tiene que ser un 6.
             }
             if (btnNivelTres.contiene(x, y) && this.banderaBotonNivel3 &&  PantallaCargando.banderaNivelFuegoDesbloqueado) {
-                efectoClick.play(); //efecto de sonido
+                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 principal.setScreen(new PantallaCargando(7, principal, true));  //nivel de fuego... tiene que ser un 7
             }
             else { //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...

@@ -125,7 +125,7 @@ public class PantallaInstrucciones implements Screen {
 
             //en la pantalla cargando determinara que cargar... se manda el numero correspondiente para saber que se va cargar en esa clase..
             if (btnRegresar.contiene(x, y) &&  this.banderaBotonRegresar) {
-                efectoClick.play(); //efecto de sonido
+                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 principal.setScreen(new PantallaCargando(0,principal,true));  //se manda true porque ya esta la cancion reproduciendose
             }
 

@@ -249,7 +249,7 @@ public class PantallaImagen implements Screen {
                 banderaBotonIzquierda = false;
                 btnIzquierda.setAlfa(1);
                 btnIzquierda.setTamanio(PantallaImagen.TAMANIO_BOTON_FLECHAS_ANCHO, PantallaImagen.TAMANIO_BOTON_FELCHAS_ALTO); //tamaño original
-                efectoHoja.play(); //efecto de sonido
+                efectoHoja.play(PantallaMenu.volumen); //efecto de sonido
                 numeroImagen -= 1; //para cambiar de imagen..
                 if(numeroImagen<=0){ //el usuario esta en la primer imagen, no debe de avanzar..
                    numeroImagen = 1;
@@ -402,7 +402,7 @@ public class PantallaImagen implements Screen {
                 banderaBotonDerecha= false;
                 btnDerecha.setAlfa(1);
                 btnDerecha.setTamanio(PantallaImagen.TAMANIO_BOTON_FLECHAS_ANCHO, PantallaImagen.TAMANIO_BOTON_FELCHAS_ALTO);  //tamaño original
-                efectoHoja.play(); //efecto de sonido
+                efectoHoja.play(PantallaMenu.volumen); //efecto de sonido
                 //cambiando imagen
                 numeroImagen += 1; //para cambiar de imagen..
                 boolean banderaCambiarImagen = true;
@@ -581,7 +581,7 @@ public class PantallaImagen implements Screen {
 
             else if (btnAccion.contiene(x,y) && this.banderaBotonAccion){
 
-                efectoClick.play(); //efecto de sonido
+                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 banderaBotonAccion = false;
                 btnAccion.setAlfa(1);
                 btnAccion.setTamanio(PantallaImagen.TAMANIO_BOTON, PantallaImagen.TAMANIO_BOTON); //tamaño orginal

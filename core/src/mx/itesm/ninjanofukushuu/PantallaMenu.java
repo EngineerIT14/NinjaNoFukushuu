@@ -37,20 +37,21 @@ public class PantallaMenu implements Screen {
     private Texture textureFondo1;
     //Botones
     private OrthographicCamera camaraHUD;   // Cámara Botones
-    private Boton btnPLay,btnInstructions,btnGallery,btnAbout;
-    private Texture texturaBtnPlay,texturaBtnInstructions,texturaBtnGallery,texturaBtnAbout; //Textura, se administran los recursos...
-    private static final int anchoBoton = 400 , altoBoton = 160;
-    private static final float posicionYBotonJugarInstrucciones = Principal.ALTO_MUNDO/2-150, posicionYBotonGalleryAbout = Principal.ALTO_MUNDO/2 -310   ; //Posicion en y...
+    private Boton btnPLay,btnInstructions,btnGallery,btnAbout,btnSonido;
+    private Texture texturaBtnPlay,texturaBtnInstructions,texturaBtnGallery,texturaBtnAbout,texturaBtnSonido; //Textura, se administran los recursos...
+    private static final int ANCHO_BOTON = 400 , ALTO_BOTON = 160 , ANCHO_BOTON_SONIDO = 150, ALTO_BOTON_SONIDO= 100;
+    private static final float POSICION_Y_BOTON_JUGAR_INSTRUCCIONES = Principal.ALTO_MUNDO/2-150, POSICION_Y_BOTON_GALLERY_ABOUT = Principal.ALTO_MUNDO/2 -310   ; //Posicion en y...
 
     //LOGO
     private Logotipo logo;
     private Texture texturaLogo;
-    private static final int anchoLogo = 700 , altoLogo = 350;
-    private static final int posicionCentradaXLogo = 330 , posicionCentradaYLogo = 380;
+    private static final int ANCHO_LOGO = 700 , ALTO_LOGO = 350;
+    private static final int POSICION_X_CENTRADA_LOGO = 330 , POSICION_Y_CENTRADA_LOGO = 380;
 
     //Efectos y musica de fondo
     private Sound efectoClick;
     private Music musicaFondo;
+    public static float volumen = .5f; //volumen para reproducir sonidos...
     private boolean banderaCancionJuego; //Esta bandera sirve para que se vuelva a crear el objeto de musicaFondo cuando regresas al menu principal y se interrumpa la que esta actualmente.
 
     //Dependiendo el caso,  sabemos que PANTALLA CARGAR, esto se hace en touchUp.
@@ -84,29 +85,6 @@ public class PantallaMenu implements Screen {
         this.cargarAudioJuego();
         this.crearObjetos();
 
-        //Creando objetos...
-        fondo1 = new Fondo(textureFondo1);
-        fondo = new Fondo(texturaFondo);
-        btnPLay = new Boton(texturaBtnPlay);
-        btnInstructions  = new Boton(texturaBtnInstructions);
-        btnGallery = new Boton(texturaBtnGallery);
-        btnAbout = new Boton(texturaBtnAbout);
-        logo = new Logotipo(texturaLogo);
-
-        //Colocando posición de botones.
-        btnInstructions.setPosicion(295,PantallaMenu.posicionYBotonJugarInstrucciones);
-        btnPLay.setPosicion(675, PantallaMenu.posicionYBotonJugarInstrucciones);
-        btnGallery.setPosicion(15,PantallaMenu.posicionYBotonGalleryAbout);
-        btnAbout.setPosicion(880,PantallaMenu.posicionYBotonGalleryAbout);
-        logo.setPosicion(PantallaMenu.posicionCentradaXLogo, PantallaMenu.posicionCentradaYLogo);
-
-        //ajustando el tamaño
-        fondo.setTamanio(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
-        btnPLay.setTamanio(anchoBoton, altoBoton);
-        btnInstructions.setTamanio(anchoBoton-10, altoBoton);
-        btnGallery.setTamanio(anchoBoton+10, altoBoton); //Se le modifico el ancho a gallery para que se vea estético..
-        btnAbout.setTamanio(anchoBoton+10, altoBoton);
-        logo.setTamanio(anchoLogo-10, altoLogo);
 
         fondo1.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo1.getSprite().setOrigin(1500 / 2, 1500 / 2);
@@ -117,16 +95,45 @@ public class PantallaMenu implements Screen {
     //Obtener las texturas cargadas en la pantallaCargando.java
     private void crearObjetos(){
         AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
-        textureFondo1 = assetManager.get("fondoMenu.jpg");
-        texturaFondo = assetManager.get("NINJAH3.png");
-        texturaBtnPlay =  assetManager.get("botonPlay.png");
-        texturaBtnInstructions =  assetManager.get("botonInstructions.png");
-        texturaBtnGallery = assetManager.get("botonGallery.png");
-        texturaBtnAbout =  assetManager.get("botonAbout.png");
-        texturaLogo = assetManager.get("Title.png");
+        this.textureFondo1 = assetManager.get("fondoMenu.jpg");
+        this.texturaFondo = assetManager.get("NINJAH3.png");
+        this.texturaBtnPlay =  assetManager.get("botonPlay.png");
+        this.texturaBtnInstructions =  assetManager.get("botonInstructions.png");
+        this.texturaBtnGallery = assetManager.get("botonGallery.png");
+        this.texturaBtnAbout =  assetManager.get("botonAbout.png");
+        this.texturaLogo = assetManager.get("Title.png");
+        this.texturaBtnSonido = assetManager.get("bocina.png");
+
         //sonido
         this.efectoClick = assetManager.get("sonidoVentana.wav");
-        this.efectoClick.setVolume(70,70);
+
+
+        //Creando objetos...
+        this.fondo1 = new Fondo(this.textureFondo1);
+        this.fondo = new Fondo(this.texturaFondo);
+        this.btnPLay = new Boton(this.texturaBtnPlay);
+        this.btnInstructions  = new Boton(this.texturaBtnInstructions);
+        this.btnGallery = new Boton(this.texturaBtnGallery);
+        this.btnAbout = new Boton(this.texturaBtnAbout);
+        this.btnSonido = new Boton(this.texturaBtnSonido);
+        this.logo = new Logotipo(this.texturaLogo);
+
+        //Colocando posición de botones.
+        this.btnInstructions.setPosicion(295,PantallaMenu.POSICION_Y_BOTON_JUGAR_INSTRUCCIONES);
+        this.btnPLay.setPosicion(675, PantallaMenu.POSICION_Y_BOTON_JUGAR_INSTRUCCIONES);
+        this.btnGallery.setPosicion(15,PantallaMenu.POSICION_Y_BOTON_GALLERY_ABOUT);
+        this.btnAbout.setPosicion(880,PantallaMenu.POSICION_Y_BOTON_GALLERY_ABOUT);
+        this.btnSonido.setPosicion(1110,Principal.ALTO_MUNDO-120);
+        this.logo.setPosicion(PantallaMenu.POSICION_X_CENTRADA_LOGO, PantallaMenu.POSICION_Y_CENTRADA_LOGO);
+
+        //ajustando el tamaño
+        this.fondo.setTamanio(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
+        this.btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON, PantallaMenu.ALTO_BOTON);
+        this.btnInstructions.setTamanio(PantallaMenu.ANCHO_BOTON-10, PantallaMenu.ALTO_BOTON);
+        this.btnGallery.setTamanio(PantallaMenu.ANCHO_BOTON+10, PantallaMenu.ALTO_BOTON); //Se le modifico el ancho a gallery para que se vea estético..
+        this.btnAbout.setTamanio(PantallaMenu.ANCHO_BOTON+10, PantallaMenu.ALTO_BOTON);
+        this.btnSonido.setTamanio(PantallaMenu.ANCHO_BOTON_SONIDO,PantallaMenu.ALTO_BOTON_SONIDO);
+        this.logo.setTamanio(ANCHO_LOGO-10, ALTO_LOGO);
 
     }
 
@@ -136,8 +143,9 @@ public class PantallaMenu implements Screen {
         if(!this.banderaCancionJuego) { //si es falsa, entonces no se esta escuchando nada....
             this.musicaFondo = Gdx.audio.newMusic(Gdx.files.internal("musicaJuegoPrincipal.wav"));
             this.musicaFondo.setLooping(true);
-            this.musicaFondo.setVolume(70);
             this.musicaFondo.play();
+            this.musicaFondo.setVolume(PantallaMenu.volumen);
+
         }
     }
 
@@ -166,6 +174,8 @@ public class PantallaMenu implements Screen {
         btnInstructions.render(batch);
         btnGallery.render(batch);
         btnAbout.render(batch);
+        btnSonido.render(batch);
+
         batch.end();
 
     }
@@ -199,7 +209,8 @@ public class PantallaMenu implements Screen {
         private Vector3 coordenadas = new Vector3();
         private float x, y;     // Las coordenadas en la pantalla virtual
 
-        private boolean banderaBotonPlay = false, banderaBotonInstructions = false, banderaBotonGallery = false, banderaBotonAbout = false; //Banderas que nos sirven para saber si el boton está transparente y  pequeño o  no además que nos ayudan para la segunda condicion de touchUp.
+        private boolean banderaBotonPlay = false, banderaBotonInstructions = false,
+                banderaBotonGallery = false, banderaBotonAbout = false, banderaBotonSonido = false; //Banderas que nos sirven para saber si el boton está transparente y  pequeño o  no además que nos ayudan para la segunda condicion de touchUp.
         /*
         Se ejecuta cuando el usuario pone un dedo sobre la pantalla, los dos primeros parámetros
         son las coordenadas relativas a la pantalla física (0,0) en la esquina superior izquierda
@@ -213,24 +224,37 @@ public class PantallaMenu implements Screen {
 
             if (btnPLay.contiene(x, y) ) {
                 btnPLay.setAlfa(.5f);
-                btnPLay.setTamanio(anchoBoton,altoBoton-15); //Lo hago más pequeño
+                btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON,PantallaMenu.ALTO_BOTON-15); //Lo hago más pequeño
                 this.banderaBotonPlay = true; //el boton está transparente, entonces activo la bandera..
             }
             //el -10, +10 +10 es porque así estan los botones originales con el tamaño correspondiente
             else if (btnInstructions.contiene(x, y)) {
                 btnInstructions.setAlfa(.5f);  //al presionarse se hace transparente
-                btnInstructions.setTamanio(anchoBoton-10,altoBoton-15); //Lo hago más pequeño
+                btnInstructions.setTamanio(PantallaMenu.ANCHO_BOTON-10,PantallaMenu.ALTO_BOTON-15); //Lo hago más pequeño
                 this.banderaBotonInstructions = true;
             }
             else if (btnAbout.contiene(x, y) ) {
                 btnAbout.setAlfa(.5f);
-                btnAbout.setTamanio(anchoBoton+10,altoBoton-15); //Lo hago más pequeño
+                btnAbout.setTamanio(PantallaMenu.ANCHO_BOTON+10,PantallaMenu.ALTO_BOTON-15); //Lo hago más pequeño
                 this.banderaBotonAbout = true;
             }
             else if (btnGallery.contiene(x, y) ) {
                 btnGallery.setAlfa(.5f);
-                btnGallery.setTamanio(anchoBoton+10,altoBoton-15); //Lo hago más pequeño
+                btnGallery.setTamanio(PantallaMenu.ANCHO_BOTON+10,PantallaMenu.ALTO_BOTON-15); //Lo hago más pequeño
                 this.banderaBotonGallery = true;
+            }
+
+            else if (btnGallery.contiene(x, y) ) {
+                btnGallery.setAlfa(.5f);
+                btnGallery.setTamanio(PantallaMenu.ANCHO_BOTON+10,PantallaMenu.ALTO_BOTON-15); //Lo hago más pequeño
+                this.banderaBotonGallery = true;
+            }
+
+            else if (btnSonido.contiene(x,y)){
+                btnSonido.setAlfa(.5f);
+                btnSonido.setTamanio(PantallaMenu.ANCHO_BOTON_SONIDO,PantallaMenu.ALTO_BOTON_SONIDO-15); //Lo hago más pequeño
+                this.banderaBotonSonido = true;
+
             }
 
             return true;    // Indica que ya procesó el evento
@@ -246,41 +270,64 @@ public class PantallaMenu implements Screen {
 
             //en la pantalla cargando determinara que cargar... se manda el numero correspondiente para saber que se va cargar en esa clase..
             if (btnPLay.contiene(x, y) &&  this.banderaBotonPlay) {
-                Gdx.app.log("leerEntrada", "HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
-                efectoClick.play(); //efecto de sonido
+                //Gdx.app.log("leerEntrada", "HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
+                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 principal.setScreen(new PantallaCargando(1,principal,true));  //se manda true porque ya esta la cancion reproduciendose
 
             }
             else if (btnInstructions.contiene(x, y) && this.banderaBotonInstructions) {
-                Gdx.app.log("leerEntrada", "HAY UN TAP EN INSTRUCCIONES!"); //cuando le apretan va decir esto..
-                efectoClick.play();
+                //Gdx.app.log("leerEntrada", "HAY UN TAP EN INSTRUCCIONES!"); //cuando le apretan va decir esto..
+                efectoClick.play(PantallaMenu.volumen);
                 principal.setScreen(new PantallaCargando(2,principal,true)); //se manda true porque ya esta la cancion reproduciendose
             }
             else if (btnAbout.contiene(x, y) && this.banderaBotonAbout ) {
-                Gdx.app.log("leerEntrada", "HAY UN TAP! EN ABOUT"); //cuando le apretan va decir esto..
-                efectoClick.play();
+                //Gdx.app.log("leerEntrada", "HAY UN TAP! EN ABOUT"); //cuando le apretan va decir esto..
+                efectoClick.play(PantallaMenu.volumen);
                 principal.setScreen(new PantallaCargando(4,principal,true)); //se manda true porque ya esta la cancion reproduciendose
             }
             else if (btnGallery.contiene(x, y) && this.banderaBotonGallery ) {
-                Gdx.app.log("leerEntrada", "HAY UN TAP EN GALLERIA!"); //cuando le apretan va decir esto..
-                efectoClick.play();
+                //Gdx.app.log("leerEntrada", "HAY UN TAP EN GALLERIA!"); //cuando le apretan va decir esto..
+                efectoClick.play(PantallaMenu.volumen);
                 principal.setScreen(new PantallaCargando(3,principal,true));//se manda true porque ya esta la cancion reproduciendose
             }
+            else if (btnSonido.contiene(x, y) && this.banderaBotonSonido && !Principal.sonidoConMute ) {
+                //Gdx.app.log("leerEntrada", "HAY UN TAP EN SONIDO!"); //cuando le apretan va decir esto..
+                silenciarJuego();
+                banderaBotonSonido = false;
+                btnSonido.setAlfa(1);
+                btnSonido.setTamanio(PantallaMenu.ANCHO_BOTON_SONIDO, ALTO_BOTON_SONIDO);
+                Principal.sonidoConMute = true;
+
+            }
+
+            else if (btnSonido.contiene(x, y) && this.banderaBotonSonido && Principal.sonidoConMute ) {
+                //Gdx.app.log("leerEntrada", "HAY UN TAP EN SONIDO!"); //cuando le apretan va decir esto..
+                activarMusicaJuego();
+                banderaBotonSonido = false;
+                btnSonido.setAlfa(1);
+                btnSonido.setTamanio(PantallaMenu.ANCHO_BOTON_SONIDO, ALTO_BOTON_SONIDO);
+                Principal.sonidoConMute = false;
+
+            }
+
             else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
                 // se le quita la transparencia y se regresa a su tamaño original
                 //el -10, +10 +10 es porque así estan los botones originales con el tamaño correspondiente
                 banderaBotonPlay = false;
                 btnPLay.setAlfa(1);
-                btnPLay.setTamanio(anchoBoton, altoBoton); //tamaño original
+                btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON, PantallaMenu.ALTO_BOTON); //tamaño original
                 banderaBotonInstructions = false;
                 btnInstructions.setAlfa(1);
-                btnInstructions.setTamanio(anchoBoton-10, altoBoton); //tamaño original
+                btnInstructions.setTamanio(PantallaMenu.ANCHO_BOTON - 10, PantallaMenu.ALTO_BOTON); //tamaño original
                 banderaBotonGallery = false;
                 btnGallery.setAlfa(1);
-                btnGallery.setTamanio(anchoBoton+10, altoBoton); //tamaño orginal
+                btnGallery.setTamanio(PantallaMenu.ANCHO_BOTON + 10, PantallaMenu.ALTO_BOTON); //tamaño orginal
                 banderaBotonAbout = false;
                 btnAbout.setAlfa(1);
-                btnAbout.setTamanio(anchoBoton+10,altoBoton); //tamaño orginal
+                btnAbout.setTamanio(PantallaMenu.ANCHO_BOTON + 10, PantallaMenu.ALTO_BOTON); //tamaño orginal
+                banderaBotonSonido = false;
+                btnSonido.setAlfa(1);
+                btnSonido.setTamanio(PantallaMenu.ANCHO_BOTON_SONIDO,ALTO_BOTON_SONIDO);
 
             }
             return true;    // Indica que ya procesó el evento
@@ -296,6 +343,17 @@ public class PantallaMenu implements Screen {
         }
     }
 
+    private void silenciarJuego() {
+        PantallaMenu.volumen = 0f;
+        this.musicaFondo.setVolume(PantallaMenu.volumen);
+    }
+
+    private void activarMusicaJuego(){ //Para que se vuela a poner la musica del juego
+        PantallaMenu.volumen = .5f;
+        this.musicaFondo.setVolume(PantallaMenu.volumen);
+
+
+    }
 
 
     //estos metodos sde ejecutan cuando se pasa a la otra pantalla

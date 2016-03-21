@@ -152,6 +152,7 @@ public class PantallaCargando implements Screen
                     assetManager.load("botonGallery.png", Texture.class);    // Cargar imagen
                     assetManager.load("botonAbout.png", Texture.class);    // Cargar imagen
                     assetManager.load("Title.png", Texture.class);    // Cargar imagen
+                    assetManager.load("bocina.png",Texture.class);
                     assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
 
                     break;

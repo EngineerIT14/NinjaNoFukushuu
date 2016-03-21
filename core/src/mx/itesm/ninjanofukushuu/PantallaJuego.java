@@ -174,15 +174,10 @@ public class PantallaJuego implements Screen{
 
         //Musica y efectos se obtienen y se ajusta el volumen
         this.efectoSaltoHataku = assetManager.get("seleccionNivel/sonidosGameplay/efectoSaltoHataku.wav");
-        this.efectoSaltoHataku.setVolume(70, 70);
         this.efectoTomarVida = assetManager.get("seleccionNivel/sonidosGameplay/efectoVida.wav");
-        this.efectoTomarVida.setVolume(70, 70);
         this.efectoTomarPergamino = assetManager.get("seleccionNivel/sonidosGameplay/efectoPergamino.wav");
-        this.efectoTomarPergamino.setVolume(70, 70);
         this.efectoDanio = assetManager.get("seleccionNivel/sonidosGameplay/efectoDanio.wav");
-        this.efectoTomarPergamino.setVolume(70, 70);
         this.efectoPuertaTemplo = assetManager.get("seleccionNivel/sonidosGameplay/puertaTemplo.wav");
-        this.efectoPuertaTemplo.setVolume(70, 70);
 
 
 
@@ -409,7 +404,7 @@ public class PantallaJuego implements Screen{
 
             this.numeroNivel = 2;
             this.marcadorPergaminos = 0;
-            this.efectoPuertaTemplo.play();
+            this.efectoPuertaTemplo.play(PantallaMenu.volumen);
             PantallaCargando.partidaGuardada.putBoolean("nivelAgua", true); //se guarda el progreso y se desbloquea el nivel de agua...
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
             //en este caso, como aun no hay otra pantalla, nos regresa al menu principal...
@@ -425,7 +420,7 @@ public class PantallaJuego implements Screen{
 
             this.numeroNivel = 3;
             this.marcadorPergaminos = 0;
-            this.efectoPuertaTemplo.play();
+            this.efectoPuertaTemplo.play(PantallaMenu.volumen);
             //en este caso, como aun no hay otra pantalla, nos regresa al menu principal...
             plataforma.setScreen(new PantallaCargando(0, plataforma, true));
 
@@ -437,7 +432,7 @@ public class PantallaJuego implements Screen{
         if(this.templos.get(2).getSprite().getX() == this.hataku.getX() &&
                 this.templos.get(2).getSprite().getY() == this.hataku.getY() && this.numeroNivel == 3){
 
-            this.efectoPuertaTemplo.play();
+            this.efectoPuertaTemplo.play(PantallaMenu.volumen);
             this.marcadorPergaminos = 0;
 
             //en este caso, como aun no hay otra pantalla, nos regresa al menu principal...
@@ -511,7 +506,7 @@ public class PantallaJuego implements Screen{
                             && hataku.getSprite().getY()+hataku.getSprite().getHeight() >= scrolls.getSprite().getY() && hataku.getSprite().getY()+hataku.getSprite().getHeight() <= scrolls.getSprite().getHeight() + scrolls.getSprite().getY()){
                 if(scrolls.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
                     this.marcadorPergaminos++;
-                    this.efectoTomarPergamino.play(); //suena efecto
+                    this.efectoTomarPergamino.play(PantallaMenu.volumen); //suena efecto
                     scrolls.quitarElemento();
                 }
                 break;
@@ -526,7 +521,7 @@ public class PantallaJuego implements Screen{
                 if(vidas.size()<3) {
                     if (pocion.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
 
-                        this.efectoTomarVida.play(); //suena efecto
+                        this.efectoTomarVida.play(PantallaMenu.volumen); //suena efecto
                         ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                         this.vidas.add(nuevo);
                         nuevo.setPosicion(vidas.get(vidas.size()-2).getSprite().getX()+70,this.textoMarcadorVidas.getY()-45);
@@ -543,7 +538,7 @@ public class PantallaJuego implements Screen{
                     && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight()-5 + Enemigo.getSprite().getY()){
                 if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
 
-                    this.efectoDanio.play();
+                    this.efectoDanio.play(PantallaMenu.volumen);
                     vidas.remove(vidas.size()-1);
                     Enemigo.quitarElemento();
                 }
@@ -563,7 +558,7 @@ public class PantallaJuego implements Screen{
                             && ataque.getSprite().getY()<=hataku.getSprite().getY()+hataku.getSprite().getHeight() && ataque.getSprite().getY()>=hataku.getSprite().getY()){
                 if (ataque.getEstadoAtaque() != ObjetosJuego.EstadoAtaque.OCULTO){
                     ataque.ocultar();
-                    this.efectoDanio.play();
+                    this.efectoDanio.play(PantallaMenu.volumen);
                     vidas.remove(vidas.size()-1);
                 }
             }
@@ -758,7 +753,7 @@ public class PantallaJuego implements Screen{
                 } else if (btnSalto.contiene(x, y) ) {
                     // Tocó el botón saltar
                     if(Personaje.EstadoSalto.EN_PISO == hataku.getEstadoSalto()) //Para que solamente suene una vez el sonido de salto
-                        efectoSaltoHataku.play();
+                        efectoSaltoHataku.play(PantallaMenu.volumen);
 
                     btnSalto.setAlfa(.5f);
                     btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON-5); //lo hago más pequeño

@@ -132,7 +132,7 @@ public class PantallaAcerca implements Screen {
         texturaPresentacionFer = assetManager.get("imagenesAcercaDe/Fercho.png");
 
         efectoClick = assetManager.get("sonidoVentana.wav");
-        this.efectoClick.setVolume(70,70);
+
 
     }
 
@@ -241,7 +241,7 @@ public class PantallaAcerca implements Screen {
                         btnIrvin.setAlfa(1);
                         btnIrvin.setTamanio(anchoBoton, altoBoton); //tamaño original
                         presentacionIrvin.desaparecer();
-                        efectoClick.play();
+                        efectoClick.play(PantallaMenu.volumen);
                     }
                 }
                 else if(presentacionMia.getEstado() == Presentacion.Estado.APARECIDO){
@@ -250,7 +250,7 @@ public class PantallaAcerca implements Screen {
                         btnMia.setAlfa(1);
                         btnMia.setTamanio(anchoBoton, altoBoton); //tamaño original
                         presentacionMia.desaparecer();
-                        efectoClick.play();
+                        efectoClick.play(PantallaMenu.volumen);
                     }
                 }
                 else if(presentacionJavier.getEstado() == Presentacion.Estado.APARECIDO){
@@ -259,7 +259,7 @@ public class PantallaAcerca implements Screen {
                         btnJavier.setAlfa(1);
                         btnJavier.setTamanio(anchoBoton,altoBoton); //tamaño orginal
                         presentacionJavier.desaparecer();
-                        efectoClick.play();
+                        efectoClick.play(PantallaMenu.volumen);
                     }
                 }
                 else if(presentacionNuri.getEstado() == Presentacion.Estado.APARECIDO){
@@ -268,7 +268,7 @@ public class PantallaAcerca implements Screen {
                         btnNuri.setAlfa(1);
                         btnNuri.setTamanio(anchoBoton, altoBoton); //tamaño orginal
                         presentacionNuri.desaparecer();
-                        efectoClick.play();
+                        efectoClick.play(PantallaMenu.volumen);
                     }
                 }
                 else if(presentacionFer.getEstado() == Presentacion.Estado.APARECIDO){
@@ -277,7 +277,7 @@ public class PantallaAcerca implements Screen {
                         btnFer.setAlfa(1);
                         btnFer.setTamanio(anchoBoton,altoBoton); //tamaño orginal
                         presentacionFer.desaparecer();
-                        efectoClick.play();
+                        efectoClick.play(PantallaMenu.volumen);
                     }
                 }
                 return true;    // Indica que ya procesó el evento
@@ -291,30 +291,30 @@ public class PantallaAcerca implements Screen {
             // Preguntar si las coordenadas son de cierto lugar de donde se quito el dedo
             if (btnIrvin.contiene(x, y) &&  this.banderaBotonIrvin) {
                 presentacionIrvin.aparecer();
-                efectoClick.play(); //efecto de sonido
+                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
 
             }
             else if (btnMia.contiene(x, y) && this.banderaBotonMia) {
                 presentacionMia.aparecer();
-                efectoClick.play();
+                efectoClick.play(PantallaMenu.volumen);
 
             }
             else if (btnJavier.contiene(x, y) && this.banderaBotonJavier ) {
                 presentacionJavier.aparecer();
-                efectoClick.play();
+                efectoClick.play(PantallaMenu.volumen);
             }
             else if (btnNuri.contiene(x, y) && this.banderaBotonNuri ) {
                 presentacionNuri.aparecer();
-                efectoClick.play();
+                efectoClick.play(PantallaMenu.volumen);
 
             }
             else if (btnFer.contiene(x, y) && this.banderaBotonFer ) {
                 presentacionFer.aparecer();
-                efectoClick.play();
+                efectoClick.play(PantallaMenu.volumen);
 
             }
             else if (btnRegresar.contiene(x, y) && this.banderaBotonRegresar ) {
-                efectoClick.play();
+                efectoClick.play(PantallaMenu.volumen);
                 principal.setScreen(new PantallaMenu(principal,true)); //se manda true porque se esta escuchando la cancion, es decir, ya hay un objeto cancion reproduciendose..
             }
             else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones... entonces cancelo su selecciona
