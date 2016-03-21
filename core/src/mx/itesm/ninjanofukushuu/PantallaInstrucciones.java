@@ -68,7 +68,7 @@ public class PantallaInstrucciones implements Screen {
     private void crearObjetos(){
         AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
         //Fondo
-        texturaFondo = assetManager.get("N.jpg");
+        texturaFondo = assetManager.get("imagenesInstrucciones/fondoInstrucciones.jpg");
         texturaRegresar = assetManager.get("return.png");
         this.efectoClick = assetManager.get("sonidoVentana.wav");
     }

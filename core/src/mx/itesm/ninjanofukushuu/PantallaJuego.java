@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.ArrayList;
+
 /*
 Desarrolladores: Irvin Emmanuel Trujillo Díaz, Javier García Roque y Luis Fernando
 Descripción: Esta clase es la encargada de mostrar el juego y su comportamiento...
@@ -58,19 +60,19 @@ public class PantallaJuego implements Screen{
     //ITEMS
 
     //Scrolls/Pergamino
-    private Array<ObjetosJuego> scroll;
+    private ArrayList<ObjetosJuego> scroll;
     private Texture texturaScroll;
 
     //Enemigos
-    private Array<ObjetosJuego> enemigoN1;
+    private ArrayList<ObjetosJuego> enemigoN1;
     private Texture texturaEN1;
 
     //Templo
-    private Array<ObjetosJuego> templos; //son en total 3 templos
+    private ArrayList<ObjetosJuego> templos; //son en total 3 templos
     private Texture texturaTemplo;
 
     //Pociones
-    private Array<ObjetosJuego> pociones;
+    private ArrayList<ObjetosJuego> pociones;
     private Texture texturaPocion;
 
     //HUD, MARCADORES DE VIDA Y PERGAMINOS..
@@ -78,12 +80,12 @@ public class PantallaJuego implements Screen{
     //VIDAS QUE SE MUESTRAN EN EL HUD.
 
     //Tambien nos va servir de marcador...
-    private Array<ObjetosJuego> vidas;
+    private ArrayList<ObjetosJuego> vidas;
     private Texture texturaVidas;
 
 
     //Ataque
-    private  Array<ObjetosJuego> ataques;
+    private  ArrayList<ObjetosJuego> ataques;
     private Texture texturaAtaque;
 
     //Marcadores
@@ -144,13 +146,13 @@ public class PantallaJuego implements Screen{
     private void crearObjetos(){
         AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
         // Carga el mapa en memoria
-        mapa = assetManager.get("MapaDeTierraV2.tmx");
+        mapa = assetManager.get("seleccionNivel/recursosNivelTierra/MapaDeTierraV2.tmx");
         //mapa.getLayers().get(0).setVisible(false);
         // Crear el objeto que dibujará el mapa
         rendererMapa = new OrthogonalTiledMapRenderer(mapa,batch);
         rendererMapa.setView(camara);
         // Cargar frames
-        texturaHataku = assetManager.get("marioSprite.png");
+        texturaHataku = assetManager.get("seleccionNivel/recursosNivelTierra/marioSprite.png");
         // Crear el personaje
         hataku = new Personaje(texturaHataku);
         // Posición inicial del personaje
@@ -158,28 +160,28 @@ public class PantallaJuego implements Screen{
             hataku.getSprite().setPosition(50, 100);
 
         //Textura Objetos que estan en la pantalla
-        this.texturaScroll = assetManager.get("scroll.png");
-        this.texturaPocion = assetManager.get("pocion.png");
-        this.texturaEN1=assetManager.get("TierraE.png");
-        this.texturaAtaque=assetManager.get("llama1.png");
-        this.texturaTemplo = assetManager.get("temploVerde.png");
+        this.texturaScroll = assetManager.get("seleccionNivel/items/scroll.png");
+        this.texturaPocion = assetManager.get("seleccionNivel/items/pocion.png");
+        this.texturaEN1=assetManager.get("seleccionNivel/recursosNivelTierra/TierraE.png");
+        this.texturaAtaque=assetManager.get("seleccionNivel/items/llama1.png");
+        this.texturaTemplo = assetManager.get("seleccionNivel/recursosNivelTierra/temploVerde.png");
 
         //****************************************************************//
         //nota: se debe cosniderar que la imagen de vidas va cambiar cuando el ninja obtenga una parte de la armadura, recomiendo usar un switch y usar una bandera (boolean) cuando se pase el nivel y deppendiendo de la bandera cargar el archivo de imagenn correspondiente
         //Por ahora no lo implemento ya que estamos trabajando en el primer nivel.
-        this.texturaVidas = assetManager.get("life1.png");
+        this.texturaVidas = assetManager.get("seleccionNivel/recursosNivelTierra/life1.png");
 
 
         //Musica y efectos se obtienen y se ajusta el volumen
-        this.efectoSaltoHataku = assetManager.get("efectoSaltoHataku.wav");
+        this.efectoSaltoHataku = assetManager.get("seleccionNivel/sonidosGameplay/efectoSaltoHataku.wav");
         this.efectoSaltoHataku.setVolume(70, 70);
-        this.efectoTomarVida = assetManager.get("efectoVida.wav");
+        this.efectoTomarVida = assetManager.get("seleccionNivel/sonidosGameplay/efectoVida.wav");
         this.efectoTomarVida.setVolume(70, 70);
-        this.efectoTomarPergamino = assetManager.get("efectoPergamino.wav");
+        this.efectoTomarPergamino = assetManager.get("seleccionNivel/sonidosGameplay/efectoPergamino.wav");
         this.efectoTomarPergamino.setVolume(70, 70);
-        this.efectoDanio = assetManager.get("efectoDanio.wav");
+        this.efectoDanio = assetManager.get("seleccionNivel/sonidosGameplay/efectoDanio.wav");
         this.efectoTomarPergamino.setVolume(70, 70);
-        this.efectoPuertaTemplo = assetManager.get("puertaTemplo.wav");
+        this.efectoPuertaTemplo = assetManager.get("seleccionNivel/sonidosGameplay/puertaTemplo.wav");
         this.efectoPuertaTemplo.setVolume(70, 70);
 
 
@@ -187,19 +189,19 @@ public class PantallaJuego implements Screen{
 
 
         // Crear los botones
-        texturaBtnIzquierda = assetManager.get("izquierda.png");
+        texturaBtnIzquierda = assetManager.get("seleccionNivel/botonesFlechas/izquierdaImagenes.png");
         btnIzquierda = new Boton(texturaBtnIzquierda);
         btnIzquierda.setPosicion(TAM_CELDA * 2, TAM_CELDA / 5);
         btnIzquierda.setAlfa(0.7f); // Un poco de transparencia
         btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON , PantallaJuego.TAMANIO_BOTON);
 
-        texturaBtnDerecha = assetManager.get("derecha.png");
+        texturaBtnDerecha = assetManager.get("seleccionNivel/botonesFlechas/derechaImagenes.png");
         btnDerecha = new Boton(texturaBtnDerecha);
         btnDerecha.setPosicion(TAM_CELDA * 8, TAM_CELDA / 5);
         btnDerecha.setAlfa(0.7f); // Un poco de transparencia
         btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON );
 
-        texturaSalto =  assetManager.get("salto.png"); //boton para saltar... carga su imagen
+        texturaSalto =  assetManager.get("seleccionNivel/botonesFlechas/salto.png"); //boton para saltar... carga su imagen
         btnSalto = new Boton(texturaSalto);
         btnSalto.setPosicion(Principal.ANCHO_CAMARA -8* TAM_CELDA, 100 + TAM_CELDA);
         btnSalto.setAlfa(0.7f);
@@ -209,12 +211,12 @@ public class PantallaJuego implements Screen{
 
 
         //Se crean objetos que son textos que se muestran en el HUD.
-        this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_CAMARA, Principal.ALTO_CAMARA * 0.96f+20);
-        this.textoMarcadorPergaminos= new Texto(50+0.70f * Principal.ANCHO_CAMARA, Principal.ALTO_CAMARA * 0.96f+20); //mandamos la posicion que queremos por default.
+        this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_CAMARA+30, Principal.ALTO_CAMARA * 0.96f);
+        this.textoMarcadorPergaminos= new Texto(50+0.70f * Principal.ANCHO_CAMARA+26, Principal.ALTO_CAMARA * 0.96f); //mandamos la posicion que queremos por default.
 
 
         //Lista scrolles: en todos los niveles solo hay 3 scroll
-        this.scroll = new Array<ObjetosJuego>(3);
+        this.scroll = new ArrayList<ObjetosJuego>(3);
         for (int i = 0; i<3;i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaScroll);
             nuevo.setTamanio(12,35);
@@ -227,7 +229,7 @@ public class PantallaJuego implements Screen{
         this.scroll.get(2).setPosicion(627, 76); //pergamino que está en precipicio
 
         //Pociones: En todos los niveles solo hay 2 pociones.
-        this.pociones = new Array<ObjetosJuego>(2);
+        this.pociones = new ArrayList<ObjetosJuego>(2);
         for(int i =0; i< 2;i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaPocion);
             nuevo.setTamanio(30,40);
@@ -239,7 +241,7 @@ public class PantallaJuego implements Screen{
         this.pociones.get(1).setPosicion(650, 240);
 
         //Enemigos: 5 enemigos en el primer nivel
-        this.enemigoN1= new Array<ObjetosJuego>(5);
+        this.enemigoN1= new ArrayList<ObjetosJuego>(5);
         for(int i =0; i< 5;i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaEN1);
             nuevo.setTamanio(60,90);
@@ -254,7 +256,7 @@ public class PantallaJuego implements Screen{
         this.enemigoN1.get(4).setPosicion(570, 503); //Samurai parte superior
 
         //Colocar los ataque en su posicion
-        this.ataques = new Array<ObjetosJuego>(5);
+        this.ataques = new ArrayList<ObjetosJuego>(5);
         for (ObjetosJuego enemigo: enemigoN1){
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaAtaque);
             //nuevo.setTamanio(30, 30);
@@ -264,7 +266,7 @@ public class PantallaJuego implements Screen{
 
         //Aqui se piensa poner un switch evaluando una variable de nivel,  de eso va dependar donde se va colocar el templo
         //templos, son 3.
-        this.templos= new Array<ObjetosJuego>(3);
+        this.templos= new ArrayList<ObjetosJuego>(3);
         for(int i =0; i< 3;i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaTemplo);
             nuevo.setTamanio(60, 90);
@@ -286,7 +288,7 @@ public class PantallaJuego implements Screen{
 
         //Si es el nivel 4 se deben de poner 5 vidas
         if(this.flag) {
-            this.vidas =  new Array<ObjetosJuego>(5);
+            this.vidas =  new ArrayList<ObjetosJuego>(5);
             for(int i = 0; i<5; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                 //nuevo.setTamanio(80,80);
@@ -302,15 +304,15 @@ public class PantallaJuego implements Screen{
 
         }
         else{ //entonces no estoy en el nivel 4, se deben de poner 3 vidas.
-            this.vidas =  new Array<ObjetosJuego>(3);
+            this.vidas =  new ArrayList<ObjetosJuego>(3);
             for(int i = 0; i<3; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                 //nuevo.setTamanio(70,70); //Irvin ya ajusto el tamaño de las vidas en photoshop..
                 this.vidas.add(nuevo);
             }
-            this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX()+95,this.textoMarcadorVidas.getY()-65);
-            this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX()+165,this.textoMarcadorVidas.getY()-65);
-            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+235,this.textoMarcadorVidas.getY()-65);
+            this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX()+95,this.textoMarcadorVidas.getY()-45);
+            this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX()+165,this.textoMarcadorVidas.getY()-45);
+            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+235,this.textoMarcadorVidas.getY()-45);
         }
 
     }
@@ -322,7 +324,7 @@ public class PantallaJuego implements Screen{
     @Override
     public void render(float delta) { // delta es el tiempo entre frames (Gdx.graphics.getDeltaTime())
         // Leer entrada
-        Gdx.app.log("",hataku.getY()+"");
+        //Gdx.app.log("",hataku.getY()+"");
         // Actualizar objetos en la pantalla
         moverPersonaje();
         actualizarCamara(); // Mover la cámara para que siga al personaje
@@ -365,7 +367,7 @@ public class PantallaJuego implements Screen{
         }
         ataqueFlag=0;
         //Dibujar ataques
-        for (int i=0;i<ataques.size;i++){
+        for (int i=0;i<ataques.size();i++){
             ObjetosJuego ataque=ataques.get(i);
             ObjetosJuego enemigo=enemigoN1.get(i);
             ataque.render(batch);
@@ -402,12 +404,14 @@ public class PantallaJuego implements Screen{
 
         //System.out.println(this.hataku.getY());
         //temploTierra
-        System.out.println(this.hataku.getX());
+        //System.out.println(this.hataku.getX());
         if(258 == this.hataku.getX() &&  512 <= this.hataku.getY() && this.numeroNivel == 1){ //258  y 512 es la posicion del templo, lo identifique con el system.out.println
 
             this.numeroNivel = 2;
             this.marcadorPergaminos = 0;
             this.efectoPuertaTemplo.play();
+            PantallaCargando.partidaGuardada.putBoolean("nivelAgua", true); //se guarda el progreso y se desbloquea el nivel de agua...
+            PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
             //en este caso, como aun no hay otra pantalla, nos regresa al menu principal...
             plataforma.setScreen(new PantallaCargando(0, plataforma, true));
 
@@ -487,7 +491,7 @@ public class PantallaJuego implements Screen{
     private void perderJuego() {//Método para verificar si el usuario ya perdio
 
         //el usuario perdio sus vidas
-        if (this.vidas.size == 0){
+        if (this.vidas.size() == 0){
             plataforma.setScreen(new PantallaCargando(0,plataforma,true)); //nos regresa a la pantalla principal.
         }
 
@@ -519,13 +523,13 @@ public class PantallaJuego implements Screen{
                     && hataku.getSprite().getY() >= pocion.getSprite().getY() && hataku.getSprite().getY() <= pocion.getSprite().getHeight() + pocion.getSprite().getY() ||
                     hataku.getSprite().getX()+hataku.getSprite().getWidth()>= pocion.getSprite().getX() && hataku.getSprite().getX()+hataku.getSprite().getWidth()<= pocion.getSprite().getX() + pocion.getSprite().getWidth()
                             && hataku.getSprite().getY()+hataku.getSprite().getHeight() >= pocion.getSprite().getY() && hataku.getSprite().getY()+hataku.getSprite().getHeight() <= pocion.getSprite().getHeight() + pocion.getSprite().getY()){
-                if(vidas.size<3) {
+                if(vidas.size()<3) {
                     if (pocion.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
 
                         this.efectoTomarVida.play(); //suena efecto
                         ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                         this.vidas.add(nuevo);
-                        nuevo.setPosicion(vidas.get(vidas.size-2).getSprite().getX()+70,this.textoMarcadorVidas.getY()-65);
+                        nuevo.setPosicion(vidas.get(vidas.size()-2).getSprite().getX()+70,this.textoMarcadorVidas.getY()-45);
                         pocion.quitarElemento();
                     }
                     break;
@@ -540,7 +544,7 @@ public class PantallaJuego implements Screen{
                 if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
 
                     this.efectoDanio.play();
-                    vidas.removeIndex(vidas.size-1);
+                    vidas.remove(vidas.size()-1);
                     Enemigo.quitarElemento();
                 }
                 break;
@@ -560,7 +564,7 @@ public class PantallaJuego implements Screen{
                 if (ataque.getEstadoAtaque() != ObjetosJuego.EstadoAtaque.OCULTO){
                     ataque.ocultar();
                     this.efectoDanio.play();
-                    vidas.removeIndex(vidas.size-1);
+                    vidas.remove(vidas.size()-1);
                 }
             }
         }

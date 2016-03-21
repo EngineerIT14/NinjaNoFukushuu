@@ -19,7 +19,7 @@ public class Texto
 
 
     public Texto(float posicionx, float posiciony) {
-        font = new BitmapFont(Gdx.files.internal("naftalene.fnt"));
+        font = new BitmapFont(Gdx.files.internal("seleccionNivel/naftalene.fnt"));
         font.setColor(Color.CORAL);
         font.getData().scale(0.001f);
         this.posicionX = posicionx;

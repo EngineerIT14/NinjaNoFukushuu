@@ -16,9 +16,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import javax.xml.soap.Text;
 
-/**
- * Created by Javier Antonio García Roque on 15/03/2016.
- */
+/*
+ Pantalla seleccion de nivel
+ * Descripción: Pantalla para seleccionar el nivel, dependiendo del progreso, el usuario desbloqueara los niveles...
+ * Profesor: Roberto Martinez Román
+ * Autores: Irvin Emmanuel Trujillo Díaz y Javier.
+
+* */
 public class SeleccionDeNivel implements  Screen{
     private final Principal principal;
     private OrthographicCamera camara;
@@ -40,7 +44,7 @@ public class SeleccionDeNivel implements  Screen{
     private static final int anchoBoton = 180, altoBoton = 200; //anchoBoton1 = 480 , altoBoton1 = 160;
 
     //Efectos
-    private Sound efectoClick;
+    private Sound efectoClick, sonidoBloqueado;
 
     public SeleccionDeNivel(Principal principal) {
         this.principal = principal;
@@ -65,13 +69,13 @@ public class SeleccionDeNivel implements  Screen{
         btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8, Principal.ALTO_MUNDO * 1 / 5 - 150);
         btnRegresar.setTamanio(anchoBoton, altoBoton);
         btnNivelUno=new Boton(texturaN1);
-        btnNivelUno.setPosicion(100, Principal.ALTO_MUNDO/2);
+        btnNivelUno.setPosicion(100, Principal.ALTO_MUNDO/2-100);
         btnNivelUno.setTamanio(anchoBoton, altoBoton);
         btnNivelDos=new Boton(texturaN2);
-        btnNivelDos.setPosicion(490, Principal.ALTO_MUNDO/2);
+        btnNivelDos.setPosicion(550, Principal.ALTO_MUNDO/2-100);
         btnNivelDos.setTamanio(anchoBoton, altoBoton);
         btnNivelTres=new Boton(texturaN3);
-        btnNivelTres.setPosicion(980, Principal.ALTO_MUNDO/2);
+        btnNivelTres.setPosicion(1000, Principal.ALTO_MUNDO/2-100);
         btnNivelTres.setTamanio(anchoBoton, altoBoton);
 
         //Batch
@@ -84,12 +88,24 @@ public class SeleccionDeNivel implements  Screen{
     private void crearObjetos() {
         AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
         //Fondo
-        texturaFondo = assetManager.get("SN.jpg");
-        texturaRegresar = assetManager.get("return.png");
-        texturaN1=assetManager.get("return.png");
-        texturaN2=assetManager.get("return.png");
-        texturaN3=assetManager.get("return.png");
+        this.texturaFondo = assetManager.get("seleccionNivel/fondoSeleccionNivel.jpg");
+        this.texturaRegresar = assetManager.get("return.png");
+
+        //el primer nivel siempre esta desbloqueadp
+        this.texturaN1=assetManager.get("seleccionNivel/galeriaEarth.png");
+        /*Aqui hay que evaluar las banderas para saber si esta desbloqueado el nivel...*/
+        if(PantallaCargando.banderaNivelAguaDesbloqueado)
+            this.texturaN2=assetManager.get("seleccionNivel/galeriaWater.png");
+        else //entonces esta bloqueado
+            this.texturaN2=assetManager.get("seleccionNivel/galeriaWaterLock.png");
+
+        if(PantallaCargando.banderaNivelFuegoDesbloqueado)
+            this.texturaN3=assetManager.get("seleccionNivel/galeriaFire.png");
+        else
+            this.texturaN3=assetManager.get("seleccionNivel/galeriaFireLock.png");
+
         this.efectoClick = assetManager.get("sonidoVentana.wav");
+        this.sonidoBloqueado = assetManager.get("bloqueado.wav");
     }
 
 
@@ -117,10 +133,7 @@ public class SeleccionDeNivel implements  Screen{
         private Vector3 coordenadas = new Vector3();
         private float x, y;     // Las coordenadas en la pantalla virtual
 
-        private boolean banderaBotonRegresar = false;
-        private boolean banderaBotonNivel1=false;
-        private boolean banderaBotonNivel2=false;
-        private boolean banderaBotonNivel3=false;
+        private boolean banderaBotonRegresar = false, banderaBotonNivel1=false, banderaBotonNivel2=false, banderaBotonNivel3=false;
         /*
         Se ejecuta cuando el usuario pone un dedo sobre la pantalla, los dos primeros parámetros
         son las coordenadas relativas a la pantalla física (0,0) en la esquina superior izquierda
@@ -136,6 +149,7 @@ public class SeleccionDeNivel implements  Screen{
                 btnRegresar.setAlfa(.5f);
                 btnRegresar.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
                 this.banderaBotonRegresar = true;
+
             }
 
             if (btnNivelUno.contiene(x, y)) {
@@ -148,12 +162,16 @@ public class SeleccionDeNivel implements  Screen{
                 btnNivelDos.setAlfa(.5f);
                 btnNivelDos.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
                 this.banderaBotonNivel2 = true;
+                if(!PantallaCargando.banderaNivelAguaDesbloqueado)
+                    sonidoBloqueado.play();
             }
 
             if (btnNivelTres.contiene(x, y)) {
                 btnNivelTres.setAlfa(.5f);
                 btnNivelTres.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
                 this.banderaBotonNivel3 = true;
+                if(!PantallaCargando.banderaNivelFuegoDesbloqueado)
+                    sonidoBloqueado.play();
             }
 
             return true;    // Indica que ya procesó el evento
@@ -173,15 +191,15 @@ public class SeleccionDeNivel implements  Screen{
             }
             if (btnNivelUno.contiene(x, y) && this.banderaBotonNivel1) {
                 efectoClick.play(); //efecto de sonido
-                principal.setScreen(new PantallaCargando(1, principal, true));  //se manda true porque ya esta la cancion reproduciendose
+                principal.setScreen(new PantallaCargando(5, principal, true));  //nivel de tierra..
             }
-            if (btnNivelDos.contiene(x, y) && this.banderaBotonNivel2) {
+            if (btnNivelDos.contiene(x, y) && this.banderaBotonNivel2 && PantallaCargando.banderaNivelAguaDesbloqueado) {
                 efectoClick.play(); //efecto de sonido
-                principal.setScreen(new PantallaCargando(1, principal, true));  //se manda true porque ya esta la cancion reproduciendose
+                principal.setScreen(new PantallaCargando(6, principal, true));  //nivel de agua.. tiene que ser un 6.
             }
-            if (btnNivelTres.contiene(x, y) && this.banderaBotonNivel3) {
+            if (btnNivelTres.contiene(x, y) && this.banderaBotonNivel3 &&  PantallaCargando.banderaNivelFuegoDesbloqueado) {
                 efectoClick.play(); //efecto de sonido
-                principal.setScreen(new PantallaCargando(1, principal, true));  //se manda true porque ya esta la cancion reproduciendose
+                principal.setScreen(new PantallaCargando(7, principal, true));  //nivel de fuego... tiene que ser un 7
             }
             else { //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
                 // se le quita la transparencia y se regresa a su tamaño original

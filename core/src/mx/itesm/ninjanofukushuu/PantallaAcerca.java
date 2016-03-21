@@ -114,22 +114,22 @@ public class PantallaAcerca implements Screen {
     private void crearObjetos(){
         AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
         //Fondo
-        texturaFondo = assetManager.get("Fondo.jpg");
+        texturaFondo = assetManager.get("imagenesAcercaDe/Fondo.jpg");
         //Abanico
         //texturaAbanico = new Texture(Gdx.files.internal("Abanico.png"));
         //Botones
-        texturaBtnMia = assetManager.get("M.png");
-        texturaBtnNuri = assetManager.get("N.png");
-        texturaBtnIrvin = assetManager.get("I.png");
-        texturaBtnJavier = assetManager.get("J.png");
-        texturaBtnFer = assetManager.get("F.png");
-        texturaRegresar = assetManager.get("return.png");
+        texturaBtnMia = assetManager.get("imagenesAcercaDe/M.png");
+        texturaBtnNuri = assetManager.get("imagenesAcercaDe/N.png");
+        texturaBtnIrvin = assetManager.get("imagenesAcercaDe/I.png");
+        texturaBtnJavier = assetManager.get("imagenesAcercaDe/J.png");
+        texturaBtnFer = assetManager.get("imagenesAcercaDe/F.png");
+        texturaRegresar = assetManager.get("return.png"); // esta en la raiz
         //Presentaciones
-        texturaPresentacionIrvin = assetManager.get("Irvi.png");
-        texturaPresentacionMia = assetManager.get("Mare.png");
-        texturaPresentacionJavier = assetManager.get("Javo.png");
-        texturaPresentacionNuri = assetManager.get("Nuria.png");
-        texturaPresentacionFer = assetManager.get("Fercho.png");
+        texturaPresentacionIrvin = assetManager.get("imagenesAcercaDe/Irvi.png");
+        texturaPresentacionMia = assetManager.get("imagenesAcercaDe/Mare.png");
+        texturaPresentacionJavier = assetManager.get("imagenesAcercaDe/Javo.png");
+        texturaPresentacionNuri = assetManager.get("imagenesAcercaDe/Nuria.png");
+        texturaPresentacionFer = assetManager.get("imagenesAcercaDe/Fercho.png");
 
         efectoClick = assetManager.get("sonidoVentana.wav");
         this.efectoClick.setVolume(70,70);

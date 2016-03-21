@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  * Descripción: Pantala intermedia entre el menú y el juego
  * Profesor: Roberto Martinez Román
- * Autores: Javier García e Irvin Emmanuel Trujillo Díaz
+ * Autores: Irvin Emmanuel Trujillo Díaz
  */
 public class PantallaCargando implements Screen
 {
@@ -45,6 +45,10 @@ public class PantallaCargando implements Screen
     //Banderas para determinar si los botones de galeriae estan desbloqueados, son publicos ya que se modifican en la pantalla juego..
     public static boolean banderaArteTierra = false, banderaArteAgua = false, banderaArteFuego = false; //Son public static para que sean manipuladas en otras clases..
 
+    //Banderas para determinas si los niveles estan desbloqueados
+    public static boolean banderaNivelAguaDesbloqueado = false, banderaNivelFuegoDesbloqueado = false; //Son public static para que sean manipuladas en otras clases..
+
+
     //Progreso de la partida
     public static Preferences partidaGuardada; //guardar el progreso del usuario..., es publica para que se pueda ir modificando en las otras clases...
 
@@ -57,10 +61,13 @@ public class PantallaCargando implements Screen
     private int pantallaCargar; //aqui se va almacenar un numero que indicara que pantalla va cargar
     private boolean banderaMusicaFondo; //Para saber que en la clase pantallaMenu al cargarse, que bandera se manda y no se reprodusca la cancion de fondo más de 1 vez si esta ya puesta..
                                 /*
-                                * 1: elementos juego
+                                * 1: elementos juego (seleccion de nivel..)
                                 * 2: elementos instrucciones
                                 * 3: elementos galeria de arte
                                 * 4: elementos acerca de
+                                * 5: recursos nivel tierra
+                                * 6: recursos nivel agua
+                                * 7: recursos nivel fuego
                                 * */
 
     public PantallaCargando(Integer pantalla,Principal plataforma, boolean banderaMusicaFondo) {
@@ -73,6 +80,9 @@ public class PantallaCargando implements Screen
         PantallaCargando.banderaArteTierra = partidaGuardada.getBoolean("arteTierra", false);
         PantallaCargando.banderaArteAgua = partidaGuardada.getBoolean("arteAgua", false);
         PantallaCargando.banderaArteFuego = partidaGuardada.getBoolean("arteFuego", false);
+        PantallaCargando.banderaNivelAguaDesbloqueado = partidaGuardada.getBoolean("nivelAgua",false);
+        PantallaCargando.banderaNivelFuegoDesbloqueado = partidaGuardada.getBoolean("nivelFuego",false);
+
 
     }
 
@@ -128,14 +138,15 @@ public class PantallaCargando implements Screen
     private void cargarRecursos() {
         // Carga los recursos de la siguiente pantalla
         /*       * 0: Menu principal.
-                     * 1: elementos juego
+                     * 1: elementos juego (recursos)
                        * 2: elementos instrucciones
                             * 3: elementos galeria de arte
-                                * 4: elementos acerca de */
+                                * 4: elementos acerca de
+                                    *5: pantalla de seleccion de nivel..   */
         switch(pantallaCargar) {
             case 0: //Pantalla Menu
                     assetManager.load("NINJAH3.png", Texture.class);    // Cargar imagen
-                    assetManager.load("FONDOMIL2.jpg", Texture.class);    // Cargar imagen
+                    assetManager.load("fondoMenu.jpg", Texture.class);    // Cargar imagen
                     assetManager.load("botonPlay.png", Texture.class);    // Cargar imagen
                     assetManager.load("botonInstructions.png", Texture.class);    // Cargar imagen
                     assetManager.load("botonGallery.png", Texture.class);    // Cargar imagen
@@ -145,70 +156,126 @@ public class PantallaCargando implements Screen
 
                     break;
 
-            case 1: //Pantalla Juego
-                    assetManager.load("MapaDeTierraV2.tmx", TiledMap.class);  // Cargar info del mapa
-                    assetManager.load("marioSprite.png", Texture.class);    // Cargar imagen
-                    // Texturas de los botones
-                    assetManager.load("derecha.png", Texture.class);
-                    assetManager.load("izquierda.png", Texture.class);
-                    assetManager.load("salto.png", Texture.class);
+            case 1: //Pantalla de seleccion de nivel...
+                    assetManager.load("seleccionNivel/fondoSeleccionNivel.jpg",Texture.class);
+                    assetManager.load("seleccionNivel/galeriaEarth.png",Texture.class);
+                    assetManager.load("seleccionNivel/galeriaEarthLock.png",Texture.class);
+                    assetManager.load("seleccionNivel/galeriaFire.png",Texture.class);
+                    assetManager.load("seleccionNivel/galeriaFireLock.png",Texture.class);
+                    assetManager.load("seleccionNivel/galeriaWater.png",Texture.class);
+                    assetManager.load("seleccionNivel/galeriaWaterLock.png",Texture.class);
 
-                    //Textura objetos
-                    assetManager.load("scroll.png", Texture.class);
-                    assetManager.load("pocion.png", Texture.class);
-                    assetManager.load("llama1.png", Texture.class);
+                    assetManager.load("return.png",Texture.class);
+                    assetManager.load("sonidoVentana.wav", Sound.class);
+                    assetManager.load("bloqueado.wav",Sound.class);
 
-                    //Textura enemigo
-                    assetManager.load("TierraE.png", Texture.class);
-                    //Textura templo
-                    assetManager.load("temploVerde.png", Texture.class);
-                    //caritaVida
-                    assetManager.load("life1.png", Texture.class);
-                    //sonidos
-                    assetManager.load("efectoSaltoHataku.wav",Sound.class);
-                    assetManager.load("efectoVida.wav",Sound.class);
-                    assetManager.load("efectoPergamino.wav",Sound.class);
-                    assetManager.load("efectoDanio.wav",Sound.class);
-                    assetManager.load("puertaTemplo.wav",Sound.class);
+
                     break;
-            case 2:
-                    assetManager.load("N.jpg",Texture.class);
+            case 2: // pantalla de instrucciones
+                    assetManager.load("imagenesInstrucciones/fondoInstrucciones.jpg",Texture.class);
                     assetManager.load("return.png",Texture.class);
                     assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
                     break;
-            case 3:
-                    assetManager.load("M.jpg", Texture.class);
-                    assetManager.load("galeriaEarth.png",Texture.class);
-                    assetManager.load("galeriaEarthLock.png",Texture.class);
-                    assetManager.load("galeriaFire.png",Texture.class);
-                    assetManager.load("galeriaFireLock.png",Texture.class);
-                    assetManager.load("galeriaWater.png",Texture.class);
-                    assetManager.load("galeriaWaterLock.png",Texture.class);
+            case 3: //pantalla de galeria de arte
+                    assetManager.load("imagenesGaleriaArte/fondoGaleriaArte.jpg", Texture.class);
+                    assetManager.load("imagenesGaleriaArte/galeriaEarth.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/galeriaEarthLock.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/galeriaFire.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/galeriaFireLock.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/galeriaWater.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/galeriaWaterLock.png",Texture.class);
 
-                    assetManager.load("return.png",Texture.class);
+                    //tambien se cargan las imagenes del arte de los niveles...
+                    // Texturas de los botones  para mover las imagenes al ver la galeria de arte..
+                    assetManager.load("seleccionNivel/botonesFlechas/derechaImagenes.png",Texture.class);
+                    assetManager.load("seleccionNivel/botonesFlechas/izquierdaImagenes.png",Texture.class);
+
+                //ArteNivelTierra
+                    assetManager.load("imagenesGaleriaArte/arteTierra/arteMenu1.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteTierra/hatakuArte.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteTierra/mapaArte1.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteTierra/mapaArte2.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteTierra/samuraiArte.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteTierra/vidaArte.png",Texture.class);
+
+                    //ArteNivelAgua
+                    assetManager.load("imagenesGaleriaArte/arteAgua/arteMenu2.jpg",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteAgua/arteMenu3.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteAgua/pocionArte.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteAgua/vidaArte2.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteAgua/vidaArte2Color.png",Texture.class);
+                   //assetManager.load("imagenesGaleriaArte/arteTierra/vidaArte.png",Texture.class);
+
+                    //ArteNivelFuego
+                    assetManager.load("imagenesGaleriaArte/arteFuego/vidaArte3.png",Texture.class);
+                    /*assetManager.load("imagenesGaleriaArte/arteTierra/hatakuArte.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteTierra/mapaArte1.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteTierra/mapaArte2.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteTierra/samuraiArte.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteTierra/vidaArte.png",Texture.class);*/
+
+                    assetManager.load("return.png",Texture.class); //el return esta en la raiz...
+                    //sonidos en raiz
                     assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
+                    assetManager.load("seleccionNivel/sonidosGameplay/efectoPergamino.wav",Sound.class); //para cuando cambias de hoja...
                     assetManager.load("bloqueado.wav",Sound.class);
                     break;
 
             case 4: //Pantalla acerca de.
-                    assetManager.load("Fondo.jpg",Texture.class);
-                    assetManager.load("M.png",Texture.class);
-                    assetManager.load("N.png", Texture.class);
-                    assetManager.load("I.png",Texture.class);
-                    assetManager.load("J.png", Texture.class);
-                    assetManager.load("F.png", Texture.class);
-                    assetManager.load("return.png",Texture.class);
-                    assetManager.load("Irvi.png",Texture.class);
-                    assetManager.load("Mare.png",Texture.class);
-                    assetManager.load("Javo.png",Texture.class);
-                    assetManager.load("Nuria.png",Texture.class);
-                    assetManager.load("Fercho.png",Texture.class);
-                    assetManager.load("sonidoVentana.wav",Sound.class);
+                    assetManager.load("imagenesAcercaDe/Fondo.jpg",Texture.class);
+                    assetManager.load("imagenesAcercaDe/M.png",Texture.class);
+                    assetManager.load("imagenesAcercaDe/N.png", Texture.class);
+                    assetManager.load("imagenesAcercaDe/I.png",Texture.class);
+                    assetManager.load("imagenesAcercaDe/J.png", Texture.class);
+                    assetManager.load("imagenesAcercaDe/F.png", Texture.class);
+                    assetManager.load("return.png",Texture.class); // esta en la raiz..
+                    assetManager.load("imagenesAcercaDe/Irvi.png",Texture.class);
+                    assetManager.load("imagenesAcercaDe/Mare.png",Texture.class);
+                    assetManager.load("imagenesAcercaDe/Javo.png",Texture.class);
+                    assetManager.load("imagenesAcercaDe/Nuria.png",Texture.class);
+                    assetManager.load("imagenesAcercaDe/Fercho.png",Texture.class);
+                    assetManager.load("sonidoVentana.wav",Sound.class); // esta en la raiz...
                     break;
             case 5:
-                    assetManager.load("SN.jpg",Texture.class);
-                    assetManager.load("return.png",Texture.class);
-                    assetManager.load("sonidoVentana.wav", Sound.class);
+                    // se cargan recursos del juego..
+                    //nivel tierra
+                    assetManager.load("seleccionNivel/recursosNivelTierra/MapaDeTierraV2.tmx", TiledMap.class);  // Cargar info del mapa
+                    assetManager.load("seleccionNivel/recursosNivelTierra/marioSprite.png", Texture.class);    // Cargar imagen
+                    // Texturas de los botones tanto para el gampeplay como para mover las imagenes al ver la historia..
+
+                    assetManager.load("seleccionNivel/botonesFlechas/salto.png", Texture.class);
+
+                    //botones para mover imagenes y personaje..
+                    assetManager.load("seleccionNivel/botonesFlechas/derechaImagenes.png",Texture.class);
+                    assetManager.load("seleccionNivel/botonesFlechas/izquierdaImagenes.png",Texture.class);
+
+                    //Textura objetos
+                    assetManager.load("seleccionNivel/items/scroll.png", Texture.class);
+                    assetManager.load("seleccionNivel/items/pocion.png", Texture.class);
+                    assetManager.load("seleccionNivel/items/llama1.png", Texture.class);
+
+                    //Textura enemigo
+                    assetManager.load("seleccionNivel/recursosNivelTierra/TierraE.png", Texture.class);
+                    //Textura templo
+                    assetManager.load("seleccionNivel/recursosNivelTierra/temploVerde.png", Texture.class);
+                    //caritaVida
+                    assetManager.load("seleccionNivel/recursosNivelTierra/life1.png", Texture.class);
+                    //sonidos
+                    assetManager.load("seleccionNivel/sonidosGameplay/efectoSaltoHataku.wav",Sound.class);
+                    assetManager.load("seleccionNivel/sonidosGameplay/efectoVida.wav",Sound.class);
+                    assetManager.load("seleccionNivel/sonidosGameplay/efectoPergamino.wav",Sound.class);
+                    assetManager.load("seleccionNivel/sonidosGameplay/efectoDanio.wav",Sound.class);
+                    assetManager.load("seleccionNivel/sonidosGameplay/puertaTemplo.wav",Sound.class);
+
+                    //se cargan los recursos para mostrar la historia...
+                    assetManager.load("botonPlay.png", Texture.class); // boton play...
+                    //son 5 imagenes para explicar la historia...
+                    assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra1.png",Texture.class);
+                    assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra2.jpg",Texture.class);
+                    assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra3.png",Texture.class);
+                    assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra4.jpg",Texture.class);
+                    assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra5.jpg",Texture.class);
+
                     break;
             default: break;
         }
@@ -248,7 +315,8 @@ public class PantallaCargando implements Screen
                     plataforma.setScreen(new PantallaMenu(this.plataforma,this.banderaMusicaFondo));
                     break;
                 case 1:
-                    plataforma.setScreen(new PantallaJuego(this.plataforma));
+                    plataforma.setScreen(new SeleccionDeNivel(this.plataforma));
+
                     break;
                 case 2:
                     plataforma.setScreen(new PantallaInstrucciones(this.plataforma));
@@ -260,15 +328,18 @@ public class PantallaCargando implements Screen
                     plataforma.setScreen(new PantallaAcerca(this.plataforma));
                     break;
                 case 5:
-                    plataforma.setScreen(new SeleccionDeNivel(this.plataforma));
+                    plataforma.setScreen(new PantallaImagen(this.plataforma,4)); //nivel de tierra... se  va a mostrar las imagenes de la historia..
                     break;
-                default: break;
+                default:
+                    plataforma.setScreen(new PantallaMenu(this.plataforma,this.banderaMusicaFondo));
+                    break;
             }
-        } else {
+        }
+        /*else {
             // Aún no termina la carga de assets, leer el avance
             float avance = assetManager.getProgress()*100;
             Gdx.app.log("Cargando",avance+"%");
-        }
+        }*/
     }
 
     private void borrarPantalla() {

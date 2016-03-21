@@ -80,14 +80,14 @@ public class PantallaGaleria implements Screen {
         else
             this.btnGaleriaTierra =  new Boton(texturaGaleriaTierraBloqueada);
 
-        btnGaleriaTierra.setPosicion(Principal.ANCHO_MUNDO / 4 - 100, Principal.ALTO_MUNDO * 2 / 3 - 200);
+        btnGaleriaTierra.setPosicion(Principal.ANCHO_MUNDO / 4 - 310, Principal.ALTO_MUNDO * 2 / 3 - 200);
 
         if(banderaPergaminosAgua) //entonces el usuario ya junto los 3 pergaminos del nivel agua
             this.btnGaleriaAgua = new Boton(texturaGaleriaAguaDesbloqueada);
         else
             this.btnGaleriaAgua = new Boton(texturaGaleriaAguaBloqueada);
 
-        btnGaleriaAgua.setPosicion(Principal.ANCHO_MUNDO / 2 - 100, Principal.ALTO_MUNDO * 2 / 3 - 200);
+        btnGaleriaAgua.setPosicion(Principal.ANCHO_MUNDO / 2 - 135, Principal.ALTO_MUNDO * 2 / 3 - 200);
 
 
 
@@ -96,7 +96,7 @@ public class PantallaGaleria implements Screen {
         else
             this.btnGaleriaFuego =  new Boton(texturaGaleriaFuegoBloqueada);
 
-        btnGaleriaFuego.setPosicion(Principal.ANCHO_MUNDO * 3 / 4 - 100, Principal.ALTO_MUNDO * 2 / 3 - 200);
+        btnGaleriaFuego.setPosicion(Principal.ANCHO_MUNDO * 3 / 4 +10, Principal.ALTO_MUNDO * 2 / 3 - 200);
 
         btnRegresar = new Boton(texturaRegresar);
 
@@ -114,14 +114,16 @@ public class PantallaGaleria implements Screen {
     //crea los objetos de textura y audio
     private void crearObjetos(){
         AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
-        //Fondo
-        this.texturaFondo = assetManager.get("M.jpg");
-        this.texturaGaleriaTierraDesbloqueada = assetManager.get("galeriaEarth.png");
-        this.texturaGaleriaTierraBloqueada =  assetManager.get("galeriaEarthLock.png");
-        this.texturaGaleriaAguaDesbloqueada = assetManager.get("galeriaWater.png");
-        this.texturaGaleriaAguaBloqueada =  assetManager.get("galeriaWaterLock.png");
-        this.texturaGaleriaFuegoDesbloqueada =  assetManager.get("galeriaFire.png");
-        this.texturaGaleriaFuegoBloqueada =  assetManager.get("galeriaFireLock.png");
+        //Fondo y textura de botones...
+        this.texturaFondo = assetManager.get("imagenesGaleriaArte/fondoGaleriaArte.jpg");
+        this.texturaGaleriaTierraDesbloqueada = assetManager.get("imagenesGaleriaArte/galeriaEarth.png");
+        this.texturaGaleriaTierraBloqueada =  assetManager.get("imagenesGaleriaArte/galeriaEarthLock.png");
+        this.texturaGaleriaAguaDesbloqueada = assetManager.get("imagenesGaleriaArte/galeriaWater.png");
+        this.texturaGaleriaAguaBloqueada =  assetManager.get("imagenesGaleriaArte/galeriaWaterLock.png");
+        this.texturaGaleriaFuegoDesbloqueada =  assetManager.get("imagenesGaleriaArte/galeriaFire.png");
+        this.texturaGaleriaFuegoBloqueada =  assetManager.get("imagenesGaleriaArte/galeriaFireLock.png");
+
+        //en raiz...
         this.texturaRegresar = assetManager.get("return.png");
         this.efectoClick = assetManager.get("sonidoVentana.wav");
         this.sonidoBloqueado = assetManager.get("bloqueado.wav");
@@ -130,7 +132,7 @@ public class PantallaGaleria implements Screen {
     @Override
     public void render(float delta) {
         //Borrar la pantalla
-        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClearColor(0, 0, 0, 0);    // r, g, b, alpha  //color RojoOscuro
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
@@ -210,16 +212,20 @@ public class PantallaGaleria implements Screen {
 
             if (btnGaleriaTierra.contiene(x,y) && this.banderaBotonGaleriaTierra && banderaPergaminosTierra ){
                 //banderaPergaminosTierra indica que el boton esta desbloqueado porque el usuario ya junto los 3 pergaminos.. en el nivel tierra
-                // si no entra al if el boton está bloqueado, no hace ningun sonido
+                // si no entra al if el boton está bloqueado, no hace ningun sonido, se reproduce el sonido de bloqueado en touchDown
+
                 banderaBotonGaleriaTierra = false;
                 btnGaleriaTierra.setAlfa(1);
                 btnGaleriaTierra.setTamanio(300, 300); //tamaño original
                 efectoClick.play(); //efecto de sonido
+                // ya se cargaron previamente las imagenes necesarias...
+                principal.setScreen(new PantallaImagen(principal, 1)); //galeria de arte de tierra..
+
             }
 
             else if (btnGaleriaAgua.contiene(x,y) && this.banderaBotonGaleriaAgua && banderaPergaminosAgua){
                 // bandera agua indica que el boton esta desbloqueado porque el usuario ya junto los 3 pergaminos.. en el nivel agua
-                // si no entra al if el boton está bloqueado, no hace ningun sonido
+                // si no entra al if el boton está bloqueado, no hace ningun sonido, se reproduce el sonido de bloqueado en touchdown..
                 banderaBotonGaleriaAgua = false;
                 btnGaleriaAgua.setAlfa(1);
                 btnGaleriaAgua.setTamanio(300, 300); //tamaño original
@@ -229,7 +235,7 @@ public class PantallaGaleria implements Screen {
 
             else if (btnGaleriaFuego.contiene(x,y) && this.banderaBotonGaleriaFuego && banderaPergaminosFuego ){
                 //banderaPergaminosFuego indica que el boton esta desbloqueado porque el usuario ya junto los 3 pergaminos.. en el nivel fuego
-                // si no entra al if el boton está bloqueado, no hace ningun sonido
+                // si no entra al if el boton está bloqueado, no hace ningun sonido, se reproduce el sonido de bloqueado en touchDown..
                 efectoClick.play(); //efecto de sonido
                 banderaBotonGaleriaFuego = false;
                 btnGaleriaFuego.setAlfa(1);
@@ -300,6 +306,7 @@ public class PantallaGaleria implements Screen {
         //Eliminar basura
         principal.dispose();
         batch.dispose();
+
         texturaGaleriaTierraDesbloqueada.dispose();
         texturaGaleriaTierraBloqueada.dispose();
         texturaGaleriaAguaDesbloqueada.dispose();
@@ -317,4 +324,3 @@ public class PantallaGaleria implements Screen {
 
 }
 
-//

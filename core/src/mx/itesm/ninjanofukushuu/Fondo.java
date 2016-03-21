@@ -17,6 +17,7 @@ public class Fondo {
     public Fondo(Texture textura){
 
         sprite = new Sprite(textura);
+
     }
 
     public void render(SpriteBatch batch){ //Se ejecuta automaticamente..
@@ -29,9 +30,16 @@ public class Fondo {
 
         sprite.setSize(ancho, alto);
     }
+
+    public void cambiarFondo(Texture textura){
+        sprite.setTexture(textura);
+    }
+
     //GetSprite
     public Sprite getSprite() {
         return sprite;
     }
+
+
 
 }

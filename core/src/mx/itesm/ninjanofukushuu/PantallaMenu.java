@@ -117,7 +117,7 @@ public class PantallaMenu implements Screen {
     //Obtener las texturas cargadas en la pantallaCargando.java
     private void crearObjetos(){
         AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
-        textureFondo1 = assetManager.get("FONDOMIL2.jpg");
+        textureFondo1 = assetManager.get("fondoMenu.jpg");
         texturaFondo = assetManager.get("NINJAH3.png");
         texturaBtnPlay =  assetManager.get("botonPlay.png");
         texturaBtnInstructions =  assetManager.get("botonInstructions.png");
@@ -248,7 +248,7 @@ public class PantallaMenu implements Screen {
             if (btnPLay.contiene(x, y) &&  this.banderaBotonPlay) {
                 Gdx.app.log("leerEntrada", "HAY UN TAP EN PLAY!"); //cuando le apretan va decir esto..
                 efectoClick.play(); //efecto de sonido
-                principal.setScreen(new PantallaCargando(5,principal,true));  //se manda true porque ya esta la cancion reproduciendose
+                principal.setScreen(new PantallaCargando(1,principal,true));  //se manda true porque ya esta la cancion reproduciendose
 
             }
             else if (btnInstructions.contiene(x, y) && this.banderaBotonInstructions) {
