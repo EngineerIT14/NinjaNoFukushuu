@@ -403,6 +403,7 @@ public class PantallaJuego implements Screen{
         batch.end();
 
     }
+    //
 
     private void ganarJuego() {
 
