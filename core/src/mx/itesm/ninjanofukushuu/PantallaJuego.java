@@ -39,6 +39,8 @@ public class PantallaJuego implements Screen{
     //Mapa
     private TiledMap mapa; //Infomracion del mapa en memoria
     private OrthogonalTiledMapRenderer rendererMapa; //Objeto para dibujar el mapa
+    private  Fondo fondo; //Imagen de fondo
+    private Texture texturaFondo; //Textura fondo
     //Personaje Principal
     private Personaje hataku; //hataku en nuestro personaje principal
     private Texture texturaHataku;       // Aquí cargamos la imagen, en el caso de la clase, se cargo hatakuSprite.png con varios frames
@@ -152,12 +154,17 @@ public class PantallaJuego implements Screen{
         rendererMapa = new OrthogonalTiledMapRenderer(mapa,batch);
         rendererMapa.setView(camara);
         // Cargar frames
-        texturaHataku = assetManager.get("seleccionNivel/recursosNivelTierra/marioSprite.png");
+        //texturaHataku = assetManager.get("seleccionNivel/recursosNivelTierra/marioSprite.png");
+        texturaHataku = assetManager.get("seleccionNivel/recursosNivelTierra/ninjita.png");
         // Crear el personaje
         hataku = new Personaje(texturaHataku);
         // Posición inicial del personaje
         if(this.numeroNivel == 1) //en el nivel tierra
             hataku.getSprite().setPosition(50, 100);
+
+        //Textura fondo
+        this.texturaFondo = assetManager.get("seleccionNivel/recursosNivelTierra/fondoTierra.jpg");
+        fondo = new Fondo(texturaFondo);
 
         //Textura Objetos que estan en la pantalla
         this.texturaScroll = assetManager.get("seleccionNivel/items/scroll.png");
@@ -337,7 +344,9 @@ public class PantallaJuego implements Screen{
         ganarJuego();
 
         batch.setProjectionMatrix(camara.combined);
-
+        batch.begin();
+        fondo.render(batch);
+        batch.end();
         rendererMapa.setView(camara);
         rendererMapa.render();  // Dibuja el mapa
         recogerObjeto();
@@ -543,7 +552,7 @@ public class PantallaJuego implements Screen{
                 if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
 
                     this.efectoDanio.play(PantallaMenu.volumen);
-                    vidas.remove(vidas.size()-1);
+                    vidas.remove(vidas.size() - 1);
                     Enemigo.quitarElemento();
                 }
                 break;
@@ -563,7 +572,7 @@ public class PantallaJuego implements Screen{
                 if (ataque.getEstadoAtaque() != ObjetosJuego.EstadoAtaque.OCULTO){
                     ataque.ocultar();
                     this.efectoDanio.play(PantallaMenu.volumen);
-                    vidas.remove(vidas.size()-1);
+                    vidas.remove(vidas.size() - 1);
                 }
             }
         }
@@ -868,7 +877,7 @@ public class PantallaJuego implements Screen{
         this.plataforma.dispose();
         this.batch.dispose();
         this.mapa.dispose();
-
+        this.texturaFondo.dispose();
 
         this.rendererMapa.dispose();
         //texturas

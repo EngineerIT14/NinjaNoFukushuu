@@ -41,15 +41,16 @@ public class Personaje
         // Lee la textura como región
         TextureRegion texturaCompleta = new TextureRegion(textura);
         // La divide en frames de 16x32 (ver marioSprite.png)
-        TextureRegion[][] texturaPersonaje = texturaCompleta.split(16,32);
+        TextureRegion[][] texturaPersonajeCorriendo= texturaCompleta.split(16,32);
+
         // Crea la animación con tiempo de 0.25 segundos entre frames.
-        animacion = new Animation(0.25f,texturaPersonaje[0][3], texturaPersonaje[0][2], texturaPersonaje[0][1] );  //La matriz [0][3] continene un sprite de mario con el pie adelante y así.. va caminando
+        animacion = new Animation(0.25f,texturaPersonajeCorriendo[0][1], texturaPersonajeCorriendo[0][2],  texturaPersonajeCorriendo[0][3],texturaPersonajeCorriendo[0][4],texturaPersonajeCorriendo[0][5],texturaPersonajeCorriendo[0][6],texturaPersonajeCorriendo[0][7] );  //La matriz [0][3] continene un sprite de mario con el pie adelante y así.. va caminando
         // Animación infinita
         animacion.setPlayMode(Animation.PlayMode.LOOP);
         // Inicia el timer que contará tiempo para saber qué frame se dibuja
         timerAnimacion = 0;
         // Crea el sprite cuando para el personaje quieto (idle)
-        sprite = new Sprite(texturaPersonaje[0][0]);    // quieto sprite del mario quieto..
+        sprite = new Sprite(texturaPersonajeCorriendo[0][0]);    // quieto sprite del mario quieto..
         estadoMovimiento = EstadoMovimiento.INICIANDO;
         estadoSalto = EstadoSalto.EN_PISO;
     }
