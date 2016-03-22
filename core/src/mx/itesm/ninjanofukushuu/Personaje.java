@@ -70,7 +70,8 @@ public class Personaje
                     if (!region.isFlipX()) {
                         region.flip(true,false);
                     }
-                } else {
+                }
+                else {
                     if (region.isFlipX()) {
                         region.flip(true,false);
                     }
