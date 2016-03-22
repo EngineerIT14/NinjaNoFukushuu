@@ -110,7 +110,7 @@ public class ObjetosJuego {
 
         }
     }
-
+//
     private float tiempoAzar() {
         return (float)Math.random()*2+0.3f;
     }
