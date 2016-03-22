@@ -210,7 +210,7 @@ public class PantallaGaleria implements Screen {
 
             // Preguntar si las coordenadas son de cierto lugar de donde se quito el dedo
 
-            if (btnGaleriaTierra.contiene(x,y) && this.banderaBotonGaleriaTierra  ){
+            if (btnGaleriaTierra.contiene(x,y) && this.banderaBotonGaleriaTierra && banderaPergaminosTierra ){
                 //banderaPergaminosTierra indica que el boton esta desbloqueado porque el usuario ya junto los 3 pergaminos.. en el nivel tierra
                 // si no entra al if el boton está bloqueado, no hace ningun sonido, se reproduce el sonido de bloqueado en touchDown
 
