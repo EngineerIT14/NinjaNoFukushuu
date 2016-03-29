@@ -169,7 +169,7 @@ public class PantallaGaleria implements Screen {
 
             if (btnGaleriaTierra.contiene(x,y)){
                 btnGaleriaTierra.setAlfa(.5f);
-                btnGaleriaTierra.setTamanio(300, 285); //Lo hago más pequeño
+                btnGaleriaTierra.setTamanio(300, 298); //Lo hago más pequeño
                 this.banderaBotonGaleriaTierra = true;
                 if(!banderaPergaminosTierra) //esta bloqueado
                     sonidoBloqueado.play(PantallaMenu.volumen);
@@ -177,7 +177,7 @@ public class PantallaGaleria implements Screen {
 
             if (btnGaleriaAgua.contiene(x,y)){
                 btnGaleriaAgua.setAlfa(.5f);
-                btnGaleriaAgua.setTamanio(300, 285); //Lo hago más pequeño
+                btnGaleriaAgua.setTamanio(300, 298); //Lo hago más pequeño
                 this.banderaBotonGaleriaAgua = true;
                 if(!banderaPergaminosAgua)// esta bloqueado
                     sonidoBloqueado.play(PantallaMenu.volumen);
@@ -185,7 +185,7 @@ public class PantallaGaleria implements Screen {
 
             if (btnGaleriaFuego.contiene(x,y)){
                 btnGaleriaFuego.setAlfa(.5f);
-                btnGaleriaFuego.setTamanio(300, 285); //Lo hago más pequeño
+                btnGaleriaFuego.setTamanio(300, 298); //Lo hago más pequeño
                 this.banderaBotonGaleriaFuego = true;
                 if(!banderaPergaminosFuego) // esta bloqueado
                     sonidoBloqueado.play(PantallaMenu.volumen);
@@ -194,7 +194,7 @@ public class PantallaGaleria implements Screen {
 
             if (btnRegresar.contiene(x,y)){
                 btnRegresar.setAlfa(.5f);
-                btnRegresar.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                btnRegresar.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                 this.banderaBotonRegresar = true;
             }
 

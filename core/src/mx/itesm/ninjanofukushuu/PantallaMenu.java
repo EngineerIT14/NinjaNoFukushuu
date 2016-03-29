@@ -225,35 +225,35 @@ public class PantallaMenu implements Screen {
 
             if (btnPLay.contiene(x, y) ) {
                 btnPLay.setAlfa(.5f);
-                btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON,PantallaMenu.ALTO_BOTON-15); //Lo hago más pequeño
+                btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON,PantallaMenu.ALTO_BOTON-2); //Lo hago más pequeño
                 this.banderaBotonPlay = true; //el boton está transparente, entonces activo la bandera..
             }
             //el -10, +10 +10 es porque así estan los botones originales con el tamaño correspondiente
             else if (btnInstructions.contiene(x, y)) {
                 btnInstructions.setAlfa(.5f);  //al presionarse se hace transparente
-                btnInstructions.setTamanio(PantallaMenu.ANCHO_BOTON-10,PantallaMenu.ALTO_BOTON-15); //Lo hago más pequeño
+                btnInstructions.setTamanio(PantallaMenu.ANCHO_BOTON-10,PantallaMenu.ALTO_BOTON-2); //Lo hago más pequeño
                 this.banderaBotonInstructions = true;
             }
             else if (btnAbout.contiene(x, y) ) {
                 btnAbout.setAlfa(.5f);
-                btnAbout.setTamanio(PantallaMenu.ANCHO_BOTON+10,PantallaMenu.ALTO_BOTON-15); //Lo hago más pequeño
+                btnAbout.setTamanio(PantallaMenu.ANCHO_BOTON+10,PantallaMenu.ALTO_BOTON-2); //Lo hago más pequeño
                 this.banderaBotonAbout = true;
             }
             else if (btnGallery.contiene(x, y) ) {
                 btnGallery.setAlfa(.5f);
-                btnGallery.setTamanio(PantallaMenu.ANCHO_BOTON+10,PantallaMenu.ALTO_BOTON-15); //Lo hago más pequeño
+                btnGallery.setTamanio(PantallaMenu.ANCHO_BOTON+10,PantallaMenu.ALTO_BOTON-2); //Lo hago más pequeño
                 this.banderaBotonGallery = true;
             }
 
             else if (btnGallery.contiene(x, y) ) {
                 btnGallery.setAlfa(.5f);
-                btnGallery.setTamanio(PantallaMenu.ANCHO_BOTON+10,PantallaMenu.ALTO_BOTON-15); //Lo hago más pequeño
+                btnGallery.setTamanio(PantallaMenu.ANCHO_BOTON+10,PantallaMenu.ALTO_BOTON-2); //Lo hago más pequeño
                 this.banderaBotonGallery = true;
             }
 
             else if (btnSonido.contiene(x,y)){
                 btnSonido.setAlfa(.5f);
-                btnSonido.setTamanio(PantallaMenu.ANCHO_BOTON_SONIDO,PantallaMenu.ALTO_BOTON_SONIDO-15); //Lo hago más pequeño
+                btnSonido.setTamanio(PantallaMenu.ANCHO_BOTON_SONIDO,PantallaMenu.ALTO_BOTON_SONIDO-2); //Lo hago más pequeño
                 this.banderaBotonSonido = true;
 
             }

@@ -201,32 +201,32 @@ public class PantallaAcerca implements Screen {
                 transformarCoordenadas(screenX, screenY);
                 if (btnIrvin.contiene(x, y)) {
                     btnIrvin.setAlfa(.5f); //al presionarse se hace transparente
-                    btnIrvin.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                    btnIrvin.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                     this.banderaBotonIrvin = true; //el boton está transparente, entonces activo la bandera..
                 }
                 else if (btnMia.contiene(x, y)) {
                     btnMia.setAlfa(.5f);  //al presionarse se hace transparente
-                    btnMia.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                    btnMia.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                     this.banderaBotonMia = true;
                 }
                 else if (btnJavier.contiene(x, y)) {
                     btnJavier.setAlfa(.5f);
-                    btnJavier.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                    btnJavier.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                     this.banderaBotonJavier = true;
                 }
                 else if (btnNuri.contiene(x, y)) {
                     btnNuri.setAlfa(.5f);
-                    btnNuri.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                    btnNuri.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                     this.banderaBotonNuri = true;
                 }
                 else if (btnFer.contiene(x,y)){
                     btnFer.setAlfa(.5f);
-                    btnFer.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                    btnFer.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                     this.banderaBotonFer = true;
                 }
                 else if (btnRegresar.contiene(x,y)){
                     btnRegresar.setAlfa(.5f);
-                    btnRegresar.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                    btnRegresar.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                     this.banderaBotonRegresar = true;
                 }
                 return true;    // Indica que ya procesó el evento
