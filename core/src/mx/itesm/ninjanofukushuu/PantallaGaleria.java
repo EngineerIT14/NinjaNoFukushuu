@@ -132,7 +132,7 @@ public class PantallaGaleria implements Screen {
     @Override
     public void render(float delta) {
         //Borrar la pantalla
-        Gdx.gl.glClearColor(0, 0, 0, 0);    // r, g, b, alpha  //color RojoOscuro
+        Gdx.gl.glClearColor(0, 0, 0, 0);    // r, g, b, alpha
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
