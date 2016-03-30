@@ -118,20 +118,21 @@ public class PantallaMenu implements Screen {
         this.btnSonido = new Boton(this.texturaBtnSonido);
         this.logo = new Logotipo(this.texturaLogo);
 
-        //Colocando posición de botones.
+        //Colocando posición de botones. Se requieren cambios en y (+22)
         this.btnInstructions.setPosicion(295,PantallaMenu.POSICION_Y_BOTON_JUGAR_INSTRUCCIONES);
         this.btnPLay.setPosicion(675, PantallaMenu.POSICION_Y_BOTON_JUGAR_INSTRUCCIONES);
         this.btnGallery.setPosicion(15,PantallaMenu.POSICION_Y_BOTON_GALLERY_ABOUT);
-        this.btnAbout.setPosicion(880,PantallaMenu.POSICION_Y_BOTON_GALLERY_ABOUT);
-        this.btnSonido.setPosicion(1110,Principal.ALTO_MUNDO-120);
+        this.btnAbout.setPosicion(880, PantallaMenu.POSICION_Y_BOTON_GALLERY_ABOUT);
+        this.btnSonido.setPosicion(1110, Principal.ALTO_MUNDO - 120);
         this.logo.setPosicion(PantallaMenu.POSICION_X_CENTRADA_LOGO, PantallaMenu.POSICION_Y_CENTRADA_LOGO);
 
-        //ajustando el tamaño
+        //ajustando el tamaño ---Esto ya no va a ser necesario
         this.fondo.setTamanio(Principal.ANCHO_MUNDO, Principal.ALTO_MUNDO);
-        this.btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON, PantallaMenu.ALTO_BOTON);
+        this.btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON-10, PantallaMenu.ALTO_BOTON);
         this.btnInstructions.setTamanio(PantallaMenu.ANCHO_BOTON-10, PantallaMenu.ALTO_BOTON);
         this.btnGallery.setTamanio(PantallaMenu.ANCHO_BOTON+10, PantallaMenu.ALTO_BOTON); //Se le modifico el ancho a gallery para que se vea estético..
         this.btnAbout.setTamanio(PantallaMenu.ANCHO_BOTON+10, PantallaMenu.ALTO_BOTON);
+        //Hasta aqui
         this.btnSonido.setTamanio(PantallaMenu.ANCHO_BOTON_SONIDO,PantallaMenu.ALTO_BOTON_SONIDO);
         this.logo.setTamanio(ANCHO_LOGO-10, ALTO_LOGO);
 
@@ -223,7 +224,7 @@ public class PantallaMenu implements Screen {
 
             transformarCoordenadas(screenX, screenY);
 
-            if (btnPLay.contiene(x, y) ) {
+            if (btnPLay.contiene(x, y)) {
                 btnPLay.setAlfa(.5f);
                 btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON,PantallaMenu.ALTO_BOTON-15); //Lo hago más pequeño
                 this.banderaBotonPlay = true; //el boton está transparente, entonces activo la bandera..
