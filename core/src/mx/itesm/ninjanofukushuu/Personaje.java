@@ -33,6 +33,7 @@ public class Personaje
     private float yInicial;         // 'y' donde inicia el salto
     private float tiempoVuelo;       // Tiempo que estará en el aire
     private float tiempoSalto;      // Tiempo actual de vuelo
+    boolean banderaVolteadoIzquierda = false;//Para cuando este quieto, voltear el sprite...
 
     /*
     Constructor del personaje, recibe una imagen con varios frames, (ver imagen marioSprite.png)
@@ -44,7 +45,7 @@ public class Personaje
         TextureRegion[][] texturaPersonajeCorriendo= texturaCompleta.split(16,32);
 
         // Crea la animación con tiempo de 0.25 segundos entre frames.
-        animacion = new Animation(0.25f,texturaPersonajeCorriendo[0][1], texturaPersonajeCorriendo[0][2],  texturaPersonajeCorriendo[0][3],texturaPersonajeCorriendo[0][4],texturaPersonajeCorriendo[0][5],texturaPersonajeCorriendo[0][6],texturaPersonajeCorriendo[0][7] );  //La matriz [0][3] continene un sprite de mario con el pie adelante y así.. va caminando
+        animacion = new Animation(0.25f,texturaPersonajeCorriendo[0][1], texturaPersonajeCorriendo[0][2],  texturaPersonajeCorriendo[0][3],texturaPersonajeCorriendo[0][4],texturaPersonajeCorriendo[0][5],texturaPersonajeCorriendo[0][6],texturaPersonajeCorriendo[0][7] );  //La matriz [0][3] continene un sprite de hataku con el pie adelante y así.. va caminando
         // Animación infinita
         animacion.setPlayMode(Animation.PlayMode.LOOP);
         // Inicia el timer que contará tiempo para saber qué frame se dibuja
@@ -68,11 +69,13 @@ public class Personaje
                 // Dirección correcta
                 if (estadoMovimiento==EstadoMovimiento.MOV_IZQUIERDA) {
                     if (!region.isFlipX()) {
+                        banderaVolteadoIzquierda = true;
                         region.flip(true,false);
                     }
                 }
-                else {
+                else { //se mueve a la derecha
                     if (region.isFlipX()) {
+                        banderaVolteadoIzquierda = false;
                         region.flip(true,false);
                     }
                 }
@@ -81,6 +84,17 @@ public class Personaje
                 break;
             case INICIANDO:
             case QUIETO:
+                if(banderaVolteadoIzquierda) {
+                    if (!sprite.isFlipX()) {
+                        sprite.flip(true, false);
+                    }
+
+                }
+                else{
+                    if (sprite.isFlipX()) {
+                        sprite.flip(true, false);
+                    }
+                }
                 sprite.draw(batch); // Dibuja el sprite
                 break;
         }

@@ -13,11 +13,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 import java.util.ArrayList;
+import com.badlogic.gdx.Input.Keys;
+
 
 /*
 Desarrolladores: Irvin Emmanuel Trujillo Díaz, Javier García Roque y Luis Fernando
@@ -51,6 +51,7 @@ public class PantallaJuego implements Screen{
     private Boton btnIzquierda;
     private Texture texturaBtnDerecha;
     private Boton btnDerecha;
+    private boolean banderaBotonTouchApretado = false; //es para que se pueda probar con el teclado y los botones del juego al mismo tiempo..
     // Botón saltar
     private Texture texturaSalto;
     private Boton btnSalto;
@@ -240,7 +241,7 @@ public class PantallaJuego implements Screen{
 
         //Se colocan las pociones en el lugar correspondiente,
         this.pociones.get(0).setPosicion(940, Principal.ALTO_MUNDO / 2 -40);
-        this.pociones.get(1).setPosicion(650, 240);
+        this.pociones.get(1).setPosicion(255, 270);
 
         //Enemigos: 5 enemigos en el primer nivel
         this.enemigoN1= new ArrayList<ObjetosJuego>(5);
@@ -343,6 +344,17 @@ public class PantallaJuego implements Screen{
         //Para verificar si el usuario ya gano...
         ganarJuego();
 
+
+        //MOVER PERSONAJES CON TECLADO (ESTO ES UTIL PARA LAS PRUEBAS,
+        // SE PIENSA COMENTAR AL ENTREGAR EL PROYECTO)
+        //
+        controlarPersonajeConTeclado();
+
+
+
+
+
+            //DIBUJAR OBJETOS COMPONENTES DEL JUEGO
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         fondo.render(batch);
@@ -401,6 +413,42 @@ public class PantallaJuego implements Screen{
         btnSalto.render(batch);
 
         batch.end();
+
+    }
+
+    private void controlarPersonajeConTeclado() {
+
+        if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
+            hataku.setEstado(Personaje.EstadoMovimiento.MOV_IZQUIERDA);
+            this.banderaBotonTouchApretado = false;
+            if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+                if (Personaje.EstadoSalto.EN_PISO == hataku.getEstadoSalto()) //Para que solamente suene una vez el sonido de salto
+                    efectoSaltoHataku.play(PantallaMenu.volumen);
+                hataku.saltar();
+            }
+        }
+
+        else if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)){
+            hataku.setEstado(Personaje.EstadoMovimiento.MOV_DERECHA);
+            this.banderaBotonTouchApretado = false;
+            if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+                if (Personaje.EstadoSalto.EN_PISO == hataku.getEstadoSalto()) //Para que solamente suene una vez el sonido de salto
+                    efectoSaltoHataku.play(PantallaMenu.volumen);
+                hataku.saltar();
+            }
+        }
+
+        else if (Gdx.input.isKeyJustPressed(Keys.SPACE) && Personaje.EstadoSalto.EN_PISO  == hataku.getEstadoSalto() ) {
+                 //Para que solamente suene una vez el sonido de salto
+                efectoSaltoHataku.play(PantallaMenu.volumen);
+                hataku.saltar();
+        }
+
+
+
+        else if(!banderaBotonTouchApretado)//no se esta apretando nada..
+            hataku.setEstado(Personaje.EstadoMovimiento.QUIETO);
+
 
     }
     //
@@ -493,7 +541,7 @@ public class PantallaJuego implements Screen{
         }
         else {
             ataque.ocultar();
-            ataque.actualizarAtaque(0,0);
+            ataque.actualizarAtaque(0, 0);
         }
     }
 
@@ -750,11 +798,12 @@ public class PantallaJuego implements Screen{
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
             if (estadoJuego==EstadosJuego.JUGANDO) {
+                banderaBotonTouchApretado = true;
                 // Preguntar si las coordenadas están sobre el botón derecho
                 if (btnDerecha.contiene(x, y) && hataku.getEstadoMovimiento() != Personaje.EstadoMovimiento.INICIANDO) {
                     // Tocó el botón derecha, hacer que el personaje se mueva a la derecha
                     btnDerecha.setAlfa(.5f);
-                    btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON-2); //lo hago más pequeño
+                    btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON - 2); //lo hago más pequeño
                     this.banderaBotonDerecha = true; //fue presionado le boton, indico aquí que fue preisonado.
                     hataku.setEstado(Personaje.EstadoMovimiento.MOV_DERECHA);
 
@@ -788,6 +837,7 @@ public class PantallaJuego implements Screen{
             if ( hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.INICIANDO && (btnDerecha.contiene(x, y) || btnIzquierda.contiene(x,y))) {
                 // Tocó el botón derecha, hacer que el personaje se mueva a la derecha
                 hataku.setEstado(Personaje.EstadoMovimiento.QUIETO);
+
                 //Ajusto tamaño y transprencia
                 if(banderaBotonDerecha) {
                     btnDerecha.setAlfa(.7f);
@@ -889,7 +939,7 @@ public class PantallaJuego implements Screen{
         this.texturaVidas.dispose();
         this.texturaPocion.dispose();
         this.texturaScroll.dispose();
-        texturaVidas.dispose();
+        this.texturaVidas.dispose();
         this.texturaEN1.dispose();
         this.texturaTemplo.dispose();
         this.texturaAtaque.dispose();
@@ -908,4 +958,6 @@ public class PantallaJuego implements Screen{
     public enum EstadosJuego {
         JUGANDO,
     }
+
+
 }
