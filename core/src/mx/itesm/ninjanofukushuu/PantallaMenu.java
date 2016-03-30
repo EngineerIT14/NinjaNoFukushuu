@@ -39,7 +39,7 @@ public class PantallaMenu implements Screen {
     private OrthographicCamera camaraHUD;   // Cámara Botones
     private Boton btnPLay,btnInstructions,btnGallery,btnAbout,btnSonido;
     private Texture texturaBtnPlay,texturaBtnInstructions,texturaBtnGallery,texturaBtnAbout,texturaBtnSonido; //Textura, se administran los recursos...
-    private static final int ANCHO_BOTON = 400 , ALTO_BOTON = 160 , ANCHO_BOTON_SONIDO = 150, ALTO_BOTON_SONIDO= 100;
+    private static final int ANCHO_BOTON = 385 , ALTO_BOTON = 135 , ANCHO_BOTON_SONIDO = 150, ALTO_BOTON_SONIDO= 100;
     private static final float POSICION_Y_BOTON_JUGAR_INSTRUCCIONES = Principal.ALTO_MUNDO/2-150, POSICION_Y_BOTON_GALLERY_ABOUT = Principal.ALTO_MUNDO/2 -310   ; //Posicion en y...
 
     //LOGO
@@ -226,7 +226,7 @@ public class PantallaMenu implements Screen {
 
             if (btnPLay.contiene(x, y)) {
                 btnPLay.setAlfa(.5f);
-                btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON,PantallaMenu.ALTO_BOTON-2); //Lo hago más pequeño
+                btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON-10,PantallaMenu.ALTO_BOTON-2); //Lo hago más pequeño
                 this.banderaBotonPlay = true; //el boton está transparente, entonces activo la bandera..
             }
             //el -10, +10 +10 es porque así estan los botones originales con el tamaño correspondiente
@@ -317,7 +317,7 @@ public class PantallaMenu implements Screen {
                 //el -10, +10 +10 es porque así estan los botones originales con el tamaño correspondiente
                 banderaBotonPlay = false;
                 btnPLay.setAlfa(1);
-                btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON, PantallaMenu.ALTO_BOTON); //tamaño original
+                btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON-10, PantallaMenu.ALTO_BOTON); //tamaño original
                 banderaBotonInstructions = false;
                 btnInstructions.setAlfa(1);
                 btnInstructions.setTamanio(PantallaMenu.ANCHO_BOTON - 10, PantallaMenu.ALTO_BOTON); //tamaño original
