@@ -175,7 +175,7 @@ public class PantallaImagen implements Screen {
     @Override
     public void render(float delta) {
         //Borrar la pantalla
-        Gdx.gl.glClearColor(.5f, 0, 0, 0); //color rojo oscuro
+        Gdx.gl.glClearColor(0, 0, 0, 0); //color rojo oscuro
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
@@ -214,21 +214,21 @@ public class PantallaImagen implements Screen {
 
             if (btnIzquierda.contiene(x,y)){
                 btnIzquierda.setAlfa(.5f);
-                btnIzquierda.setTamanio(PantallaImagen.TAMANIO_BOTON_FLECHAS_ANCHO, PantallaImagen.TAMANIO_BOTON_FELCHAS_ALTO-5); //Lo hago más pequeño
+                btnIzquierda.setTamanio(PantallaImagen.TAMANIO_BOTON_FLECHAS_ANCHO, PantallaImagen.TAMANIO_BOTON_FELCHAS_ALTO-3); //Lo hago más pequeño
                 this.banderaBotonIzquierda = true;
 
             }
 
             if (btnDerecha.contiene(x,y)){
                 btnDerecha.setAlfa(.5f);
-                btnDerecha.setTamanio(PantallaImagen.TAMANIO_BOTON_FLECHAS_ANCHO, PantallaImagen.TAMANIO_BOTON_FELCHAS_ALTO-5); //Lo hago más pequeño
+                btnDerecha.setTamanio(PantallaImagen.TAMANIO_BOTON_FLECHAS_ANCHO, PantallaImagen.TAMANIO_BOTON_FELCHAS_ALTO-3); //Lo hago más pequeño
                 this.banderaBotonDerecha = true;
 
             }
 
             if (btnAccion.contiene(x,y)){
                 btnAccion.setAlfa(.5f);
-                btnAccion.setTamanio(PantallaImagen.TAMANIO_BOTON, PantallaImagen.TAMANIO_BOTON-5); //Lo hago más pequeño
+                btnAccion.setTamanio(PantallaImagen.TAMANIO_BOTON, PantallaImagen.TAMANIO_BOTON-3); //Lo hago más pequeño
                 this.banderaBotonAccion = true;
 
             }

@@ -146,20 +146,20 @@ public class SeleccionDeNivel implements  Screen{
 
             if (btnRegresar.contiene(x, y)) {
                 btnRegresar.setAlfa(.5f);
-                btnRegresar.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                btnRegresar.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                 this.banderaBotonRegresar = true;
 
             }
 
             if (btnNivelUno.contiene(x, y)) {
                 btnNivelUno.setAlfa(.5f);
-                btnNivelUno.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                btnNivelUno.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                 this.banderaBotonNivel1 = true;
             }
 
             if (btnNivelDos.contiene(x, y)) {
                 btnNivelDos.setAlfa(.5f);
-                btnNivelDos.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                btnNivelDos.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                 this.banderaBotonNivel2 = true;
                 if(!PantallaCargando.banderaNivelAguaDesbloqueado)
                     sonidoBloqueado.play(PantallaMenu.volumen);
@@ -167,7 +167,7 @@ public class SeleccionDeNivel implements  Screen{
 
             if (btnNivelTres.contiene(x, y)) {
                 btnNivelTres.setAlfa(.5f);
-                btnNivelTres.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                btnNivelTres.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                 this.banderaBotonNivel3 = true;
                 if(!PantallaCargando.banderaNivelFuegoDesbloqueado)
                     sonidoBloqueado.play(PantallaMenu.volumen);

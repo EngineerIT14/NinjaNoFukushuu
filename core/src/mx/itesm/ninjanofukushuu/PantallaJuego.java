@@ -754,14 +754,14 @@ public class PantallaJuego implements Screen{
                 if (btnDerecha.contiene(x, y) && hataku.getEstadoMovimiento() != Personaje.EstadoMovimiento.INICIANDO) {
                     // Tocó el botón derecha, hacer que el personaje se mueva a la derecha
                     btnDerecha.setAlfa(.5f);
-                    btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON-5); //lo hago más pequeño
+                    btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON-3); //lo hago más pequeño
                     this.banderaBotonDerecha = true; //fue presionado le boton, indico aquí que fue preisonado.
                     hataku.setEstado(Personaje.EstadoMovimiento.MOV_DERECHA);
 
                 } else if (btnIzquierda.contiene(x, y) && hataku.getEstadoMovimiento() != Personaje.EstadoMovimiento.INICIANDO) {
                     // Tocó el botón izquierda, hacer que el personaje se mueva a la izquierda
                     btnIzquierda.setAlfa(.5f);
-                    btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON-5); //lo hago más pequeño
+                    btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON-3); //lo hago más pequeño
                     this.banderaBotonIzquierda = true;
                     hataku.setEstado(Personaje.EstadoMovimiento.MOV_IZQUIERDA);
                 } else if (btnSalto.contiene(x, y) ) {
@@ -770,7 +770,7 @@ public class PantallaJuego implements Screen{
                         efectoSaltoHataku.play(PantallaMenu.volumen);
 
                     btnSalto.setAlfa(.5f);
-                    btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON-5); //lo hago más pequeño
+                    btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON,PantallaJuego.TAMANIO_BOTON-3); //lo hago más pequeño
                     this.banderaBotonSaltar = true;
                     hataku.saltar();
                 }

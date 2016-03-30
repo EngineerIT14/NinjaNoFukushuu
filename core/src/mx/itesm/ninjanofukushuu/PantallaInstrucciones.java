@@ -109,7 +109,7 @@ public class PantallaInstrucciones implements Screen {
 
             if (btnRegresar.contiene(x,y)){
                 btnRegresar.setAlfa(.5f);
-                btnRegresar.setTamanio(anchoBoton, altoBoton - 15); //Lo hago más pequeño
+                btnRegresar.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                 this.banderaBotonRegresar = true;
             }
 

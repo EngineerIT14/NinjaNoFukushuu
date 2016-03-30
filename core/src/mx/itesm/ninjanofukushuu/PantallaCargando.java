@@ -77,7 +77,7 @@ public class PantallaCargando implements Screen
         this.assetManager = plataforma.getAssetManager();
         PantallaCargando.partidaGuardada =  Gdx.app.getPreferences("partidaGuardada"); //Para crear (en caso de que no este) o cargar la partida...
         //por default banderas estan en falso..                         //lave        boolean
-        PantallaCargando.banderaArteTierra = partidaGuardada.getBoolean("arteTierra", false);
+        PantallaCargando.banderaArteTierra = partidaGuardada.getBoolean("arteTierra", true);
         PantallaCargando.banderaArteAgua = partidaGuardada.getBoolean("arteAgua", false);
         PantallaCargando.banderaArteFuego = partidaGuardada.getBoolean("arteFuego", false);
         PantallaCargando.banderaNivelAguaDesbloqueado = partidaGuardada.getBoolean("nivelAgua",false);
