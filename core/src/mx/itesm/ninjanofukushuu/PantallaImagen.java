@@ -156,7 +156,7 @@ public class PantallaImagen implements Screen {
         //creandoBotones
 
         this.btnAccion = new Boton(texturaBtnAccion);
-        this.btnAccion.setPosicion(Principal.ANCHO_MUNDO-200, Principal.ALTO_MUNDO * 1 / 5 - 150);
+        this.btnAccion.setPosicion(Principal.ANCHO_MUNDO-205, Principal.ALTO_MUNDO * 1 / 5 - 140);
         this.btnAccion.setAlfa(0.7f); // Un poco de transparencia
         this.btnAccion.setTamanio(PantallaImagen.TAMANIO_BOTON, PantallaImagen.TAMANIO_BOTON);
 
