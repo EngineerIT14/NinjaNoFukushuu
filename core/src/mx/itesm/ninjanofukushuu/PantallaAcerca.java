@@ -85,7 +85,7 @@ public class PantallaAcerca implements Screen {
         btnJavier.setPosicion(Principal.ANCHO_MUNDO * 3 / 4 - 100, Principal.ALTO_MUNDO * 2 / 3 - 100);
         btnNuri.setPosicion(Principal.ANCHO_MUNDO * 3 / 8 - 100, Principal.ALTO_MUNDO / 3 - 100);
         btnFer.setPosicion(Principal.ANCHO_MUNDO * 5 / 8 - 100, Principal.ALTO_MUNDO / 3 - 100);
-        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8 , Principal.ALTO_MUNDO * 1 / 5 -150);
+        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8, Principal.ALTO_MUNDO * 1 / 5 -130);
         presentacionIrvin.setPosicion(0 - 20, 0 - 100);
         presentacionMia.setPosicion(0 - 20, 0 - 100);
         presentacionJavier.setPosicion(0 - 20, 0 - 100);
@@ -98,7 +98,7 @@ public class PantallaAcerca implements Screen {
         btnJavier.setTamanio(anchoBoton,altoBoton);
         btnNuri.setTamanio(anchoBoton, altoBoton);
         btnFer.setTamanio(anchoBoton, altoBoton);
-        btnRegresar.setTamanio(anchoBoton , altoBoton );
+        btnRegresar.setTamanio(anchoBoton-30 , altoBoton-30 );
 
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
@@ -226,7 +226,7 @@ public class PantallaAcerca implements Screen {
                 }
                 else if (btnRegresar.contiene(x,y)){
                     btnRegresar.setAlfa(.5f);
-                    btnRegresar.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
+                    btnRegresar.setTamanio(anchoBoton-30, altoBoton - 32); //Lo hago más pequeño
                     this.banderaBotonRegresar = true;
                 }
                 return true;    // Indica que ya procesó el evento
@@ -337,7 +337,7 @@ public class PantallaAcerca implements Screen {
                 btnFer.setTamanio(anchoBoton,altoBoton); //tamaño orginal
                 banderaBotonRegresar = false;
                 btnRegresar.setAlfa(1);
-                btnRegresar.setTamanio(anchoBoton,altoBoton); //tamaño orginal
+                btnRegresar.setTamanio(anchoBoton-30,altoBoton-30); //tamaño orginal
 
             }
             return true;    // Indica que ya procesó el evento

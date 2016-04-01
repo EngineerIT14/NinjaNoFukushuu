@@ -66,8 +66,8 @@ public class SeleccionDeNivel implements  Screen{
         fondo = new Fondo(texturaFondo);
 
         btnRegresar = new Boton(texturaRegresar);
-        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8, Principal.ALTO_MUNDO * 1 / 5 - 150);
-        btnRegresar.setTamanio(anchoBoton, altoBoton);
+        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8, Principal.ALTO_MUNDO * 1 / 5 - 130);
+        btnRegresar.setTamanio(anchoBoton-30, altoBoton-30);
         btnNivelUno=new Boton(texturaN1);
         btnNivelUno.setPosicion(100, Principal.ALTO_MUNDO/2-100);
         btnNivelUno.setTamanio(anchoBoton, altoBoton);
@@ -146,7 +146,7 @@ public class SeleccionDeNivel implements  Screen{
 
             if (btnRegresar.contiene(x, y)) {
                 btnRegresar.setAlfa(.5f);
-                btnRegresar.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
+                btnRegresar.setTamanio(anchoBoton-30, altoBoton - 32); //Lo hago más pequeño
                 this.banderaBotonRegresar = true;
 
             }
@@ -210,7 +210,7 @@ public class SeleccionDeNivel implements  Screen{
                 btnNivelUno.setAlfa(1);
                 btnNivelDos.setAlfa(1);
                 btnNivelTres.setAlfa(1);
-                btnRegresar.setTamanio(anchoBoton, altoBoton); //tamaño orginal
+                btnRegresar.setTamanio(anchoBoton-30, altoBoton-30); //tamaño orginal
                 btnNivelUno.setTamanio(anchoBoton,altoBoton);
                 btnNivelDos.setTamanio(anchoBoton,altoBoton);
                 btnNivelTres.setTamanio(anchoBoton,altoBoton);

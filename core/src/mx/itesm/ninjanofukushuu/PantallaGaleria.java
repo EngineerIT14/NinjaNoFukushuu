@@ -101,8 +101,8 @@ public class PantallaGaleria implements Screen {
         btnRegresar = new Boton(texturaRegresar);
 
         //ajustando tamaño y posiciones del boton reresar...
-        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8 , Principal.ALTO_MUNDO * 1 / 5 -150);
-        btnRegresar.setTamanio(anchoBoton, altoBoton );
+        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8 , Principal.ALTO_MUNDO * 1 / 5 -130);
+        btnRegresar.setTamanio(anchoBoton-30, altoBoton-30 );
         //Batch
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
@@ -194,7 +194,7 @@ public class PantallaGaleria implements Screen {
 
             if (btnRegresar.contiene(x,y)){
                 btnRegresar.setAlfa(.5f);
-                btnRegresar.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
+                btnRegresar.setTamanio(anchoBoton-30, altoBoton - 32); //Lo hago más pequeño
                 this.banderaBotonRegresar = true;
             }
 
@@ -264,7 +264,7 @@ public class PantallaGaleria implements Screen {
                 btnGaleriaFuego.setTamanio(300, 300); //tamaño orginal
                 banderaBotonRegresar = false;
                 btnRegresar.setAlfa(1);
-                btnRegresar.setTamanio(anchoBoton,altoBoton); //tamaño orginal
+                btnRegresar.setTamanio(anchoBoton-30,altoBoton-30); //tamaño orginal
             }
             return true;    // Indica que ya procesó el evento
         }
