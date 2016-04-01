@@ -42,7 +42,7 @@ public class Personaje
         // Lee la textura como región
         TextureRegion texturaCompleta = new TextureRegion(textura);
         // La divide en frames de 16x32 (ver marioSprite.png)
-        TextureRegion[][] texturaPersonajeCorriendo= texturaCompleta.split(18,32);
+        TextureRegion[][] texturaPersonajeCorriendo= texturaCompleta.split(16,32);
 
         // Crea la animación con tiempo de 0.15 segundos entre frames.
         animacion = new Animation(0.10f,texturaPersonajeCorriendo[0][1], texturaPersonajeCorriendo[0][2],  texturaPersonajeCorriendo[0][3],texturaPersonajeCorriendo[0][4],texturaPersonajeCorriendo[0][5],texturaPersonajeCorriendo[0][6]);  //La matriz [0][3] continene un sprite de hataku con el pie adelante y así.. va caminando
