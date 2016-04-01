@@ -889,6 +889,7 @@ public class PantallaJuego implements Screen{
                         banderaBotonIzquierda = false;
                     }
                 }
+
             }
             else {
                 if (!btnSalto.contiene(x,y)){
