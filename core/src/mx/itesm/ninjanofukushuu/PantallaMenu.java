@@ -38,7 +38,7 @@ public class PantallaMenu implements Screen {
     //Botones
     private OrthographicCamera camaraHUD;   // Cámara Botones
     private Boton btnPLay,btnInstructions,btnGallery,btnAbout,btnSonido;
-    private Texture texturaBtnPlay,texturaBtnInstructions,texturaBtnGallery,texturaBtnAbout,texturaBtnSonido; //Textura, se administran los recursos...
+    private Texture texturaBtnPlay,texturaBtnInstructions,texturaBtnGallery,texturaBtnAbout,texturaBtnSonido, texturaMute; //Textura, se administran los recursos...
     private static final int ANCHO_BOTON = 385 , ALTO_BOTON = 135 , ANCHO_BOTON_SONIDO = 150, ALTO_BOTON_SONIDO= 100;
     private static final float POSICION_Y_BOTON_JUGAR_INSTRUCCIONES = Principal.ALTO_MUNDO/2-150, POSICION_Y_BOTON_GALLERY_ABOUT = Principal.ALTO_MUNDO/2 -310   ; //Posicion en y...
 
@@ -103,6 +103,7 @@ public class PantallaMenu implements Screen {
         this.texturaBtnAbout =  assetManager.get("botonAbout.png");
         this.texturaLogo = assetManager.get("Title.png");
         this.texturaBtnSonido = assetManager.get("bocina.png");
+        this.texturaMute = assetManager.get("mute.png");
 
         //sonido
         this.efectoClick = assetManager.get("sonidoVentana.wav");
@@ -177,7 +178,6 @@ public class PantallaMenu implements Screen {
         btnGallery.render(batch);
         btnAbout.render(batch);
         btnSonido.render(batch);
-
         batch.end();
 
     }
@@ -298,6 +298,7 @@ public class PantallaMenu implements Screen {
                 banderaBotonSonido = false;
                 btnSonido.setAlfa(1);
                 btnSonido.setTamanio(PantallaMenu.ANCHO_BOTON_SONIDO, ALTO_BOTON_SONIDO);
+
                 Principal.sonidoConMute = true;
 
             }
@@ -346,11 +347,15 @@ public class PantallaMenu implements Screen {
     }
 
     private void silenciarJuego() {
+        btnSonido = new Boton(texturaMute);
+        this.btnSonido.setPosicion(1110, Principal.ALTO_MUNDO - 120);
         PantallaMenu.volumen = 0f;
         this.musicaFondo.setVolume(PantallaMenu.volumen);
     }
 
     private void activarMusicaJuego(){ //Para que se vuela a poner la musica del juego
+        btnSonido = new Boton(texturaBtnSonido);
+        this.btnSonido.setPosicion(1110, Principal.ALTO_MUNDO - 120);
         PantallaMenu.volumen = .5f;
         this.musicaFondo.setVolume(PantallaMenu.volumen);
 
@@ -382,6 +387,10 @@ public class PantallaMenu implements Screen {
         texturaLogo.dispose();
         //sonido
         this.efectoClick.dispose();
+        //texturas
+        textureFondo1.dispose();
+        texturaBtnSonido.dispose();
+        texturaMute.dispose();
 
         //NOTA: LA MUSICA DE FONDO NO SE LIBER, YA QUE QUEREMOS QUE SE SIGA ESCUCHANDO..
     }

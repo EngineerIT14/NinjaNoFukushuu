@@ -889,6 +889,8 @@ public class PantallaJuego implements Screen{
                         banderaBotonIzquierda = false;
                     }
                 }
+            }
+            else {
                 if (!btnSalto.contiene(x,y)){
                     if (banderaBotonSaltar) {
                         btnSalto.setAlfa(.7f);
