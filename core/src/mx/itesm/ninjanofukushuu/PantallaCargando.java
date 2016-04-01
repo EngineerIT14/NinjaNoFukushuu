@@ -152,6 +152,7 @@ public class PantallaCargando implements Screen
                     assetManager.load("bocina.png",Texture.class);
                     assetManager.load("mute.png",Texture.class);
                     assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
+                assetManager.load("seleccionNivel/sonidosGameplay/puertaTemplo.wav",Sound.class);
 
                     break;
 

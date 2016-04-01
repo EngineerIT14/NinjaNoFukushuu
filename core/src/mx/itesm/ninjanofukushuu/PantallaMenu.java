@@ -49,7 +49,7 @@ public class PantallaMenu implements Screen {
     private static final int POSICION_X_CENTRADA_LOGO = 330 , POSICION_Y_CENTRADA_LOGO = 380;
 
     //Efectos y musica de fondo
-    private Sound efectoClick;
+    private Sound efectoClick, efectoTrucoActivado;
     private static Music musicaFondo;
     public static float volumen = .5f; //volumen para reproducir sonidos...
     private boolean banderaCancionJuego; //Esta bandera sirve para que se vuelva a crear el objeto de musicaFondo cuando regresas al menu principal y se interrumpa la que esta actualmente.
@@ -108,6 +108,7 @@ public class PantallaMenu implements Screen {
 
         //sonido
         this.efectoClick = assetManager.get("sonidoVentana.wav");
+        this.efectoTrucoActivado = assetManager.get("seleccionNivel/sonidosGameplay/puertaTemplo.wav");
 
 
         //Creando objetos...
@@ -214,6 +215,7 @@ public class PantallaMenu implements Screen {
     public class ProcesadorEntrada extends InputAdapter {
         private Vector3 coordenadas = new Vector3();
         private float x, y;     // Las coordenadas en la pantalla virtual
+        private int contadorCabeza = 0; //Para aplicar el truco de liberacion de todo el contenido del juego
 
         private boolean banderaBotonPlay = false, banderaBotonInstructions = false,
                 banderaBotonGallery = false, banderaBotonAbout = false, banderaBotonSonido = false; //Banderas que nos sirven para saber si el boton está transparente y  pequeño o  no además que nos ayudan para la segunda condicion de touchUp.
@@ -229,6 +231,7 @@ public class PantallaMenu implements Screen {
             transformarCoordenadas(screenX, screenY);
 
             if (btnPLay.contiene(x, y)) {
+                contadorCabeza = 0;
                 btnPLay.setAlfa(.5f);
                 btnPLay.setTamanio(PantallaMenu.ANCHO_BOTON-10,PantallaMenu.ALTO_BOTON-2); //Lo hago más pequeño
                 this.banderaBotonPlay = true; //el boton está transparente, entonces activo la bandera..
@@ -236,31 +239,45 @@ public class PantallaMenu implements Screen {
             //el -10, +10 +10 es porque así estan los botones originales con el tamaño correspondiente
             else if (btnInstructions.contiene(x, y)) {
                 btnInstructions.setAlfa(.5f);  //al presionarse se hace transparente
+                contadorCabeza = 0;
                 btnInstructions.setTamanio(PantallaMenu.ANCHO_BOTON-10,PantallaMenu.ALTO_BOTON-2); //Lo hago más pequeño
                 this.banderaBotonInstructions = true;
             }
             else if (btnAbout.contiene(x, y) ) {
+                contadorCabeza = 0;
                 btnAbout.setAlfa(.5f);
                 btnAbout.setTamanio(PantallaMenu.ANCHO_BOTON+10,PantallaMenu.ALTO_BOTON-2); //Lo hago más pequeño
                 this.banderaBotonAbout = true;
             }
             else if (btnGallery.contiene(x, y) ) {
+                contadorCabeza = 0;
                 btnGallery.setAlfa(.5f);
                 btnGallery.setTamanio(PantallaMenu.ANCHO_BOTON+10,PantallaMenu.ALTO_BOTON-2); //Lo hago más pequeño
                 this.banderaBotonGallery = true;
             }
 
             else if (btnGallery.contiene(x, y) ) {
+                contadorCabeza = 0;
                 btnGallery.setAlfa(.5f);
                 btnGallery.setTamanio(PantallaMenu.ANCHO_BOTON+10,PantallaMenu.ALTO_BOTON-2); //Lo hago más pequeño
                 this.banderaBotonGallery = true;
             }
 
             else if (btnSonido.contiene(x,y)){
+                contadorCabeza = 0;
                 btnSonido.setAlfa(.5f);
                 btnSonido.setTamanio(PantallaMenu.ANCHO_BOTON_SONIDO,PantallaMenu.ALTO_BOTON_SONIDO-2); //Lo hago más pequeño
                 this.banderaBotonSonido = true;
 
+            }
+
+            else if (250<=x && x<=390 && 382<=y && y<=516) { //posicion cabeza del ninja
+                //System.out.println(x+" "+y);
+                contadorCabeza+=1;
+                if(contadorCabeza == 10){
+                    desbloquearTodoElContenido();
+
+                }
             }
 
             return true;    // Indica que ya procesó el evento
@@ -348,6 +365,34 @@ public class PantallaMenu implements Screen {
             x = coordenadas.x;
             y = coordenadas.y;
         }
+    }
+
+    private void desbloquearTodoElContenido() { //Metodo que se activa cuando el usuario toca 10 veces la cabeza del ninja, es un glitch pafra librar los debsloqueables..
+        //Liberas niveles
+
+        PantallaCargando.partidaGuardada.putBoolean("nivelAgua", true); //se guarda el progreso y se desbloquea el nivel de agua...
+        PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
+
+        PantallaCargando.partidaGuardada.putBoolean("nivelFuego", true); //se guarda el progreso y se desbloquea el nivel de agua...
+        PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
+
+
+
+
+
+        //Liberas galeria de arte
+        PantallaCargando.partidaGuardada.putBoolean("arteTierra", true); //se guarda el progreso y se desbloquea la galeria de arte de tierra,,
+        PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
+
+        PantallaCargando.partidaGuardada.putBoolean("arteAgua", true); //se guarda el progreso y se desbloquea la galeria de arte de agua// ,,
+        PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
+
+
+        PantallaCargando.partidaGuardada.putBoolean("arteFuego", true); //se guarda el progreso y se desbloquea la galeria de arte de fuego// ,,
+        PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
+
+        //El sonido suena, aun si el usuario quito el sonido
+        this.efectoTrucoActivado.play();
     }
 
     private void silenciarJuego() {
