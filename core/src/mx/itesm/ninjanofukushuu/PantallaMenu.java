@@ -103,6 +103,7 @@ public class PantallaMenu implements Screen {
         this.texturaBtnAbout =  assetManager.get("botonAbout.png");
         this.texturaLogo = assetManager.get("Title.png");
         this.texturaBtnSonido = assetManager.get("bocina.png");
+
         this.texturaMute = assetManager.get("mute.png");
 
         //sonido
@@ -116,7 +117,10 @@ public class PantallaMenu implements Screen {
         this.btnInstructions  = new Boton(this.texturaBtnInstructions);
         this.btnGallery = new Boton(this.texturaBtnGallery);
         this.btnAbout = new Boton(this.texturaBtnAbout);
-        this.btnSonido = new Boton(this.texturaBtnSonido);
+        if(!Principal.sonidoConMute)
+            this.btnSonido = new Boton(this.texturaBtnSonido);
+        else
+            this.btnSonido =  new Boton(this.texturaMute);
         this.logo = new Logotipo(this.texturaLogo);
 
         //Colocando posición de botones. Se requieren cambios en y (+22)

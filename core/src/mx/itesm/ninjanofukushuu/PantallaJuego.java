@@ -206,7 +206,7 @@ public class PantallaJuego implements Screen{
 
         texturaSalto =  assetManager.get("seleccionNivel/botonesFlechas/salto.png"); //boton para saltar... carga su imagen
         btnSalto = new Boton(texturaSalto);
-        btnSalto.setPosicion(Principal.ANCHO_CAMARA -8* TAM_CELDA, 100 + TAM_CELDA);
+        btnSalto.setPosicion(Principal.ANCHO_CAMARA -6* TAM_CELDA, 100 + TAM_CELDA);
         btnSalto.setAlfa(0.7f);
         btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON );
 
