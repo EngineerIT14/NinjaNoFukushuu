@@ -854,7 +854,7 @@ public class PantallaJuego implements Screen{
                 else if (banderaBotonSaltar) {
                     btnSalto.setAlfa(.7f);
                     btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se regresa a posicion orignal
-                    banderaBotonDerecha = false;
+                    banderaBotonSaltar = false;
                 }
 
             }
@@ -881,7 +881,7 @@ public class PantallaJuego implements Screen{
                     if(banderaBotonDerecha) {
                         btnDerecha.setAlfa(.7f);
                         btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se rgresa a posicion original
-                        banderaBotonSaltar = false;
+                        banderaBotonDerecha = false;
                     }
                     if(banderaBotonIzquierda) {
                         btnIzquierda.setAlfa(.7f);
