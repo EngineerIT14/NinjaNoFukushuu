@@ -465,8 +465,9 @@ public class PantallaJuego implements Screen{
             this.efectoPuertaTemplo.play(PantallaMenu.volumen);
             PantallaCargando.partidaGuardada.putBoolean("nivelAgua", true); //se guarda el progreso y se desbloquea el nivel de agua...
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
-            //en este caso, como aun no hay otra pantalla, nos regresa al menu principal...
-            plataforma.setScreen(new PantallaCargando(0, plataforma, true));
+
+            //Se va regresar a seleccion de nivel
+            plataforma.setScreen(new PantallaCargando(1, plataforma, true));
 
         }
 
