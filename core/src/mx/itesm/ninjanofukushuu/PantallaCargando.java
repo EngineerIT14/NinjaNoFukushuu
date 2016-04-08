@@ -279,6 +279,49 @@ public class PantallaCargando implements Screen
                     assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra5.jpg",Texture.class);
 
                     break;
+            case 6:
+                // se cargan recursos del juego..
+                //nivel tierra
+                assetManager.load("seleccionNivel/recursosNivelAgua/MapaDeAgua.tmx", TiledMap.class);  // Cargar info del mapa
+                //assetManager.load("seleccionNivel/recursosNivelTierra/marioSprite.png", Texture.class);    // Cargar imagen
+                assetManager.load("seleccionNivel/recursosNivelAgua/ninjita.png", Texture.class);    // Cargar imagen
+                //assetManager.load("seleccionNivel/recursosNivelAgua/fondoAgua.jpg",Texture.class); //Fondo del mapa
+                // Texturas de los botones tanto para el gampeplay como para mover las imagenes al ver la historia..
+
+                assetManager.load("seleccionNivel/botonesFlechas/salto.png", Texture.class);
+
+                //botones para mover imagenes y personaje..
+                assetManager.load("seleccionNivel/botonesFlechas/derechaImagenes.png",Texture.class);
+                assetManager.load("seleccionNivel/botonesFlechas/izquierdaImagenes.png",Texture.class);
+
+                //Textura objetos
+                assetManager.load("seleccionNivel/items/scroll.png", Texture.class);
+                assetManager.load("seleccionNivel/items/pocion.png", Texture.class);
+                assetManager.load("seleccionNivel/items/ataque2.png", Texture.class);
+
+                //Textura enemigo
+                assetManager.load("seleccionNivel/recursosNivelAgua/AguaE.png", Texture.class);
+                //Textura templo
+                assetManager.load("seleccionNivel/recursosNivelAgua/temploAzul.png", Texture.class);
+                //caritaVida
+                assetManager.load("seleccionNivel/recursosNivelAgua/life2.png", Texture.class);
+                //sonidos
+                assetManager.load("seleccionNivel/sonidosGameplay/efectoSaltoHataku.wav",Sound.class);
+                assetManager.load("seleccionNivel/sonidosGameplay/efectoVida.wav",Sound.class);
+                assetManager.load("seleccionNivel/sonidosGameplay/efectoPergamino.wav",Sound.class);
+                assetManager.load("seleccionNivel/sonidosGameplay/efectoDanio.wav",Sound.class);
+                assetManager.load("seleccionNivel/sonidosGameplay/puertaTemplo.wav",Sound.class);
+
+                //se cargan los recursos para mostrar la historia...
+                assetManager.load("botonPlay.png", Texture.class); // boton play...
+                //son 5 imagenes para explicar la historia...
+                assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua1.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua2.jpg",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua3.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua4.jpg",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua5.jpg",Texture.class);
+
+                break;
             default: break;
         }
     }
@@ -331,6 +374,9 @@ public class PantallaCargando implements Screen
                     break;
                 case 5:
                     plataforma.setScreen(new PantallaImagen(this.plataforma,4)); //nivel de tierra... se  va a mostrar las imagenes de la historia..
+                    break;
+                case 6:
+                    plataforma.setScreen(new PantallaImagen(this.plataforma,5)); //nivel de agua... se  va a mostrar las imagenes de la historia..
                     break;
                 default:
                     plataforma.setScreen(new PantallaMenu(this.plataforma,this.banderaMusicaFondo));
