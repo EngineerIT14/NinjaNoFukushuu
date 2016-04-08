@@ -108,7 +108,7 @@ public class PantallaJuego implements Screen{
 
     //Variable para indicar si numero de nivel y hacer el cambio en el numero de vidas, ya que hataku tiene su armadura completa en el nivel 4 y las vidas deben aumentar a 5, esta variable es nuestra bandera...
     private boolean flag = false;
-    private int numeroNivel ;
+    private int  numeroNivel; //es estatica ya que solo se quiere una copia de etsa variable y es modificada en seleccion de  nivel...
     private int ataqueFlag;
 
 
@@ -629,9 +629,12 @@ public class PantallaJuego implements Screen{
 
     private void ganarJuego() {
 
-        //System.out.println(this.hataku.getY());
+        //PROBADORES PARA SABER EN QUE COORDENADAS VAS A GANAR..
+        /*System.out.println("y = "+this.hataku.getY());
+
+        System.out.println("X = "+this.hataku.getX());*/
+
         //temploTierra
-        //System.out.println(this.hataku.getX());
         if(258 == this.hataku.getX() &&  512 <= this.hataku.getY() && this.numeroNivel == 1){ //258  y 512 es la posicion del templo, lo identifique con el system.out.println
 
             this.numeroNivel = 2;
@@ -645,21 +648,23 @@ public class PantallaJuego implements Screen{
 
         }
 
-        /*
+
         // temploAgua
 
-        if(this.templos.get(1).getSprite().getX() == this.hataku.getX() &&
-                this.templos.get(1).getSprite().getY() == this.hataku.getY() && this.numeroNivel == 2){
+        if( 44 == this.hataku.getX() && 1164  <= this.hataku.getY() && this.numeroNivel == 2){
 
             this.numeroNivel = 3;
             this.marcadorPergaminos = 0;
             this.efectoPuertaTemplo.play(PantallaMenu.volumen);
-            //en este caso, como aun no hay otra pantalla, nos regresa al menu principal...
-            plataforma.setScreen(new PantallaCargando(0, plataforma, true));
+            PantallaCargando.partidaGuardada.putBoolean("nivelFuego", true); //se guarda el progreso y se desbloquea el nivel de agua...
+            PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
+
+            //Se va regresar a seleccion de nivel
+            plataforma.setScreen(new PantallaCargando(1, plataforma, true));
 
         }
 
-
+/*
         //temploFuego
 
         if(this.templos.get(2).getSprite().getX() == this.hataku.getX() &&
@@ -673,6 +678,7 @@ public class PantallaJuego implements Screen{
 
         }
         */
+
     }
 
     private void liberarArte() {
