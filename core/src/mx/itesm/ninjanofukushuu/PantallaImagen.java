@@ -141,7 +141,7 @@ public class PantallaImagen implements Screen {
             this.texturaBtnAccion = assetManager.get("return.png");
 
         else
-            this.texturaBtnAccion = assetManager.get("botonPlay.png");
+            this.texturaBtnAccion = assetManager.get("Play.png");
 
 
         this.efectoClick = assetManager.get("sonidoVentana.wav");

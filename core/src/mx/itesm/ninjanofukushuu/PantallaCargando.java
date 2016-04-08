@@ -165,6 +165,7 @@ public class PantallaCargando implements Screen
                     assetManager.load("seleccionNivel/galeriaWater.png",Texture.class);
                     assetManager.load("seleccionNivel/galeriaWaterLock.png",Texture.class);
 
+                    assetManager.load("Play.png",Texture.class);
                     assetManager.load("return.png",Texture.class);
                     assetManager.load("sonidoVentana.wav", Sound.class);
                     assetManager.load("bloqueado.wav",Sound.class);
