@@ -69,6 +69,7 @@ public class PantallaJuego implements Screen{
     //Enemigos
     private ArrayList<ObjetosJuego> enemigoN1;
     private Texture texturaEN1;
+    private ArrayList<ObjetosJuego> enemigoN2;
 
     //Templo
     private ArrayList<ObjetosJuego> templos; //son en total 3 templos
@@ -107,7 +108,7 @@ public class PantallaJuego implements Screen{
 
     //Variable para indicar si numero de nivel y hacer el cambio en el numero de vidas, ya que hataku tiene su armadura completa en el nivel 4 y las vidas deben aumentar a 5, esta variable es nuestra bandera...
     private boolean flag = false;
-    private int numeroNivel = 1 ; //nivel 1 tierra, nivel 2 agua, nivel 3 fuego
+    private int numeroNivel ;
     private int ataqueFlag;
 
 
@@ -116,8 +117,9 @@ public class PantallaJuego implements Screen{
     /*//Estado para la suma del marcador
     private Estado estado;*/
 
-    public PantallaJuego(Principal plataforma) {
+    public PantallaJuego(Principal plataforma,int nivel) {
         this.plataforma = plataforma;
+        numeroNivel=nivel;
     }
 
     @Override
@@ -146,13 +148,14 @@ public class PantallaJuego implements Screen{
 
     //los recursos se cargan en la pantallaCargando
 
-    private void crearObjetos(){
+    private void crearObjetos() {
         AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
-        // Carga el mapa en memoria
-        mapa = assetManager.get("seleccionNivel/recursosNivelTierra/MapaDeTierraV2.tmx");
+        if (this.numeroNivel == 1){ //en el nivel tierra{
+            // Carga el mapa en memoria
+            mapa = assetManager.get("seleccionNivel/recursosNivelTierra/MapaDeTierraV2.tmx");
         //mapa.getLayers().get(0).setVisible(false);
         // Crear el objeto que dibujará el mapa
-        rendererMapa = new OrthogonalTiledMapRenderer(mapa,batch);
+        rendererMapa = new OrthogonalTiledMapRenderer(mapa, batch);
         rendererMapa.setView(camara);
         // Cargar frames
         //texturaHataku = assetManager.get("seleccionNivel/recursosNivelTierra/marioSprite.png");
@@ -160,8 +163,8 @@ public class PantallaJuego implements Screen{
         // Crear el personaje
         hataku = new Personaje(texturaHataku);
         // Posición inicial del personaje
-        if(this.numeroNivel == 1) //en el nivel tierra
-            hataku.getSprite().setPosition(50, 100);
+        if (this.numeroNivel == 1) //en el nivel tierra
+            hataku.getSprite().setPosition(30, 100);
 
         //Textura fondo
         this.texturaFondo = assetManager.get("seleccionNivel/recursosNivelTierra/fondoTierra.jpg");
@@ -170,8 +173,8 @@ public class PantallaJuego implements Screen{
         //Textura Objetos que estan en la pantalla
         this.texturaScroll = assetManager.get("seleccionNivel/items/scroll.png");
         this.texturaPocion = assetManager.get("seleccionNivel/items/pocion.png");
-        this.texturaEN1=assetManager.get("seleccionNivel/recursosNivelTierra/TierraE.png");
-        this.texturaAtaque=assetManager.get("seleccionNivel/items/llama1.png");
+        this.texturaEN1 = assetManager.get("seleccionNivel/recursosNivelTierra/TierraE.png");
+        this.texturaAtaque = assetManager.get("seleccionNivel/items/llama1.png");
         this.texturaTemplo = assetManager.get("seleccionNivel/recursosNivelTierra/temploVerde.png");
 
         //****************************************************************//
@@ -188,66 +191,61 @@ public class PantallaJuego implements Screen{
         this.efectoPuertaTemplo = assetManager.get("seleccionNivel/sonidosGameplay/puertaTemplo.wav");
 
 
-
-
-
         // Crear los botones
         texturaBtnIzquierda = assetManager.get("seleccionNivel/botonesFlechas/izquierdaImagenes.png");
         btnIzquierda = new Boton(texturaBtnIzquierda);
         btnIzquierda.setPosicion(TAM_CELDA * 2, TAM_CELDA / 5);
         btnIzquierda.setAlfa(0.7f); // Un poco de transparencia
-        btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON , PantallaJuego.TAMANIO_BOTON);
+        btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON);
 
         texturaBtnDerecha = assetManager.get("seleccionNivel/botonesFlechas/derechaImagenes.png");
         btnDerecha = new Boton(texturaBtnDerecha);
         btnDerecha.setPosicion(TAM_CELDA * 8, TAM_CELDA / 5);
         btnDerecha.setAlfa(0.7f); // Un poco de transparencia
-        btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON );
+        btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON);
 
-        texturaSalto =  assetManager.get("seleccionNivel/botonesFlechas/salto.png"); //boton para saltar... carga su imagen
+        texturaSalto = assetManager.get("seleccionNivel/botonesFlechas/salto.png"); //boton para saltar... carga su imagen
         btnSalto = new Boton(texturaSalto);
-        btnSalto.setPosicion(Principal.ANCHO_CAMARA -6* TAM_CELDA, 100 + TAM_CELDA);
+        btnSalto.setPosicion(Principal.ANCHO_CAMARA - 6 * TAM_CELDA, 100 + TAM_CELDA);
         btnSalto.setAlfa(0.7f);
-        btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON );
-
-
+        btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON);
 
 
         //Se crean objetos que son textos que se muestran en el HUD.
-        this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_CAMARA+30, Principal.ALTO_CAMARA * 0.96f);
-        this.textoMarcadorPergaminos= new Texto(50+0.70f * Principal.ANCHO_CAMARA+26, Principal.ALTO_CAMARA * 0.96f); //mandamos la posicion que queremos por default.
+        this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_CAMARA + 30, Principal.ALTO_CAMARA * 0.96f);
+        this.textoMarcadorPergaminos = new Texto(50 + 0.70f * Principal.ANCHO_CAMARA + 26, Principal.ALTO_CAMARA * 0.96f); //mandamos la posicion que queremos por default.
 
 
         //Lista scrolles: en todos los niveles solo hay 3 scroll
         this.scroll = new ArrayList<ObjetosJuego>(3);
-        for (int i = 0; i<3;i++) {
+        for (int i = 0; i < 3; i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaScroll);
-            nuevo.setTamanio(12,35);
+            nuevo.setTamanio(12, 35);
             this.scroll.add(nuevo);
         }
 
         //Posiciones pergamino nivel tierra
-        this.scroll.get(0).setPosicion(50,340); //pergamino de en medio...
-        this.scroll.get(1).setPosicion(745, 32 ); //pergamino de hasta abajo
+        this.scroll.get(0).setPosicion(50, 340); //pergamino de en medio...
+        this.scroll.get(1).setPosicion(745, 32); //pergamino de hasta abajo
         this.scroll.get(2).setPosicion(627, 76); //pergamino que está en precipicio
 
         //Pociones: En todos los niveles solo hay 2 pociones.
         this.pociones = new ArrayList<ObjetosJuego>(2);
-        for(int i =0; i< 2;i++) {
+        for (int i = 0; i < 2; i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaPocion);
-            nuevo.setTamanio(30,40);
+            nuevo.setTamanio(30, 40);
             this.pociones.add(nuevo);
         }
 
         //Se colocan las pociones en el lugar correspondiente,
-        this.pociones.get(0).setPosicion(940, Principal.ALTO_MUNDO / 2 -40);
+        this.pociones.get(0).setPosicion(940, Principal.ALTO_MUNDO / 2 - 40);
         this.pociones.get(1).setPosicion(255, 270);
 
         //Enemigos: 5 enemigos en el primer nivel
-        this.enemigoN1= new ArrayList<ObjetosJuego>(5);
-        for(int i =0; i< 5;i++) {
+        this.enemigoN1 = new ArrayList<ObjetosJuego>(5);
+        for (int i = 0; i < 5; i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaEN1);
-            nuevo.setTamanio(60,90);
+            nuevo.setTamanio(60, 90);
             this.enemigoN1.add(nuevo);
         }
 
@@ -260,17 +258,17 @@ public class PantallaJuego implements Screen{
 
         //Colocar los ataque en su posicion
         this.ataques = new ArrayList<ObjetosJuego>(5);
-        for (ObjetosJuego enemigo: enemigoN1){
+        for (ObjetosJuego enemigo : enemigoN1) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaAtaque);
             //nuevo.setTamanio(30, 30);
             this.ataques.add(nuevo);
-            nuevo.setPosicion(enemigo.getSprite().getX()+15,enemigo.getSprite().getY()+25);
+            nuevo.setPosicion(enemigo.getSprite().getX() + 15, enemigo.getSprite().getY() + 25);
         }
 
         //Aqui se piensa poner un switch evaluando una variable de nivel,  de eso va dependar donde se va colocar el templo
         //templos, son 3.
-        this.templos= new ArrayList<ObjetosJuego>(3);
-        for(int i =0; i< 3;i++) {
+        this.templos = new ArrayList<ObjetosJuego>(3);
+        for (int i = 0; i < 3; i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaTemplo);
             nuevo.setTamanio(60, 90);
             this.templos.add(nuevo);
@@ -282,17 +280,16 @@ public class PantallaJuego implements Screen{
         //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
 
         //Vidas: El numero de vidas cambia cuando se tiene la armadura completa, por lo que. al llegar all ultimo de nivel se debe de moficiar la variable globa de vidas, aumentando la vidas del persoonaje a 5.
-        if(this.numeroNivel == 4){ //El nivel 4 es donde hataku enfrenta al jefe final, por lo que, sus vidas aumentan...
+        if (this.numeroNivel == 4) { //El nivel 4 es donde hataku enfrenta al jefe final, por lo que, sus vidas aumentan...
             this.flag = true;
-        }
-        else{
+        } else {
             this.flag = false; //no estoy en el nivel 4.
         }
 
         //Si es el nivel 4 se deben de poner 5 vidas
-        if(this.flag) {
-            this.vidas =  new ArrayList<ObjetosJuego>(5);
-            for(int i = 0; i<5; i++) {
+        if (this.flag) {
+            this.vidas = new ArrayList<ObjetosJuego>(5);
+            for (int i = 0; i < 5; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                 //nuevo.setTamanio(80,80);
                 this.vidas.add(nuevo);
@@ -305,19 +302,165 @@ public class PantallaJuego implements Screen{
             this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
             this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);*/
 
-        }
-        else{ //entonces no estoy en el nivel 4, se deben de poner 3 vidas.
-            this.vidas =  new ArrayList<ObjetosJuego>(3);
-            for(int i = 0; i<3; i++) {
+        } else { //entonces no estoy en el nivel 4, se deben de poner 3 vidas.
+            this.vidas = new ArrayList<ObjetosJuego>(3);
+            for (int i = 0; i < 3; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                 //nuevo.setTamanio(70,70); //Irvin ya ajusto el tamaño de las vidas en photoshop..
                 this.vidas.add(nuevo);
             }
-            this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX()+95,this.textoMarcadorVidas.getY()-45);
-            this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX()+165,this.textoMarcadorVidas.getY()-45);
-            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX()+235,this.textoMarcadorVidas.getY()-45);
+            this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX() + 95, this.textoMarcadorVidas.getY() - 45);
+            this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX() + 165, this.textoMarcadorVidas.getY() - 45);
+            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX() + 235, this.textoMarcadorVidas.getY() - 45);
         }
+        }
+        else if (this.numeroNivel == 2){
+            // Carga el mapa en memoria
+            mapa = assetManager.get("seleccionNivel/recursosNivelAgua/MapaDeAgua.tmx");
+            //mapa.getLayers().get(0).setVisible(false);
+            // Crear el objeto que dibujará el mapa
+            rendererMapa = new OrthogonalTiledMapRenderer(mapa, batch);
+            rendererMapa.setView(camara);
+            // Cargar frames
+            texturaHataku = assetManager.get("seleccionNivel/recursosNivelAgua/ninjita.png");
+            // Crear el personaje
+            hataku = new Personaje(texturaHataku);
+            // Posición inicial del personaje
+            hataku.getSprite().setPosition(20, 20);
 
+            //Textura fondo
+            //this.texturaFondo = assetManager.get("seleccionNivel/recursosNivelTierra/fondoTierra.jpg");
+            //fondo = new Fondo(texturaFondo);
+
+            //Textura Objetos que estan en la pantalla
+            this.texturaScroll = assetManager.get("seleccionNivel/items/scroll.png");
+            this.texturaPocion = assetManager.get("seleccionNivel/items/pocion.png");
+            this.texturaEN1 = assetManager.get("seleccionNivel/recursosNivelAgua/AguaE.png");
+            this.texturaAtaque = assetManager.get("seleccionNivel/items/ataque2.png");
+            this.texturaTemplo = assetManager.get("seleccionNivel/recursosNivelAgua/temploAzul.png");
+
+            //****************************************************************//
+            //nota: se debe cosniderar que la imagen de vidas va cambiar cuando el ninja obtenga una parte de la armadura, recomiendo usar un switch y usar una bandera (boolean) cuando se pase el nivel y deppendiendo de la bandera cargar el archivo de imagenn correspondiente
+            //Por ahora no lo implemento ya que estamos trabajando en el primer nivel.
+            this.texturaVidas = assetManager.get("seleccionNivel/recursosNivelAgua/life2.png");
+
+
+            //Musica y efectos se obtienen y se ajusta el volumen
+            this.efectoSaltoHataku = assetManager.get("seleccionNivel/sonidosGameplay/efectoSaltoHataku.wav");
+            this.efectoTomarVida = assetManager.get("seleccionNivel/sonidosGameplay/efectoVida.wav");
+            this.efectoTomarPergamino = assetManager.get("seleccionNivel/sonidosGameplay/efectoPergamino.wav");
+            this.efectoDanio = assetManager.get("seleccionNivel/sonidosGameplay/efectoDanio.wav");
+            this.efectoPuertaTemplo = assetManager.get("seleccionNivel/sonidosGameplay/puertaTemplo.wav");
+
+
+            // Crear los botones
+            texturaBtnIzquierda = assetManager.get("seleccionNivel/botonesFlechas/izquierdaImagenes.png");
+            btnIzquierda = new Boton(texturaBtnIzquierda);
+            btnIzquierda.setPosicion(TAM_CELDA * 2, TAM_CELDA / 5);
+            btnIzquierda.setAlfa(0.7f); // Un poco de transparencia
+            btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON);
+
+            texturaBtnDerecha = assetManager.get("seleccionNivel/botonesFlechas/derechaImagenes.png");
+            btnDerecha = new Boton(texturaBtnDerecha);
+            btnDerecha.setPosicion(TAM_CELDA * 8, TAM_CELDA / 5);
+            btnDerecha.setAlfa(0.7f); // Un poco de transparencia
+            btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON);
+
+            texturaSalto = assetManager.get("seleccionNivel/botonesFlechas/salto.png"); //boton para saltar... carga su imagen
+            btnSalto = new Boton(texturaSalto);
+            btnSalto.setPosicion(Principal.ANCHO_CAMARA - 6 * TAM_CELDA, 100 + TAM_CELDA);
+            btnSalto.setAlfa(0.7f);
+            btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON);
+
+
+            //Se crean objetos que son textos que se muestran en el HUD.
+            this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_CAMARA + 30, Principal.ALTO_CAMARA * 0.96f);
+            this.textoMarcadorPergaminos = new Texto(50 + 0.70f * Principal.ANCHO_CAMARA + 26, Principal.ALTO_CAMARA * 0.96f); //mandamos la posicion que queremos por default.
+
+
+            //Lista scrolles: en todos los niveles solo hay 3 scroll
+            this.scroll = new ArrayList<ObjetosJuego>(3);
+            for (int i = 0; i < 3; i++) {
+                ObjetosJuego nuevo = new ObjetosJuego(this.texturaScroll);
+                nuevo.setTamanio(12, 35);
+                this.scroll.add(nuevo);
+            }
+
+            //Posiciones pergamino nivel agua
+            this.scroll.get(0).setPosicion(20, 1040); //pergamino derecha arriba.
+            this.scroll.get(1).setPosicion(680, 1230); //pergamino de hasta arriba izquierda
+            this.scroll.get(2).setPosicion(680, 76); //pergamino abajo
+
+            //Pociones: En todos los niveles solo hay 2 pociones.
+            this.pociones = new ArrayList<ObjetosJuego>(2);
+            for (int i = 0; i < 2; i++) {
+                ObjetosJuego nuevo = new ObjetosJuego(this.texturaPocion);
+                nuevo.setTamanio(30, 40);
+                this.pociones.add(nuevo);
+            }
+
+            //Se colocan las pociones en el lugar correspondiente,
+            this.pociones.get(0).setPosicion(400, 630);
+            this.pociones.get(1).setPosicion(400, 990);
+
+            //Enemigos: 4 enemigos en el segundo nivel
+            this.enemigoN1 = new ArrayList<ObjetosJuego>(4);
+            for (int i = 0; i < 4; i++) {
+                ObjetosJuego nuevo = new ObjetosJuego(this.texturaEN1);
+                nuevo.setTamanio(60, 90);
+                this.enemigoN1.add(nuevo);
+            }
+
+            //Se colocan los enemigos en su lugar correspondiente, en el nivel de Agua
+            this.enemigoN1.get(0).setPosicion(20, 565); //centro izquierda
+            this.enemigoN1.get(1).setPosicion(560, 678);  //centro derecha
+            this.enemigoN1.get(2).setPosicion(530, 805); //plataforma derecha
+            this.enemigoN1.get(3).setPosicion(290, 805); //Plataforma Izquierda
+
+            //Enemigos especiales
+            this.enemigoN2 = new ArrayList<ObjetosJuego>(4);
+            for (int i = 0; i < 4; i++) {
+                ObjetosJuego nuevo = new ObjetosJuego(texturaEN1);
+                nuevo.setTamanio(60,90);
+                this.enemigoN2.add(nuevo);
+            }
+
+            this.enemigoN2.get(0).setPosicion(330,165);
+            this.enemigoN2.get(1).setPosicion(590,965);
+            this.enemigoN2.get(2).setPosicion(180,965);
+            this.enemigoN2.get(3).setPosicion(380,1126);
+
+            //Colocar los ataque en su posicion
+            this.ataques = new ArrayList<ObjetosJuego>(5);
+            for (ObjetosJuego enemigo : enemigoN1) {
+                ObjetosJuego nuevo = new ObjetosJuego(this.texturaAtaque);
+                nuevo.setTamanio(30, 30);
+                this.ataques.add(nuevo);
+                nuevo.setPosicion(enemigo.getSprite().getX() + 15, enemigo.getSprite().getY() + 25);
+            }
+
+            //Aqui se piensa poner un switch evaluando una variable de nivel,  de eso va dependar donde se va colocar el templo
+            //templos, son 3.
+            this.templos = new ArrayList<ObjetosJuego>(3);
+            for (int i = 0; i < 3; i++) {
+                ObjetosJuego nuevo = new ObjetosJuego(this.texturaTemplo);
+                nuevo.setTamanio(60, 90);
+                this.templos.add(nuevo);
+            }
+
+            this.templos.get(0).setPosicion(55, 1210); //temploAgua
+
+            this.vidas = new ArrayList<ObjetosJuego>(3);
+            for (int i = 0; i < 3; i++) {
+                ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
+                nuevo.setTamanio(70,70); //Irvin ya ajusto el tamaño de las vidas en photoshop..
+                this.vidas.add(nuevo);
+            }
+            this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX() + 95, this.textoMarcadorVidas.getY() - 45);
+            this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX() + 165, this.textoMarcadorVidas.getY() - 45);
+            this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX() + 235, this.textoMarcadorVidas.getY() - 45);
+
+            }
     }
 
     /*
@@ -330,8 +473,12 @@ public class PantallaJuego implements Screen{
         //Gdx.app.log("",hataku.getY()+"");
         // Actualizar objetos en la pantalla
         moverPersonaje();
-        actualizarCamara(); // Mover la cámara para que siga al personaje
-
+        if(numeroNivel==2){
+            actualizarCamaraAgua();
+        }
+        else{
+            actualizarCamara(); // Mover la cámara para que siga al personaje
+        }
         // Dibujar
         borrarPantalla();
 
@@ -357,7 +504,7 @@ public class PantallaJuego implements Screen{
             //DIBUJAR OBJETOS COMPONENTES DEL JUEGO
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        fondo.render(batch);
+        //fondo.render(batch);
         batch.end();
         rendererMapa.setView(camara);
         rendererMapa.render();  // Dibuja el mapa
@@ -380,6 +527,12 @@ public class PantallaJuego implements Screen{
         for (ObjetosJuego Enemigo : enemigoN1) {
             if (Enemigo.actualizar())
                 Enemigo.render(batch);
+        }
+        if(numeroNivel>1){
+            for(ObjetosJuego enemigo:enemigoN2){
+                if(enemigo.actualizar())
+                    enemigo.render(batch);
+            }
         }
         ataqueFlag=0;
         //Dibujar ataques
@@ -414,6 +567,27 @@ public class PantallaJuego implements Screen{
 
         batch.end();
 
+    }
+
+    private void actualizarCamaraAgua() {
+        float posX = hataku.getX();
+        float posY = hataku.getY();
+        // Si está en la parte 'media'
+        if (posX>=Principal.ANCHO_CAMARA/2 && posX<=Principal.ALTO_MUNDO-Principal.ANCHO_CAMARA/2) {
+            // El personaje define el centro de la cámara
+            camara.position.set((int)posX, camara.position.y, 0);
+        } else if (posX>Principal.ALTO_MUNDO-Principal.ANCHO_CAMARA/2) {    // Si está en la última mitad
+            // La cámara se queda media pantalla antes del fin del mundo  :)
+            camara.position.set(Principal.ALTO_MUNDO-Principal.ANCHO_CAMARA/2, camara.position.y, 0);
+        }
+        if (posY>=Principal.ALTO_CAMARA/2 && posY<= ANCHO_MAPA-Principal.ALTO_CAMARA/2) {
+            // El personaje define el centro de la cámara
+            camara.position.set(camara.position.x, (int)posY, 0);
+        } else if (posY>=ANCHO_MAPA-Principal.ALTO_CAMARA/2) {    // Si está en la última mitad
+            // La cámara se queda media pantalla antes del fin del mundo  :)
+            camara.position.set(camara.position.x, ANCHO_MAPA-Principal.ALTO_CAMARA/2, 0);
+        }
+        camara.update();
     }
 
     private void controlarPersonajeConTeclado() {

@@ -349,25 +349,25 @@ public class PantallaImagen implements Screen {
                                 }
                                 break;
                             case 5: //historia de nivel de agua
-                                /*switch(numeroImagen){
+                                switch(numeroImagen){
                                     case 1:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/arteMenu1.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua1.png");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 2:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/hatakuArte.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua2.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 3:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/mapaArte1.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua3.png");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 4:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/mapaArte2.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua4.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     default:break;
-                                }*/
+                                }
                                 break;
                             case 6: //historia de nivel de fuego
                                 /*switch(numeroImagen){
@@ -528,25 +528,29 @@ public class PantallaImagen implements Screen {
                                 }
                                 break;
                             case 5: //historia de nivel de agua
-                                /*switch(numeroImagen){
+                                switch(numeroImagen){
                                     case 1:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/arteMenu1.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua1.png");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 2:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/hatakuArte.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua2.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 3:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/mapaArte1.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua3.png");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 4:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/mapaArte2.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua4.jpg");
+                                        imagen.cambiarFondo(texturaImagen);
+                                        break;
+                                    case 5:
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua5.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     default:break;
-                                }*/
+                                }
                                 break;
                             case 6: //historia de nivel de fuego
                                 /*switch(numeroImagen){
@@ -590,8 +594,12 @@ public class PantallaImagen implements Screen {
                 if(indicadorImagenes<4)//es el boton return entonces...
                     principal.setScreen(new PantallaGaleria(principal,PantallaCargando.banderaArteTierra,PantallaCargando.banderaArteAgua,PantallaCargando.banderaArteFuego));// regresas a la galeria...
 
-                else //es el boton play
-                    principal.setScreen(new PantallaJuego(principal)); //nivel de tierra..
+                else if(indicadorImagenes==4) {
+                    principal.setScreen(new PantallaJuego(principal,1)); //nivel de tierra..
+                }
+                else if(indicadorImagenes==5){
+                    principal.setScreen(new PantallaJuego(principal,2)); //nivel de agua..
+                }
             }
 
             else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
