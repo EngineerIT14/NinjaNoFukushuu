@@ -639,8 +639,9 @@ public class PantallaJuego implements Screen{
             this.efectoPuertaTemplo.play(PantallaMenu.volumen);
             PantallaCargando.partidaGuardada.putBoolean("nivelAgua", true); //se guarda el progreso y se desbloquea el nivel de agua...
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
-            //en este caso, como aun no hay otra pantalla, nos regresa al menu principal...
-            plataforma.setScreen(new PantallaCargando(0, plataforma, true));
+
+            //Se va regresar a seleccion de nivel
+            plataforma.setScreen(new PantallaCargando(1, plataforma, true));
 
         }
 
@@ -1018,18 +1019,17 @@ public class PantallaJuego implements Screen{
                     btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se rgresa a posicion original
                     banderaBotonDerecha = false;
                 }
-                if(banderaBotonIzquierda) {
+                else if(banderaBotonIzquierda) {
                     btnIzquierda.setAlfa(.7f);
                     btnIzquierda.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se regresa a posicion original
                     banderaBotonIzquierda = false;
                 }
 
-                if (banderaBotonSaltar) {
+                else if (banderaBotonSaltar) {
                     btnSalto.setAlfa(.7f);
                     btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se regresa a posicion orignal
-                    banderaBotonDerecha = false;
+                    banderaBotonSaltar = false;
                 }
-
 
             }
 
@@ -1037,7 +1037,7 @@ public class PantallaJuego implements Screen{
                 if (banderaBotonSaltar) {
                     btnSalto.setAlfa(.7f);
                     btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se regresa a posicion orignal
-                    banderaBotonDerecha = false;
+                    banderaBotonSaltar = false;
                 }
             }
             return true;    // Indica que ya procesó el evento
@@ -1055,7 +1055,7 @@ public class PantallaJuego implements Screen{
                     if(banderaBotonDerecha) {
                         btnDerecha.setAlfa(.7f);
                         btnDerecha.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se rgresa a posicion original
-                        banderaBotonSaltar = false;
+                        banderaBotonDerecha = false;
                     }
                     if(banderaBotonIzquierda) {
                         btnIzquierda.setAlfa(.7f);
@@ -1063,7 +1063,6 @@ public class PantallaJuego implements Screen{
                         banderaBotonIzquierda = false;
                     }
                 }
-
             }
             else {
                 if (!btnSalto.contiene(x,y)){
@@ -1074,7 +1073,6 @@ public class PantallaJuego implements Screen{
                     }
                 }
             }
-
             return true;
         }
 
@@ -1102,12 +1100,13 @@ public class PantallaJuego implements Screen{
     // Libera los assets
     @Override
     public void dispose() {
+
         this.plataforma.dispose();
         this.batch.dispose();
         this.mapa.dispose();
         this.texturaFondo.dispose();
-
         this.rendererMapa.dispose();
+
         //texturas
         this.texturaHataku.dispose();
         this.texturaBtnDerecha.dispose();
@@ -1127,8 +1126,6 @@ public class PantallaJuego implements Screen{
         this.efectoTomarPergamino.dispose();
         this.efectoDanio.dispose();
         this.efectoPuertaTemplo.dispose();
-
-
     }
 
 
