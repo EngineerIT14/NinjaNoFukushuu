@@ -448,7 +448,7 @@ public class PantallaJuego implements Screen{
                 this.templos.add(nuevo);
             }
 
-            this.templos.get(0).setPosicion(55, 1210); //temploAgua
+            this.templos.get(0).setPosicion(20, 1160); //temploAgua
 
             this.vidas = new ArrayList<ObjetosJuego>(3);
             for (int i = 0; i < 3; i++) {
