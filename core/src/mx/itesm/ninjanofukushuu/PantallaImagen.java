@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 /*
  PantallaImagen
- Autor: Irvin Emmanuel Trujillo Díaz
+ Autor: Irvin Emmanuel Trujillo Díaz, Luis Fernando, Javier García
  Descripcion: Pantalla que muestra imagenes, botones para mover las imagenes y un boton accion(regresar o jugar, dependiendo de donde se encuentre el usuario) ...
  Profesor: Roberto Martinez Román
  */
@@ -128,9 +128,8 @@ public class PantallaImagen implements Screen {
                 this.texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua1.png");
                 break;
             case 6:
-                this.texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaFuego1.png");
+                this.texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego1.png");
                 break; //primer imagen de la historia de nivel del fuego
-
         }
 
 
@@ -268,29 +267,30 @@ public class PantallaImagen implements Screen {
                        switch(indicadorImagenes) {
                            case 1: //galeria de arte nivel tierra
 
-                           switch (numeroImagen) {
-                               case 1:
-                                   texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/arteMenu1.png");
-                                   imagen.cambiarFondo(texturaImagen);
-                                   break;
-                               case 2:
-                                   texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/hatakuArte.png");
-                                   imagen.cambiarFondo(texturaImagen);
-                                   break;
-                               case 3:
-                                   texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/mapaArte1.png");
-                                   imagen.cambiarFondo(texturaImagen);
-                                   break;
-                               case 4:
-                                   texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/mapaArte2.png");
-                                   imagen.cambiarFondo(texturaImagen);
-                                   break;
-                               case 5:
-                                   texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/samuraiArte.png");
-                                   imagen.cambiarFondo(texturaImagen);
-                                   break;
-                               default:break;
-                           }
+                               switch (numeroImagen) {
+                                   case 1:
+                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/arteMenu1.png");
+                                       imagen.cambiarFondo(texturaImagen);
+                                       break;
+                                   case 2:
+                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/hatakuArte.png");
+                                       imagen.cambiarFondo(texturaImagen);
+                                       break;
+                                   case 3:
+                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/mapaArte1.png");
+                                       imagen.cambiarFondo(texturaImagen);
+                                       break;
+                                   case 4:
+                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/mapaArte2.png");
+                                       imagen.cambiarFondo(texturaImagen);
+                                       break;
+                                   case 5:
+                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/samuraiArte.png");
+                                       imagen.cambiarFondo(texturaImagen);
+                                       break;
+                                   default:
+                                       break;
+                               }
                                break;
 
                            case 2: // galeria de arte nivel de agua
@@ -315,10 +315,35 @@ public class PantallaImagen implements Screen {
                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/vidaArte2Color.png");
                                        imagen.cambiarFondo(texturaImagen);
                                        break;
-                                   default:break;
+                                   default:
+                                       break;
                                }
                                break;
                            case 3: //galeria de arte nivel del fuego
+                               switch (numeroImagen) {
+                                   case 1:
+                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/arteMenu2.jpg");
+                                       imagen.cambiarFondo(texturaImagen);
+                                       break;
+                                   case 2:
+                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/arteMenu3.png");
+                                       imagen.cambiarFondo(texturaImagen);
+                                       break;
+                                   case 3:
+                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/pocionArte.png");
+                                       imagen.cambiarFondo(texturaImagen);
+                                       break;
+                                   case 4:
+                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/vidaArte2.png");
+                                       imagen.cambiarFondo(texturaImagen);
+                                       break;
+                                   case 5:
+                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/vidaArte2Color.png");
+                                       imagen.cambiarFondo(texturaImagen);
+                                       break;
+                                   default:
+                                       break;
+                               }
                                break;
                            default:break;
                        }
@@ -370,25 +395,25 @@ public class PantallaImagen implements Screen {
                                 }
                                 break;
                             case 6: //historia de nivel de fuego
-                                /*switch(numeroImagen){
+                                switch(numeroImagen){
                                     case 1:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/arteMenu1.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego1.png");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 2:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/hatakuArte.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego2.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 3:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/mapaArte1.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego3.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 4:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/mapaArte2.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego4.png");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     default:break;
-                                }*/
+                                }
                                 break;
                             default:break;
                         }
@@ -493,6 +518,33 @@ public class PantallaImagen implements Screen {
                                 }
                                 break;
                             case 3: //galeria de arte nivel del fuego
+                                switch (numeroImagen) {
+                                    case 1:
+                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/arteMenu2.jpg");
+                                        imagen.cambiarFondo(texturaImagen);
+                                        break;
+                                    case 2:
+                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/arteMenu3.png");
+                                        imagen.cambiarFondo(texturaImagen);
+                                        break;
+                                    case 3:
+                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/pocionArte.png");
+                                        imagen.cambiarFondo(texturaImagen);
+                                        break;
+                                    case 4:
+                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/vidaArte2.png");
+                                        imagen.cambiarFondo(texturaImagen);
+                                        break;
+                                    case 5:
+                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/vidaArte2Color.png");
+                                        imagen.cambiarFondo(texturaImagen);
+                                        break;
+                                    /*case 6:
+                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/vidaArte.png");
+                                        imagen.cambiarFondo(texturaImagen);
+                                        break;*/
+                                    default:break;
+                                }
                                 break;
                             default:break;
                         }
@@ -553,25 +605,29 @@ public class PantallaImagen implements Screen {
                                 }
                                 break;
                             case 6: //historia de nivel de fuego
-                                /*switch(numeroImagen){
+                                switch(numeroImagen){
                                     case 1:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/arteMenu1.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego1.png");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 2:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/hatakuArte.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego2.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 3:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/mapaArte1.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego3.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 4:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/mapaArte2.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego4.png");
+                                        imagen.cambiarFondo(texturaImagen);
+                                        break;
+                                    case 5:
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego5.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     default:break;
-                                }*/
+                                }
                                 break;
                             default:break;
                         }
@@ -579,9 +635,6 @@ public class PantallaImagen implements Screen {
                 }
 
             }
-
-
-
 
             else if (btnAccion.contiene(x,y) && this.banderaBotonAccion){
 

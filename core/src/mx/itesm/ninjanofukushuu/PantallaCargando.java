@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  * Descripción: Pantala intermedia entre el menú y el juego
  * Profesor: Roberto Martinez Román
- * Autores: Irvin Emmanuel Trujillo Díaz
+ * Autores: Irvin Emmanuel Trujillo Díaz, Luis Fernando, Javier García
  */
 public class PantallaCargando implements Screen
 {
@@ -323,6 +323,48 @@ public class PantallaCargando implements Screen
                 assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua5.jpg",Texture.class);
 
                 break;
+            case 7:
+                // se cargan recursos del juego..
+                //nivel Fuego
+                assetManager.load("seleccionNivel/recursosNivelAgua/MapaDeAgua.tmx", TiledMap.class);  // Cargar info del mapa
+                //assetManager.load("seleccionNivel/recursosNivelTierra/marioSprite.png", Texture.class);    // Cargar imagen
+                assetManager.load("seleccionNivel/recursosNivelFuego/ninjaS.png", Texture.class);    // Cargar imagen
+                //assetManager.load("seleccionNivel/recursosNivelAgua/fondoAgua.jpg",Texture.class); //Fondo del mapa
+                // Texturas de los botones tanto para el gampeplay como para mover las imagenes al ver la historia..
+
+                assetManager.load("seleccionNivel/botonesFlechas/salto.png", Texture.class);
+
+                //botones para mover imagenes y personaje..
+                assetManager.load("seleccionNivel/botonesFlechas/derechaImagenes.png",Texture.class);
+                assetManager.load("seleccionNivel/botonesFlechas/izquierdaImagenes.png",Texture.class);
+
+                //Textura objetos
+                assetManager.load("seleccionNivel/items/scroll.png", Texture.class);
+                assetManager.load("seleccionNivel/items/pocion.png", Texture.class);
+                assetManager.load("seleccionNivel/items/ataque3.png", Texture.class);
+
+                //Textura enemigo
+                assetManager.load("seleccionNivel/recursosNivelFuego/Enemigo3.png", Texture.class);
+                //Textura templo
+                assetManager.load("seleccionNivel/recursosNivelFuego/temploRojo.png", Texture.class);
+                //caritaVida
+                assetManager.load("seleccionNivel/recursosNivelFuego/lifeFuego.png", Texture.class);
+                //sonidos
+                assetManager.load("seleccionNivel/sonidosGameplay/efectoSaltoHataku.wav",Sound.class);
+                assetManager.load("seleccionNivel/sonidosGameplay/efectoVida.wav",Sound.class);
+                assetManager.load("seleccionNivel/sonidosGameplay/efectoPergamino.wav",Sound.class);
+                assetManager.load("seleccionNivel/sonidosGameplay/efectoDanio.wav",Sound.class);
+                assetManager.load("seleccionNivel/sonidosGameplay/puertaTemplo.wav",Sound.class);
+
+                //se cargan los recursos para mostrar la historia...
+                assetManager.load("botonPlay.png", Texture.class); // boton play...
+                //son 5 imagenes para explicar la historia...
+                assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego1.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego2.jpg",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego3.jpg",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego4.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego5.jpg",Texture.class);
+                break;
             default: break;
         }
     }
@@ -378,6 +420,9 @@ public class PantallaCargando implements Screen
                     break;
                 case 6:
                     plataforma.setScreen(new PantallaImagen(this.plataforma,5)); //nivel de agua... se  va a mostrar las imagenes de la historia..
+                    break;
+                case 7:
+                    plataforma.setScreen(new PantallaImagen(this.plataforma,6)); //nivel de agua... se  va a mostrar las imagenes de la historia..
                     break;
                 default:
                     plataforma.setScreen(new PantallaMenu(this.plataforma,this.banderaMusicaFondo));
