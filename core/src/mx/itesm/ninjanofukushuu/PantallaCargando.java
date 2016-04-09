@@ -326,7 +326,7 @@ public class PantallaCargando implements Screen
             case 7:
                 // se cargan recursos del juego..
                 //nivel Fuego
-                assetManager.load("seleccionNivel/recursosNivelAgua/MapaDeAgua.tmx", TiledMap.class);  // Cargar info del mapa
+                assetManager.load("seleccionNivel/recursosNivelFuego/mapaDeFuego.tmx", TiledMap.class);  // Cargar info del mapa
                 //assetManager.load("seleccionNivel/recursosNivelTierra/marioSprite.png", Texture.class);    // Cargar imagen
                 assetManager.load("seleccionNivel/recursosNivelFuego/ninjaS.png", Texture.class);    // Cargar imagen
                 //assetManager.load("seleccionNivel/recursosNivelAgua/fondoAgua.jpg",Texture.class); //Fondo del mapa
