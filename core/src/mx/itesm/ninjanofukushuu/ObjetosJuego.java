@@ -20,6 +20,7 @@ public class ObjetosJuego {
     private float maxTiempoOculto; //MAX (aleatorio)
     private int distancia;
     private float alto,ancho;
+    private EstadoEsp estadoEspecial;
 
     public ObjetosJuego(Texture textura){
         sprite = new Sprite(textura);
@@ -30,6 +31,7 @@ public class ObjetosJuego {
         distancia = 150;
         alto=30;
         ancho=30;
+        estadoEspecial =EstadoEsp.DERECHA_ESP;
     }
     //Render
     public void render(SpriteBatch batch){
@@ -110,6 +112,29 @@ public class ObjetosJuego {
 
         }
     }
+
+    //Movimiento enemigos especiales
+    public void actualizarMov(){
+        switch (estadoEspecial){
+            case DERECHA_ESP:
+                if (estadoEspecial==estadoEspecial.DERECHA_ESP) {
+                    if (!sprite.isFlipX()) { //se voltea el ataque..
+                        sprite.flip(true, false);
+                    }
+                }
+                sprite.setPosition(sprite.getX()+1,sprite.getY());
+                break;
+            case IZQUIERDA_ESP:
+                if (estadoEspecial==estadoEspecial.IZQUIERDA_ESP){
+                    if (sprite.isFlipX()) { // se voltea el ataqye
+                        sprite.flip(true,false);
+                    }
+                }
+                sprite.setPosition(sprite.getX()-1,sprite.getY());
+                break;
+
+        }
+    }
 //
     private float tiempoAzar() {
         return (float)Math.random()*2+0.3f;
@@ -132,6 +157,10 @@ public class ObjetosJuego {
         return estadoAtaque;
     }
 
+    public EstadoEsp getEstadoEspecial(){
+        return estadoEspecial;
+    }
+
     public void mandarDerecha() {
         estadoAtaque=EstadoAtaque.DERECHA;
     }
@@ -149,6 +178,15 @@ public class ObjetosJuego {
         }
     }
 
+    public void cambiarSentido() {
+        if(estadoEspecial==EstadoEsp.DERECHA_ESP){
+            estadoEspecial = EstadoEsp.IZQUIERDA_ESP;
+        }
+        else {
+            estadoEspecial = EstadoEsp.DERECHA_ESP;
+        }
+    }
+
     //Estados
     public  enum  Estado{
         ENMAPA,
@@ -159,5 +197,9 @@ public class ObjetosJuego {
         IZQUIERDA,
         OCULTO,
         DISPONIBLE
+    }
+    public enum EstadoEsp{
+        DERECHA_ESP,
+        IZQUIERDA_ESP
     }
 }

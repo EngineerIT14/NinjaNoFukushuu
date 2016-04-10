@@ -282,7 +282,7 @@ public class PantallaCargando implements Screen
                     break;
             case 6:
                 // se cargan recursos del juego..
-                //nivel tierra
+                //nivel Agua
                 assetManager.load("seleccionNivel/recursosNivelAgua/MapaDeAgua.tmx", TiledMap.class);  // Cargar info del mapa
                 //assetManager.load("seleccionNivel/recursosNivelTierra/marioSprite.png", Texture.class);    // Cargar imagen
                 assetManager.load("seleccionNivel/recursosNivelAgua/ninjita.png", Texture.class);    // Cargar imagen
