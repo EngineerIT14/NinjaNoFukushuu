@@ -612,7 +612,7 @@ public class PantallaJuego implements Screen{
 
         }
     }
-
+    //...
     /*
     Dibuja TODOS los elementos del juego en la pantalla.
     Este método se está ejecutando muchas veces por segundo.
