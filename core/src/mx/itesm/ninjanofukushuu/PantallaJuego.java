@@ -330,10 +330,11 @@ public class PantallaJuego implements Screen{
             hataku.getSprite().setPosition(20, 20);
 
             //Textura fondo
-            //this.texturaFondo = assetManager.get("seleccionNivel/recursosNivelTierra/fondoTierra.jpg");
-            //fondo = new Fondo(texturaFondo);
+            this.texturaFondo = assetManager.get("seleccionNivel/recursosNivelAgua/fondoAgua.png");
+            fondo = new Fondo(texturaFondo);
 
-            //Textura Objetos que estan en la pantalla
+
+                    //Textura Objetos que estan en la pantalla
             this.texturaScroll = assetManager.get("seleccionNivel/items/scroll.png");
             this.texturaPocion = assetManager.get("seleccionNivel/items/pocion.png");
             this.texturaEN1 = assetManager.get("seleccionNivel/recursosNivelAgua/AguaE.png");
@@ -479,8 +480,8 @@ public class PantallaJuego implements Screen{
             hataku.getSprite().setPosition(20, 20);
 
             //Textura fondo
-            //this.texturaFondo = assetManager.get("seleccionNivel/recursosNivelTierra/fondoTierra.jpg");
-            //fondo = new Fondo(texturaFondo);
+            this.texturaFondo = assetManager.get("seleccionNivel/recursosNivelFuego/fondoFuego.png");
+            fondo = new Fondo(texturaFondo);
 
             //Textura Objetos que estan en la pantalla
             this.texturaScroll = assetManager.get("seleccionNivel/items/scroll.png");
@@ -654,7 +655,7 @@ public class PantallaJuego implements Screen{
             //DIBUJAR OBJETOS COMPONENTES DEL JUEGO
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        //fondo.render(batch);
+        fondo.render(batch);
         batch.end();
         rendererMapa.setView(camara);
         rendererMapa.render();  // Dibuja el mapa
