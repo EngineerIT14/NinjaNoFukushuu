@@ -331,7 +331,7 @@ public class PantallaCargando implements Screen
                 assetManager.load("seleccionNivel/recursosNivelFuego/mapaDeFuego.tmx", TiledMap.class);  // Cargar info del mapa
                 //assetManager.load("seleccionNivel/recursosNivelTierra/marioSprite.png", Texture.class);    // Cargar imagen
                 assetManager.load("seleccionNivel/recursosNivelFuego/ninjaS.png", Texture.class);    // Cargar imagen
-                assetManager.load("seleccionNivel/recursosNivelFuego/fondoFuego.png",Texture.class); //Fondo del mapa
+                assetManager.load("seleccionNivel/recursosNivelFuego/fondofuego.png",Texture.class); //Fondo del mapa
                 // Texturas de los botones tanto para el gampeplay como para mover las imagenes al ver la historia..
 
                 assetManager.load("seleccionNivel/botonesFlechas/salto.png", Texture.class);
