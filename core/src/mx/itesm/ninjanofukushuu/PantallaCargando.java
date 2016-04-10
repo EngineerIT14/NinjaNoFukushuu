@@ -165,6 +165,8 @@ public class PantallaCargando implements Screen
                     assetManager.load("seleccionNivel/galeriaWater.png",Texture.class);
                     assetManager.load("seleccionNivel/galeriaWaterLock.png",Texture.class);
 
+                    assetManager.load("seleccionNivel/galeriaWaterLock.png",Texture.class);
+
                     assetManager.load("Play.png",Texture.class);
                     assetManager.load("return.png",Texture.class);
                     assetManager.load("sonidoVentana.wav", Sound.class);
@@ -282,11 +284,11 @@ public class PantallaCargando implements Screen
                     break;
             case 6:
                 // se cargan recursos del juego..
-                //nivel tierra
+                //nivel Agua
                 assetManager.load("seleccionNivel/recursosNivelAgua/MapaDeAgua.tmx", TiledMap.class);  // Cargar info del mapa
                 //assetManager.load("seleccionNivel/recursosNivelTierra/marioSprite.png", Texture.class);    // Cargar imagen
                 assetManager.load("seleccionNivel/recursosNivelAgua/ninjita.png", Texture.class);    // Cargar imagen
-                //assetManager.load("seleccionNivel/recursosNivelAgua/fondoAgua.jpg",Texture.class); //Fondo del mapa
+                assetManager.load("seleccionNivel/recursosNivelAgua/fondoAgua.png",Texture.class); //Fondo del mapa
                 // Texturas de los botones tanto para el gampeplay como para mover las imagenes al ver la historia..
 
                 assetManager.load("seleccionNivel/botonesFlechas/salto.png", Texture.class);
@@ -329,7 +331,7 @@ public class PantallaCargando implements Screen
                 assetManager.load("seleccionNivel/recursosNivelFuego/mapaDeFuego.tmx", TiledMap.class);  // Cargar info del mapa
                 //assetManager.load("seleccionNivel/recursosNivelTierra/marioSprite.png", Texture.class);    // Cargar imagen
                 assetManager.load("seleccionNivel/recursosNivelFuego/ninjaS.png", Texture.class);    // Cargar imagen
-                //assetManager.load("seleccionNivel/recursosNivelAgua/fondoAgua.jpg",Texture.class); //Fondo del mapa
+                assetManager.load("seleccionNivel/recursosNivelFuego/fondoFuego.png",Texture.class); //Fondo del mapa
                 // Texturas de los botones tanto para el gampeplay como para mover las imagenes al ver la historia..
 
                 assetManager.load("seleccionNivel/botonesFlechas/salto.png", Texture.class);
