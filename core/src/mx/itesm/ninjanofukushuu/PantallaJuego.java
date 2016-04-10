@@ -477,10 +477,10 @@ public class PantallaJuego implements Screen{
             // Crear el personaje
             hataku = new Personaje(texturaHataku);
             // Posición inicial del personaje
-            hataku.getSprite().setPosition(20, 20);
+            hataku.getSprite().setPosition(40, 90);
 
             //Textura fondo
-            this.texturaFondo = assetManager.get("seleccionNivel/recursosNivelFuego/fondoFuego.png");
+            this.texturaFondo = assetManager.get("seleccionNivel/recursosNivelFuego/fondofuego.png");
             fondo = new Fondo(texturaFondo);
 
             //Textura Objetos que estan en la pantalla
@@ -538,9 +538,9 @@ public class PantallaJuego implements Screen{
             }
 
             //Posiciones pergamino nivel agua
-            this.scroll.get(0).setPosicion(20, 1040); //pergamino derecha arriba.
-            this.scroll.get(1).setPosicion(680, 1230); //pergamino de hasta arriba izquierda
-            this.scroll.get(2).setPosicion(680, 76); //pergamino abajo
+            this.scroll.get(0).setPosicion(40, 350); //pergamino derecha arriba.
+            this.scroll.get(1).setPosicion(680, 900); //pergamino de hasta arriba izquierda
+            this.scroll.get(2).setPosicion(676, 350); //pergamino abajo
 
             //Pociones: En todos los niveles solo hay 2 pociones.
             this.pociones = new ArrayList<ObjetosJuego>(2);
@@ -563,23 +563,22 @@ public class PantallaJuego implements Screen{
             }
 
             //Se colocan los enemigos en su lugar correspondiente, en el nivel de Agua
-            this.enemigoN1.get(0).setPosicion(20, 565); //centro izquierda
-            this.enemigoN1.get(1).setPosicion(560, 678);  //centro derecha
-            this.enemigoN1.get(2).setPosicion(530, 805); //plataforma derecha
-            this.enemigoN1.get(3).setPosicion(290, 805); //Plataforma Izquierda
+            this.enemigoN1.get(0).setPosicion(280, 170); //centro izquierda
+            this.enemigoN1.get(1).setPosicion(560, 440);  //centro derecha
+            this.enemigoN1.get(2).setPosicion(480, 920); //plataforma derecha
+            this.enemigoN1.get(3).setPosicion(225, 760); //Plataforma Izquierda
 
             //Enemigos especiales
-            this.enemigoN3 = new ArrayList<ObjetosJuego>(4);
-            for (int i = 0; i < 4; i++) {
-                ObjetosJuego nuevo = new ObjetosJuego(texturaEN1);
+            this.enemigoN2 = new ArrayList<ObjetosJuego>(2);
+            for (int i = 0; i < 2; i++) {
+                ObjetosJuego nuevo = new ObjetosJuego(texturaAtaque);
                 nuevo.setTamanio(60,90);
-                this.enemigoN3.add(nuevo);
+                this.enemigoN2.add(nuevo);
             }
 
-            this.enemigoN3.get(0).setPosicion(330,165);
-            this.enemigoN3.get(1).setPosicion(590,965);
-            this.enemigoN3.get(2).setPosicion(180,965);
-            this.enemigoN3.get(3).setPosicion(380,1126);
+            this.enemigoN2.get(0).setPosicion(79, 200);
+            this.enemigoN2.get(1).setPosicion(79, 930);
+
 
             //Colocar los ataque en su posicion
             this.ataques = new ArrayList<ObjetosJuego>(5);
@@ -599,7 +598,7 @@ public class PantallaJuego implements Screen{
                 this.templos.add(nuevo);
             }
 
-            this.templos.get(0).setPosicion(20, 1160); //temploAgua
+            this.templos.get(0).setPosicion(20, 960); //temploFuego
 
             this.vidas = new ArrayList<ObjetosJuego>(3);
             for (int i = 0; i < 3; i++) {
@@ -626,6 +625,12 @@ public class PantallaJuego implements Screen{
         moverPersonaje();
         if(numeroNivel==2){
             actualizarCamaraAgua();
+        }
+        else{
+            actualizarCamara(); // Mover la cámara para que siga al personaje
+        }
+        if(numeroNivel==3){
+            actualizarCamaraFuego();
         }
         else{
             actualizarCamara(); // Mover la cámara para que siga al personaje
@@ -679,13 +684,14 @@ public class PantallaJuego implements Screen{
             if (Enemigo.actualizar())
                 Enemigo.render(batch);
         }
-        if(numeroNivel==2){
+        if(numeroNivel>=2){
             for(ObjetosJuego enemigo:enemigoN2){
                 if(enemigo.actualizar())
                     enemigo.render(batch);
                     cambioDireccion(enemigo);
             }
         }
+
         ataqueFlag=0;
         //Dibujar ataques
         for (int i=0;i<ataques.size();i++){
@@ -734,7 +740,7 @@ public class PantallaJuego implements Screen{
             celdaY = (int) ((enemigo.getSprite().getY() + enemigo.getSprite().getHeight() / 2) / TAM_CELDA); // Casilla del enemigo en Y
         }
         TiledMapTileLayer capaPlataforma = (TiledMapTileLayer) mapa.getLayers().get(0);
-        if ( capaPlataforma.getCell(celdaX,celdaY) != null ) {
+        if ( capaPlataforma.getCell(celdaX, celdaY) != null ) {
             // Colisionará y cambiara de dirección
             enemigo.cambiarSentido();
         }
@@ -744,6 +750,27 @@ public class PantallaJuego implements Screen{
     }
 
     private void actualizarCamaraAgua() {
+        float posX = hataku.getX();
+        float posY = hataku.getY();
+        // Si está en la parte 'media'
+        if (posX>=Principal.ANCHO_CAMARA/2 && posX<=Principal.ALTO_MUNDO-Principal.ANCHO_CAMARA/2) {
+            // El personaje define el centro de la cámara
+            camara.position.set((int)posX, camara.position.y, 0);
+        } else if (posX>Principal.ALTO_MUNDO-Principal.ANCHO_CAMARA/2) {    // Si está en la última mitad
+            // La cámara se queda media pantalla antes del fin del mundo  :)
+            camara.position.set(Principal.ALTO_MUNDO-Principal.ANCHO_CAMARA/2, camara.position.y, 0);
+        }
+        if (posY>=Principal.ALTO_CAMARA/2 && posY<= ANCHO_MAPA-Principal.ALTO_CAMARA/2) {
+            // El personaje define el centro de la cámara
+            camara.position.set(camara.position.x, (int) posY, 0);
+        } else if (posY>=ANCHO_MAPA-Principal.ALTO_CAMARA/2) {    // Si está en la última mitad
+            // La cámara se queda media pantalla antes del fin del mundo  :)
+            camara.position.set(camara.position.x, ANCHO_MAPA-Principal.ALTO_CAMARA/2, 0);
+        }
+        camara.update();
+    }
+
+    private void actualizarCamaraFuego() {
         float posX = hataku.getX();
         float posY = hataku.getY();
         // Si está en la parte 'media'
@@ -838,20 +865,19 @@ public class PantallaJuego implements Screen{
 
         }
 
-/*
         //temploFuego
 
-        if(this.templos.get(2).getSprite().getX() == this.hataku.getX() &&
-                this.templos.get(2).getSprite().getY() == this.hataku.getY() && this.numeroNivel == 3){
+        if( 44 == this.hataku.getX() && 964  <= this.hataku.getY() && this.numeroNivel == 3){
 
-            this.efectoPuertaTemplo.play(PantallaMenu.volumen);
+            //this.numeroNivel = 3;
             this.marcadorPergaminos = 0;
+            this.efectoPuertaTemplo.play(PantallaMenu.volumen);
+            //PantallaCargando.partidaGuardada.putBoolean("nivelFuego", true); //se guarda el progreso y se desbloquea el nivel de agua...
+            //PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
 
-            //en este caso, como aun no hay otra pantalla, nos regresa al menu principal...
-            plataforma.setScreen(new PantallaCargando(0, plataforma, true));
-
-        }
-        */
+            //Se va regresar a seleccion de nivel
+            plataforma.setScreen(new PantallaCargando(1, plataforma, true));
+            }
 
     }
 
@@ -976,6 +1002,7 @@ public class PantallaJuego implements Screen{
                 break;
             }
         }
+
 
         //tomar daño de ataque enemigos
         for (ObjetosJuego ataque: ataques){
