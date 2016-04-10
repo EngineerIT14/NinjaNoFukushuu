@@ -289,6 +289,7 @@ public class PantallaCargando implements Screen
                     //Para la pausa
                     assetManager.load("seleccionNivel/recursosPausa/menu.png",Texture.class);
                     assetManager.load("seleccionNivel/recursosPausa/Pausa.png",Texture.class);
+                    assetManager.load("seleccionNivel/recursosPausa/fondoPausa.png",Texture.class);
 
 
                     break;
@@ -341,6 +342,7 @@ public class PantallaCargando implements Screen
                 //Para la pausa
                 assetManager.load("seleccionNivel/recursosPausa/menu.png",Texture.class);
                 assetManager.load("seleccionNivel/recursosPausa/Pausa.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosPausa/fondoPausa.png",Texture.class);
 
 
                 break;
@@ -393,6 +395,7 @@ public class PantallaCargando implements Screen
                 //Para la pausa
                 assetManager.load("seleccionNivel/recursosPausa/menu.png",Texture.class);
                 assetManager.load("seleccionNivel/recursosPausa/Pausa.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosPausa/fondoPausa.png",Texture.class);
 
                 break;
             default: break;

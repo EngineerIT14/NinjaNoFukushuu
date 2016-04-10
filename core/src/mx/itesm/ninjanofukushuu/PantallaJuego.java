@@ -15,7 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import com.badlogic.gdx.Input.Keys;
 
 
@@ -56,6 +56,14 @@ public class PantallaJuego implements Screen{
     private Texture texturaSalto;
     private Boton btnSalto;
 
+    //elemenos para la pausa...
+    private Texture texturaPausa, texturaContinue, texturaMenu, texturaFondoPausa;
+    private Fondo fondoPausa;
+    private Boton btnPausa, btnContinue, btnMenu;
+    private int anchoBotonesInteractivosPausa = 250, altoBotonesInteractivosPausa = 100;
+
+
+
     //tamañoBotones
     private static int TAMANIO_BOTON = 89;
 
@@ -63,21 +71,21 @@ public class PantallaJuego implements Screen{
     //ITEMS
 
     //Scrolls/Pergamino
-    private ArrayList<ObjetosJuego> scroll;
+    private LinkedList<ObjetosJuego> scroll;
     private Texture texturaScroll;
 
     //Enemigos
-    private ArrayList<ObjetosJuego> enemigoN1;
+    private LinkedList<ObjetosJuego> enemigoN1;
     private Texture texturaEN1;
-    private ArrayList<ObjetosJuego> enemigoN2;
-    private ArrayList<ObjetosJuego> enemigoN3;
+    private LinkedList<ObjetosJuego> enemigoN2;
+    private LinkedList<ObjetosJuego> enemigoN3;
 
     //Templo
-    private ArrayList<ObjetosJuego> templos; //son en total 3 templos
+    private LinkedList<ObjetosJuego> templos; //son en total 3 templos
     private Texture texturaTemplo;
 
     //Pociones
-    private ArrayList<ObjetosJuego> pociones;
+    private LinkedList<ObjetosJuego> pociones;
     private Texture texturaPocion;
 
     //HUD, MARCADORES DE VIDA Y PERGAMINOS..
@@ -85,12 +93,12 @@ public class PantallaJuego implements Screen{
     //VIDAS QUE SE MUESTRAN EN EL HUD.
 
     //Tambien nos va servir de marcador...
-    private ArrayList<ObjetosJuego> vidas;
+    private LinkedList<ObjetosJuego> vidas;
     private Texture texturaVidas;
 
 
     //Ataque
-    private  ArrayList<ObjetosJuego> ataques;
+    private  LinkedList<ObjetosJuego> ataques;
     private Texture texturaAtaque;
 
     //Marcadores
@@ -151,6 +159,21 @@ public class PantallaJuego implements Screen{
 
     private void crearObjetos() {
         AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
+
+        //Texturas que se usan en todos los niveles
+        this.texturaFondoPausa = assetManager.get("seleccionNivel/recursosPausa/fondoPausa.png");
+        this.texturaContinue = assetManager.get("seleccionNivel/recursosPerdiste/continue.png");
+        this.texturaMenu = assetManager.get("seleccionNivel/recursosPausa/menu.png");
+
+        //botones menuPausa
+        this.btnContinue = new Boton(texturaContinue);
+        this.btnMenu = new Boton(this.texturaMenu);
+
+
+
+        this.fondoPausa =  new Fondo(this.texturaFondoPausa);
+
+
         if (this.numeroNivel == 1){ //en el nivel tierra{
             // Carga el mapa en memoria
             mapa = assetManager.get("seleccionNivel/recursosNivelTierra/MapaDeTierraV2.tmx");
@@ -212,13 +235,25 @@ public class PantallaJuego implements Screen{
         btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON);
 
 
+
+
+
+
         //Se crean objetos que son textos que se muestran en el HUD.
         this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_CAMARA + 30, Principal.ALTO_CAMARA * 0.96f);
         this.textoMarcadorPergaminos = new Texto(50 + 0.70f * Principal.ANCHO_CAMARA + 26, Principal.ALTO_CAMARA * 0.96f); //mandamos la posicion que queremos por default.
 
 
+        this.texturaPausa = assetManager.get("seleccionNivel/recursosPausa/Pausa.png");
+        this.btnPausa = new Boton(this.texturaPausa);
+        this.btnPausa.setAlfa(0.7f);
+        this.btnPausa.setPosicion(this.textoMarcadorVidas.getX()-86,this.textoMarcadorVidas.getY()-23);
+
+
+
+
         //Lista scrolles: en todos los niveles solo hay 3 scroll
-        this.scroll = new ArrayList<ObjetosJuego>(3);
+        this.scroll = new LinkedList<ObjetosJuego>();
         for (int i = 0; i < 3; i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaScroll);
             nuevo.setTamanio(12, 35);
@@ -231,7 +266,7 @@ public class PantallaJuego implements Screen{
         this.scroll.get(2).setPosicion(627, 76); //pergamino que está en precipicio
 
         //Pociones: En todos los niveles solo hay 2 pociones.
-        this.pociones = new ArrayList<ObjetosJuego>(2);
+        this.pociones = new LinkedList<ObjetosJuego>();
         for (int i = 0; i < 2; i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaPocion);
             nuevo.setTamanio(30, 40);
@@ -243,7 +278,7 @@ public class PantallaJuego implements Screen{
         this.pociones.get(1).setPosicion(255, 270);
 
         //Enemigos: 5 enemigos en el primer nivel
-        this.enemigoN1 = new ArrayList<ObjetosJuego>(5);
+        this.enemigoN1 = new LinkedList<ObjetosJuego>();
         for (int i = 0; i < 5; i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaEN1);
             nuevo.setTamanio(60, 90);
@@ -258,7 +293,7 @@ public class PantallaJuego implements Screen{
         this.enemigoN1.get(4).setPosicion(570, 503); //Samurai parte superior
 
         //Colocar los ataque en su posicion
-        this.ataques = new ArrayList<ObjetosJuego>(5);
+        this.ataques = new LinkedList<ObjetosJuego>();
         for (ObjetosJuego enemigo : enemigoN1) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaAtaque);
             //nuevo.setTamanio(30, 30);
@@ -268,7 +303,7 @@ public class PantallaJuego implements Screen{
 
         //Aqui se piensa poner un switch evaluando una variable de nivel,  de eso va dependar donde se va colocar el templo
         //templos, son 3.
-        this.templos = new ArrayList<ObjetosJuego>(3);
+        this.templos = new LinkedList<ObjetosJuego>();
         for (int i = 0; i < 3; i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaTemplo);
             nuevo.setTamanio(60, 90);
@@ -289,7 +324,7 @@ public class PantallaJuego implements Screen{
 
         //Si es el nivel 4 se deben de poner 5 vidas
         if (this.flag) {
-            this.vidas = new ArrayList<ObjetosJuego>(5);
+            this.vidas = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 5; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                 //nuevo.setTamanio(80,80);
@@ -304,7 +339,7 @@ public class PantallaJuego implements Screen{
             this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);*/
 
         } else { //entonces no estoy en el nivel 4, se deben de poner 3 vidas.
-            this.vidas = new ArrayList<ObjetosJuego>(3);
+            this.vidas = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 3; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                 //nuevo.setTamanio(70,70); //Irvin ya ajusto el tamaño de las vidas en photoshop..
@@ -379,9 +414,15 @@ public class PantallaJuego implements Screen{
             this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_CAMARA + 30, Principal.ALTO_CAMARA * 0.96f);
             this.textoMarcadorPergaminos = new Texto(50 + 0.70f * Principal.ANCHO_CAMARA + 26, Principal.ALTO_CAMARA * 0.96f); //mandamos la posicion que queremos por default.
 
+            this.texturaPausa = assetManager.get("seleccionNivel/recursosPausa/Pausa.png");
+            this.btnPausa = new Boton(this.texturaPausa);
+            this.btnPausa.setAlfa(0.7f);
+            this.btnPausa.setPosicion(this.textoMarcadorVidas.getX()-86,this.textoMarcadorVidas.getY()-23);
+
+
 
             //Lista scrolles: en todos los niveles solo hay 3 scroll
-            this.scroll = new ArrayList<ObjetosJuego>(3);
+            this.scroll = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 3; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaScroll);
                 nuevo.setTamanio(12, 35);
@@ -394,7 +435,7 @@ public class PantallaJuego implements Screen{
             this.scroll.get(2).setPosicion(680, 76); //pergamino abajo
 
             //Pociones: En todos los niveles solo hay 2 pociones.
-            this.pociones = new ArrayList<ObjetosJuego>(2);
+            this.pociones = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 2; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaPocion);
                 nuevo.setTamanio(30, 40);
@@ -406,7 +447,7 @@ public class PantallaJuego implements Screen{
             this.pociones.get(1).setPosicion(400, 990);
 
             //Enemigos: 4 enemigos en el segundo nivel
-            this.enemigoN1 = new ArrayList<ObjetosJuego>(4);
+            this.enemigoN1 = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 4; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaEN1);
                 nuevo.setTamanio(60, 90);
@@ -420,7 +461,7 @@ public class PantallaJuego implements Screen{
             this.enemigoN1.get(3).setPosicion(290, 805); //Plataforma Izquierda
 
             //Enemigos especiales
-            this.enemigoN2 = new ArrayList<ObjetosJuego>(4);
+            this.enemigoN2 = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 4; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(texturaEN1);
                 nuevo.setTamanio(60,90);
@@ -433,7 +474,7 @@ public class PantallaJuego implements Screen{
             this.enemigoN2.get(3).setPosicion(380,1126);
 
             //Colocar los ataque en su posicion
-            this.ataques = new ArrayList<ObjetosJuego>(5);
+            this.ataques = new LinkedList<ObjetosJuego>();
             for (ObjetosJuego enemigo : enemigoN1) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaAtaque);
                 nuevo.setTamanio(30, 30);
@@ -443,7 +484,7 @@ public class PantallaJuego implements Screen{
 
             //Aqui se piensa poner un switch evaluando una variable de nivel,  de eso va dependar donde se va colocar el templo
             //templos, son 3.
-            this.templos = new ArrayList<ObjetosJuego>(3);
+            this.templos = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 3; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaTemplo);
                 nuevo.setTamanio(60, 90);
@@ -452,7 +493,7 @@ public class PantallaJuego implements Screen{
 
             this.templos.get(0).setPosicion(20, 1160); //temploAgua
 
-            this.vidas = new ArrayList<ObjetosJuego>(3);
+            this.vidas = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 3; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                 nuevo.setTamanio(70,70); //Irvin ya ajusto el tamaño de las vidas en photoshop..
@@ -528,9 +569,15 @@ public class PantallaJuego implements Screen{
             this.textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_CAMARA + 30, Principal.ALTO_CAMARA * 0.96f);
             this.textoMarcadorPergaminos = new Texto(50 + 0.70f * Principal.ANCHO_CAMARA + 26, Principal.ALTO_CAMARA * 0.96f); //mandamos la posicion que queremos por default.
 
+            this.texturaPausa = assetManager.get("seleccionNivel/recursosPausa/Pausa.png");
+            this.btnPausa = new Boton(this.texturaPausa);
+            this.btnPausa.setAlfa(0.7f);
+            this.btnPausa.setPosicion(this.textoMarcadorVidas.getX()-86,this.textoMarcadorVidas.getY()-23);
+
+
 
             //Lista scrolles: en todos los niveles solo hay 3 scroll
-            this.scroll = new ArrayList<ObjetosJuego>(3);
+            this.scroll = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 3; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaScroll);
                 nuevo.setTamanio(12, 35);
@@ -543,7 +590,7 @@ public class PantallaJuego implements Screen{
             this.scroll.get(2).setPosicion(676, 350); //pergamino abajo
 
             //Pociones: En todos los niveles solo hay 2 pociones.
-            this.pociones = new ArrayList<ObjetosJuego>(2);
+            this.pociones = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 2; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaPocion);
                 nuevo.setTamanio(30, 40);
@@ -555,7 +602,7 @@ public class PantallaJuego implements Screen{
             this.pociones.get(1).setPosicion(400, 990);
 
             //Enemigos: 4 enemigos en el segundo nivel
-            this.enemigoN1 = new ArrayList<ObjetosJuego>(4);
+            this.enemigoN1 = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 4; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaEN1);
                 nuevo.setTamanio(60, 90);
@@ -569,7 +616,7 @@ public class PantallaJuego implements Screen{
             this.enemigoN1.get(3).setPosicion(225, 760); //Plataforma Izquierda
 
             //Enemigos especiales
-            this.enemigoN2 = new ArrayList<ObjetosJuego>(2);
+            this.enemigoN2 = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 2; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(texturaAtaque);
                 nuevo.setTamanio(60,90);
@@ -581,7 +628,7 @@ public class PantallaJuego implements Screen{
 
 
             //Colocar los ataque en su posicion
-            this.ataques = new ArrayList<ObjetosJuego>(5);
+            this.ataques = new LinkedList<ObjetosJuego>();
             for (ObjetosJuego enemigo : enemigoN1) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaAtaque);
                 nuevo.setTamanio(30, 30);
@@ -591,7 +638,7 @@ public class PantallaJuego implements Screen{
 
             //Aqui se piensa poner un switch evaluando una variable de nivel,  de eso va dependar donde se va colocar el templo
             //templos, son 3.
-            this.templos = new ArrayList<ObjetosJuego>(3);
+            this.templos = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 3; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaTemplo);
                 nuevo.setTamanio(60, 90);
@@ -600,7 +647,7 @@ public class PantallaJuego implements Screen{
 
             this.templos.get(0).setPosicion(20, 960); //temploFuego
 
-            this.vidas = new ArrayList<ObjetosJuego>(3);
+            this.vidas = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 3; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                 nuevo.setTamanio(70,70); //Irvin ya ajusto el tamaño de las vidas en photoshop..
@@ -621,109 +668,128 @@ public class PantallaJuego implements Screen{
     public void render(float delta) { // delta es el tiempo entre frames (Gdx.graphics.getDeltaTime())
         // Leer entrada
         //Gdx.app.log("",hataku.getY()+"");
-        // Actualizar objetos en la pantalla
-        moverPersonaje();
-        if(numeroNivel==2){
-            actualizarCamaraAgua();
-        }
 
-        else if(numeroNivel==3){
-            actualizarCamaraFuego();
-        }
+        if(estadoJuego == EstadosJuego.JUGANDO) {
+            // Actualizar objetos en la pantalla
+            moverPersonaje();
+            if (numeroNivel == 2) {
+                actualizarCamaraAgua();
+            } else if (numeroNivel == 3) {
+                actualizarCamaraFuego();
+            } else {
+                actualizarCamara(); // Mover la cámara para que siga al personaje
+            }
 
-        else{
-            actualizarCamara(); // Mover la cámara para que siga al personaje
-        }
+            // Dibujar
+            borrarPantalla();
 
-        // Dibujar
-        borrarPantalla();
+            // Para verificar si el usuario ya tomo los 3 pergaminos y liberar el boton de galeria de arte...
+            liberarArte();
 
-        // Para verificar si el usuario ya tomo los 3 pergaminos y liberar el boton de galeria de arte...
-        liberarArte();
+            //Para verificar si el usuario ya perdio...
+            perderJuego();
 
-        //Para verificar si el usuario ya perdio...
-        perderJuego();
-
-        //Para verificar si el usuario ya gano...
-        ganarJuego();
+            //Para verificar si el usuario ya gano...
+            ganarJuego();
 
 
-        //MOVER PERSONAJES CON TECLADO (ESTO ES UTIL PARA LAS PRUEBAS,
-        // SE PIENSA COMENTAR AL ENTREGAR EL PROYECTO)
-        //
-        controlarPersonajeConTeclado();
-
-
-
+            //MOVER PERSONAJES CON TECLADO (ESTO ES UTIL PARA LAS PRUEBAS,
+            // SE PIENSA COMENTAR AL ENTREGAR EL PROYECTO)
+            //
+            controlarPersonajeConTeclado();
 
 
             //DIBUJAR OBJETOS COMPONENTES DEL JUEGO
-        batch.setProjectionMatrix(camara.combined);
-        batch.begin();
-        fondo.render(batch);
-        batch.end();
-        rendererMapa.setView(camara);
-        rendererMapa.render();  // Dibuja el mapa
-        recogerObjeto();
-        // Entre begin-end dibujamos nuestros objetos en pantalla
-        batch.begin();
-        hataku.render(batch);    // Dibuja el personaje
-        //Dibujar scrolls
-        for (ObjetosJuego scrolls : scroll) {
-            if (scrolls.actualizar()) {
-                scrolls.render(batch);
+            batch.setProjectionMatrix(camara.combined);
+            batch.begin();
+            fondo.render(batch);
+            batch.end();
+            rendererMapa.setView(camara);
+            rendererMapa.render();  // Dibuja el mapa
+            recogerObjeto();
+            // Entre begin-end dibujamos nuestros objetos en pantalla
+            batch.begin();
+            hataku.render(batch);    // Dibuja el personaje
+            //Dibujar scrolls
+            for (ObjetosJuego scrolls : scroll) {
+                if (scrolls.actualizar()) {
+                    scrolls.render(batch);
+                }
             }
-        }
-        //Dibujar pociones
-        for (ObjetosJuego pocion : pociones) {
-            if (pocion.actualizar())
-                pocion.render(batch);
-        }
+            //Dibujar pociones
+            for (ObjetosJuego pocion : pociones) {
+                if (pocion.actualizar())
+                    pocion.render(batch);
+            }
 
-        for (ObjetosJuego Enemigo : enemigoN1) {
-            if (Enemigo.actualizar())
-                Enemigo.render(batch);
-        }
-        if(numeroNivel>=2){
-            for(ObjetosJuego enemigo:enemigoN2){
-                if(enemigo.actualizar())
-                    enemigo.render(batch);
+            for (ObjetosJuego Enemigo : enemigoN1) {
+                if (Enemigo.actualizar())
+                    Enemigo.render(batch);
+            }
+            if (numeroNivel >= 2) {
+                for (ObjetosJuego enemigo : enemigoN2) {
+                    if (enemigo.actualizar())
+                        enemigo.render(batch);
                     cambioDireccion(enemigo);
+                }
             }
-        }
 
-        ataqueFlag=0;
-        //Dibujar ataques
-        for (int i=0;i<ataques.size();i++){
-            ObjetosJuego ataque=ataques.get(i);
-            ObjetosJuego enemigo=enemigoN1.get(i);
-            ataque.render(batch);
-            atacarEnemigo(ataque, enemigo);
-            ataqueFlag++;
-        }
-
-        this.templos.get(0).render(batch);//temploTierra
-
-
-        batch.end();
-        //Dibuja el HUD
-        batch.setProjectionMatrix(camaraHUD.combined);
-        batch.begin();
-        // Mostrar pergaminos
-        this.textoMarcadorPergaminos.mostrarMensaje(batch, "Scrolls: " + this.marcadorPergaminos);
-        // Mostrar vida
-        this.textoMarcadorVidas.mostrarMensaje(batch, "Health: ");
-        //Dibujar iconos vidas
-        for (ObjetosJuego vida : this.vidas) {
-            if (vida.actualizar()) {
-                vida.render(batch);
+            ataqueFlag = 0;
+            //Dibujar ataques
+            for (int i = 0; i < ataques.size(); i++) {
+                ObjetosJuego ataque = ataques.get(i);
+                ObjetosJuego enemigo = enemigoN1.get(i);
+                ataque.render(batch);
+                atacarEnemigo(ataque, enemigo);
+                ataqueFlag++;
             }
-        }
-        btnIzquierda.render(batch);
-        btnDerecha.render(batch);
-        btnSalto.render(batch);
 
-        batch.end();
+            this.templos.get(0).render(batch);//temploTierra
+
+
+            batch.end();
+            //Dibuja el HUD
+            batch.setProjectionMatrix(camaraHUD.combined);
+            batch.begin();
+            // Mostrar pergaminos
+            this.textoMarcadorPergaminos.mostrarMensaje(batch, "Scrolls: " + this.marcadorPergaminos);
+            // Mostrar vida
+            this.textoMarcadorVidas.mostrarMensaje(batch, "Health: ");
+            //Dibujar iconos vidas
+            for (ObjetosJuego vida : this.vidas) {
+                if (vida.actualizar()) {
+                    vida.render(batch);
+                }
+            }
+            btnIzquierda.render(batch);
+            btnDerecha.render(batch);
+            btnSalto.render(batch);
+            btnPausa.render(batch);
+
+            batch.end();
+        }
+        else if(estadoJuego == EstadosJuego.PAUSA) {
+
+            batch.setProjectionMatrix(camara.combined);
+            batch.begin();
+            fondo.render(batch);
+            batch.end();
+
+            rendererMapa.setView(camara);
+            rendererMapa.render();  // Dibuja el mapa
+
+
+
+            //Dibuja el HUD
+            batch.setProjectionMatrix(camaraHUD.combined);
+            batch.begin();
+            this.fondoPausa.render(batch);
+            this.btnMenu.render(batch);
+            this.btnContinue.render(batch);
+            batch.end();
+
+
+        }
 
     }
 
@@ -1138,7 +1204,7 @@ public class PantallaJuego implements Screen{
 
     private void borrarPantalla() {
         //Gdx.gl.glClearColor(1, 1, 1, 1);    // Color de fondo
-        Gdx.gl.glClearColor(107 / 255f, 140f / 255, 1, 1);
+        //Gdx.gl.glClearColor(107 / 255f, 140f / 255, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
@@ -1184,8 +1250,8 @@ public class PantallaJuego implements Screen{
     {
         private Vector3 coordenadas = new Vector3();
         private float x, y;     // Las coordenadas en la pantalla virtual
-        private boolean banderaBotonDerecha = false, banderaBotonIzquierda = false, banderaBotonSaltar = false; //Nos sirven para saber si lo debemos de regresar de tamaño y quitarle la trasnparencia cuando han sido presionados, esto se hace  en touchUp
-
+        private boolean banderaBotonDerecha = false, banderaBotonIzquierda = false, banderaBotonSaltar = false, banderaBotonPausa = false, banderaBotonContinue = false, banderaBotonMenu = false; //Nos sirven para saber si lo debemos de regresar de tamaño y quitarle la trasnparencia cuando han sido presionados, esto se hace  en touchUp
+        private float anchoBotonPausa = btnPausa.getAncho() , altoBotonPausa = btnPausa.getAlto();
 
         /*
         Se ejecuta cuando el usuario pone un dedo sobre la pantalla, los dos primeros parámetros
@@ -1222,6 +1288,28 @@ public class PantallaJuego implements Screen{
                     this.banderaBotonSaltar = true;
                     hataku.saltar();
                 }
+                else if (btnPausa.contiene(x,y)){
+                    btnPausa.setAlfa(.5f);
+                    btnPausa.setTamanio(anchoBotonPausa,altoBotonPausa-2);
+                    this.banderaBotonPausa = true;
+                }
+            }
+
+            else if(estadoJuego == EstadosJuego.PAUSA){
+
+                if (btnContinue.contiene(x,y)){
+                    btnContinue.setAlfa(.5f);
+                    btnContinue.setTamanio(anchoBotonesInteractivosPausa,altoBotonesInteractivosPausa-2);
+                    this.banderaBotonContinue = true;
+                }
+
+                else if (btnMenu.contiene(x, y)){
+                    btnMenu.setAlfa(.5f);
+                    btnMenu.setTamanio(anchoBotonesInteractivosPausa,altoBotonesInteractivosPausa-2);
+                    this.banderaBotonMenu = true;
+
+                }
+
             }
             return true;    // Indica que ya procesó el evento
         }
@@ -1233,7 +1321,7 @@ public class PantallaJuego implements Screen{
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
             // Preguntar si las coordenadas son de algún botón para DETENER el movimiento
-            if ( hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.INICIANDO && (btnDerecha.contiene(x, y) || btnIzquierda.contiene(x,y))) {
+            if ( hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.INICIANDO && (btnDerecha.contiene(x, y) || btnIzquierda.contiene(x,y)) && estadoJuego == EstadosJuego.JUGANDO) {
                 // Tocó el botón derecha, hacer que el personaje se mueva a la derecha
                 hataku.setEstado(Personaje.EstadoMovimiento.QUIETO);
 
@@ -1257,13 +1345,49 @@ public class PantallaJuego implements Screen{
 
             }
 
-            if( hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.INICIANDO && btnSalto.contiene(x,y)){
+            if( hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.INICIANDO && btnSalto.contiene(x,y)  && estadoJuego == EstadosJuego.JUGANDO){
                 if (banderaBotonSaltar) {
                     btnSalto.setAlfa(.7f);
                     btnSalto.setTamanio(PantallaJuego.TAMANIO_BOTON, PantallaJuego.TAMANIO_BOTON); //se regresa a posicion orignal
                     banderaBotonSaltar = false;
                 }
             }
+
+            if(banderaBotonPausa && estadoJuego == EstadosJuego.JUGANDO){
+                btnPausa.setAlfa(.7f);
+                btnPausa.setTamanio(anchoBotonPausa, altoBotonPausa); //se regresa a posicion orignal
+                efectoTomarPergamino.play(PantallaMenu.volumen);
+                pausa();
+                banderaBotonPausa = false;
+            }
+
+            if(btnContinue.contiene(x,y) && banderaBotonContinue && estadoJuego == EstadosJuego.PAUSA){
+                btnContinue.setAlfa(.7f);
+                btnContinue.setTamanio(anchoBotonesInteractivosPausa, altoBotonesInteractivosPausa); //se regresa a posicion orignal
+                efectoTomarPergamino.play(PantallaMenu.volumen);
+                pausa();
+                banderaBotonContinue = false;
+            }
+            else{
+                btnContinue.setAlfa(.7f);
+                btnContinue.setTamanio(anchoBotonesInteractivosPausa, altoBotonesInteractivosPausa); //se regresa a posicion orignal
+            }
+
+            if(btnMenu.contiene(x,y) &&  banderaBotonMenu && estadoJuego == EstadosJuego.PAUSA){
+                btnMenu.setAlfa(.7f);
+                btnMenu.setTamanio(anchoBotonesInteractivosPausa, altoBotonesInteractivosPausa); //se regresa a posicion orignal
+                efectoTomarPergamino.play(PantallaMenu.volumen);
+                plataforma.setScreen(new PantallaMenu(plataforma, true));  //nos regresa al menu principal.
+                banderaBotonContinue = false;
+            }
+            else{
+                btnMenu.setAlfa(.7f);
+                btnMenu.setTamanio(anchoBotonesInteractivosPausa, altoBotonesInteractivosPausa); //se regresa a posicion orignal
+            }
+
+
+
+
             return true;    // Indica que ya procesó el evento
         }
 
@@ -1310,6 +1434,31 @@ public class PantallaJuego implements Screen{
         }
     }
 
+    private void pausa() {
+        if(this.estadoJuego == EstadosJuego.JUGANDO) {
+            this.fondoPausa.setPosicion(this.textoMarcadorVidas.getX() + 20, 0);
+            //Cuando hay una pausa se crean los botones de menu y continue...
+
+
+            btnContinue.setPosicion(this.textoMarcadorVidas.getX()+110, 125);
+            btnContinue.setAlfa(0.7f); // Un poco de transparencia
+            //el boton debe hacerse pequeño
+            btnContinue.setTamanio(this.anchoBotonesInteractivosPausa, this.altoBotonesInteractivosPausa);
+
+
+            btnMenu.setPosicion(this.textoMarcadorVidas.getX() + 110, 5);
+            btnMenu.setAlfa(0.7f);
+            btnMenu.setTamanio(this.anchoBotonesInteractivosPausa, this.altoBotonesInteractivosPausa);
+
+            this.estadoJuego = EstadosJuego.PAUSA;
+
+        }
+        else{
+            this.estadoJuego = EstadosJuego.JUGANDO;
+
+        }
+    }
+
     //Se ejecutan de manera automatica cuando nos movemos de pantalla...
     @Override
     public void resume() {
@@ -1335,6 +1484,10 @@ public class PantallaJuego implements Screen{
         this.texturaHataku.dispose();
         this.texturaBtnDerecha.dispose();
         this.texturaBtnIzquierda.dispose();
+        this.texturaPausa.dispose();
+        this.texturaFondoPausa.dispose();
+        this.texturaContinue.dispose();
+        this.texturaMenu.dispose();
         this.texturaSalto.dispose();
         this.texturaVidas.dispose();
         this.texturaPocion.dispose();
@@ -1355,6 +1508,7 @@ public class PantallaJuego implements Screen{
 
     public enum EstadosJuego {
         JUGANDO,
+        PAUSA
     }
 
 

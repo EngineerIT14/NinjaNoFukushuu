@@ -33,6 +33,12 @@ public class Fondo {
         return sprite.getHeight();
     }
 
+    public void setPosicion(float x, float y) {
+        sprite.setPosition(x, y);
+        //rectColision.setPosition(x,y);
+    }
+
+
 
 
     public void setTamanio(float ancho,float alto){
