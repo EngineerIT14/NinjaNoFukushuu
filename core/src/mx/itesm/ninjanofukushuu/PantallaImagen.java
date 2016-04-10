@@ -653,6 +653,9 @@ public class PantallaImagen implements Screen {
                 else if(indicadorImagenes==5){
                     principal.setScreen(new PantallaJuego(principal,2)); //nivel de agua..
                 }
+                else if(indicadorImagenes==6){
+                    principal.setScreen(new PantallaJuego(principal,3)); //nivel de agua..
+                }
             }
 
             else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
