@@ -56,8 +56,8 @@ public class PantallaInstrucciones implements Screen {
         fondo = new Fondo(texturaFondo);
 
         btnRegresar = new Boton(texturaRegresar);
-        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8 , Principal.ALTO_MUNDO * 1 / 5 -130);
-        btnRegresar.setTamanio(anchoBoton-30, altoBoton -30);
+        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8 +60 , Principal.ALTO_MUNDO * 1 / 5 -130);
+        btnRegresar.setTamanio(anchoBoton-80, altoBoton -80);
         //Batch
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
@@ -109,7 +109,7 @@ public class PantallaInstrucciones implements Screen {
 
             if (btnRegresar.contiene(x,y)){
                 btnRegresar.setAlfa(.5f);
-                btnRegresar.setTamanio(anchoBoton-30, altoBoton - 32); //Lo hago más pequeño
+                btnRegresar.setTamanio(anchoBoton-80, altoBoton - 78); //Lo hago más pequeño
                 this.banderaBotonRegresar = true;
             }
 
@@ -133,7 +133,7 @@ public class PantallaInstrucciones implements Screen {
                 // se le quita la transparencia y se regresa a su tamaño original
                 banderaBotonRegresar = false;
                 btnRegresar.setAlfa(1);
-                btnRegresar.setTamanio(anchoBoton-30,altoBoton-30); //tamaño orginal
+                btnRegresar.setTamanio(anchoBoton-80,altoBoton-80); //tamaño orginal
             }
             return true;    // Indica que ya procesó el evento
         }
