@@ -317,7 +317,7 @@ public class PantallaJuego implements Screen{
         }
         else if (this.numeroNivel == 2){
             // Carga el mapa en memoria
-            mapa = assetManager.get("seleccionNivel/recursosNivelAgua/MapaDeAgua.tmx");
+            mapa = assetManager.get("seleccionNivel/recursosNivelAgua/MapaDeAgua2.tmx");
             //mapa.getLayers().get(0).setVisible(false);
             // Crear el objeto que dibujará el mapa
             rendererMapa = new OrthogonalTiledMapRenderer(mapa, batch);
