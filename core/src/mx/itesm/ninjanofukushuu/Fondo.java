@@ -25,6 +25,15 @@ public class Fondo {
         sprite.draw(batch);
     }
 
+    public float getAncho(){
+        return sprite.getWidth();
+    }
+
+    public float getAlto(){
+        return sprite.getHeight();
+    }
+
+
 
     public void setTamanio(float ancho,float alto){
 

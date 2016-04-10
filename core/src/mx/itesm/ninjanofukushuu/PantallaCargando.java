@@ -281,6 +281,16 @@ public class PantallaCargando implements Screen
                     assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra4.jpg",Texture.class);
                     assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra5.jpg",Texture.class);
 
+
+                    //Para el gameOver
+                    assetManager.load("seleccionNivel/recursosPerdiste/gameOver.png",Texture.class);
+                    assetManager.load("seleccionNivel/recursosPerdiste/continue.png",Texture.class);
+
+                    //Para la pausa
+                    assetManager.load("seleccionNivel/recursosPausa/menu.png",Texture.class);
+                    assetManager.load("seleccionNivel/recursosPausa/Pausa.png",Texture.class);
+
+
                     break;
             case 6:
                 // se cargan recursos del juego..
@@ -324,6 +334,15 @@ public class PantallaCargando implements Screen
                 assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua4.jpg",Texture.class);
                 assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua5.jpg",Texture.class);
 
+                //Para el gameOver
+                assetManager.load("seleccionNivel/recursosPerdiste/gameOver.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosPerdiste/continue.png",Texture.class);
+
+                //Para la pausa
+                assetManager.load("seleccionNivel/recursosPausa/menu.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosPausa/Pausa.png",Texture.class);
+
+
                 break;
             case 7:
                 // se cargan recursos del juego..
@@ -366,6 +385,15 @@ public class PantallaCargando implements Screen
                 assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego3.jpg",Texture.class);
                 assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego4.png",Texture.class);
                 assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego5.jpg",Texture.class);
+
+                //Para el gameOver
+                assetManager.load("seleccionNivel/recursosPerdiste/gameOver.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosPerdiste/continue.png",Texture.class);
+
+                //Para la pausa
+                assetManager.load("seleccionNivel/recursosPausa/menu.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosPausa/Pausa.png",Texture.class);
+
                 break;
             default: break;
         }
@@ -424,7 +452,7 @@ public class PantallaCargando implements Screen
                     plataforma.setScreen(new PantallaImagen(this.plataforma,5)); //nivel de agua... se  va a mostrar las imagenes de la historia..
                     break;
                 case 7:
-                    plataforma.setScreen(new PantallaImagen(this.plataforma,6)); //nivel de agua... se  va a mostrar las imagenes de la historia..
+                    plataforma.setScreen(new PantallaImagen(this.plataforma,6)); //nivel de fuego... se  va a mostrar las imagenes de la historia..
                     break;
                 default:
                     plataforma.setScreen(new PantallaMenu(this.plataforma,this.banderaMusicaFondo));

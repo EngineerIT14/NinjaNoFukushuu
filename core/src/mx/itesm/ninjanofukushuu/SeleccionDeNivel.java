@@ -65,19 +65,6 @@ public class SeleccionDeNivel implements  Screen{
         //Crear fondo
         fondo = new Fondo(texturaFondo);
 
-        btnRegresar = new Boton(texturaRegresar);
-        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8, Principal.ALTO_MUNDO * 1 / 5 - 130);
-        btnRegresar.setTamanio(anchoBoton-30, altoBoton-30);
-        btnNivelUno=new Boton(texturaN1);
-        btnNivelUno.setPosicion(100, Principal.ALTO_MUNDO/2-100);
-        btnNivelUno.setTamanio(anchoBoton, altoBoton);
-        btnNivelDos=new Boton(texturaN2);
-        btnNivelDos.setPosicion(550, Principal.ALTO_MUNDO/2-100);
-        btnNivelDos.setTamanio(anchoBoton, altoBoton);
-        btnNivelTres=new Boton(texturaN3);
-        btnNivelTres.setPosicion(1000, Principal.ALTO_MUNDO/2-100);
-        btnNivelTres.setTamanio(anchoBoton, altoBoton);
-
         //Batch
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
@@ -106,6 +93,20 @@ public class SeleccionDeNivel implements  Screen{
 
         this.efectoClick = assetManager.get("sonidoVentana.wav");
         this.sonidoBloqueado = assetManager.get("bloqueado.wav");
+
+        btnRegresar = new Boton(texturaRegresar);
+        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8, Principal.ALTO_MUNDO * 1 / 5 - 130);
+        btnRegresar.setTamanio(anchoBoton-30, altoBoton-30);
+        btnNivelUno=new Boton(texturaN1);
+        btnNivelUno.setPosicion(100, Principal.ALTO_MUNDO/2-100);
+        btnNivelUno.setTamanio(anchoBoton, altoBoton);
+        btnNivelDos=new Boton(texturaN2);
+        btnNivelDos.setPosicion(550, Principal.ALTO_MUNDO/2-100);
+        btnNivelDos.setTamanio(anchoBoton, altoBoton);
+        btnNivelTres=new Boton(texturaN3);
+        btnNivelTres.setPosicion(1000, Principal.ALTO_MUNDO/2-100);
+        btnNivelTres.setTamanio(anchoBoton, altoBoton);
+
     }
 
 

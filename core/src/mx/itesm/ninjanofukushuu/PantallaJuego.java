@@ -857,14 +857,14 @@ public class PantallaJuego implements Screen{
 
     private void liberarArte() {
         if(this.marcadorPergaminos == 3 && this.numeroNivel == 1){
-            //PantallaCargando.banderaArteTierra = true;
+
             PantallaCargando.partidaGuardada.putBoolean("arteTierra", true); //se guarda el progreso y se desbloquea la galeria de arte de tierra,,
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
 
         }
 
         else if(this.marcadorPergaminos == 3 && this.numeroNivel == 2){
-            //PantallaCargando.banderaArteAgua = true;
+
             PantallaCargando.partidaGuardada.putBoolean("arteAgua", true); //se guarda el progreso y se desbloquea la galeria de arte de agua..
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
 
@@ -872,7 +872,7 @@ public class PantallaJuego implements Screen{
         }
 
         else if(this.marcadorPergaminos == 3 && this.numeroNivel == 3){
-            //PantallaCargando.banderaArteFuego = true;
+
             PantallaCargando.partidaGuardada.getBoolean("arteFuego", true); // se guarda el progreso y se desbloquea la galeria de arte de fuego
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
         }
@@ -904,12 +904,12 @@ public class PantallaJuego implements Screen{
 
         //el usuario perdio sus vidas
         if (this.vidas.size() == 0){
-            plataforma.setScreen(new PantallaCargando(0,plataforma,true)); //nos regresa a la pantalla principal.
+            plataforma.setScreen(new PantallaGameOver(plataforma,this.numeroNivel)); //nos regresa a la pantalla principal.
         }
 
         //el usuario cayo en un precipcio
         if (this.hataku.getY()<-50){
-            plataforma.setScreen(new PantallaCargando(0,plataforma,true)); //nos regresa a la pantalla principal.
+            plataforma.setScreen(new PantallaGameOver(plataforma,this.numeroNivel)); //nos regresa a la pantalla principal.
 
         }
     }
@@ -963,17 +963,20 @@ public class PantallaJuego implements Screen{
             }
         }
 
-        //mata enemigos especiales al toque
-        for (ObjetosJuego Enemigo : enemigoN2) {
-            if(hataku.getSprite().getX()>= Enemigo.getSprite().getX() && hataku.getSprite().getX()<= Enemigo.getSprite().getX() + Enemigo.getSprite().getWidth()-10
-                    && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight()-5 + Enemigo.getSprite().getY()){
-                if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
+        if(this.numeroNivel == 2 || this.numeroNivel == 3) {
 
-                    this.efectoDanio.play(PantallaMenu.volumen);
-                    vidas.remove(vidas.size() - 1);
-                    Enemigo.quitarElemento();
+            //mata enemigos especiales al toque
+            for (ObjetosJuego Enemigo : enemigoN2) {
+                if (hataku.getSprite().getX() >= Enemigo.getSprite().getX() && hataku.getSprite().getX() <= Enemigo.getSprite().getX() + Enemigo.getSprite().getWidth() - 10
+                        && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight() - 5 + Enemigo.getSprite().getY()) {
+                    if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
+
+                        this.efectoDanio.play(PantallaMenu.volumen);
+                        vidas.remove(vidas.size() - 1);
+                        Enemigo.quitarElemento();
+                    }
+                    break;
                 }
-                break;
             }
         }
 
