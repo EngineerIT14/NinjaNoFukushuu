@@ -679,10 +679,11 @@ public class PantallaJuego implements Screen{
             if (Enemigo.actualizar())
                 Enemigo.render(batch);
         }
-        if(numeroNivel>1){
+        if(numeroNivel==2){
             for(ObjetosJuego enemigo:enemigoN2){
                 if(enemigo.actualizar())
                     enemigo.render(batch);
+                    cambioDireccion(enemigo);
             }
         }
         ataqueFlag=0;
@@ -718,6 +719,28 @@ public class PantallaJuego implements Screen{
 
         batch.end();
 
+    }
+
+    private void cambioDireccion(ObjetosJuego enemigo) {
+        int celdaX;
+        int celdaY;
+        if (enemigo.getEstadoEspecial() == ObjetosJuego.EstadoEsp.DERECHA_ESP) {
+            celdaX = (int) ((enemigo.getSprite().getX() + 45) / TAM_CELDA);   // Casilla del enemigo en X
+            celdaX++;   // Casilla del lado derecho
+            celdaY = (int) ((enemigo.getSprite().getY() + enemigo.getSprite().getHeight() / 2) / TAM_CELDA); // Casilla del enemigo en Y
+        }
+        else{
+            celdaX = (int) ((enemigo.getSprite().getX()) / TAM_CELDA);   // Casilla del enemigo en X
+            celdaY = (int) ((enemigo.getSprite().getY() + enemigo.getSprite().getHeight() / 2) / TAM_CELDA); // Casilla del enemigo en Y
+        }
+        TiledMapTileLayer capaPlataforma = (TiledMapTileLayer) mapa.getLayers().get(0);
+        if ( capaPlataforma.getCell(celdaX,celdaY) != null ) {
+            // Colisionará y cambiara de dirección
+            enemigo.cambiarSentido();
+        }
+        else {
+            enemigo.actualizarMov(); //mover enemigo
+        }
     }
 
     private void actualizarCamaraAgua() {
@@ -928,6 +951,20 @@ public class PantallaJuego implements Screen{
 
         //mata enemigos al toque
         for (ObjetosJuego Enemigo : enemigoN1) {
+            if(hataku.getSprite().getX()>= Enemigo.getSprite().getX() && hataku.getSprite().getX()<= Enemigo.getSprite().getX() + Enemigo.getSprite().getWidth()-10
+                    && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight()-5 + Enemigo.getSprite().getY()){
+                if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
+
+                    this.efectoDanio.play(PantallaMenu.volumen);
+                    vidas.remove(vidas.size() - 1);
+                    Enemigo.quitarElemento();
+                }
+                break;
+            }
+        }
+
+        //mata enemigos especiales al toque
+        for (ObjetosJuego Enemigo : enemigoN2) {
             if(hataku.getSprite().getX()>= Enemigo.getSprite().getX() && hataku.getSprite().getX()<= Enemigo.getSprite().getX() + Enemigo.getSprite().getWidth()-10
                     && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight()-5 + Enemigo.getSprite().getY()){
                 if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
