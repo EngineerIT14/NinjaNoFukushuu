@@ -114,10 +114,8 @@ public class PantallaJuego implements Screen{
 
 
 
-
-    //Variable para indicar si numero de nivel y hacer el cambio en el numero de vidas, ya que hataku tiene su armadura completa en el nivel 4 y las vidas deben aumentar a 5, esta variable es nuestra bandera...
-    private boolean flag = false;
-    private int  numeroNivel; //es estatica ya que solo se quiere una copia de etsa variable y es modificada en seleccion de  nivel...
+    private boolean flag = false; //boleano para saber si se esta jugando el primer nivel, esto con el fin de cuando se esta jugando en el nivel 2 y 3, hay enemigos diferentes y no genere un error al correr el codigo...
+    private int  numeroNivel;
     private int ataqueFlag;
 
 
@@ -133,6 +131,12 @@ public class PantallaJuego implements Screen{
 
     @Override
     public void show() {
+
+        //Verifica si es el primer nivel
+        if(this.numeroNivel==1)
+            this.flag =true;
+
+
         // Crea la cámara/vista
         camara = new OrthographicCamera(Principal.ANCHO_CAMARA, Principal.ALTO_CAMARA);
         camara.position.set(Principal.ANCHO_CAMARA / 2, Principal.ALTO_CAMARA / 2, 0);
@@ -315,30 +319,8 @@ public class PantallaJuego implements Screen{
 
         //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
 
-        //Vidas: El numero de vidas cambia cuando se tiene la armadura completa, por lo que. al llegar all ultimo de nivel se debe de moficiar la variable globa de vidas, aumentando la vidas del persoonaje a 5.
-        if (this.numeroNivel == 4) { //El nivel 4 es donde hataku enfrenta al jefe final, por lo que, sus vidas aumentan...
-            this.flag = true;
-        } else {
-            this.flag = false; //no estoy en el nivel 4.
-        }
 
-        //Si es el nivel 4 se deben de poner 5 vidas
-        if (this.flag) {
-            this.vidas = new LinkedList<ObjetosJuego>();
-            for (int i = 0; i < 5; i++) {
-                ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
-                //nuevo.setTamanio(80,80);
-                this.vidas.add(nuevo);
-            }
 
-            //Se colocan las vidas en el lugar correspondiente
-           /* this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
-            this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
-            this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
-            this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);
-            this.vidas.get(0).setPosicion(1000, Principal.ALTO_MUNDO / 2);*/
-
-        } else { //entonces no estoy en el nivel 4, se deben de poner 3 vidas.
             this.vidas = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 3; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
@@ -348,7 +330,7 @@ public class PantallaJuego implements Screen{
             this.vidas.get(0).setPosicion(this.textoMarcadorVidas.getX() + 95, this.textoMarcadorVidas.getY() - 45);
             this.vidas.get(1).setPosicion(this.textoMarcadorVidas.getX() + 165, this.textoMarcadorVidas.getY() - 45);
             this.vidas.get(2).setPosicion(this.textoMarcadorVidas.getX() + 235, this.textoMarcadorVidas.getY() - 45);
-        }
+
         }
         else if (this.numeroNivel == 2){
             // Carga el mapa en memoria
@@ -726,7 +708,7 @@ public class PantallaJuego implements Screen{
                 if (Enemigo.actualizar())
                     Enemigo.render(batch);
             }
-            if (numeroNivel >= 2) {
+            if (numeroNivel >= 2 && !this.flag) {
                 for (ObjetosJuego enemigo : enemigoN2) {
                     if (enemigo.actualizar())
                         enemigo.render(batch);
@@ -1055,7 +1037,7 @@ public class PantallaJuego implements Screen{
             }
         }
 
-        if(this.numeroNivel == 2 || this.numeroNivel == 3) {
+        if(!this.flag && this.numeroNivel == 2 || this.numeroNivel == 3 ) {
 
             //mata enemigos especiales al toque
             for (ObjetosJuego Enemigo : enemigoN2) {

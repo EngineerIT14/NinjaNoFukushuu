@@ -206,7 +206,7 @@ public class PantallaCargando implements Screen
                     assetManager.load("imagenesGaleriaArte/arteAgua/arteMenu3.png",Texture.class);
                     assetManager.load("imagenesGaleriaArte/arteAgua/pocionArte.png",Texture.class);
                     assetManager.load("imagenesGaleriaArte/arteAgua/vidaArte2.png",Texture.class);
-                    assetManager.load("imagenesGaleriaArte/arteAgua/vidaArte2Color.png",Texture.class);
+
                    //assetManager.load("imagenesGaleriaArte/arteTierra/vidaArte.png",Texture.class);
 
                     //ArteNivelFuego
