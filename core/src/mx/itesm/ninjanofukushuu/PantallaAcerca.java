@@ -86,11 +86,11 @@ public class PantallaAcerca implements Screen {
         btnNuri.setPosicion(Principal.ANCHO_MUNDO * 3 / 8 - 100, Principal.ALTO_MUNDO / 3 - 100);
         btnFer.setPosicion(Principal.ANCHO_MUNDO * 5 / 8 - 100, Principal.ALTO_MUNDO / 3 - 100);
         btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8, Principal.ALTO_MUNDO * 1 / 5 -130);
-        presentacionIrvin.setPosicion(0 - 20, 0 - 100);
-        presentacionMia.setPosicion(0 - 20, 0 - 100);
-        presentacionJavier.setPosicion(0 - 20, 0 - 100);
-        presentacionNuri.setPosicion(0 - 20, 0 - 100);
-        presentacionFer.setPosicion(0 - 20, 0 - 100);
+        presentacionIrvin.setPosicion(0+50, 0 );
+        presentacionMia.setPosicion(0+50, 0 );
+        presentacionJavier.setPosicion(0+50, 0);
+        presentacionNuri.setPosicion(0+50, 0 );
+        presentacionFer.setPosicion(0+50, 0 );
         //Ajuste de tamaño
         //abanico.setTamanio(1280, 780);
         btnIrvin.setTamanio(anchoBoton, altoBoton);
@@ -102,11 +102,11 @@ public class PantallaAcerca implements Screen {
 
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
-        presentacionIrvin.setTamanio(1280, 880);
-        presentacionMia.setTamanio(1280,880);
-        presentacionJavier.setTamanio(1280, 880);
-        presentacionNuri.setTamanio(1280,880);
-        presentacionFer.setTamanio(1280, 880);
+        presentacionIrvin.setTamanio(1200, 720);
+        presentacionMia.setTamanio(1200,720);
+        presentacionJavier.setTamanio(1200, 720);
+        presentacionNuri.setTamanio(1200,720);
+        presentacionFer.setTamanio(1200, 720);
 
     }
 

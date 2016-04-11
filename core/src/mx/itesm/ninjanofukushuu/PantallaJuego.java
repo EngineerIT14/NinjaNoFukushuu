@@ -77,11 +77,11 @@ public class PantallaJuego implements Screen{
     //Enemigos
     private LinkedList<ObjetosJuego> enemigoN1;
     private Texture texturaEN1;
-    private LinkedList<ObjetosJuego> enemigoN2;
+    private LinkedList<ObjetosJuego> enemigoN2; //Enemigo especial con movimiento...usan la misma textura que los enemigos.
     private LinkedList<ObjetosJuego> enemigoN3;
 
     //Templo
-    private LinkedList<ObjetosJuego> templos; //son en total 3 templos
+    private LinkedList<ObjetosJuego> templos; //son en total 3 templos...Yo (Luis) digo que 1 es mas que suficiente
     private Texture texturaTemplo;
 
     //Pociones
