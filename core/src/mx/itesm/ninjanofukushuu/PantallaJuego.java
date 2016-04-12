@@ -271,15 +271,15 @@ public class PantallaJuego implements Screen{
 
         //Pociones: En todos los niveles solo hay 2 pociones.
         this.pociones = new LinkedList<ObjetosJuego>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             ObjetosJuego nuevo = new ObjetosJuego(this.texturaPocion);
             nuevo.setTamanio(30, 40);
             this.pociones.add(nuevo);
         }
 
         //Se colocan las pociones en el lugar correspondiente,
-        this.pociones.get(0).setPosicion(940, Principal.ALTO_MUNDO / 2 - 40);
-        this.pociones.get(1).setPosicion(255, 270);
+
+        this.pociones.get(0).setPosicion(255, 270);
 
         //Enemigos: 5 enemigos en el primer nivel
         this.enemigoN1 = new LinkedList<ObjetosJuego>();
@@ -418,7 +418,7 @@ public class PantallaJuego implements Screen{
 
             //Pociones: En todos los niveles solo hay 2 pociones.
             this.pociones = new LinkedList<ObjetosJuego>();
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 1; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaPocion);
                 nuevo.setTamanio(30, 40);
                 this.pociones.add(nuevo);
@@ -426,7 +426,7 @@ public class PantallaJuego implements Screen{
 
             //Se colocan las pociones en el lugar correspondiente,
             this.pociones.get(0).setPosicion(400, 630);
-            this.pociones.get(1).setPosicion(400, 990);
+
 
             //Enemigos: 4 enemigos en el segundo nivel
             this.enemigoN1 = new LinkedList<ObjetosJuego>();
@@ -573,7 +573,7 @@ public class PantallaJuego implements Screen{
 
             //Pociones: En todos los niveles solo hay 2 pociones.
             this.pociones = new LinkedList<ObjetosJuego>();
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 1; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaPocion);
                 nuevo.setTamanio(30, 40);
                 this.pociones.add(nuevo);
@@ -581,7 +581,7 @@ public class PantallaJuego implements Screen{
 
             //Se colocan las pociones en el lugar correspondiente,
             this.pociones.get(0).setPosicion(400, 630);
-            this.pociones.get(1).setPosicion(400, 990);
+
 
             //Enemigos: 4 enemigos en el segundo nivel
             this.enemigoN1 = new LinkedList<ObjetosJuego>();
