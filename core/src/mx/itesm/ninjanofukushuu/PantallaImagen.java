@@ -122,7 +122,7 @@ public class PantallaImagen implements Screen {
                 this.texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/vidaArte3.png");
                 break;
             case 4: //primer imagen de la historia de nivel de tierra
-                this.texturaImagen = assetManager.get("seleccionNivel/recursosNivelTierra/historiaTierra1.png");
+                this.texturaImagen = assetManager.get("seleccionNivel/recursosNivelTierra/historiaTierra1.jpg");
                 break;
             case 5: //primer imagen de la historia de nivel de agua
                 this.texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua1.png");
@@ -354,7 +354,7 @@ public class PantallaImagen implements Screen {
                             case 4: // historia nivel de tierra
                                 switch(numeroImagen){
                                     case 1:
-                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelTierra/historiaTierra1.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelTierra/historiaTierra1.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 2:
@@ -362,7 +362,7 @@ public class PantallaImagen implements Screen {
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 3:
-                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelTierra/historiaTierra3.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelTierra/historiaTierra3.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 4:
@@ -555,7 +555,7 @@ public class PantallaImagen implements Screen {
                             case 4: // historia nivel de tierra
                                 switch(numeroImagen){
                                     case 1:
-                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelTierra/historiaTierra1.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelTierra/historiaTierra1.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 2:
@@ -563,7 +563,7 @@ public class PantallaImagen implements Screen {
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 3:
-                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelTierra/historiaTierra3.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelTierra/historiaTierra3.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 4:

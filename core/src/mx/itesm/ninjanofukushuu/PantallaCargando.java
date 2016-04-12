@@ -278,9 +278,9 @@ public class PantallaCargando implements Screen
                 //se cargan los recursos para mostrar la historia...
                     assetManager.load("botonPlay.png", Texture.class); // boton play...
                     //son 5 imagenes para explicar la historia...
-                    assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra1.png",Texture.class);
+                    assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra1.jpg",Texture.class);
                     assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra2.jpg",Texture.class);
-                    assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra3.png",Texture.class);
+                    assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra3.jpg",Texture.class);
                     assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra4.jpg",Texture.class);
                     assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra5.jpg",Texture.class);
 
