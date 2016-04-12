@@ -892,8 +892,8 @@ public class PantallaJuego implements Screen{
             PantallaCargando.partidaGuardada.putBoolean("nivelAgua", true); //se guarda el progreso y se desbloquea el nivel de agua...
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
 
-            //Se va regresar a seleccion de nivel
-            plataforma.setScreen(new PantallaCargando(1, plataforma, true));
+            //Se va regresar a seleccion de nivel, primero se muestra la pantalla winner
+            plataforma.setScreen(new PantallaWinner(this.plataforma));
 
         }
 
@@ -908,14 +908,14 @@ public class PantallaJuego implements Screen{
             PantallaCargando.partidaGuardada.putBoolean("nivelFuego", true); //se guarda el progreso y se desbloquea el nivel de agua...
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
 
-            //Se va regresar a seleccion de nivel
-            plataforma.setScreen(new PantallaCargando(1, plataforma, true));
+            //Se va regresar a seleccion de nivel, primero se muestra la pantalla winner
+            plataforma.setScreen(new PantallaWinner(this.plataforma));
 
         }
 
         //temploFuego
 
-        if( 44 == this.hataku.getX() && 964 <= this.hataku.getY() && this.numeroNivel == 3){
+        if( 44 == this.hataku.getX() && 960 <= this.hataku.getY() && this.numeroNivel == 3){
 
             //this.numeroNivel = 3;
             this.marcadorPergaminos = 0;
@@ -923,8 +923,8 @@ public class PantallaJuego implements Screen{
             //PantallaCargando.partidaGuardada.putBoolean("nivelFuego", true); //se guarda el progreso y se desbloquea el nivel de agua...
             //PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
 
-            //Se va regresar a seleccion de nivel
-            plataforma.setScreen(new PantallaCargando(1, plataforma, true));
+            //Se va regresar a seleccion de nivel, primero se muestra la pantalla winner
+            plataforma.setScreen(new PantallaWinner(this.plataforma));
             }
 
     }

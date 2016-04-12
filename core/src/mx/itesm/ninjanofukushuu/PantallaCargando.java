@@ -271,8 +271,11 @@ public class PantallaCargando implements Screen
                     assetManager.load("seleccionNivel/sonidosGameplay/efectoPergamino.wav",Sound.class);
                     assetManager.load("seleccionNivel/sonidosGameplay/efectoDanio.wav",Sound.class);
                     assetManager.load("seleccionNivel/sonidosGameplay/puertaTemplo.wav",Sound.class);
+                    assetManager.load("seleccionNivel/recursosPerdiste/muerteNinja.wav",Sound.class);
+                    assetManager.load("seleccionNivel/recursosWinner/win.wav",Sound.class);
 
-                    //se cargan los recursos para mostrar la historia...
+
+                //se cargan los recursos para mostrar la historia...
                     assetManager.load("botonPlay.png", Texture.class); // boton play...
                     //son 5 imagenes para explicar la historia...
                     assetManager.load("seleccionNivel/recursosNivelTierra/historiaTierra1.png",Texture.class);
@@ -285,6 +288,9 @@ public class PantallaCargando implements Screen
                     //Para el gameOver
                     assetManager.load("seleccionNivel/recursosPerdiste/gameOver.png",Texture.class);
                     assetManager.load("seleccionNivel/recursosPerdiste/continue.png",Texture.class);
+
+                    //Para el winner
+                    assetManager.load("seleccionNivel/recursosWinner/winner.jpg", Texture.class);
 
                     //Para la pausa
                     assetManager.load("seleccionNivel/recursosPausa/menu.png",Texture.class);
@@ -325,6 +331,9 @@ public class PantallaCargando implements Screen
                 assetManager.load("seleccionNivel/sonidosGameplay/efectoPergamino.wav",Sound.class);
                 assetManager.load("seleccionNivel/sonidosGameplay/efectoDanio.wav",Sound.class);
                 assetManager.load("seleccionNivel/sonidosGameplay/puertaTemplo.wav",Sound.class);
+                assetManager.load("seleccionNivel/recursosPerdiste/muerteNinja.wav",Sound.class);
+                assetManager.load("seleccionNivel/recursosWinner/win.wav",Sound.class);
+
 
                 //se cargan los recursos para mostrar la historia...
                 assetManager.load("botonPlay.png", Texture.class); // boton play...
@@ -338,6 +347,9 @@ public class PantallaCargando implements Screen
                 //Para el gameOver
                 assetManager.load("seleccionNivel/recursosPerdiste/gameOver.png",Texture.class);
                 assetManager.load("seleccionNivel/recursosPerdiste/continue.png",Texture.class);
+
+                //Para el winner
+                assetManager.load("seleccionNivel/recursosWinner/winner.jpg",Texture.class);
 
                 //Para la pausa
                 assetManager.load("seleccionNivel/recursosPausa/menu.png",Texture.class);
@@ -378,6 +390,9 @@ public class PantallaCargando implements Screen
                 assetManager.load("seleccionNivel/sonidosGameplay/efectoPergamino.wav",Sound.class);
                 assetManager.load("seleccionNivel/sonidosGameplay/efectoDanio.wav",Sound.class);
                 assetManager.load("seleccionNivel/sonidosGameplay/puertaTemplo.wav",Sound.class);
+                assetManager.load("seleccionNivel/recursosPerdiste/muerteNinja.wav",Sound.class);
+                assetManager.load("seleccionNivel/recursosWinner/win.wav",Sound.class);
+
 
                 //se cargan los recursos para mostrar la historia...
                 assetManager.load("botonPlay.png", Texture.class); // boton play...
@@ -391,6 +406,9 @@ public class PantallaCargando implements Screen
                 //Para el gameOver
                 assetManager.load("seleccionNivel/recursosPerdiste/gameOver.png",Texture.class);
                 assetManager.load("seleccionNivel/recursosPerdiste/continue.png",Texture.class);
+
+                //Para el winner
+                assetManager.load("seleccionNivel/recursosWinner/winner.jpg",Texture.class);
 
                 //Para la pausa
                 assetManager.load("seleccionNivel/recursosPausa/menu.png",Texture.class);

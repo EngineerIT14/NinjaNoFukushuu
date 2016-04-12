@@ -14,41 +14,32 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /*
-
-Desarrollador: Irvin Emmanuel Trujillo Díaz
-Descripción: Pantalla que aparece cuando el usuario pierde en el videojuego, dandole las opciones para volver a jugar ese nivel desde el principio o regresar al menu principal.
-Profesor: Roberto Martinez Román.
-
+* Autor: Irvin Emmanuel Trujillo Díaz
+* Descripción: Esta clase muestra una imagen cuando el usuario gana en el jueglo
+* Profesor: Roberto Martinez Román
 * */
-public class PantallaGameOver implements Screen {
+public class PantallaWinner implements Screen {
 
     private final Principal principal;
     private OrthographicCamera camara;
     private Viewport vista;
     private SpriteBatch batch;
 
-    private int nivelDondePerdi; //Para saber en caso de que el usuairo quier volver a jugar, que nivel cargar...
 
-    private Fondo fondo; /* Es la imagen de gameOver*/
+    private Fondo fondo; /* Es la imagen de winner*/
     private Texture texturaFondo;
 
     //Botones para que el usuario pueda tener opciones
     private Boton btnContinue;
     private Texture texturaBtnContinue;
 
-    private Boton btnMenu;
-    private Texture texturaBtnMenu;
-
 
     //Efectos
-    private Sound efectoClick, efectoMuerteNinja;
+    private Sound efectoClick,efectoWin;
 
     //constructor
-    public PantallaGameOver(Principal principal, int nivel) {
+    public PantallaWinner(Principal principal) {
         this.principal = principal;
-        this.nivelDondePerdi = nivel;
-
-
     }
 
 
@@ -63,13 +54,11 @@ public class PantallaGameOver implements Screen {
         this.crearObjetos();
         // Indicar el objeto que atiende los eventos de touch (entrada en general)
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
-        this.efectoMuerteNinja.play(PantallaMenu.volumen); //Se rerpoduce sonido
 
-
+        this.efectoWin.play(PantallaMenu.volumen);
 
 
         //Batch
-
         this.batch = new SpriteBatch();
     }
 
@@ -77,8 +66,7 @@ public class PantallaGameOver implements Screen {
     private void crearObjetos() {
         AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
         //Textura de fondos y botones
-        this.texturaFondo = assetManager.get("seleccionNivel/recursosPerdiste/gameOver.png");
-        this.texturaBtnMenu = assetManager.get("seleccionNivel/recursosPausa/menu.png");
+        this.texturaFondo = assetManager.get("seleccionNivel/recursosWinner/winner.jpg");
         this.texturaBtnContinue = assetManager.get("seleccionNivel/recursosPerdiste/continue.png");
 
         //Crear fondo
@@ -89,14 +77,10 @@ public class PantallaGameOver implements Screen {
 
         //botones
         this.btnContinue = new Boton(this.texturaBtnContinue);
-        this.btnContinue.setPosicion(Principal.ANCHO_MUNDO / 2-160,  Principal.ALTO_MUNDO / 2-200);
-
-        this.btnMenu = new Boton(this.texturaBtnMenu);
-        this.btnMenu.setPosicion(Principal.ANCHO_MUNDO / 2-160, Principal.ALTO_MUNDO / 2-350);
+        this.btnContinue.setPosicion(Principal.ANCHO_MUNDO / 2 + 200, Principal.ALTO_MUNDO / 2 - 200);
 
         this.efectoClick = assetManager.get("sonidoVentana.wav");
-        this.efectoMuerteNinja =  assetManager.get("seleccionNivel/recursosPerdiste/muerteNinja.wav");
-
+        this.efectoWin =  assetManager.get("seleccionNivel/recursosWinner/win.wav");
 
 
 
@@ -114,7 +98,6 @@ public class PantallaGameOver implements Screen {
         //DIBUJAR
         this.batch.begin();
         this.fondo.render(batch);
-        this.btnMenu.render(batch);
         this.btnContinue.render(batch);
         this.batch.end();
     }
@@ -127,7 +110,7 @@ public class PantallaGameOver implements Screen {
         private float anchoBoton = btnContinue.getAncho();
         private float altoBton = btnContinue.getAlto();
 
-        private boolean banderaBotonContinue = false, banderaBotonMenu = false;
+        private boolean banderaBotonContinue = false;
         /*
         Se ejecuta cuando el usuario pone un dedo sobre la pantalla, los dos primeros parámetros
         son las coordenadas relativas a la pantalla física (0,0) en la esquina superior izquierda
@@ -140,17 +123,10 @@ public class PantallaGameOver implements Screen {
 
             if (btnContinue.contiene(x, y)) {
                 btnContinue.setAlfa(.5f);
-                btnContinue.setTamanio(btnContinue.getAncho() , btnContinue.getAlto() - 2); //Lo hago más pequeño
+                btnContinue.setTamanio(btnContinue.getAncho(), btnContinue.getAlto() - 2); //Lo hago más pequeño
                 this.banderaBotonContinue = true;
 
             }
-
-            if (btnMenu.contiene(x, y)) {
-                btnMenu.setAlfa(.5f);
-                btnMenu.setTamanio(btnMenu.getAncho(), btnMenu.getAlto() - 2); //Lo hago más pequeño
-                this.banderaBotonMenu = true;
-            }
-
 
             return true;    // Indica que ya procesó el evento
         }
@@ -165,21 +141,12 @@ public class PantallaGameOver implements Screen {
             //en la pantalla cargando determinara que cargar... se manda el numero correspondiente para saber que se va cargar en esa clase..
             if (btnContinue.contiene(x, y) && this.banderaBotonContinue) {
                 efectoClick.play(PantallaMenu.volumen); //efecto de sonido
-                principal.setScreen(new PantallaJuego(principal,nivelDondePerdi));   //Nos regresa al nivel donde se perdio---
-            }
-            if (btnMenu.contiene(x, y) && this.banderaBotonMenu) {
-                efectoClick.play(PantallaMenu.volumen); //efecto de sonido
-                principal.setScreen(new PantallaMenu(principal, true));  //nos regresa al menu principal.
-            }
-            else { //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
+                principal.setScreen(new SeleccionDeNivel(principal));   //Nos regresa a seleccionar los niveles...
+            } else { //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
                 // se le quita la transparencia y se regresa a su tamaño original
                 banderaBotonContinue = false;
-                banderaBotonMenu = false;
                 btnContinue.setAlfa(1);
-                btnMenu.setAlfa(1);
-
                 btnContinue.setTamanio(this.anchoBoton, this.altoBton); //tamaño orginal
-                btnMenu.setTamanio(this.anchoBoton, this.altoBton);
             }
             return true;    // Indica que ya procesó el evento
         }
@@ -221,11 +188,6 @@ public class PantallaGameOver implements Screen {
         principal.dispose();
         batch.dispose();
         this.texturaBtnContinue.dispose();
-        this.texturaBtnMenu.dispose();
         texturaFondo.dispose();
     }
 }
-
-
-
-
