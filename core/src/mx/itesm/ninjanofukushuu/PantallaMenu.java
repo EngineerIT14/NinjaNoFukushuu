@@ -148,7 +148,7 @@ public class PantallaMenu implements Screen {
     private void cargarAudioJuego() {
         //Musica de fondo
         if(!this.banderaCancionJuego) { //si es falsa, entonces no se esta escuchando nada....
-            this.musicaFondo = Gdx.audio.newMusic(Gdx.files.internal("musicaJuegoPrincipal.wav"));
+            this.musicaFondo = Gdx.audio.newMusic(Gdx.files.internal("musicaJuegoPrincipal.mp3"));
             this.musicaFondo.setLooping(true);
             this.musicaFondo.play();
             this.musicaFondo.setVolume(PantallaMenu.volumen);
