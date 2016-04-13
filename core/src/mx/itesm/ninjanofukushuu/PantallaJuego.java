@@ -354,9 +354,9 @@ public class PantallaJuego implements Screen{
                     //Textura Objetos que estan en la pantalla
             this.texturaScroll = assetManager.get("seleccionNivel/items/scroll.png");
             this.texturaPocion = assetManager.get("seleccionNivel/items/pocion.png");
-            this.texturaEN1 = assetManager.get("seleccionNivel/recursosNivelAgua/AguaE.png");
+            this.texturaEN1 = assetManager.get("seleccionNivel/recursosNivelAgua/aguaE.png");
             this.texturaAtaque = assetManager.get("seleccionNivel/items/ataque2.png");
-            this.texturaTemplo = assetManager.get("seleccionNivel/recursosNivelAgua/temploAzul.png");
+            this.texturaTemplo = assetManager.get("seleccionNivel/recursosNivelTierra/temploVerde.png"); /*LUIS! NO LE MUEVAS, EN LA TABLETA NO CARGA TEMPLOAZUL.. */
 
             //****************************************************************//
             //nota: se debe cosniderar que la imagen de vidas va cambiar cuando el ninja obtenga una parte de la armadura, recomiendo usar un switch y usar una bandera (boolean) cuando se pase el nivel y deppendiendo de la bandera cargar el archivo de imagenn correspondiente

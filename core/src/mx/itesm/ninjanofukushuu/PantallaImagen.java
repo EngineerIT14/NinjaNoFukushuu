@@ -324,7 +324,7 @@ public class PantallaImagen implements Screen {
                                        imagen.cambiarFondo(texturaImagen);
                                        break;
                                    case 2:
-                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/disenioNivelFuego.PNG");
+                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/disenioNivelFuego.png");
                                        imagen.cambiarFondo(texturaImagen);
                                        break;
                                    case 3:
@@ -332,11 +332,11 @@ public class PantallaImagen implements Screen {
                                        imagen.cambiarFondo(texturaImagen);
                                        break;
                                    case 4:
-                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/fondoFuego.png");
+                                       texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/fondofuego.png");
                                        imagen.cambiarFondo(texturaImagen);
                                        break;
                                    case 5:
-                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/fondoFuego2.jpg");
+                                       texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/fondofuego2.jpg");
                                        imagen.cambiarFondo(texturaImagen);
                                        break;
                                    default:
@@ -518,20 +518,14 @@ public class PantallaImagen implements Screen {
                                 break;
                             case 3: //galeria de arte nivel del fuego
 
-                                /*
-*  ssetManager.load("imagenesGaleriaArte/arteFuego/vidaArte3.png",Texture.class);
-                               assetManager.load("imagenesGaleriaArte/arteFuego/disenioNivelFuego.PNG",Texture.class);
-                               assetManager.load("imagenesGaleriaArte/arteFuego/Enemigo3.png",Texture.class);
-                               assetManager.load("imagenesGaleriaArte/arteFuego/fondoFuego.png",Texture.class);
-                               assetManager.load("imagenesGaleriaArte/arteFuego/fondoFuego2.jpg",Texture.class);
-                               assetManager.load("imagenesAcercaDe/Fondo.jpg",Texture.class);*/
+
                                 switch (numeroImagen) {
                                     case 1:
                                         texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/vidaArte3.png");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 2:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/disenioNivelFuego.PNG");
+                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/disenioNivelFuego.png");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 3:
@@ -539,11 +533,11 @@ public class PantallaImagen implements Screen {
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 4:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/fondoFuego.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/fondofuego.png");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 5:
-                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/fondoFuego2.jpg");
+                                        texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/fondofuego2.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 6:

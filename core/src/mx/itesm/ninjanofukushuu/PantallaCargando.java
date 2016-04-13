@@ -214,10 +214,10 @@ public class PantallaCargando implements Screen
                     //ArteNivelFuego
 
                     assetManager.load("imagenesGaleriaArte/arteFuego/vidaArte3.png",Texture.class);
-                    assetManager.load("imagenesGaleriaArte/arteFuego/disenioNivelFuego.PNG",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteFuego/disenioNivelFuego.png",Texture.class);
                     assetManager.load("imagenesGaleriaArte/arteFuego/Enemigo3.png",Texture.class);
-                    assetManager.load("imagenesGaleriaArte/arteFuego/fondoFuego.png",Texture.class);
-                    assetManager.load("imagenesGaleriaArte/arteFuego/fondoFuego2.jpg",Texture.class);
+                    assetManager.load("seleccionNivel/recursosNivelFuego/fondofuego.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteFuego/fondofuego2.jpg",Texture.class);
                     assetManager.load("imagenesAcercaDe/Fondo.jpg",Texture.class);
 
 
@@ -324,9 +324,9 @@ public class PantallaCargando implements Screen
                 assetManager.load("seleccionNivel/items/ataque2.png", Texture.class);
 
                 //Textura enemigo
-                assetManager.load("seleccionNivel/recursosNivelAgua/AguaE.png", Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelAgua/aguaE.png", Texture.class);
                 //Textura templo
-                assetManager.load("seleccionNivel/recursosNivelAgua/temploAzul.png", Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelTierra/temploVerde.png", Texture.class);
                 //caritaVida
                 assetManager.load("seleccionNivel/recursosNivelAgua/life2.png", Texture.class);
                 //sonidos
