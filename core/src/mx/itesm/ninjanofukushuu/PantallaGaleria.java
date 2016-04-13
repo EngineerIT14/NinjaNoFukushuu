@@ -230,6 +230,8 @@ public class PantallaGaleria implements Screen {
                 btnGaleriaAgua.setAlfa(1);
                 btnGaleriaAgua.setTamanio(300, 300); //tamaño original
                 efectoClick.play(PantallaMenu.volumen); //efecto de sonido
+                // ya se cargaron previamente las imagenes necesarias...
+                principal.setScreen(new PantallaImagen(principal, 2)); //galeria de arte de agua..
 
             }
 
@@ -240,6 +242,8 @@ public class PantallaGaleria implements Screen {
                 banderaBotonGaleriaFuego = false;
                 btnGaleriaFuego.setAlfa(1);
                 btnGaleriaFuego.setTamanio(300, 300); //tamaño orginal
+                // ya se cargaron previamente las imagenes necesarias...
+                principal.setScreen(new PantallaImagen(principal, 3)); //galeria de arte de fuego..
 
             }
 

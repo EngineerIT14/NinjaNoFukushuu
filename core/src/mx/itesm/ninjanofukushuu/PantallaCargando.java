@@ -202,20 +202,24 @@ public class PantallaCargando implements Screen
                     assetManager.load("imagenesGaleriaArte/arteTierra/fondoArteTierra.png",Texture.class);
 
                     //ArteNivelAgua
+                    assetManager.load("imagenesGaleriaArte/arteAgua/aguaE.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteAgua/arteFondo.jpg",Texture.class);
                     assetManager.load("imagenesGaleriaArte/arteAgua/arteMenu2.jpg",Texture.class);
-                    assetManager.load("imagenesGaleriaArte/arteAgua/arteMenu3.png",Texture.class);
+                    assetManager.load("seleccionNivel/fondoSeleccionNivel.jpg",Texture.class);
                     assetManager.load("imagenesGaleriaArte/arteAgua/pocionArte.png",Texture.class);
                     assetManager.load("imagenesGaleriaArte/arteAgua/vidaArte2.png",Texture.class);
 
-                   //assetManager.load("imagenesGaleriaArte/arteTierra/vidaArte.png",Texture.class);
+
 
                     //ArteNivelFuego
+
                     assetManager.load("imagenesGaleriaArte/arteFuego/vidaArte3.png",Texture.class);
-                    /*assetManager.load("imagenesGaleriaArte/arteTierra/hatakuArte.png",Texture.class);
-                    assetManager.load("imagenesGaleriaArte/arteTierra/mapaArte1.png",Texture.class);
-                    assetManager.load("imagenesGaleriaArte/arteTierra/mapaArte2.png",Texture.class);
-                    assetManager.load("imagenesGaleriaArte/arteTierra/samuraiArte.png",Texture.class);
-                    assetManager.load("imagenesGaleriaArte/arteTierra/vidaArte.png",Texture.class);*/
+                    assetManager.load("imagenesGaleriaArte/arteFuego/disenioNivelFuego.PNG",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteFuego/Enemigo3.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteFuego/fondoFuego.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteFuego/fondoFuego2.jpg",Texture.class);
+                    assetManager.load("imagenesAcercaDe/Fondo.jpg",Texture.class);
+
 
                     assetManager.load("return.png",Texture.class); //el return esta en la raiz...
                     //sonidos en raiz
