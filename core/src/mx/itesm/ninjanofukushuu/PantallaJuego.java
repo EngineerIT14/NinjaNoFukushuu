@@ -1137,7 +1137,7 @@ public class PantallaJuego implements Screen{
         if ( hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.INICIANDO
                 && (hataku.getEstadoSalto() != Personaje.EstadoSalto.SUBIENDO) ) {
             // Calcula la celda donde estaría después de moverlo
-            int celdaX = (int) ((hataku.getX()+4) / TAM_CELDA);
+            int celdaX = (int) ((hataku.getX()) / TAM_CELDA);
             int celdaY = (int) ((hataku.getY() + hataku.VELOCIDAD_Y) / TAM_CELDA);
             // Recuperamos la celda en esta posición
             // La capa 0 es el fondo
