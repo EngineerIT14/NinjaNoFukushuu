@@ -2,6 +2,7 @@ package mx.itesm.ninjanofukushuu;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -25,6 +26,7 @@ public class Personaje
     // Estados del personaje
     private EstadoMovimiento estadoMovimiento;
     private EstadoSalto estadoSalto;
+    private Estado estado;
 
     // SALTO del personaje
     private static final float V0 =45;     // Velocidad inicial del salto
@@ -34,6 +36,7 @@ public class Personaje
     private float tiempoVuelo;       // Tiempo que estará en el aire
     private float tiempoSalto;      // Tiempo actual de vuelo
     boolean banderaVolteadoIzquierda = false;//Para cuando este quieto, voltear el sprite...
+    private float tiempoDaniado;
 
     /*
     Constructor del personaje, recibe una imagen con varios frames, (ver imagen marioSprite.png)
@@ -54,6 +57,8 @@ public class Personaje
         sprite = new Sprite(texturaPersonajeCorriendo[0][0]);    // quieto sprite del mario quieto..
         estadoMovimiento = EstadoMovimiento.INICIANDO;
         estadoSalto = EstadoSalto.EN_PISO;
+        estado = Estado.SIN_DANIO;
+        tiempoDaniado=0;
     }
 
     // Dibuja el personaje
@@ -122,6 +127,23 @@ public class Personaje
         }
     }
 
+    //Estado daño enemigo
+    public void danio(){
+        switch (estado){
+            case SIN_DANIO:
+                sprite.setColor(Color.WHITE);
+                break;
+            case DANIADO:
+                sprite.setColor(Color.RED);
+                tiempoDaniado += Gdx.graphics.getDeltaTime();
+                if(tiempoDaniado>=5){
+                    estado=Estado.SIN_DANIO;
+                    tiempoDaniado=0;
+                }
+                break;
+        }
+    }
+
     // Avanza en su caída
     public void caer() {
         sprite.setY(sprite.getY() + VELOCIDAD_Y);
@@ -167,6 +189,8 @@ public class Personaje
         return estadoMovimiento;
     }
 
+    public Estado getEstado(){return estado;}
+
     // Modificador del estado
     public void setEstado(EstadoMovimiento estado) {
         this.estadoMovimiento = estado;
@@ -190,6 +214,13 @@ public class Personaje
         return estadoSalto;
     }
 
+    public void daniar() {
+        if(estado!=Estado.DANIADO){
+            estado=Estado.DANIADO;
+            tiempoDaniado=0;
+        }
+    }
+
     public enum EstadoMovimiento {
         INICIANDO,
         QUIETO,
@@ -202,5 +233,9 @@ public class Personaje
         SUBIENDO,
         BAJANDO,
         CAIDA_LIBRE // Cayó de una orilla
+    }
+    public enum Estado{
+        SIN_DANIO,
+        DANIADO
     }
 }

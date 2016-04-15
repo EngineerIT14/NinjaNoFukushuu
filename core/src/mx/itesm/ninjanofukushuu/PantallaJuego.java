@@ -187,7 +187,7 @@ public class PantallaJuego implements Screen{
         rendererMapa.setView(camara);
         // Cargar frames
         //texturaHataku = assetManager.get("seleccionNivel/recursosNivelTierra/marioSprite.png");
-        texturaHataku = assetManager.get("seleccionNivel/recursosNivelTierra/ninjita.png");
+        texturaHataku = assetManager.get("seleccionNivel/recursosNivelTierra/Hataku.png");
         // Crear el personaje
         hataku = new Personaje(texturaHataku);
         // Posición inicial del personaje
@@ -473,7 +473,7 @@ public class PantallaJuego implements Screen{
                 this.templos.add(nuevo);
             }
 
-            this.templos.get(0).setPosicion(20, 1160); //temploAgua
+            this.templos.get(0).setPosicion(20, 1170); //temploAgua
 
             this.vidas = new LinkedList<ObjetosJuego>();
             for (int i = 0; i < 3; i++) {
@@ -691,6 +691,7 @@ public class PantallaJuego implements Screen{
             recogerObjeto();
             // Entre begin-end dibujamos nuestros objetos en pantalla
             batch.begin();
+            hataku.danio();
             hataku.render(batch);    // Dibuja el personaje
             //Dibujar scrolls
             for (ObjetosJuego scrolls : scroll) {
@@ -1028,10 +1029,11 @@ public class PantallaJuego implements Screen{
             if(hataku.getSprite().getX()>= Enemigo.getSprite().getX() && hataku.getSprite().getX()<= Enemigo.getSprite().getX() + Enemigo.getSprite().getWidth()-10
                     && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight()-5 + Enemigo.getSprite().getY()){
                 if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
-
-                    this.efectoDanio.play(PantallaMenu.volumen);
-                    vidas.remove(vidas.size() - 1);
-                    Enemigo.quitarElemento();
+                    if(hataku.getEstado()!=Personaje.Estado.DANIADO){
+                        this.efectoDanio.play(PantallaMenu.volumen);
+                        vidas.remove(vidas.size() - 1);
+                        hataku.daniar();
+                    }
                 }
                 break;
             }
@@ -1044,10 +1046,11 @@ public class PantallaJuego implements Screen{
                 if (hataku.getSprite().getX() >= Enemigo.getSprite().getX() && hataku.getSprite().getX() <= Enemigo.getSprite().getX() + Enemigo.getSprite().getWidth() - 10
                         && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight() - 5 + Enemigo.getSprite().getY()) {
                     if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
-
-                        this.efectoDanio.play(PantallaMenu.volumen);
-                        vidas.remove(vidas.size() - 1);
-                        Enemigo.quitarElemento();
+                        if(hataku.getEstado()!=Personaje.Estado.DANIADO){
+                            this.efectoDanio.play(PantallaMenu.volumen);
+                            vidas.remove(vidas.size() - 1);
+                            hataku.daniar();
+                        }
                     }
                     break;
                 }
@@ -1066,9 +1069,12 @@ public class PantallaJuego implements Screen{
                     ataque.getSprite().getX()+ataque.getSprite().getWidth()<= hataku.getSprite().getX()+hataku.getSprite().getWidth() && ataque.getSprite().getX()+ataque.getSprite().getWidth()>= hataku.getSprite().getX()
                             && ataque.getSprite().getY()<=hataku.getSprite().getY()+hataku.getSprite().getHeight() && ataque.getSprite().getY()>=hataku.getSprite().getY()){
                 if (ataque.getEstadoAtaque() != ObjetosJuego.EstadoAtaque.OCULTO){
-                    ataque.ocultar();
-                    this.efectoDanio.play(PantallaMenu.volumen);
-                    vidas.remove(vidas.size() - 1);
+                    if(hataku.getEstado()!=Personaje.Estado.DANIADO){
+                        ataque.ocultar();
+                        this.efectoDanio.play(PantallaMenu.volumen);
+                        vidas.remove(vidas.size() - 1);
+                        hataku.daniar();
+                    }
                 }
             }
         }
@@ -1131,7 +1137,7 @@ public class PantallaJuego implements Screen{
         if ( hataku.getEstadoMovimiento()!= Personaje.EstadoMovimiento.INICIANDO
                 && (hataku.getEstadoSalto() != Personaje.EstadoSalto.SUBIENDO) ) {
             // Calcula la celda donde estaría después de moverlo
-            int celdaX = (int) (hataku.getX() / TAM_CELDA);
+            int celdaX = (int) ((hataku.getX()+4) / TAM_CELDA);
             int celdaY = (int) ((hataku.getY() + hataku.VELOCIDAD_Y) / TAM_CELDA);
             // Recuperamos la celda en esta posición
             // La capa 0 es el fondo
