@@ -12,9 +12,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 import java.util.LinkedList;
 import com.badlogic.gdx.Input.Keys;
 
@@ -990,13 +992,12 @@ public class PantallaJuego implements Screen{
     }
 
     private void recogerObjeto() {
+        Rectangle rh = new Rectangle(hataku.getX(),hataku.getY(),hataku.getSprite().getWidth(),hataku.getSprite().getHeight());
         //Recogerscrolls al tocarlos
         for (ObjetosJuego scrolls : scroll) {
-            if(hataku.getSprite().getX()>= scrolls.getSprite().getX() && hataku.getSprite().getX()<= scrolls.getSprite().getX() + scrolls.getSprite().getWidth()
-                    && hataku.getSprite().getY() >= scrolls.getSprite().getY() && hataku.getSprite().getY() <= scrolls.getSprite().getHeight() + scrolls.getSprite().getY() ||
-                    hataku.getSprite().getX()+hataku.getSprite().getWidth()>= scrolls.getSprite().getX() && hataku.getSprite().getX()+hataku.getSprite().getWidth()<= scrolls.getSprite().getX() + scrolls.getSprite().getWidth()
-                            && hataku.getSprite().getY()+hataku.getSprite().getHeight() >= scrolls.getSprite().getY() && hataku.getSprite().getY()+hataku.getSprite().getHeight() <= scrolls.getSprite().getHeight() + scrolls.getSprite().getY()){
-                if(scrolls.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
+            Rectangle rs = new Rectangle(scrolls.getSprite().getX(),scrolls.getSprite().getY(),scrolls.getSprite().getWidth(),scrolls.getSprite().getHeight());
+            if(rs.overlaps(rh)) {
+                if (scrolls.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
                     this.marcadorPergaminos++;
                     this.efectoTomarPergamino.play(PantallaMenu.volumen); //suena efecto
                     scrolls.quitarElemento();
@@ -1006,13 +1007,10 @@ public class PantallaJuego implements Screen{
         }
         //Recoger pociones al tocarlas
         for (ObjetosJuego pocion : pociones) {
-            if(hataku.getSprite().getX()>= pocion.getSprite().getX() && hataku.getSprite().getX()<= pocion.getSprite().getX() + pocion.getSprite().getWidth()
-                    && hataku.getSprite().getY() >= pocion.getSprite().getY() && hataku.getSprite().getY() <= pocion.getSprite().getHeight() + pocion.getSprite().getY() ||
-                    hataku.getSprite().getX()+hataku.getSprite().getWidth()>= pocion.getSprite().getX() && hataku.getSprite().getX()+hataku.getSprite().getWidth()<= pocion.getSprite().getX() + pocion.getSprite().getWidth()
-                            && hataku.getSprite().getY()+hataku.getSprite().getHeight() >= pocion.getSprite().getY() && hataku.getSprite().getY()+hataku.getSprite().getHeight() <= pocion.getSprite().getHeight() + pocion.getSprite().getY()){
+            Rectangle rp= new Rectangle(pocion.getSprite().getX(),pocion.getSprite().getY(),pocion.getSprite().getWidth(),pocion.getSprite().getHeight());
+            if(rp.overlaps(rh)){
                 if(vidas.size()<3) {
                     if (pocion.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
-
                         this.efectoTomarVida.play(PantallaMenu.volumen); //suena efecto
                         ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                         this.vidas.add(nuevo);
@@ -1026,8 +1024,8 @@ public class PantallaJuego implements Screen{
 
         //mata enemigos al toque
         for (ObjetosJuego Enemigo : enemigoN1) {
-            if(hataku.getSprite().getX()>= Enemigo.getSprite().getX() && hataku.getSprite().getX()<= Enemigo.getSprite().getX() + Enemigo.getSprite().getWidth()-10
-                    && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight()-5 + Enemigo.getSprite().getY()){
+            Rectangle rE1= new Rectangle(Enemigo.getSprite().getX(),Enemigo.getSprite().getY(),Enemigo.getSprite().getWidth(),Enemigo.getSprite().getHeight());
+            if(rE1.overlaps(rh)){
                 if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
                     if(hataku.getEstado()!=Personaje.Estado.DANIADO){
                         this.efectoDanio.play(PantallaMenu.volumen);
@@ -1043,8 +1041,8 @@ public class PantallaJuego implements Screen{
 
             //mata enemigos especiales al toque
             for (ObjetosJuego Enemigo : enemigoN2) {
-                if (hataku.getSprite().getX() >= Enemigo.getSprite().getX() && hataku.getSprite().getX() <= Enemigo.getSprite().getX() + Enemigo.getSprite().getWidth() - 10
-                        && hataku.getSprite().getY() >= Enemigo.getSprite().getY() && hataku.getSprite().getY() <= Enemigo.getSprite().getHeight() - 5 + Enemigo.getSprite().getY()) {
+                Rectangle rE2= new Rectangle(Enemigo.getSprite().getX(),Enemigo.getSprite().getY(),Enemigo.getSprite().getWidth(),Enemigo.getSprite().getHeight());
+                if (rE2.overlaps(rh)) {
                     if (Enemigo.getEstado() != ObjetosJuego.Estado.DESAPARECIDO) {
                         if(hataku.getEstado()!=Personaje.Estado.DANIADO){
                             this.efectoDanio.play(PantallaMenu.volumen);
@@ -1060,14 +1058,8 @@ public class PantallaJuego implements Screen{
 
         //tomar daño de ataque enemigos
         for (ObjetosJuego ataque: ataques){
-            if(ataque.getSprite().getX()<= hataku.getSprite().getX()+hataku.getSprite().getWidth() && ataque.getSprite().getX()>= hataku.getSprite().getX()
-                    && ataque.getSprite().getY()+ataque.getSprite().getHeight()<=hataku.getSprite().getY()+hataku.getSprite().getHeight() && ataque.getSprite().getY()+ataque.getSprite().getHeight()>=hataku.getSprite().getY() ||
-                    ataque.getSprite().getX()<= hataku.getSprite().getX()+hataku.getSprite().getWidth() && ataque.getSprite().getX()>= hataku.getSprite().getX()
-                            && ataque.getSprite().getY()<=hataku.getSprite().getY()+hataku.getSprite().getHeight() && ataque.getSprite().getY()>=hataku.getSprite().getY() ||
-                    ataque.getSprite().getX()+ataque.getSprite().getWidth()<= hataku.getSprite().getX()+hataku.getSprite().getWidth() && ataque.getSprite().getX()+ataque.getSprite().getWidth()>= hataku.getSprite().getX()
-                            && ataque.getSprite().getY()+ataque.getSprite().getHeight()<=hataku.getSprite().getY()+hataku.getSprite().getHeight() && ataque.getSprite().getY()+ataque.getSprite().getHeight()>=hataku.getSprite().getY() ||
-                    ataque.getSprite().getX()+ataque.getSprite().getWidth()<= hataku.getSprite().getX()+hataku.getSprite().getWidth() && ataque.getSprite().getX()+ataque.getSprite().getWidth()>= hataku.getSprite().getX()
-                            && ataque.getSprite().getY()<=hataku.getSprite().getY()+hataku.getSprite().getHeight() && ataque.getSprite().getY()>=hataku.getSprite().getY()){
+            Rectangle ra = new Rectangle(ataque.getSprite().getX(),ataque.getSprite().getY(),ataque.getSprite().getWidth(),ataque.getSprite().getHeight());
+            if(ra.overlaps(rh)){
                 if (ataque.getEstadoAtaque() != ObjetosJuego.EstadoAtaque.OCULTO){
                     if(hataku.getEstado()!=Personaje.Estado.DANIADO){
                         ataque.ocultar();
