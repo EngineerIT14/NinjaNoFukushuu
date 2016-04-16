@@ -11,3 +11,7 @@ B.A. Animation and Digital Art (LAD)
 
 * Nuria Michelle Víquez Chilpa
 * Maria Fernanda Fajardo Torres	
+* 
+
+LICENSE: Attribution-NonCommercial 3.0  
+https://creativecommons.org/licenses/by-nc/3.0/us/
