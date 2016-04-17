@@ -459,7 +459,7 @@ public class PantallaJuego implements Screen{
             //Se colocan los enemigos en su lugar correspondiente, en el nivel de Agua
             this.enemigoN1.get(0).setPosicion(280, 170); //centro izquierda
             this.enemigoN1.get(1).setPosicion(560, 440);  //centro derecha
-            this.enemigoN1.get(2).setPosicion(480, 920); //plataforma derecha
+            this.enemigoN1.get(2).setPosicion(480, 950); //plataforma derecha
             this.enemigoN1.get(3).setPosicion(225, 760); //Plataforma Izquierda
 
             //Enemigos especiales
@@ -484,7 +484,7 @@ public class PantallaJuego implements Screen{
             }
 
             this.temploElemental  = new ObjetosJuego(this.texturaTemplo);
-            this.temploElemental.setPosicion(20, 960); //temploFuego
+            this.temploElemental.setPosicion(20, 1000); //temploFuego
             this.temploElemental.setTamanio(60, 90);
 
             //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
