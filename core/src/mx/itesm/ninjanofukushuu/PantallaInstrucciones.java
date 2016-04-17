@@ -8,7 +8,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -17,24 +16,26 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  *Pantalla instrucciones, donse se le mostraran las instrucciones del juego  al usuario
  *  Autores: Javier e Irvin Emmanuel Trujillo Díaz
- *
  */
 public class PantallaInstrucciones implements Screen {
     private final Principal principal;
     private OrthographicCamera camara;
     private Viewport vista;
-    private SpriteBatch batch;
+    private static SpriteBatch batch;
+
+
+    //Se usa static para que solamente haya 1 copia.
     //Fondo
-    private Fondo fondo;
-    private Texture texturaFondo;
+    private static Fondo fondo;
+    private static Texture texturaFondo;
 
-
-    private Boton btnRegresar;
-    private Texture texturaRegresar;
-    private static final int anchoBoton = 180, altoBoton = 200; //anchoBoton1 = 480 , altoBoton1 = 160;
+    //Boton regresar
+    private static Boton btnRegresar;
+    private static Texture texturaRegresar;
+    private static final int anchoBoton = 180, altoBoton = 200;
 
     //Efectos
-    private Sound efectoClick;
+    private static Sound efectoClick;
 
     public PantallaInstrucciones(Principal principal) {
         this.principal = principal;
@@ -52,6 +53,17 @@ public class PantallaInstrucciones implements Screen {
         // Indicar el objeto que atiende los eventos de touch (entrada en general)
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
+
+    }
+
+    //crea los objetos de textura y audio
+    private void crearObjetos(){
+        AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
+        //Fondo
+        texturaFondo = assetManager.get("imagenesInstrucciones/fondoInstrucciones.jpg");
+        texturaRegresar = assetManager.get("return.png");
+        efectoClick = assetManager.get("sonidoVentana.wav");
+
         //Crear fondo
         fondo = new Fondo(texturaFondo);
 
@@ -62,15 +74,6 @@ public class PantallaInstrucciones implements Screen {
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
         batch = new SpriteBatch();
-    }
-
-    //crea los objetos de textura y audio
-    private void crearObjetos(){
-        AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
-        //Fondo
-        texturaFondo = assetManager.get("imagenesInstrucciones/fondoInstrucciones.jpg");
-        texturaRegresar = assetManager.get("return.png");
-        this.efectoClick = assetManager.get("sonidoVentana.wav");
     }
 
 
@@ -109,7 +112,7 @@ public class PantallaInstrucciones implements Screen {
 
             if (btnRegresar.contiene(x,y)){
                 btnRegresar.setAlfa(.5f);
-                btnRegresar.setTamanio(anchoBoton-80, altoBoton - 78); //Lo hago más pequeño
+                btnRegresar.setTamanio(anchoBoton - 80, altoBoton - 78); //Lo hago más pequeño
                 this.banderaBotonRegresar = true;
             }
 
@@ -131,9 +134,11 @@ public class PantallaInstrucciones implements Screen {
 
             else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
                 // se le quita la transparencia y se regresa a su tamaño original
-                banderaBotonRegresar = false;
-                btnRegresar.setAlfa(1);
-                btnRegresar.setTamanio(anchoBoton-80,altoBoton-80); //tamaño orginal
+                if(banderaBotonRegresar) {
+                    banderaBotonRegresar = false;
+                    btnRegresar.setAlfa(1);
+                    btnRegresar.setTamanio(anchoBoton - 80, altoBoton - 80); //tamaño orginal
+                }
             }
             return true;    // Indica que ya procesó el evento
         }

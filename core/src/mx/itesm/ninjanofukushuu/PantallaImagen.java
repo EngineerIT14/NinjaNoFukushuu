@@ -40,23 +40,23 @@ public class PantallaImagen implements Screen {
 
     //Imagenes que son para mostrar el arte, son 6 imagenes por cada seccion (arte)...
     //en caso de que sea para mostrar la historia, son 5 imagenes, se va determinar que texturas cargar con el int indicadorImagenes...
-    private Fondo imagen;
-    private Texture  texturaImagen;
+    private static Fondo imagen;
+    private static Texture  texturaImagen;
     //las texturas van a cambiar cuando el usuario presione  <- y ->
 
     //Botones para que el usuario pueda mover las imagenes...
-    private Boton btnDerecha;
-    private Texture texturaBtnDerecha;
+    private static Boton btnDerecha;
+    private static Texture texturaBtnDerecha;
 
-    private Boton btnIzquierda;
-    private Texture texturaBtnIzquierda;
+    private static Boton btnIzquierda;
+    private static Texture texturaBtnIzquierda;
 
 
-    private Boton btnAccion;
+    private static Boton btnAccion;
     // la textura cargada y el comportamiento del boton dependera del indicadorImagenes
     //de 1 a 3: son las texturas de la galeria de arte por lo que la textura es la del boton regresar
     //4 a 6 son de la historia por lo que el boton dirá "play"...
-    private Texture texturaBtnAccion;
+    private static Texture texturaBtnAccion;
 
     private AssetManager assetManager;
 
@@ -66,10 +66,8 @@ public class PantallaImagen implements Screen {
     private static int TAMANIO_BOTON_FELCHAS_ALTO = 141;
     private static int TAMANIO_BOTON = 200;//BOTON RETURN-ACCION
 
-
-
     //Efectos
-    private Sound efectoHoja, efectoClick;
+    private static Sound efectoHoja, efectoClick;
 
     public PantallaImagen(Principal principal, int indicadorImagenes) {
         this.principal = principal;
@@ -92,14 +90,7 @@ public class PantallaImagen implements Screen {
         // Indicar el objeto que atiende los eventos de touch (entrada en general)
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
-        //Crear fondo/imagenes que se van a mostra
-        this.imagen = new Fondo(this.texturaImagen);
 
-
-        //Batch
-        this.imagen.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
-        this.imagen.getSprite().setOrigin(1500 / 2, 1500 / 2);
-        batch = new SpriteBatch();
     }
 
 
@@ -113,22 +104,22 @@ public class PantallaImagen implements Screen {
         // aqui se evalua si se debe de mostrar la primera  imagen de la historia o de la galeria de arte...
         switch(this.indicadorImagenes){
             case 1: //arte de nivel tierra
-                this.texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/arteMenu1.png");
+                texturaImagen = assetManager.get("imagenesGaleriaArte/arteTierra/arteMenu1.png");
                 break;
             case 2: //arte de nivel agua
-                this.texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/arteMenu2.jpg");
+                texturaImagen = assetManager.get("imagenesGaleriaArte/arteAgua/arteMenu2.jpg");
                 break;
             case 3: //arte de nivel de fuego
-                this.texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/vidaArte3.png");
+                texturaImagen = assetManager.get("imagenesGaleriaArte/arteFuego/vidaArte3.png");
                 break;
             case 4: //primer imagen de la historia de nivel de tierra
-                this.texturaImagen = assetManager.get("seleccionNivel/recursosNivelTierra/historiaTierra1.jpg");
+                texturaImagen = assetManager.get("seleccionNivel/recursosNivelTierra/historiaTierra1.jpg");
                 break;
             case 5: //primer imagen de la historia de nivel de agua
-                this.texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua1.png");
+                texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua1.png");
                 break;
             case 6:
-                this.texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego1.png");
+                texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego1.png");
                 break; //primer imagen de la historia de nivel del fuego
         }
 
@@ -137,38 +128,47 @@ public class PantallaImagen implements Screen {
         //de 1 a 3: son las texturas de la galeria de arte por lo que la textura es la del boton regresar
         //4 a 6 son de la historia por lo que el boton dirá "play"...
         if(this.indicadorImagenes<4)
-            this.texturaBtnAccion = assetManager.get("return.png");
+            texturaBtnAccion = assetManager.get("return.png");
 
         else
-            this.texturaBtnAccion = assetManager.get("Play.png");
+            texturaBtnAccion = assetManager.get("Play.png");
 
 
-        this.efectoClick = assetManager.get("sonidoVentana.wav");
-        this.efectoHoja = assetManager.get("seleccionNivel/sonidosGameplay/efectoPergamino.wav"); //para cuando cambias de hoja..
+        efectoClick = assetManager.get("sonidoVentana.wav");
+        efectoHoja = assetManager.get("seleccionNivel/sonidosGameplay/efectoPergamino.wav"); //para cuando cambias de hoja..
 
 
 
         //botones para mover las imagenes..
-        this.texturaBtnIzquierda =  assetManager.get("seleccionNivel/botonesFlechas/izquierdaImagenes.png");
-        this.texturaBtnDerecha = assetManager.get("seleccionNivel/botonesFlechas/derechaImagenes.png");
+        texturaBtnIzquierda =  assetManager.get("seleccionNivel/botonesFlechas/izquierdaImagenes.png");
+        texturaBtnDerecha = assetManager.get("seleccionNivel/botonesFlechas/derechaImagenes.png");
 
         //creandoBotones
 
-        this.btnAccion = new Boton(texturaBtnAccion);
-        this.btnAccion.setPosicion(Principal.ANCHO_MUNDO-205, Principal.ALTO_MUNDO * 1 / 5 - 140);
-        this.btnAccion.setAlfa(0.7f); // Un poco de transparencia
-        this.btnAccion.setTamanio(PantallaImagen.TAMANIO_BOTON, PantallaImagen.TAMANIO_BOTON);
+        btnAccion = new Boton(texturaBtnAccion);
+        btnAccion.setPosicion(Principal.ANCHO_MUNDO-205, Principal.ALTO_MUNDO * 1 / 5 - 140);
+        btnAccion.setAlfa(1);
+        btnAccion.setTamanio(PantallaImagen.TAMANIO_BOTON, PantallaImagen.TAMANIO_BOTON);
 
 
         btnIzquierda = new Boton(texturaBtnIzquierda);
         btnIzquierda.setPosicion(50 , 16 / 5 +30);
-        btnIzquierda.setAlfa(0.7f); // Un poco de transparencia
+        btnIzquierda.setAlfa(1);
         btnIzquierda.setTamanio(PantallaImagen.TAMANIO_BOTON_FLECHAS_ANCHO , PantallaImagen.TAMANIO_BOTON_FELCHAS_ALTO);
 
         btnDerecha = new Boton(texturaBtnDerecha);
         btnDerecha.setPosicion(Principal.ANCHO_MUNDO / 2 + 200, 16 / 5+20);
-        btnDerecha.setAlfa(0.7f); // Un poco de transparencia
+        btnDerecha.setAlfa(1);
         btnDerecha.setTamanio(PantallaImagen.TAMANIO_BOTON_FLECHAS_ANCHO, PantallaImagen.TAMANIO_BOTON_FELCHAS_ALTO );
+
+        //Crear fondo/imagenes que se van a mostra
+        imagen = new Fondo(texturaImagen);
+
+
+        //Batch
+        imagen.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
+        imagen.getSprite().setOrigin(1500 / 2, 1500 / 2);
+        batch = new SpriteBatch();
     }
 
     @Override
@@ -180,10 +180,10 @@ public class PantallaImagen implements Screen {
         batch.setProjectionMatrix(camara.combined);
         //DIBUJAR
         batch.begin();
-        this.imagen.render(batch);
-        this.btnAccion.render(batch);
-        this.btnIzquierda.render(batch);
-        this.btnDerecha.render(batch);
+        imagen.render(batch);
+        btnAccion.render(batch);
+        btnIzquierda.render(batch);
+        btnDerecha.render(batch);
         batch.end();
     }
 
@@ -662,15 +662,21 @@ public class PantallaImagen implements Screen {
             else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
                 // se le quita la transparencia y se regresa a su tamaño original
                 //niveles bloqueados
-                banderaBotonIzquierda = false;
-                btnIzquierda.setAlfa(1);
-                btnIzquierda.setTamanio(PantallaImagen.TAMANIO_BOTON_FLECHAS_ANCHO, PantallaImagen.TAMANIO_BOTON_FELCHAS_ALTO); //tamaño original
-                banderaBotonDerecha = false;
-                btnDerecha.setAlfa(1);
-                btnDerecha.setTamanio(PantallaImagen.TAMANIO_BOTON_FLECHAS_ANCHO, PantallaImagen.TAMANIO_BOTON_FELCHAS_ALTO); //tamaño original
-                banderaBotonAccion = false;
-                btnAccion.setAlfa(1);
-                btnAccion.setTamanio(PantallaImagen.TAMANIO_BOTON, PantallaImagen.TAMANIO_BOTON); //tamaño orginal
+                if(banderaBotonIzquierda) {
+                    banderaBotonIzquierda = false;
+                    btnIzquierda.setAlfa(1);
+                    btnIzquierda.setTamanio(PantallaImagen.TAMANIO_BOTON_FLECHAS_ANCHO, PantallaImagen.TAMANIO_BOTON_FELCHAS_ALTO); //tamaño original
+                }
+                else if(banderaBotonDerecha) {
+                    banderaBotonDerecha = false;
+                    btnDerecha.setAlfa(1);
+                    btnDerecha.setTamanio(PantallaImagen.TAMANIO_BOTON_FLECHAS_ANCHO, PantallaImagen.TAMANIO_BOTON_FELCHAS_ALTO); //tamaño original
+                }
+                else if(banderaBotonAccion) {
+                    banderaBotonAccion = false;
+                    btnAccion.setAlfa(1);
+                    btnAccion.setTamanio(PantallaImagen.TAMANIO_BOTON, PantallaImagen.TAMANIO_BOTON); //tamaño orginal
+                }
             }
             return true;    // Indica que ya procesó el evento
         }

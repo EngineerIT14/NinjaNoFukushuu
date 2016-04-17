@@ -23,19 +23,15 @@ public class PantallaWinner implements Screen {
     private final Principal principal;
     private OrthographicCamera camara;
     private Viewport vista;
-    private SpriteBatch batch;
-
-
-    private Fondo fondo; /* Es la imagen de winner*/
-    private Texture texturaFondo;
-
+    private static SpriteBatch batch;
+    //static = 1 copia
+    private static Fondo fondo; /* Es la imagen de winner*/
+    private static Texture texturaFondo;
     //Botones para que el usuario pueda tener opciones
-    private Boton btnContinue;
-    private Texture texturaBtnContinue;
-
-
+    private static Boton btnContinue;
+    private static Texture texturaBtnContinue;
     //Efectos
-    private Sound efectoClick,efectoWin;
+    private static Sound efectoClick,efectoWin;
 
     //constructor
     public PantallaWinner(Principal principal) {
@@ -54,35 +50,32 @@ public class PantallaWinner implements Screen {
         this.crearObjetos();
         // Indicar el objeto que atiende los eventos de touch (entrada en general)
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
+        efectoWin.play(PantallaMenu.volumen);
 
-        this.efectoWin.play(PantallaMenu.volumen);
-
-
-        //Batch
-        this.batch = new SpriteBatch();
     }
 
     //crea los objetos de textura y audio
     private void crearObjetos() {
         AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
         //Textura de fondos y botones
-        this.texturaFondo = assetManager.get("seleccionNivel/recursosWinner/winner.jpg");
-        this.texturaBtnContinue = assetManager.get("seleccionNivel/recursosPerdiste/continue.png");
+        texturaFondo = assetManager.get("seleccionNivel/recursosWinner/winner.jpg");
+        texturaBtnContinue = assetManager.get("seleccionNivel/recursosPerdiste/continue.png");
 
         //Crear fondo
-        this.fondo = new Fondo(texturaFondo);
+        fondo = new Fondo(texturaFondo);
 
-        this.fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
-        this.fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
+        fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
+        fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
 
         //botones
-        this.btnContinue = new Boton(this.texturaBtnContinue);
-        this.btnContinue.setPosicion(Principal.ANCHO_MUNDO / 2 + 200, Principal.ALTO_MUNDO / 2 - 200);
+        btnContinue = new Boton(texturaBtnContinue);
+        btnContinue.setPosicion(Principal.ANCHO_MUNDO / 2 + 200, Principal.ALTO_MUNDO / 2 - 200);
 
-        this.efectoClick = assetManager.get("sonidoVentana.wav");
-        this.efectoWin =  assetManager.get("seleccionNivel/recursosWinner/win.wav");
+        efectoClick = assetManager.get("sonidoVentana.wav");
+        efectoWin =  assetManager.get("seleccionNivel/recursosWinner/win.wav");
 
-
+        //Batch
+        batch = new SpriteBatch();
 
     }
 
@@ -93,13 +86,13 @@ public class PantallaWinner implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        this.batch.setProjectionMatrix(camara.combined);
+        batch.setProjectionMatrix(camara.combined);
 
         //DIBUJAR
-        this.batch.begin();
-        this.fondo.render(batch);
-        this.btnContinue.render(batch);
-        this.batch.end();
+        batch.begin();
+        fondo.render(batch);
+        btnContinue.render(batch);
+        batch.end();
     }
 
 
@@ -144,9 +137,11 @@ public class PantallaWinner implements Screen {
                 principal.setScreen(new SeleccionDeNivel(principal));   //Nos regresa a seleccionar los niveles...
             } else { //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
                 // se le quita la transparencia y se regresa a su tamaño original
-                banderaBotonContinue = false;
-                btnContinue.setAlfa(1);
-                btnContinue.setTamanio(this.anchoBoton, this.altoBton); //tamaño orginal
+                if(banderaBotonContinue) {
+                    banderaBotonContinue = false;
+                    btnContinue.setAlfa(1);
+                    btnContinue.setTamanio(this.anchoBoton, this.altoBton); //tamaño orginal
+                }
             }
             return true;    // Indica que ya procesó el evento
         }
@@ -187,7 +182,7 @@ public class PantallaWinner implements Screen {
         //Eliminar basura
         principal.dispose();
         batch.dispose();
-        this.texturaBtnContinue.dispose();
+        texturaBtnContinue.dispose();
         texturaFondo.dispose();
     }
 }

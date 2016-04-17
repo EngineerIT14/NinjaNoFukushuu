@@ -29,43 +29,44 @@ public class PantallaCargando implements Screen
     // La cámara y vista principal
     private OrthographicCamera camara;
     private Viewport vista;
-    private SpriteBatch batch;
+    private static SpriteBatch batch;
 
+    //static = 1 copia.
     // Imagen cargando
-    private Texture texturaCargando;
-    private Sprite spriteCargando;
+    private static Texture texturaCargando;
+    private static Sprite spriteCargando;
     //Fondo de la textura  (la base blanca)
-    private Texture texturaFondoCargando;
-    private Sprite spriteFondoCargando;
+    private static Texture texturaFondoCargando;
+    private static Sprite spriteFondoCargando;
 
     //Textura cargando...
-    private  Texture texturaLetrasLoading;
-    private Sprite spriteLetrasLoading;
+    private static Texture texturaLetrasLoading;
+    private static Sprite spriteLetrasLoading;
 
     //Banderas para determinar si los botones de galeriae estan desbloqueados, son publicos ya que se modifican en la pantalla juego..
     public static boolean banderaArteTierra = false, banderaArteAgua = false, banderaArteFuego = false; //Son public static para que sean manipuladas en otras clases..
 
-    //Banderas para determinas si los niveles estan desbloqueados
+    //Banderas para determinar si los niveles estan desbloqueados
     public static boolean banderaNivelAguaDesbloqueado = false, banderaNivelFuegoDesbloqueado = false; //Son public static para que sean manipuladas en otras clases..
 
 
     //Progreso de la partida
     public static Preferences partidaGuardada; //guardar el progreso del usuario..., es publica para que se pueda ir modificando en las otras clases...
 
-
     private AssetManager assetManager;  // Asset manager principal
 
     private int pantallaCargar; //aqui se va almacenar un numero que indicara que pantalla va cargar
-    private boolean banderaMusicaFondo; //Para saber que en la clase pantallaMenu al cargarse, que bandera se manda y no se reprodusca la cancion de fondo más de 1 vez si esta ya puesta..
-                                /*
-                                * 1: elementos juego (seleccion de nivel..)
-                                * 2: elementos instrucciones
-                                * 3: elementos galeria de arte
-                                * 4: elementos acerca de
-                                * 5: recursos nivel tierra
-                                * 6: recursos nivel agua
-                                * 7: recursos nivel fuego
-                                * */
+    /*
+                          * 1: elementos juego (seleccion de nivel..)
+                          * 2: elementos instrucciones
+                          * 3: elementos galeria de arte
+                          * 4: elementos acerca de
+                          * 5: recursos nivel tierra
+                          * 6: recursos nivel agua
+                          * 7: recursos nivel fuego
+                          * */
+    private boolean banderaMusicaFondo; //Para saber que en la clase pantallaMenu al cargarse, se debe de mostrar el logo del tec o no (al principio) tambien para evitar que se reproduzca nuevamente la canción..
+
 
     public PantallaCargando(Integer pantalla,Principal plataforma, boolean banderaMusicaFondo) {
         this.plataforma = plataforma;
@@ -97,9 +98,12 @@ public class PantallaCargando implements Screen
         //Se resetea con esta configuracion de procesadorEntradar();
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
-        // Cargar recursos
+        cargarImagenCargando();     // Cargar recursos para mostrar en la pantalla cargando...
+        cargarRecursos(); //Cargando recursos de determinada pantalla
+    }
 
-        if(!this.banderaMusicaFondo) { //si la banderaMusica es falsa, lo que nos quiere decir es que por primera vez se carga la pantalla, entonces se esta iniciando la APP, por lo que debe de mostrar el logo del equipoRocket y del tec.. recordar que apartir de la pantalllaMenu es donde se manda true  como argumentos..
+    private void cargarImagenCargando() {
+        if(!this.banderaMusicaFondo) { //si la banderaMusica es falsa, lo que nos quiere decir es que por primera vez se carga la pantalla, entonces se esta iniciando la APP, por lo que debe de mostrar el logo del tec.. recordar que apartir de la pantalllaMenu es donde se manda true  como argumentos..
             assetManager.load("logoRocket.jpg", Texture.class);
             assetManager.finishLoading();
             texturaCargando = assetManager.get("logoRocket.jpg");
@@ -110,25 +114,23 @@ public class PantallaCargando implements Screen
             assetManager.load("LOADING2.png",Texture.class);
             assetManager.finishLoading();
             texturaCargando = assetManager.get("cargando.png");
-            this.texturaFondoCargando = assetManager.get("fondoCargando.png");
-            this.texturaLetrasLoading = assetManager.get("LOADING2.png");
+            texturaFondoCargando = assetManager.get("fondoCargando.png");
+            texturaLetrasLoading = assetManager.get("LOADING2.png");
 
 
-            spriteFondoCargando = new Sprite(this.texturaFondoCargando);
+            spriteFondoCargando = new Sprite(texturaFondoCargando);
             spriteFondoCargando.setPosition(Principal.ANCHO_MUNDO / 2 - spriteFondoCargando.getWidth() / 2,
                     Principal.ALTO_MUNDO / 2 - spriteFondoCargando.getHeight() / 2);
 
-            spriteLetrasLoading = new Sprite(this.texturaLetrasLoading);
+            spriteLetrasLoading = new Sprite(texturaLetrasLoading);
             spriteLetrasLoading.setPosition(Principal.ANCHO_MUNDO / 2 - spriteLetrasLoading.getWidth() / 2,
                     Principal.ALTO_MUNDO / 2 - spriteLetrasLoading.getHeight() / 2 -300);
 
         }
         spriteCargando = new Sprite(texturaCargando);
         spriteCargando.setPosition(Principal.ANCHO_MUNDO / 2 - spriteCargando.getWidth() / 2,
-                                    Principal.ALTO_MUNDO / 2 - spriteCargando.getHeight() / 2);
+                Principal.ALTO_MUNDO / 2 - spriteCargando.getHeight() / 2);
 
-
-        cargarRecursos();
     }
 
     // Carga los recursos a través del administrador de assets (siguiente pantalla)
@@ -152,8 +154,7 @@ public class PantallaCargando implements Screen
                     assetManager.load("bocina.png",Texture.class);
                     assetManager.load("mute.png",Texture.class);
                     assetManager.load("sonidoVentana.wav", Sound.class);    // Cargar sonido
-                assetManager.load("seleccionNivel/sonidosGameplay/puertaTemplo.wav",Sound.class);
-
+                    assetManager.load("seleccionNivel/sonidosGameplay/puertaTemplo.wav",Sound.class);
                     break;
 
             case 1: //Pantalla de seleccion de nivel...
@@ -212,7 +213,6 @@ public class PantallaCargando implements Screen
 
 
                     //ArteNivelFuego
-
                     assetManager.load("imagenesGaleriaArte/arteFuego/vidaArte3.png",Texture.class);
                     assetManager.load("imagenesGaleriaArte/arteFuego/disenioNivelFuego.png",Texture.class);
                     assetManager.load("imagenesGaleriaArte/arteFuego/Enemigo3.png",Texture.class);
@@ -300,7 +300,6 @@ public class PantallaCargando implements Screen
                     assetManager.load("seleccionNivel/recursosPausa/menu.png",Texture.class);
                     assetManager.load("seleccionNivel/recursosPausa/Pausa.png",Texture.class);
                     assetManager.load("seleccionNivel/recursosPausa/fondoPausa.png",Texture.class);
-
 
                     break;
             case 6:
@@ -434,14 +433,14 @@ public class PantallaCargando implements Screen
         borrarPantalla();
 
         //gira la imagen cargando cuando no sea la primer pantalla
-        if(banderaMusicaFondo == true) //al iniciar la APP, se esta mandando como argumento falso ya que no se esta reproduciendo la musica antes.. por ende, cuando es true, estas cargando las otras pantallas, porm lo que debe de girar la imagen..
+        if(banderaMusicaFondo) //Significa que esta cargando una pantalla, entonces la imagen es la que gira..
             spriteCargando.setRotation(spriteCargando.getRotation() -5);
 
         batch.setProjectionMatrix(camara.combined);
 
         // Entre begin-end dibujamos nuestros objetos en pantalla
         batch.begin();
-        if(banderaMusicaFondo == true) { //al iniciar la APP, se esta mandando como argumento falso ya que no se esta reproduciendo la musica antes.. por ende, cuando es true, estas cargando las otras pantallas,
+        if(banderaMusicaFondo) { //al iniciar la APP, la bandera es falsa porque no se esta escuchando ninguna cancion, entonces es el logo del TEC, NO gira.
             spriteFondoCargando.draw(batch);
             spriteLetrasLoading.draw(batch);
         }
@@ -517,19 +516,14 @@ public class PantallaCargando implements Screen
     public class ProcesadorEntrada extends InputAdapter {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
             return true;    // Indica que ya procesó el evento
         }
         //Se ejecuta cuando el usuario QUITA el dedo de la pantalla.
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-
             return true;    // Indica que ya procesó el evento
         }
-
     }
-
-
 
     @Override
     public void hide() {
@@ -539,6 +533,8 @@ public class PantallaCargando implements Screen
     @Override
     public void dispose() {
         plataforma.dispose();
+        texturaLetrasLoading.dispose();
+        texturaFondoCargando.dispose();
         texturaCargando.dispose();
         batch.dispose();
         // Los assets de PantallaJuego se liberan en el método dispose de PantallaJuego

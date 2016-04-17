@@ -19,27 +19,25 @@ Descripción: Esta clase es la encargada de representar la pantalla de "About", 
 Profesor: Roberto Martinez Román.
  */
 public class PantallaAcerca implements Screen {
-
+    //static = 1 copia
     private final Principal principal;
     private OrthographicCamera camara;
     private Viewport vista;
-    private SpriteBatch batch;
+    private static SpriteBatch batch;
     //Fondo
-    private Fondo fondo;
-    private Texture texturaFondo;
+    private static Fondo fondo;
+    private static Texture texturaFondo;
 
     //Botones
-    private Boton btnMia,btnNuri,btnIrvin,btnJavier, btnFer, btnRegresar;
-    private Texture texturaBtnMia,texturaBtnNuri, texturaBtnIrvin,texturaBtnJavier, texturaBtnFer, texturaRegresar;
+    private static Boton btnMia,btnNuri,btnIrvin,btnJavier, btnFer, btnRegresar;
+    private static Texture texturaBtnMia,texturaBtnNuri, texturaBtnIrvin,texturaBtnJavier, texturaBtnFer, texturaRegresar;
     private static final int anchoBoton = 180, altoBoton = 200; //anchoBoton1 = 480 , altoBoton1 = 160;
     //Presentaciones
-    private Presentacion presentacionIrvin, presentacionMia, presentacionJavier, presentacionNuri, presentacionFer;
-    private  Texture texturaPresentacionIrvin, texturaPresentacionMia, texturaPresentacionJavier, texturaPresentacionNuri, texturaPresentacionFer;
+    private static Presentacion presentacionIrvin, presentacionMia, presentacionJavier, presentacionNuri, presentacionFer;
+    private static Texture texturaPresentacionIrvin, texturaPresentacionMia, texturaPresentacionJavier, texturaPresentacionNuri, texturaPresentacionFer;
 
     //Efectos y musica de fondo
-    private Sound efectoClick;
-
-
+    private static Sound efectoClick;
 
     public PantallaAcerca(Principal principal) {
         this.principal = principal;
@@ -54,11 +52,36 @@ public class PantallaAcerca implements Screen {
         vista = new StretchViewport(Principal.ANCHO_MUNDO,Principal.ALTO_MUNDO,camara);
 
         this.crearObjetos();
+        // Indicar el objeto que atiende los eventos de touch (entrada en general)
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
+    }
+
+    //crea los objetos de textura y audio
+    private void crearObjetos(){
+        AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
+        //Fondo
+        texturaFondo = assetManager.get("imagenesAcercaDe/Fondo.jpg");
+        //Abanico
+        //texturaAbanico = new Texture(Gdx.files.internal("Abanico.png"));
+        //Botones
+        texturaBtnMia = assetManager.get("imagenesAcercaDe/M.png");
+        texturaBtnNuri = assetManager.get("imagenesAcercaDe/N.png");
+        texturaBtnIrvin = assetManager.get("imagenesAcercaDe/I.png");
+        texturaBtnJavier = assetManager.get("imagenesAcercaDe/J.png");
+        texturaBtnFer = assetManager.get("imagenesAcercaDe/F.png");
+        texturaRegresar = assetManager.get("return.png"); // esta en la raiz
+        //Presentaciones
+        texturaPresentacionIrvin = assetManager.get("imagenesAcercaDe/Irvi.png");
+        texturaPresentacionMia = assetManager.get("imagenesAcercaDe/Mare.png");
+        texturaPresentacionJavier = assetManager.get("imagenesAcercaDe/Javo.png");
+        texturaPresentacionNuri = assetManager.get("imagenesAcercaDe/Nuria.png");
+        texturaPresentacionFer = assetManager.get("imagenesAcercaDe/Fercho.png");
+
+        efectoClick = assetManager.get("sonidoVentana.wav");
+
         //Batch
         batch = new SpriteBatch();
 
-        // Indicar el objeto que atiende los eventos de touch (entrada en general)
-        Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
         //Crear fondo
         fondo = new Fondo(texturaFondo);
@@ -86,11 +109,11 @@ public class PantallaAcerca implements Screen {
         btnNuri.setPosicion(Principal.ANCHO_MUNDO * 3 / 8 - 100, Principal.ALTO_MUNDO / 3 - 100);
         btnFer.setPosicion(Principal.ANCHO_MUNDO * 5 / 8 - 100, Principal.ALTO_MUNDO / 3 - 100);
         btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8, Principal.ALTO_MUNDO * 1 / 5 -130);
-        presentacionIrvin.setPosicion(0+50, 0 );
-        presentacionMia.setPosicion(0+50, 0 );
-        presentacionJavier.setPosicion(0+50, 0);
-        presentacionNuri.setPosicion(0+50, 0 );
-        presentacionFer.setPosicion(0+50, 0 );
+        presentacionIrvin.setPosicion(50, 0 );
+        presentacionMia.setPosicion(50, 0 );
+        presentacionJavier.setPosicion(50, 0);
+        presentacionNuri.setPosicion(50, 0 );
+        presentacionFer.setPosicion(50, 0 );
         //Ajuste de tamaño
         //abanico.setTamanio(1280, 780);
         btnIrvin.setTamanio(anchoBoton, altoBoton);
@@ -107,31 +130,6 @@ public class PantallaAcerca implements Screen {
         presentacionJavier.setTamanio(1200, 720);
         presentacionNuri.setTamanio(1200,720);
         presentacionFer.setTamanio(1200, 720);
-
-    }
-
-    //crea los objetos de textura y audio
-    private void crearObjetos(){
-        AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
-        //Fondo
-        texturaFondo = assetManager.get("imagenesAcercaDe/Fondo.jpg");
-        //Abanico
-        //texturaAbanico = new Texture(Gdx.files.internal("Abanico.png"));
-        //Botones
-        texturaBtnMia = assetManager.get("imagenesAcercaDe/M.png");
-        texturaBtnNuri = assetManager.get("imagenesAcercaDe/N.png");
-        texturaBtnIrvin = assetManager.get("imagenesAcercaDe/I.png");
-        texturaBtnJavier = assetManager.get("imagenesAcercaDe/J.png");
-        texturaBtnFer = assetManager.get("imagenesAcercaDe/F.png");
-        texturaRegresar = assetManager.get("return.png"); // esta en la raiz
-        //Presentaciones
-        texturaPresentacionIrvin = assetManager.get("imagenesAcercaDe/Irvi.png");
-        texturaPresentacionMia = assetManager.get("imagenesAcercaDe/Mare.png");
-        texturaPresentacionJavier = assetManager.get("imagenesAcercaDe/Javo.png");
-        texturaPresentacionNuri = assetManager.get("imagenesAcercaDe/Nuria.png");
-        texturaPresentacionFer = assetManager.get("imagenesAcercaDe/Fercho.png");
-
-        efectoClick = assetManager.get("sonidoVentana.wav");
 
 
     }
@@ -159,25 +157,22 @@ public class PantallaAcerca implements Screen {
         if(presentacionIrvin.actualizar()){
             presentacionIrvin.render(batch);
         }
-        if(presentacionMia.actualizar()){
+        else if(presentacionMia.actualizar()){
             presentacionMia.render(batch);
         }
-        if(presentacionJavier.actualizar()){
+        else if(presentacionJavier.actualizar()){
             presentacionJavier.render(batch);
         }
-        if(presentacionNuri.actualizar()){
+        else if(presentacionNuri.actualizar()){
             presentacionNuri.render(batch);
         }
-        if(presentacionFer.actualizar()){
+        else if(presentacionFer.actualizar()){
             presentacionFer.render(batch);
         }
         batch.end();
     }
 
-
      /*REVISION DE TOUCH*/
-    //se elimino metodo leer entrada, ahora eso es de touchDown
-    //Se eliminó el método de verificarBoton... ahora se usa touchUp, touchDown...
 
     //Clase utilizada para manejar los eventos de touch en la pantalla
     public class ProcesadorEntrada extends InputAdapter {
@@ -194,7 +189,7 @@ public class PantallaAcerca implements Screen {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-            //caso cuando no hay ninguna ventana emerge abierta...
+            //caso cuando no hay ninguna ventana emergente abierta...
             if(presentacionIrvin.getEstado() != Presentacion.Estado.APARECIDO && presentacionMia.getEstado() != Presentacion.Estado.APARECIDO && presentacionJavier.getEstado() != Presentacion.Estado.APARECIDO
                     && presentacionNuri.getEstado() != Presentacion.Estado.APARECIDO && presentacionFer.getEstado() !=  Presentacion.Estado.APARECIDO) {
 
@@ -202,32 +197,32 @@ public class PantallaAcerca implements Screen {
                 if (btnIrvin.contiene(x, y)) {
                     btnIrvin.setAlfa(.5f); //al presionarse se hace transparente
                     btnIrvin.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
-                    this.banderaBotonIrvin = true; //el boton está transparente, entonces activo la bandera..
+                    banderaBotonIrvin = true; //el boton está transparente, entonces activo la bandera..
                 }
                 else if (btnMia.contiene(x, y)) {
                     btnMia.setAlfa(.5f);  //al presionarse se hace transparente
                     btnMia.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
-                    this.banderaBotonMia = true;
+                    banderaBotonMia = true;
                 }
                 else if (btnJavier.contiene(x, y)) {
                     btnJavier.setAlfa(.5f);
                     btnJavier.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
-                    this.banderaBotonJavier = true;
+                    banderaBotonJavier = true;
                 }
                 else if (btnNuri.contiene(x, y)) {
                     btnNuri.setAlfa(.5f);
                     btnNuri.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
-                    this.banderaBotonNuri = true;
+                    banderaBotonNuri = true;
                 }
                 else if (btnFer.contiene(x,y)){
                     btnFer.setAlfa(.5f);
                     btnFer.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
-                    this.banderaBotonFer = true;
+                    banderaBotonFer = true;
                 }
                 else if (btnRegresar.contiene(x,y)){
                     btnRegresar.setAlfa(.5f);
                     btnRegresar.setTamanio(anchoBoton-30, altoBoton - 32); //Lo hago más pequeño
-                    this.banderaBotonRegresar = true;
+                    banderaBotonRegresar = true;
                 }
                 return true;    // Indica que ya procesó el evento
             }
@@ -289,55 +284,66 @@ public class PantallaAcerca implements Screen {
             transformarCoordenadas(screenX, screenY);
 
             // Preguntar si las coordenadas son de cierto lugar de donde se quito el dedo
-            if (btnIrvin.contiene(x, y) &&  this.banderaBotonIrvin) {
+            if (btnIrvin.contiene(x, y) &&  banderaBotonIrvin) {
                 presentacionIrvin.aparecer();
                 efectoClick.play(PantallaMenu.volumen); //efecto de sonido
 
             }
-            else if (btnMia.contiene(x, y) && this.banderaBotonMia) {
+            else if (btnMia.contiene(x, y) && banderaBotonMia) {
                 presentacionMia.aparecer();
                 efectoClick.play(PantallaMenu.volumen);
 
             }
-            else if (btnJavier.contiene(x, y) && this.banderaBotonJavier ) {
+            else if (btnJavier.contiene(x, y) && banderaBotonJavier ) {
                 presentacionJavier.aparecer();
                 efectoClick.play(PantallaMenu.volumen);
             }
-            else if (btnNuri.contiene(x, y) && this.banderaBotonNuri ) {
+            else if (btnNuri.contiene(x, y) && banderaBotonNuri ) {
                 presentacionNuri.aparecer();
                 efectoClick.play(PantallaMenu.volumen);
 
             }
-            else if (btnFer.contiene(x, y) && this.banderaBotonFer ) {
+            else if (btnFer.contiene(x, y) && banderaBotonFer ) {
                 presentacionFer.aparecer();
                 efectoClick.play(PantallaMenu.volumen);
 
             }
-            else if (btnRegresar.contiene(x, y) && this.banderaBotonRegresar ) {
+            else if (btnRegresar.contiene(x, y) && banderaBotonRegresar ) {
                 efectoClick.play(PantallaMenu.volumen);
                 principal.setScreen(new PantallaMenu(principal,true)); //se manda true porque se esta escuchando la cancion, es decir, ya hay un objeto cancion reproduciendose..
             }
             else{ //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones... entonces cancelo su selecciona
                 // se le quita la transparencia y se regresa a su tamaño original de los botones
-
-                banderaBotonIrvin = false;
-                btnIrvin.setAlfa(1);
-                btnIrvin.setTamanio(anchoBoton, altoBoton); //tamaño original
-                banderaBotonMia = false;
-                btnMia.setAlfa(1);
-                btnMia.setTamanio(anchoBoton, altoBoton); //tamaño original
-                banderaBotonJavier = false;
-                btnJavier.setAlfa(1);
-                btnJavier.setTamanio(anchoBoton,altoBoton); //tamaño orginal
-                banderaBotonNuri = false;
-                btnNuri.setAlfa(1);
-                btnNuri.setTamanio(anchoBoton, altoBoton); //tamaño orginal
-                banderaBotonFer = false;
-                btnFer.setAlfa(1);
-                btnFer.setTamanio(anchoBoton,altoBoton); //tamaño orginal
-                banderaBotonRegresar = false;
-                btnRegresar.setAlfa(1);
-                btnRegresar.setTamanio(anchoBoton-30,altoBoton-30); //tamaño orginal
+               if(banderaBotonIrvin) {
+                   banderaBotonIrvin = false;
+                   btnIrvin.setAlfa(1);
+                   btnIrvin.setTamanio(anchoBoton, altoBoton); //tamaño original
+               }
+               else if(banderaBotonMia){
+                   banderaBotonMia = false;
+                   btnMia.setAlfa(1);
+                   btnMia.setTamanio(anchoBoton, altoBoton); //tamaño original
+               }
+               else if(banderaBotonJavier){
+                   banderaBotonJavier = false;
+                   btnJavier.setAlfa(1);
+                   btnJavier.setTamanio(anchoBoton,altoBoton); //tamaño orginal
+               }
+               else if(banderaBotonNuri) {
+                   banderaBotonNuri = false;
+                   btnNuri.setAlfa(1);
+                   btnNuri.setTamanio(anchoBoton, altoBoton); //tamaño orginal
+               }
+               else if(banderaBotonFer) {
+                   banderaBotonFer = false;
+                   btnFer.setAlfa(1);
+                   btnFer.setTamanio(anchoBoton, altoBoton); //tamaño orginal
+               }
+               else if (banderaBotonRegresar) {
+                   banderaBotonRegresar = false;
+                   btnRegresar.setAlfa(1);
+                   btnRegresar.setTamanio(anchoBoton - 30, altoBoton - 30); //tamaño orginal
+               }
 
             }
             return true;    // Indica que ya procesó el evento
@@ -380,6 +386,7 @@ public class PantallaAcerca implements Screen {
         principal.dispose();
         batch.dispose();
 
+
         //texturas
         texturaBtnIrvin.dispose();
         texturaBtnMia.dispose();
@@ -393,7 +400,6 @@ public class PantallaAcerca implements Screen {
         texturaPresentacionFer.dispose();
         texturaRegresar.dispose();
         texturaFondo.dispose();
-        //texturaAbanico.dispose();
         efectoClick.dispose();
 
     }

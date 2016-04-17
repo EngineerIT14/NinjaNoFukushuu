@@ -32,7 +32,6 @@ public class Principal extends Game  {
 
     @Override
     public void create() {
-
         // Agregamos un loader para los mapas
         assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         // Pantalla inicial
