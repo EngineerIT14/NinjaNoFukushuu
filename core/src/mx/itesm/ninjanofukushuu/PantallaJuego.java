@@ -305,6 +305,7 @@ public class PantallaJuego implements Screen{
             //Templo donde tiene que llegar el usuario para ganar el nivel
             this.temploElemental  = new ObjetosJuego(this.texturaTemplo);
             this.temploElemental.setPosicion(230, 510); //temploTierra
+            this.temploElemental.setTamanio(60, 90);
 
             //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
             this.vidas = new LinkedList<ObjetosJuego>();
@@ -387,6 +388,7 @@ public class PantallaJuego implements Screen{
             //Templo donde tiene que llegar el usuario para ganar el nivel
             this.temploElemental  = new ObjetosJuego(this.texturaTemplo);
             this.temploElemental.setPosicion(20, 1170); //temploAgua
+            this.temploElemental.setTamanio(60, 90);
 
             //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
             this.vidas = new LinkedList<ObjetosJuego>();
@@ -481,6 +483,7 @@ public class PantallaJuego implements Screen{
 
             this.temploElemental  = new ObjetosJuego(this.texturaTemplo);
             this.temploElemental.setPosicion(20, 960); //temploFuego
+            this.temploElemental.setTamanio(60, 90);
 
             //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
             this.vidas = new LinkedList<ObjetosJuego>();
