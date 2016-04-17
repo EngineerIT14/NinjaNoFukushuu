@@ -111,7 +111,10 @@ public class PantallaJuego implements Screen{
     //Mover las plataformas.
     private TiledMapTileLayer capa;
     private TiledMapTileLayer.Cell celda;
-    private int y=0, x=0;
+    private TiledMapTileLayer.Cell celda1;
+    private TiledMapTileLayer.Cell celda2;
+    private TiledMapTileLayer.Cell celda3;
+    private int y=0, x=21;
 
     // Estados del juego
     private EstadosJuego estadoJuego;
@@ -502,6 +505,10 @@ public class PantallaJuego implements Screen{
             mapa = assetManager.get("seleccionNivel/recursosNivelFuego/mapaDeFuego.tmx");
             capa=(TiledMapTileLayer)mapa.getLayers().get(1);
             celda=capa.getCell(23,40);
+            celda1=capa.getCell(22,40);
+            celda2=capa.getCell(23,39);
+            celda3=capa.getCell(22,39);
+
             //mapa.getLayers().get(0).setVisible(false);
             // Crear el objeto que dibujará el mapa
             rendererMapa = new OrthogonalTiledMapRenderer(mapa, batch);
@@ -671,16 +678,32 @@ public class PantallaJuego implements Screen{
                 actualizarCamaraFuego();
                 y++;
                 if(y%20==0){
-                    capa.setCell(x,7,celda);
-                    //capa.getCell(x,3,celda);
+                    capa.setCell(17,42,celda);
+                    capa.setCell(16,42,celda1);
+                    capa.setCell(16,41,celda2);
+                    capa.setCell(17,41,celda3);
+                }
+                if(y%25==0){
+                    capa.setCell(x,2,celda2);
+                    capa.setCell(x+1,2,celda2);
+                    capa.setCell(x+2,2,celda2);
+                    capa.setCell(x+3,2,celda2);
                     x++;
                 }
-                if(y%40==0){
-                    capa.setCell(x,6,null);
-                    capa.setCell(x-1,6,null);
+                if(y%160==0){
+                    capa.setCell(17,42,null);
+                    capa.setCell(16,42,null);
+                    capa.setCell(16,41,null);
+                    capa.setCell(17,41,null);
                 }
-                if(x==5){
-                    x=0;
+                if(y%25==0){
+                    capa.setCell(x-1,2,null);
+                    capa.setCell(33,2,null);
+                    capa.setCell(32,2,null);
+                    capa.setCell(34,2,null);
+                }
+                if(x==32){
+                    x=21;
                 }
 
             } else {
