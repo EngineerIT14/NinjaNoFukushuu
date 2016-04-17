@@ -445,7 +445,7 @@ public class PantallaJuego implements Screen{
 
             //Se colocan las pociones en el lugar correspondiente,
             this.pociones.get(0).setPosicion(400, 630);
-            this.pociones.get(1).setPosicion(600,1002);
+            this.pociones.get(1).setPosicion(600,1001);
 
 
             //Enemigos: 4 enemigos en el segundo nivel
