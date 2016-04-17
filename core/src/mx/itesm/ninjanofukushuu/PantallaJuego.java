@@ -108,12 +108,12 @@ public class PantallaJuego implements Screen{
     private static Texto textoMarcadorVidas;
 
     //Mover las plataformas.
-    private TiledMapTileLayer capa;
-    private TiledMapTileLayer.Cell celda;
+    private TiledMapTileLayer capa; //Aquí solo se lee la capa del tiled donde estan las plataformas
+    private TiledMapTileLayer.Cell celda;//La celda es el cuadro de 16*16 que utilizare (en este caso use 4)
     private TiledMapTileLayer.Cell celda1;
     private TiledMapTileLayer.Cell celda2;
     private TiledMapTileLayer.Cell celda3;
-    private int y=0, x=21;
+    private int y=0, x=21;//Es donde comienza X y Y para que regrese al pricipio cuando se mueve
 
     // Estados del juego
     private EstadosJuego estadoJuego;
@@ -405,9 +405,11 @@ public class PantallaJuego implements Screen{
 
             // Carga el mapa en memoria
             mapa = assetManager.get("seleccionNivel/recursosNivelFuego/mapaDeFuego.tmx");
-            capa=(TiledMapTileLayer)mapa.getLayers().get(1);
-            celda=capa.getCell(23,40);
-            celda1=capa.getCell(22,40);
+
+            //Mover plataformas
+            capa=(TiledMapTileLayer)mapa.getLayers().get(1);//Se lee la capa donde trabajremos
+            celda=capa.getCell(23,40);//se obtiene la tectura o imagen dependiendo de su pocision en el mapa
+            celda1=capa.getCell(22,40);//Utilizo 4 diferentes de 16*16
             celda2=capa.getCell(23,39);
             celda3=capa.getCell(22, 39);
 
@@ -514,32 +516,44 @@ public class PantallaJuego implements Screen{
             }
             else if (numeroNivel == 3) {
                 actualizarCamaraFuego();
+                //Movimiento de plataformas
                 y++;
+                //Este es el tiempo de cada cuando se ejecutara
                 if(y%20==0){
+                    //Plataforma desaparece, aquí se crea la plataforma cada que se cumpla el if,
+                    //los numero son su pocision x,y y celda es la imagne que use .
                     capa.setCell(17,42,celda);
                     capa.setCell(16,42,celda1);
                     capa.setCell(16,41,celda2);
                     capa.setCell(17,41,celda3);
                 }
+                //Este es el tiempo de cada cuando se ejecutara
                 if(y%25==0){
+                    ////Plataforma movible, va creando la imagen hacía adelante, efecto de movimiento.
                     capa.setCell(x,2,celda3);
                     capa.setCell(x+1,2,celda3);
                     capa.setCell(x+2,2,celda2);
                     capa.setCell(x+3,2,celda2);
                     x++;
                 }
+                //Este es el tiempo de cada cuando se ejecutara
                 if(y%160==0){
+                    //Se elimina la plataforma, va a borrar la plataforma para que sea intermitente, por eso el null.
                     capa.setCell(17,42,null);
                     capa.setCell(16,42,null);
                     capa.setCell(16,41,null);
                     capa.setCell(17,41,null);
                 }
+                //Este es el tiempo de cada cuando se ejecutara
                 if(y%25==0){
+                    //Este elimina la plataforma movible, va eliminado cada cuadrito por eso x-1.
+                    //los ultimos numeros fueron colocados para eliminar los que se pasan de la posicion de x.
                     capa.setCell(x-1,2,null);
                     capa.setCell(33,2,null);
                     capa.setCell(32,2,null);
                     capa.setCell(34,2,null);
                 }
+                //utilizo la posicion en x, cuando esta es igual a 32, nos va a regresar a x=21, así se crea el efecto de movimiento.
                 if(x==32){
                     x=21;
                 }
