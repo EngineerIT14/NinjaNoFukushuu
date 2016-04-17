@@ -8,13 +8,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import javax.xml.soap.Text;
 
 /*
  Pantalla seleccion de nivel
@@ -27,24 +25,25 @@ public class SeleccionDeNivel implements  Screen{
     private final Principal principal;
     private OrthographicCamera camara;
     private Viewport vista;
-    private SpriteBatch batch;
+    private static SpriteBatch batch;
+    //static = 1 copia  en memoria.
     //Fondo
-    private Fondo fondo;
-    private Texture texturaFondo;
+    private static Fondo fondo;
+    private static Texture texturaFondo;
 
 
-    private Boton btnRegresar;
-    private Boton btnNivelUno;
-    private Boton btnNivelDos;
-    private Boton btnNivelTres;
-    private Texture texturaRegresar;
-    private Texture texturaN1;
-    private Texture texturaN2;
-    private Texture texturaN3;
+    private static Boton btnRegresar;
+    private static Boton btnNivelUno;
+    private static Boton btnNivelDos;
+    private static Boton btnNivelTres;
+    private static Texture texturaRegresar;
+    private static Texture texturaN1;
+    private static Texture texturaN2;
+    private static Texture texturaN3;
     private static final int anchoBoton = 180, altoBoton = 200; //anchoBoton1 = 480 , altoBoton1 = 160;
 
     //Efectos
-    private Sound efectoClick, sonidoBloqueado;
+    private static Sound efectoClick, sonidoBloqueado;
 
     public SeleccionDeNivel(Principal principal) {
         this.principal = principal;
@@ -62,50 +61,51 @@ public class SeleccionDeNivel implements  Screen{
         // Indicar el objeto que atiende los eventos de touch (entrada en general)
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
-        //Crear fondo
-        fondo = new Fondo(texturaFondo);
-
-        //Batch
-        fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
-        fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
-        batch = new SpriteBatch();
     }
 
     //crea los objetos de textura y audio
     private void crearObjetos() {
         AssetManager assetManager = principal.getAssetManager();   // Referencia al assetManager
         //Fondo
-        this.texturaFondo = assetManager.get("seleccionNivel/fondoSeleccionNivel.jpg");
-        this.texturaRegresar = assetManager.get("return.png");
+      texturaFondo = assetManager.get("seleccionNivel/fondoSeleccionNivel.jpg");
+      texturaRegresar = assetManager.get("return.png");
 
         //el primer nivel siempre esta desbloqueadp
-        this.texturaN1=assetManager.get("seleccionNivel/galeriaEarth.png");
+      texturaN1=assetManager.get("seleccionNivel/galeriaEarth.png");
         /*Aqui hay que evaluar las banderas para saber si esta desbloqueado el nivel...*/
         if(PantallaCargando.banderaNivelAguaDesbloqueado)
-            this.texturaN2=assetManager.get("seleccionNivel/galeriaWater.png");
+          texturaN2=assetManager.get("seleccionNivel/galeriaWater.png");
         else //entonces esta bloqueado
-            this.texturaN2=assetManager.get("seleccionNivel/galeriaWaterLock.png");
+          texturaN2=assetManager.get("seleccionNivel/galeriaWaterLock.png");
 
         if(PantallaCargando.banderaNivelFuegoDesbloqueado)
-            this.texturaN3=assetManager.get("seleccionNivel/galeriaFire.png");
+          texturaN3=assetManager.get("seleccionNivel/galeriaFire.png");
         else
-            this.texturaN3=assetManager.get("seleccionNivel/galeriaFireLock.png");
+          texturaN3=assetManager.get("seleccionNivel/galeriaFireLock.png");
 
-        this.efectoClick = assetManager.get("sonidoVentana.wav");
-        this.sonidoBloqueado = assetManager.get("bloqueado.wav");
+        efectoClick = assetManager.get("sonidoVentana.wav");
+        sonidoBloqueado = assetManager.get("bloqueado.wav");
 
         btnRegresar = new Boton(texturaRegresar);
         btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8, Principal.ALTO_MUNDO * 1 / 5 - 130);
         btnRegresar.setTamanio(anchoBoton-30, altoBoton-30);
         btnNivelUno=new Boton(texturaN1);
-        btnNivelUno.setPosicion(100, Principal.ALTO_MUNDO/2-100);
+        btnNivelUno.setPosicion(100, Principal.ALTO_MUNDO / 2 - 100);
         btnNivelUno.setTamanio(anchoBoton, altoBoton);
         btnNivelDos=new Boton(texturaN2);
-        btnNivelDos.setPosicion(550, Principal.ALTO_MUNDO/2-100);
+        btnNivelDos.setPosicion(550, Principal.ALTO_MUNDO / 2 - 100);
         btnNivelDos.setTamanio(anchoBoton, altoBoton);
         btnNivelTres=new Boton(texturaN3);
-        btnNivelTres.setPosicion(1000, Principal.ALTO_MUNDO/2-100);
+        btnNivelTres.setPosicion(1000, Principal.ALTO_MUNDO / 2 - 100);
         btnNivelTres.setTamanio(anchoBoton, altoBoton);
+
+        //Crear fondo
+        fondo = new Fondo(texturaFondo);
+
+        fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
+        fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
+
+        batch = new SpriteBatch();
 
     }
 
@@ -147,18 +147,18 @@ public class SeleccionDeNivel implements  Screen{
 
             if (btnRegresar.contiene(x, y)) {
                 btnRegresar.setAlfa(.5f);
-                btnRegresar.setTamanio(anchoBoton-30, altoBoton - 32); //Lo hago más pequeño
+                btnRegresar.setTamanio(anchoBoton - 30, altoBoton - 32); //Lo hago más pequeño
                 this.banderaBotonRegresar = true;
 
             }
 
-            if (btnNivelUno.contiene(x, y)) {
+            else if (btnNivelUno.contiene(x, y)) {
                 btnNivelUno.setAlfa(.5f);
                 btnNivelUno.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                 this.banderaBotonNivel1 = true;
             }
 
-            if (btnNivelDos.contiene(x, y)) {
+            else if (btnNivelDos.contiene(x, y)) {
                 btnNivelDos.setAlfa(.5f);
                 btnNivelDos.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                 this.banderaBotonNivel2 = true;
@@ -166,7 +166,7 @@ public class SeleccionDeNivel implements  Screen{
                     sonidoBloqueado.play(PantallaMenu.volumen);
             }
 
-            if (btnNivelTres.contiene(x, y)) {
+            else if (btnNivelTres.contiene(x, y)) {
                 btnNivelTres.setAlfa(.5f);
                 btnNivelTres.setTamanio(anchoBoton, altoBoton - 2); //Lo hago más pequeño
                 this.banderaBotonNivel3 = true;
@@ -189,32 +189,40 @@ public class SeleccionDeNivel implements  Screen{
                 efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 principal.setScreen(new PantallaCargando(0, principal, true));  //se manda true porque ya esta la cancion reproduciendose
             }
-            if (btnNivelUno.contiene(x, y) && this.banderaBotonNivel1) {
+            else if (btnNivelUno.contiene(x, y) && this.banderaBotonNivel1) {
                 efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 principal.setScreen(new PantallaCargando(5, principal, true));  //nivel de tierra..
             }
-            if (btnNivelDos.contiene(x, y) && this.banderaBotonNivel2 && PantallaCargando.banderaNivelAguaDesbloqueado) {
+            else if (btnNivelDos.contiene(x, y) && this.banderaBotonNivel2 && PantallaCargando.banderaNivelAguaDesbloqueado) {
                 efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 principal.setScreen(new PantallaCargando(6, principal, true));  //nivel de agua.. tiene que ser un 6.
             }
-            if (btnNivelTres.contiene(x, y) && this.banderaBotonNivel3 &&  PantallaCargando.banderaNivelFuegoDesbloqueado) {
+            else if (btnNivelTres.contiene(x, y) && this.banderaBotonNivel3 &&  PantallaCargando.banderaNivelFuegoDesbloqueado) {
                 efectoClick.play(PantallaMenu.volumen); //efecto de sonido
                 principal.setScreen(new PantallaCargando(7, principal, true));  //nivel de fuego... tiene que ser un 7
             }
             else { //entonces el usuario despego el dedo de la pantalla en otra parte que no sean los botones...
                 // se le quita la transparencia y se regresa a su tamaño original
-                banderaBotonRegresar = false;
-                banderaBotonNivel1=false;
-                banderaBotonNivel2=false;
-                banderaBotonNivel3=false;
-                btnRegresar.setAlfa(1);
-                btnNivelUno.setAlfa(1);
-                btnNivelDos.setAlfa(1);
-                btnNivelTres.setAlfa(1);
-                btnRegresar.setTamanio(anchoBoton-30, altoBoton-30); //tamaño orginal
-                btnNivelUno.setTamanio(anchoBoton,altoBoton);
-                btnNivelDos.setTamanio(anchoBoton,altoBoton);
-                btnNivelTres.setTamanio(anchoBoton,altoBoton);
+                if(banderaBotonRegresar) {
+                    banderaBotonRegresar = false;
+                    btnRegresar.setAlfa(1);
+                    btnRegresar.setTamanio(anchoBoton - 30, altoBoton - 30); //tamaño orginal
+                }
+                else if(banderaBotonNivel1) {
+                    banderaBotonNivel1 = false;
+                    btnNivelUno.setAlfa(1);
+                    btnNivelUno.setTamanio(anchoBoton, altoBoton);
+                }
+                else if(banderaBotonNivel2) {
+                    banderaBotonNivel2 = false;
+                    btnNivelDos.setAlfa(1);
+                    btnNivelDos.setTamanio(anchoBoton, altoBoton);
+                }
+                else if(banderaBotonNivel3) {
+                    banderaBotonNivel3 = false;
+                    btnNivelTres.setAlfa(1);
+                    btnNivelTres.setTamanio(anchoBoton, altoBoton);
+                }
             }
             return true;    // Indica que ya procesó el evento
         }

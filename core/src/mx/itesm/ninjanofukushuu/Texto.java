@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /*
-Desarrolladores: Roberto Martinez Roman, Javier García Roque e Irvin Emmanuel Trujillo Díaz.
+Desarrolladores: Javier García Roque e Irvin Emmanuel Trujillo Díaz.
 Descripción: Clase donde se ponen las especificaciones del texto
 Profesor: Roberto Martinez Román.
 */
@@ -19,7 +19,7 @@ public class Texto
 
 
     public Texto(float posicionx, float posiciony) {
-        font = new BitmapFont(Gdx.files.internal("seleccionNivel/naftalene.fnt"));
+        font = new BitmapFont(Gdx.files.internal("seleccionNivel/naftalene.fnt")); //Tipo de letra.
         font.setColor(Color.CORAL);
         font.getData().scale(0.001f);
         this.posicionX = posicionx;
