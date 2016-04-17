@@ -174,8 +174,6 @@ public class PantallaJuego implements Screen{
         AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
 
         //*****Texturas y sonidos  que se usan en todos los niveles*****
-
-
         //Objetos
         this.texturaScroll = assetManager.get("seleccionNivel/items/scroll.png");
         this.texturaPocion = assetManager.get("seleccionNivel/items/pocion.png");
@@ -187,6 +185,9 @@ public class PantallaJuego implements Screen{
         this.efectoDanio = assetManager.get("seleccionNivel/sonidosGameplay/efectoDanio.wav");
         this.efectoPuertaTemplo = assetManager.get("seleccionNivel/sonidosGameplay/puertaTemplo.wav");
 
+        //Se crean objetos que son textos que se muestran en el HUD EN TODOS LOS NIVELES
+        textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_CAMARA + 30, Principal.ALTO_CAMARA * 0.96f);
+        textoMarcadorPergaminos = new Texto(50 + 0.70f * Principal.ANCHO_CAMARA + 26, Principal.ALTO_CAMARA * 0.96f); //mandamos la posicion que queremos por default.
 
         // Crear los botones que se usan en todos los niveles
         texturaBtnIzquierda = assetManager.get("seleccionNivel/botonesFlechas/izquierdaImagenes.png");
@@ -223,9 +224,6 @@ public class PantallaJuego implements Screen{
         fondoPausa =  new Fondo(texturaFondoPausa);
 
 
-        //Se crean objetos que son textos que se muestran en el HUD EN TODOS LOS NIVELES
-        textoMarcadorVidas = new Texto(0.1f * Principal.ANCHO_CAMARA + 30, Principal.ALTO_CAMARA * 0.96f);
-        textoMarcadorPergaminos = new Texto(50 + 0.70f * Principal.ANCHO_CAMARA + 26, Principal.ALTO_CAMARA * 0.96f); //mandamos la posicion que queremos por default.
 
         //Lista scrolles: en todos los niveles solo hay 3 scroll
         this.scrolls = new LinkedList<ObjetosJuego>();
@@ -242,17 +240,6 @@ public class PantallaJuego implements Screen{
             nuevo.setTamanio(30, 40);
             this.pociones.add(nuevo);
         }
-
-        //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
-        this.vidas = new LinkedList<ObjetosJuego>();
-        for (int i = 0; i < 3; i++) {
-            ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
-            this.vidas.add(nuevo);
-        }
-
-        this.vidas.get(0).setPosicion(textoMarcadorVidas.getX() + 95, textoMarcadorVidas.getY() - 45);
-        this.vidas.get(1).setPosicion(textoMarcadorVidas.getX() + 165, textoMarcadorVidas.getY() - 45);
-        this.vidas.get(2).setPosicion(textoMarcadorVidas.getX() + 235, textoMarcadorVidas.getY() - 45);
 
 
         //****************APARTIR DE AQUI, SE CARGA LO NECESARIO PARA CADA NIVEL
@@ -319,6 +306,12 @@ public class PantallaJuego implements Screen{
             this.temploElemental  = new ObjetosJuego(this.texturaTemplo);
             this.temploElemental.setPosicion(230, 510); //temploTierra
 
+            //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
+            this.vidas = new LinkedList<ObjetosJuego>();
+            for (int i = 0; i < 3; i++) {
+                ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
+                this.vidas.add(nuevo);
+            }
         }
         else if (this.numeroNivel == 2){
             // Carga el mapa en memoria
@@ -394,6 +387,14 @@ public class PantallaJuego implements Screen{
             //Templo donde tiene que llegar el usuario para ganar el nivel
             this.temploElemental  = new ObjetosJuego(this.texturaTemplo);
             this.temploElemental.setPosicion(20, 1170); //temploAgua
+
+            //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
+            this.vidas = new LinkedList<ObjetosJuego>();
+            for (int i = 0; i < 3; i++) {
+                ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
+                this.vidas.add(nuevo);
+            }
+
         }
 
         //Nivel Fuego----------------------------------------------------------------------------------
@@ -480,7 +481,20 @@ public class PantallaJuego implements Screen{
 
             this.temploElemental  = new ObjetosJuego(this.texturaTemplo);
             this.temploElemental.setPosicion(20, 960); //temploFuego
+
+            //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
+            this.vidas = new LinkedList<ObjetosJuego>();
+            for (int i = 0; i < 3; i++) {
+                ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
+                this.vidas.add(nuevo);
+            }
+
         }
+
+        //COLOCANDO LAS VIDAS DEL MARCADOR EN SU LUGAR CORRESPONDIENTE...
+        this.vidas.get(0).setPosicion(textoMarcadorVidas.getX() + 95, textoMarcadorVidas.getY() - 45);
+        this.vidas.get(1).setPosicion(textoMarcadorVidas.getX() + 165, textoMarcadorVidas.getY() - 45);
+        this.vidas.get(2).setPosicion(textoMarcadorVidas.getX() + 235, textoMarcadorVidas.getY() - 45);
     }
 
 
