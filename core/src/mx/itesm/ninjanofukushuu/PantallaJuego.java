@@ -684,10 +684,10 @@ public class PantallaJuego implements Screen{
                     capa.setCell(17,41,celda3);
                 }
                 if(y%25==0){
-                    capa.setCell(x,2,celda2);
-                    capa.setCell(x+1,2,celda2);
+                    capa.setCell(x,3,celda3);
+                    capa.setCell(x+1,2,celda3);
                     capa.setCell(x+2,2,celda2);
-                    capa.setCell(x+3,2,celda2);
+                    capa.setCell(x+3,3,celda2);
                     x++;
                 }
                 if(y%160==0){
@@ -697,10 +697,10 @@ public class PantallaJuego implements Screen{
                     capa.setCell(17,41,null);
                 }
                 if(y%25==0){
-                    capa.setCell(x-1,2,null);
+                    capa.setCell(x-1,3,null);
                     capa.setCell(33,2,null);
                     capa.setCell(32,2,null);
-                    capa.setCell(34,2,null);
+                    capa.setCell(34,3,null);
                 }
                 if(x==32){
                     x=21;
