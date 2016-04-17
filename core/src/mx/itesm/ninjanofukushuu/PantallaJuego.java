@@ -108,6 +108,11 @@ public class PantallaJuego implements Screen{
     private Texto textoMarcadorPergaminos; //Texto para mostrar el marcador de vidas y marcador de pergaminos.
     private Texto textoMarcadorVidas;
 
+    //Mover las plataformas.
+    private TiledMapTileLayer capa;
+    private TiledMapTileLayer.Cell celda;
+    private int y=0, x=0;
+
     // Estados del juego
     private EstadosJuego estadoJuego;
 
@@ -491,8 +496,12 @@ public class PantallaJuego implements Screen{
 
         //Nivel Fuego----------------------------------------------------------------------------------
         else if (this.numeroNivel == 3){
+            //Mover plataformas.
+
             // Carga el mapa en memoria
             mapa = assetManager.get("seleccionNivel/recursosNivelFuego/mapaDeFuego.tmx");
+            capa=(TiledMapTileLayer)mapa.getLayers().get(1);
+            celda=capa.getCell(23,40);
             //mapa.getLayers().get(0).setVisible(false);
             // Crear el objeto que dibujará el mapa
             rendererMapa = new OrthogonalTiledMapRenderer(mapa, batch);
@@ -660,6 +669,20 @@ public class PantallaJuego implements Screen{
                 actualizarCamaraAgua();
             } else if (numeroNivel == 3) {
                 actualizarCamaraFuego();
+                y++;
+                if(y%20==0){
+                    capa.setCell(x,6,celda);
+                    //capa.getCell(x,3,celda);
+                    x++;
+                }
+                if(y%40==0){
+                    capa.setCell(x,6,null);
+                    capa.setCell(x-1,6,null);
+                }
+                if(x==5){
+                    x=0;
+                }
+
             } else {
                 actualizarCamara(); // Mover la cámara para que siga al personaje
             }
