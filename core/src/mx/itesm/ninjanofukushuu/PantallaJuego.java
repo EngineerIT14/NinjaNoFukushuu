@@ -445,7 +445,7 @@ public class PantallaJuego implements Screen{
 
             //Se colocan las pociones en el lugar correspondiente,
             this.pociones.get(0).setPosicion(400, 630);
-            //FALTA CPOLOCAR SEGUNDA POCION
+            this.pociones.get(1).setPosicion(600,1001);
 
 
             //Enemigos: 4 enemigos en el segundo nivel
@@ -471,7 +471,7 @@ public class PantallaJuego implements Screen{
             }
 
             this.enemigoN2.get(0).setPosicion(79, 200);
-            this.enemigoN2.get(1).setPosicion(79, 930);
+            this.enemigoN2.get(1).setPosicion(79, 960);
 
 
             //Colocar los ataque en su posicion
