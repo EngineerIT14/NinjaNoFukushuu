@@ -276,13 +276,11 @@ public class PantallaJuego implements Screen{
 
             //Se colocan las pociones en el lugar correspondiente,
             this.pociones.get(0).setPosicion(255, 270);
-            this.pociones.get(1).setPosicion(-650,720); //no   quiero que tenga 2 pociones...
+            //FALTA COLOCAR LA POSICIOND E LA SEGUNDA PCION
 
-
-
-            //Enemigos: 6 enemigos en el primer nivel
+            //Enemigos: 5 enemigos en el primer nivel
             this.enemigoN1 = new LinkedList<ObjetosJuego>();
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 5; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaEN1);
                 nuevo.setTamanio(60, 90);
                 this.enemigoN1.add(nuevo);
@@ -294,7 +292,6 @@ public class PantallaJuego implements Screen{
             this.enemigoN1.get(2).setPosicion(790, 295); //Samurai Escalon
             this.enemigoN1.get(3).setPosicion(960, 120); //Samurai escalon
             this.enemigoN1.get(4).setPosicion(570, 503); //Samurai parte superior
-            this.enemigoN1.get(5).setPosicion(969, 405);
 
             //Colocar los ataque en su posicion
             this.ataques = new LinkedList<ObjetosJuego>();
@@ -308,7 +305,6 @@ public class PantallaJuego implements Screen{
             //Templo donde tiene que llegar el usuario para ganar el nivel
             this.temploElemental  = new ObjetosJuego(this.texturaTemplo);
             this.temploElemental.setPosicion(230, 510); //temploTierra
-            this.temploElemental.setTamanio(60, 90);
 
             //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
             this.vidas = new LinkedList<ObjetosJuego>();
@@ -350,7 +346,7 @@ public class PantallaJuego implements Screen{
 
             //Se colocan las pociones en el lugar correspondiente,
             this.pociones.get(0).setPosicion(400, 630);
-            this.pociones.get(1).setPosicion(-650,720); //no   quiero que tenga 2 pociones...
+            //Falta colocar posicion de la segunda pocion
 
             //Enemigos: 4 enemigos en el segundo nivel
             this.enemigoN1 = new LinkedList<ObjetosJuego>();
@@ -391,7 +387,6 @@ public class PantallaJuego implements Screen{
             //Templo donde tiene que llegar el usuario para ganar el nivel
             this.temploElemental  = new ObjetosJuego(this.texturaTemplo);
             this.temploElemental.setPosicion(20, 1170); //temploAgua
-            this.temploElemental.setTamanio(60, 90);
 
             //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
             this.vidas = new LinkedList<ObjetosJuego>();
@@ -412,7 +407,7 @@ public class PantallaJuego implements Screen{
             celda=capa.getCell(23,40);
             celda1=capa.getCell(22,40);
             celda2=capa.getCell(23,39);
-            celda3 = capa.getCell(22, 39);
+            celda3=capa.getCell(22, 39);
 
             //mapa.getLayers().get(0).setVisible(false);
             // Crear el objeto que dibujará el mapa
@@ -446,8 +441,7 @@ public class PantallaJuego implements Screen{
 
             //Se colocan las pociones en el lugar correspondiente,
             this.pociones.get(0).setPosicion(400, 630);
-            this.pociones.get(1).setPosicion(600,1001);
-
+            //FALTA CPOLOCAR SEGUNDA POCION
 
 
             //Enemigos: 4 enemigos en el segundo nivel
@@ -487,7 +481,6 @@ public class PantallaJuego implements Screen{
 
             this.temploElemental  = new ObjetosJuego(this.texturaTemplo);
             this.temploElemental.setPosicion(20, 960); //temploFuego
-            this.temploElemental.setTamanio(60, 90);
 
             //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
             this.vidas = new LinkedList<ObjetosJuego>();
