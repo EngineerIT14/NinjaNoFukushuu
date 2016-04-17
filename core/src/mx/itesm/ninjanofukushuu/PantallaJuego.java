@@ -671,7 +671,7 @@ public class PantallaJuego implements Screen{
                 actualizarCamaraFuego();
                 y++;
                 if(y%20==0){
-                    capa.setCell(x,6,celda);
+                    capa.setCell(x,7,celda);
                     //capa.getCell(x,3,celda);
                     x++;
                 }
