@@ -765,7 +765,6 @@ public class PantallaJuego implements Screen{
         //temploTierra
         if(258 == hataku.getX() &&  512 <= hataku.getY() && this.numeroNivel == 1){ //258  y 512 es la posicion del templo, lo identifique con el system.out.println
 
-            this.numeroNivel = 2;
             marcadorPergaminos = 0;
             this.efectoPuertaTemplo.play(PantallaMenu.volumen);
             PantallaCargando.partidaGuardada.putBoolean("nivelAgua", true); //se guarda el progreso y se desbloquea el nivel de agua...
@@ -781,7 +780,7 @@ public class PantallaJuego implements Screen{
 
         if( 44 == hataku.getX() && 1164  <= hataku.getY() && this.numeroNivel == 2){
 
-            this.numeroNivel = 3;
+
             marcadorPergaminos = 0;
             this.efectoPuertaTemplo.play(PantallaMenu.volumen);
             PantallaCargando.partidaGuardada.putBoolean("nivelFuego", true); //se guarda el progreso y se desbloquea el nivel de agua...
