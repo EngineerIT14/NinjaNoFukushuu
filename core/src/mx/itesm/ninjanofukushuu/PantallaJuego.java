@@ -767,7 +767,7 @@ public class PantallaJuego implements Screen{
         //temploTierra
         if(258 == hataku.getX() &&  512 <= hataku.getY() && this.numeroNivel == 1){ //258  y 512 es la posicion del templo, lo identifique con el system.out.println
 
-            marcadorPergaminos = 0;
+
             this.efectoPuertaTemplo.play(PantallaMenu.volumen);
             PantallaCargando.partidaGuardada.putBoolean("nivelAgua", true); //se guarda el progreso y se desbloquea el nivel de agua...
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
@@ -780,10 +780,10 @@ public class PantallaJuego implements Screen{
 
         // temploAgua
 
-        if( 44 == hataku.getX() && 1164  <= hataku.getY() && this.numeroNivel == 2){
+        else if( 44 == hataku.getX() && 1164  <= hataku.getY() && this.numeroNivel == 2){
 
 
-            marcadorPergaminos = 0;
+
             this.efectoPuertaTemplo.play(PantallaMenu.volumen);
             PantallaCargando.partidaGuardada.putBoolean("nivelFuego", true); //se guarda el progreso y se desbloquea el nivel de agua...
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
@@ -795,7 +795,7 @@ public class PantallaJuego implements Screen{
 
         //temploFuego
 
-        if( 44 == hataku.getX() && 960 <= hataku.getY() && this.numeroNivel == 3){
+        else if( 44 == hataku.getX() && 960 <= hataku.getY() && this.numeroNivel == 3){
 
             //SI SE ESTA JUGANDO EL NIVEL 3, ELIMINA EL "RASTRO" DE LA PLATAFORMA MOVIL, PARA QUE CUANDO EL USUARIO REGRESE AL JUEGO ESE RASTRO NO SIGA EN PANTALLA.
             capa.setCell(posicionXplataforma - 1, 2, null);
@@ -833,8 +833,9 @@ public class PantallaJuego implements Screen{
 
         else if(marcadorPergaminos == 3 && this.numeroNivel == 3){
 
-            PantallaCargando.partidaGuardada.getBoolean("arteFuego", true); // se guarda el progreso y se desbloquea la galeria de arte de fuego
+            PantallaCargando.partidaGuardada.putBoolean("arteFuego", true); //se guarda el progreso y se desbloquea la galeria de arte de fuego// ,,
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
+
         }
     }
 
