@@ -137,6 +137,8 @@ public class PantallaJuego implements Screen{
         if(this.numeroNivel==1)
             this.flag =true;
 
+        marcadorPergaminos = 0;
+
         // Crea la cámara/vista
         camara = new OrthographicCamera(Principal.ANCHO_CAMARA, Principal.ALTO_CAMARA);
         camara.position.set(Principal.ANCHO_CAMARA / 2, Principal.ALTO_CAMARA / 2, 0);
