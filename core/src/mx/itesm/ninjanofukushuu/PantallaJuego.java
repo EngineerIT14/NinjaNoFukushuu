@@ -513,10 +513,10 @@ public class PantallaJuego implements Screen{
                 //Este es el tiempo de cada cuando se ejecutara
                 if(tiempo%25==0){
                     ////Plataforma movible, va creando la imagen hacía adelante, efecto de movimiento.
-                    capa.setCell(posicionXplataforma,2,celda3);
-                    capa.setCell(posicionXplataforma+1,2,celda3);
-                    capa.setCell(posicionXplataforma+2,2,celda2);
-                    capa.setCell(posicionXplataforma+3,2,celda2);
+                    capa.setCell(posicionXplataforma,1,celda3);
+                    capa.setCell(posicionXplataforma+1,1,celda3);
+                    capa.setCell(posicionXplataforma+2,1,celda2);
+                    capa.setCell(posicionXplataforma+3,1,celda2);
                     posicionXplataforma++;
                 }
                 //Este es el tiempo de cada cuando se ejecutara
@@ -531,10 +531,10 @@ public class PantallaJuego implements Screen{
                 if(tiempo%25==0){
                     //Este elimina la plataforma movible, va eliminado cada cuadrito por eso x-1.
                     //los ultimos numeros fueron colocados para eliminar los que se pasan de la posicion de x.
-                    capa.setCell(posicionXplataforma-1,2,null);
-                    capa.setCell(33,2,null);
-                    capa.setCell(32,2,null);
-                    capa.setCell(34,2,null);
+                    capa.setCell(posicionXplataforma-1,1,null);
+                    capa.setCell(33,1,null);
+                    capa.setCell(32,1,null);
+                    capa.setCell(34,1,null);
                 }
                 //utilizo la posicion en x, cuando esta es igual a 32, nos va a regresar a x=21, así se crea el efecto de movimiento.
                 if(posicionXplataforma==32){
@@ -798,10 +798,10 @@ public class PantallaJuego implements Screen{
         else if( 44 == hataku.getX() && 960 <= hataku.getY() && this.numeroNivel == 3){
 
             //SI SE ESTA JUGANDO EL NIVEL 3, ELIMINA EL "RASTRO" DE LA PLATAFORMA MOVIL, PARA QUE CUANDO EL USUARIO REGRESE AL JUEGO ESE RASTRO NO SIGA EN PANTALLA.
-            capa.setCell(posicionXplataforma - 1, 2, null);
-            capa.setCell(posicionXplataforma, 2, null);
-            capa.setCell(posicionXplataforma + 1, 2, null);
-            capa.setCell(posicionXplataforma + 2, 2, null);
+            capa.setCell(posicionXplataforma - 1, 1, null);
+            capa.setCell(posicionXplataforma, 1, null);
+            capa.setCell(posicionXplataforma + 1, 1, null);
+            capa.setCell(posicionXplataforma + 2, 1, null);
 
             //this.numeroNivel = 3;
             marcadorPergaminos = 0;
@@ -868,10 +868,10 @@ public class PantallaJuego implements Screen{
         if (this.vidas.size() == 0){
             if(numeroNivel==3) {
                 //SI SE ESTA JUGANDO EL NIVEL 3, ELIMINA EL "RASTRO" DE LA PLATAFORMA MOVIL, PARA QUE CUANDO EL USUARIO REGRESE AL JUEGO ESE RASTRO NO SIGA EN PANTALLA.
-                capa.setCell(posicionXplataforma - 1, 2, null);
-                capa.setCell(posicionXplataforma, 2, null);
-                capa.setCell(posicionXplataforma + 1, 2, null);
-                capa.setCell(posicionXplataforma + 2, 2, null);
+                capa.setCell(posicionXplataforma - 1, 1, null);
+                capa.setCell(posicionXplataforma, 1, null);
+                capa.setCell(posicionXplataforma + 1, 1, null);
+                capa.setCell(posicionXplataforma + 2, 1, null);
             }
 
             plataforma.setScreen(new PantallaGameOver(plataforma,this.numeroNivel)); //nos regresa a la pantalla principal.
@@ -881,10 +881,10 @@ public class PantallaJuego implements Screen{
         if (hataku.getY()<-50){
             if(numeroNivel==3) {
                 //SI SE ESTA JUGANDO EL NIVEL 3, ELIMINA EL "RASTRO" DE LA PLATAFORMA MOVIL, PARA QUE CUANDO EL USUARIO REGRESE AL JUEGO ESE RASTRO NO SIGA EN PANTALLA.
-                capa.setCell(posicionXplataforma - 1, 2, null);
-                capa.setCell(posicionXplataforma, 2, null);
-                capa.setCell(posicionXplataforma + 1, 2, null);
-                capa.setCell(posicionXplataforma + 2, 2, null);
+                capa.setCell(posicionXplataforma - 1, 1, null);
+                capa.setCell(posicionXplataforma, 1, null);
+                capa.setCell(posicionXplataforma + 1, 1, null);
+                capa.setCell(posicionXplataforma + 2, 1, null);
             }
 
             plataforma.setScreen(new PantallaGameOver(plataforma,this.numeroNivel)); //nos regresa a la pantalla principal.
@@ -1252,10 +1252,10 @@ public class PantallaJuego implements Screen{
             else if(btnMenu.contiene(x,y) &&  banderaBotonMenu && estadoJuego == EstadosJuego.PAUSA){
                 if(numeroNivel==3) {
                     //SI SE ESTA JUGANDO EL NIVEL 3, ELIMINA EL "RASTRO" DE LA PLATAFORMA MOVIL, PARA QUE CUANDO EL USUARIO REGRESE AL JUEGO ESE RASTRO NO SIGA EN PANTALLA.
-                    capa.setCell(posicionXplataforma - 1, 2, null);
-                    capa.setCell(posicionXplataforma, 2, null);
-                    capa.setCell(posicionXplataforma + 1, 2, null);
-                    capa.setCell(posicionXplataforma + 2, 2, null);
+                    capa.setCell(posicionXplataforma - 1, 1, null);
+                    capa.setCell(posicionXplataforma, 1, null);
+                    capa.setCell(posicionXplataforma + 1, 1, null);
+                    capa.setCell(posicionXplataforma + 2, 1, null);
                 }
 
                 btnMenu.setAlfa(.7f);
