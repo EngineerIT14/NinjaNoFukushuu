@@ -16,7 +16,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 import java.util.LinkedList;
 import com.badlogic.gdx.Input.Keys;
 
@@ -120,15 +119,9 @@ public class PantallaJuego implements Screen{
 
     //Efectos del juego
     private Sound efectoSaltoHataku, efectoTomarVida, efectoTomarPergamino, efectoDanio, efectoPuertaTemplo;
-
-
-
     private boolean flag = false; //boleano para saber si se esta jugando el primer nivel, esto con el fin de cuando se esta jugando en el nivel 2 y 3, hay enemigos diferentes y no genere un error al correr el codigo...
     private int  numeroNivel;
     private int ataqueFlag;
-
-
-
 
     /*//Estado para la suma del marcador
     private Estado estado;*/
@@ -140,18 +133,15 @@ public class PantallaJuego implements Screen{
 
     @Override
     public void show() {
-
         //Verifica si es el primer nivel
         if(this.numeroNivel==1)
             this.flag =true;
-
 
         // Crea la cámara/vista
         camara = new OrthographicCamera(Principal.ANCHO_CAMARA, Principal.ALTO_CAMARA);
         camara.position.set(Principal.ANCHO_CAMARA / 2, Principal.ALTO_CAMARA / 2, 0);
         camara.update();
         vista = new StretchViewport(Principal.ANCHO_CAMARA, Principal.ALTO_CAMARA, camara);
-
         batch = new SpriteBatch();
 
         // Cámara para HUD
@@ -163,7 +153,6 @@ public class PantallaJuego implements Screen{
 
         // Indicar el objeto que atiende los eventos de touch (entrada en general)
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
-
         estadoJuego = EstadosJuego.JUGANDO;
     }
 
@@ -251,7 +240,6 @@ public class PantallaJuego implements Screen{
             rendererMapa = new OrthogonalTiledMapRenderer(mapa, batch);
             rendererMapa.setView(camara);
             // Cargar frames
-            //texturaHataku = assetManager.get("seleccionNivel/recursosNivelTierra/marioSprite.png");
             texturaHataku = assetManager.get("seleccionNivel/recursosNivelTierra/Hataku.png");
             // Crear el personaje
             hataku = new Personaje(texturaHataku);
@@ -399,9 +387,7 @@ public class PantallaJuego implements Screen{
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                 this.vidas.add(nuevo);
             }
-
         }
-
         //Nivel Fuego----------------------------------------------------------------------------------
         else if (this.numeroNivel == 3){
             //Mover plataformas.
@@ -436,19 +422,14 @@ public class PantallaJuego implements Screen{
 
             this.texturaVidas = assetManager.get("seleccionNivel/recursosNivelFuego/lifeFuego.png");
 
-
             //Posiciones pergamino nivel fuego
             this.scrolls.get(0).setPosicion(40, 350);
             this.scrolls.get(1).setPosicion(680, 900);
             this.scrolls.get(2).setPosicion(676, 350);
 
-
-
             //Se colocan las pociones en el lugar correspondiente,
             this.pociones.get(0).setPosicion(400, 630);
             this.pociones.get(1).setPosicion(600,1001);
-
-
 
             //Enemigos: 4 enemigos en el segundo nivel
             this.enemigoN1 = new LinkedList<ObjetosJuego>();
@@ -495,15 +476,12 @@ public class PantallaJuego implements Screen{
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaVidas);
                 this.vidas.add(nuevo);
             }
-
         }
-
         //COLOCANDO LAS VIDAS DEL MARCADOR EN SU LUGAR CORRESPONDIENTE...
         this.vidas.get(0).setPosicion(textoMarcadorVidas.getX() + 95, textoMarcadorVidas.getY() - 45);
         this.vidas.get(1).setPosicion(textoMarcadorVidas.getX() + 165, textoMarcadorVidas.getY() - 45);
         this.vidas.get(2).setPosicion(textoMarcadorVidas.getX() + 235, textoMarcadorVidas.getY() - 45);
     }
-
 
     @Override
     public void render(float delta) { // delta es el tiempo entre frames (Gdx.graphics.getDeltaTime())
