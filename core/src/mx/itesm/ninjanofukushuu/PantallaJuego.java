@@ -284,7 +284,7 @@ public class PantallaJuego implements Screen{
             this.enemigoN1.get(2).setPosicion(790, 295); //Samurai Escalon
             this.enemigoN1.get(3).setPosicion(960, 120); //Samurai escalon
             this.enemigoN1.get(4).setPosicion(570, 503); //Samurai parte superior
-            this.enemigoN1.get(5).setPosicion(969, 405);
+            this.enemigoN1.get(5).setPosicion(1010, 405);
 
             //Colocar los ataque en su posicion
             this.ataques = new LinkedList<ObjetosJuego>();
