@@ -52,6 +52,10 @@ public class PantallaWinner implements Screen {
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
         efectoWin.play(PantallaMenu.volumen);
 
+        //DESACTIVANDO BOTONES PARA IMPEDIR QUE INTERRUMPA AL USUARIO EN EL JUEGO.
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
+
     }
 
     //crea los objetos de textura y audio

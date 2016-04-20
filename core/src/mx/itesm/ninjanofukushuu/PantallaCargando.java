@@ -98,8 +98,14 @@ public class PantallaCargando implements Screen
         //Se resetea con esta configuracion de procesadorEntradar();
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
+        //DESACTIVANDO BOTONES PARA IMPEDIR QUE INTERRUMPA AL USUARIO EN EL JUEGO.
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
+
         cargarImagenCargando();     // Cargar recursos para mostrar en la pantalla cargando...
         cargarRecursos(); //Cargando recursos de determinada pantalla
+
+
     }
 
     private void cargarImagenCargando() {

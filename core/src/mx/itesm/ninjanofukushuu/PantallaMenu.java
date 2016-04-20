@@ -79,6 +79,10 @@ public class PantallaMenu implements Screen {
         // Indicar el objeto que atiende los eventos de touch (entrada en general)
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
+        //ACTIVANDO BOTONES DE DISPOSITIVO PARA QUE EL USUARIO LOS PUEDA USAR SI ASI LOS DESEA...
+        Gdx.input.setCatchBackKey(false);
+        Gdx.input.setCatchMenuKey(false);
+
     }
 
     //Obtener las texturas cargadas en la pantallaCargando.java
