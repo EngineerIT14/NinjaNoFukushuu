@@ -435,21 +435,23 @@ public class PantallaJuego implements Screen{
 
             //Se colocan las pociones en el lugar correspondiente,
             this.pociones.get(0).setPosicion(400, 630);
-            this.pociones.get(1).setPosicion(-600,1001);//NO QUIERO QUE SALGA LA SEGUNDA POCION..
+            this.pociones.get(1).setPosicion(600,1001);
 
-            //Enemigos: 4 enemigos en el segundo nivel
+            //Enemigos: 8 enemigos en el segundo nivel
             this.enemigoN1 = new LinkedList<ObjetosJuego>();
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 6; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(this.texturaEN1);
                 nuevo.setTamanio(60, 90);
                 this.enemigoN1.add(nuevo);
             }
 
-            //Se colocan los enemigos en su lugar correspondiente, en el nivel de Agua
-            this.enemigoN1.get(0).setPosicion(280, 170); //centro izquierda
-            this.enemigoN1.get(1).setPosicion(560, 440);  //centro derecha
-            this.enemigoN1.get(2).setPosicion(480, 950); //plataforma derecha
-            this.enemigoN1.get(3).setPosicion(225, 760); //Plataforma Izquierda
+            //Se colocan los enemigos en su lugar correspondiente, en el nivel de Fuego
+            this.enemigoN1.get(0).setPosicion(530, 260); //Parte baja, derecha, cerca del pergamino
+            this.enemigoN1.get(1).setPosicion(370, 388);  //Parte de en medio
+            this.enemigoN1.get(2).setPosicion(470, 119);  //Parte baja, arriba de la plataforma movil y abajo del samurai que esta cerca del pergamino
+            this.enemigoN1.get(3).setPosicion(100, 215);  //Parte baja, izquierda
+            this.enemigoN1.get(4).setPosicion(480, 950); //plataforma derecha
+            this.enemigoN1.get(5).setPosicion(225, 760); //Plataforma Izquierda
 
             //Enemigos especiales
             this.enemigoN2 = new LinkedList<ObjetosJuego>();
