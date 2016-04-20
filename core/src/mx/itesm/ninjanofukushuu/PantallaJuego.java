@@ -111,7 +111,8 @@ public class PantallaJuego implements Screen{
     private TiledMapTileLayer.Cell celda1;
     private TiledMapTileLayer.Cell celda2;
     private TiledMapTileLayer.Cell celda3;
-    private int t=0, posicionXplataforma=21; //Es donde comienza  para que regrese al pricipio cuando se mueve, t es el tiempo de cuando se muev la plataforma..
+
+    private int t=0, posicionXplataforma1=21, posicionXplataforma2 = 12, posicionXplataforma3=10, posicionXplataforma4=31, posicionXplataforma5= 20; //Es donde comienza  para que regrese al pricipio cuando se mueve, t es el tiempo de cuando se muev la plataforma..
 
     // Estados del juego
     private EstadosJuego estadoJuego;
@@ -206,6 +207,7 @@ public class PantallaJuego implements Screen{
         btnPausa = new Boton(texturaPausa);
         btnPausa.setAlfa(0.7f);
         btnPausa.setPosicion(textoMarcadorVidas.getX() - 86, textoMarcadorVidas.getY() - 23);
+        btnPausa.setTamanio(btnPausa.getAncho() + 10, btnPausa.getAlto() + 10);
 
         //Texturas de pausa que se utilizan en todos los niveles.
         texturaFondoPausa = assetManager.get("seleccionNivel/recursosPausa/fondoPausa.png");
@@ -415,7 +417,7 @@ public class PantallaJuego implements Screen{
             // Crear el personaje
             hataku = new Personaje(texturaHataku);
             // Posición inicial del personaje
-            hataku.getSprite().setPosition(40, 90);
+            hataku.getSprite().setPosition(220, 90);
 
             //Textura fondo
             texturaFondo = assetManager.get("seleccionNivel/recursosNivelFuego/fondofuego.png");
@@ -430,12 +432,12 @@ public class PantallaJuego implements Screen{
 
             //Posiciones pergamino nivel fuego
             this.scrolls.get(0).setPosicion(40, 350);
-            this.scrolls.get(1).setPosicion(680, 900);
+            this.scrolls.get(1).setPosicion(675, 900);
             this.scrolls.get(2).setPosicion(676, 350);
 
             //Se colocan las pociones en el lugar correspondiente,
             this.pociones.get(0).setPosicion(400, 630);
-            this.pociones.get(1).setPosicion(600,1001);
+            this.pociones.get(1).setPosicion(200,700);
 
             //Enemigos: 8 enemigos en el segundo nivel
             this.enemigoN1 = new LinkedList<ObjetosJuego>();
@@ -446,23 +448,31 @@ public class PantallaJuego implements Screen{
             }
 
             //Se colocan los enemigos en su lugar correspondiente, en el nivel de Fuego
-            this.enemigoN1.get(0).setPosicion(530, 260); //Parte baja, derecha, cerca del pergamino
-            this.enemigoN1.get(1).setPosicion(370, 388);  //Parte de en medio
+            this.enemigoN1.get(0).setPosicion(530, 263); //Parte baja, derecha, cerca del pergamino
+            this.enemigoN1.get(1).setPosicion(330, 390);  //Parte de en medio
             this.enemigoN1.get(2).setPosicion(470, 119);  //Parte baja, arriba de la plataforma movil y abajo del samurai que esta cerca del pergamino
             this.enemigoN1.get(3).setPosicion(100, 215);  //Parte baja, izquierda
-            this.enemigoN1.get(4).setPosicion(480, 950); //plataforma derecha
-            this.enemigoN1.get(5).setPosicion(225, 760); //Plataforma Izquierda
+            this.enemigoN1.get(4).setPosicion(360, 791); //Plataforma de arriba, abajo del templo en medio..
+            this.enemigoN1.get(5).setPosicion(480, 950); //plataforma derecha
 
-            //Enemigos especiales
+
+            //Enemigos especiales, en el nivel de fuego son las bolas de fuego rebotando... aqui seran 8 bolas de fuego rebotando..
             this.enemigoN2 = new LinkedList<ObjetosJuego>();
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 8; i++) {
                 ObjetosJuego nuevo = new ObjetosJuego(texturaAtaque);
                 nuevo.setTamanio(60,90);
                 this.enemigoN2.add(nuevo);
             }
 
-            this.enemigoN2.get(0).setPosicion(79, 200);
-            this.enemigoN2.get(1).setPosicion(79, 960);
+
+            this.enemigoN2.get(0).setPosicion(60, 200);
+            this.enemigoN2.get(1).setPosicion(67, 500);
+            this.enemigoN2.get(2).setPosicion(40, 550);
+            this.enemigoN2.get(3).setPosicion(65, 580);
+            this.enemigoN2.get(4).setPosicion(70, 900);
+            this.enemigoN2.get(5).setPosicion(90, 680);
+            this.enemigoN2.get(6).setPosicion(73, 730);
+            this.enemigoN2.get(7).setPosicion(79, 800);
 
 
             //Colocar los ataque en su posicion
@@ -623,10 +633,10 @@ public class PantallaJuego implements Screen{
 
     private void moverApagarPlataformaFuego() { //con este método, se administra el movimiento de las plataformas del nivel de fuego
         //Movimiento de plataformas
-        t++;
+        t+=1;
         //Este es el t de cada cuando se ejecutara
         if(t%20==0){
-            //Plataforma desaparece, aquí se crea la plataforma cada que se cumpla el if,
+            //plataforma intermitente.. aqui se dibuja...
             //los numero son su pocision x,y y celda es la imagne que use .
             capa.setCell(17,42,celda);
             capa.setCell(16,42,celda1);
@@ -636,32 +646,108 @@ public class PantallaJuego implements Screen{
         //Este es el t de cada cuando se ejecutara
         if(t%25==0){
             ////Plataforma movible, va creando la imagen hacía adelante, efecto de movimiento.
-            capa.setCell(posicionXplataforma,1,celda3);
-            capa.setCell(posicionXplataforma+1,1,celda3);
-            capa.setCell(posicionXplataforma+2,1,celda2);
-            capa.setCell(posicionXplataforma+3,1,celda2);
-            posicionXplataforma++;
+
+            //PLATAFORMA DE  HASTA ABAJO MOVIBLE... (x,y) las vas calculando del tiled map...
+            //SE MUEVE A LA DERECHA
+            capa.setCell(posicionXplataforma1,1,celda3);
+            capa.setCell(posicionXplataforma1+1,1,celda3);
+            capa.setCell(posicionXplataforma1+2,1,celda2);
+            capa.setCell(posicionXplataforma1+3,1,celda2);
+            posicionXplataforma1+=1;
+
+            //Plataforma movible que se encuentra cerca del pergamino ...  (x,y) los vas calculando del tiled map.
+            //SE MUEVE A LA IZQUIERDA
+            capa.setCell(posicionXplataforma2,20,celda3);
+            capa.setCell(posicionXplataforma2-1,20,celda3);
+            capa.setCell(posicionXplataforma2-2,20,celda2);
+            capa.setCell(posicionXplataforma2-3,20,celda2);
+            posicionXplataforma2-=1;
+
+            //PLATAFORMA MOVIBLE DE HASTA ARRIBA DONDE SE LLEGA AUNA PLATAFORMA DONDE ESTA UN ENEMIGO
+            //SE MUEVE A LA DERECHA
+            capa.setCell(posicionXplataforma3,48,celda3);
+            capa.setCell(posicionXplataforma3+1,48,celda3);
+            capa.setCell(posicionXplataforma3+2,48,celda2);
+            capa.setCell(posicionXplataforma3+3,48,celda2);
+            posicionXplataforma3+=1;
+
+            //PLATAFORMA MOVIBLE DE HASTA ARRIBA  DONDE SE LLEGA AUNA PLATAFORMA DONDE ESTA UN PERGAMINO
+            //SE MUEVE A LA DERECHA
+            capa.setCell(posicionXplataforma4,54,celda3);
+            capa.setCell(posicionXplataforma4+1,54,celda3);
+            capa.setCell(posicionXplataforma4+2,54,celda2);
+            capa.setCell(posicionXplataforma4+3,54,celda2);
+            posicionXplataforma4+=1;
+
+            //Plataforma para llegar al templo
+            //SE MUEVE A LA IZQUIERDA
+            capa.setCell(posicionXplataforma5,61,celda3);
+            capa.setCell(posicionXplataforma5-1,61,celda3);
+            capa.setCell(posicionXplataforma5-2,61,celda2);
+            capa.setCell(posicionXplataforma5-3,61,celda2);
+            posicionXplataforma5-=1;
         }
         //Este es el t de cada cuando se ejecutara
-        if(t%160==0){
-            //Se elimina la plataforma, va a borrar la plataforma para que sea intermitente, por eso el null.
+        if(t%160==0){ //plataforma intermitente..
+            //Se elimina la plataforma intermitente
             capa.setCell(17,42,null);
             capa.setCell(16,42,null);
             capa.setCell(16,41,null);
             capa.setCell(17,41,null);
         }
         //Este es el t de cada cuando se ejecutara
-        if(t%25==0){
+        if(t%25==0){ //plataforma movible borrado
             //Este elimina la plataforma movible, va eliminado cada cuadrito por eso x-1.
             //los ultimos numeros fueron colocados para eliminar los que se pasan de la posicion de x.
-            capa.setCell(posicionXplataforma-1,1,null);
+            //Plataforma 1
+            capa.setCell(posicionXplataforma1-1,1,null);
             capa.setCell(33,1,null);
             capa.setCell(32,1,null);
             capa.setCell(34,1,null);
+
+            //plataforma2 (la que se encuentra el pergamino)
+            capa.setCell(posicionXplataforma2+1,20,null);
+            capa.setCell(4,20,null);
+            capa.setCell(5,20,null);
+            capa.setCell(3,20,null);
+
+            //plataforma3 (arriba cerca de una plataforma de un enemigo)
+            capa.setCell(posicionXplataforma3-1,48,null);
+            capa.setCell(19,48,null);
+            capa.setCell(18,48,null);
+            capa.setCell(20,48,null);
+
+
+            //plataforma 4 donde esta cerca d eun pergamino hasta arriba
+            capa.setCell(posicionXplataforma4-1,54,null);
+            capa.setCell(38,54,null);
+            capa.setCell(37,54,null);
+            capa.setCell(39,54,null);
+
+            //Plataforma 5 que se mueve a la izquierda para llegar al templo
+
+            capa.setCell(posicionXplataforma5+1,61,null);
+            capa.setCell(13,61,null);
+            capa.setCell(14,61,null);
+            capa.setCell(12,61,null);
+
+
         }
-        //utilizo la posicion en x, cuando esta es igual a 32, nos va a regresar a x=21, así se crea el efecto de movimiento.
-        if(posicionXplataforma==32)
-            posicionXplataforma=21;
+        // así se crea el efecto de movimiento. ya que nos regresa para no seguir avanzando..
+        if(posicionXplataforma1==32)
+            posicionXplataforma1=21;
+
+        if(posicionXplataforma2==5)
+            posicionXplataforma2=12;
+
+        if(posicionXplataforma3==18)
+            posicionXplataforma3=10;
+
+        if(posicionXplataforma4==37)
+            posicionXplataforma4=31;
+
+        if(posicionXplataforma5==14)
+            posicionXplataforma5=20;
 
     }
 
@@ -807,11 +893,7 @@ public class PantallaJuego implements Screen{
         else if( 44 == hataku.getX() && 960 <= hataku.getY() && this.numeroNivel == 3){
 
             //SI SE ESTA JUGANDO EL NIVEL 3, ELIMINA EL "RASTRO" DE LA PLATAFORMA MOVIL, PARA QUE CUANDO EL USUARIO REGRESE AL JUEGO ESE RASTRO NO SIGA EN PANTALLA.
-            capa.setCell(posicionXplataforma - 1, 1, null);
-            capa.setCell(posicionXplataforma, 1, null);
-            capa.setCell(posicionXplataforma + 1, 1, null);
-            capa.setCell(posicionXplataforma + 2, 1, null);
-
+            eliminarRasttroPlataformasMoviles();
             //this.numeroNivel = 3;
             marcadorPergaminos = 0;
             this.efectoPuertaTemplo.play(PantallaMenu.volumen);
@@ -821,6 +903,40 @@ public class PantallaJuego implements Screen{
             //Se va regresar a seleccion de nivel, primero se muestra la pantalla winner
             plataforma.setScreen(new PantallaWinner(this.plataforma));
             }
+
+    }
+
+    private void eliminarRasttroPlataformasMoviles() {
+
+        //Plataforma1, la que esta hasta abajo
+        capa.setCell(posicionXplataforma1 - 1, 1, null);
+        capa.setCell(posicionXplataforma1, 1, null);
+        capa.setCell(posicionXplataforma1 + 1, 1, null);
+        capa.setCell(posicionXplataforma1 + 2, 1, null);
+
+        //plataforma2 (la que se encuentra el pergamino)
+        capa.setCell(posicionXplataforma2+1,20,null);
+        capa.setCell(posicionXplataforma2,20,null);
+        capa.setCell(posicionXplataforma2-1,20,null);
+        capa.setCell(posicionXplataforma2-2,20,null);
+
+        //plataforma3 (arriba cerca de una plataforma de un enemigo)
+        capa.setCell(posicionXplataforma3-1,48,null);
+        capa.setCell(posicionXplataforma3,48,null);
+        capa.setCell(posicionXplataforma3+1,48,null);
+        capa.setCell(posicionXplataforma3+2,48,null);
+
+        //plataforma4 (arriba cerca de una plataforma de un enemigo)
+        capa.setCell(posicionXplataforma4-1,54,null);
+        capa.setCell(posicionXplataforma4,54,null);
+        capa.setCell(posicionXplataforma4+1,54,null);
+        capa.setCell(posicionXplataforma4+2,54,null);
+
+        //plataforma5 (la que se encuentra cerca del templo)
+        capa.setCell(posicionXplataforma5+1,61,null);
+        capa.setCell(posicionXplataforma5,61,null);
+        capa.setCell(posicionXplataforma5-1,61,null);
+        capa.setCell(posicionXplataforma5-2,61,null);
 
     }
 
@@ -877,10 +993,7 @@ public class PantallaJuego implements Screen{
         if (this.vidas.size() == 0){
             if(numeroNivel==3) {
                 //SI SE ESTA JUGANDO EL NIVEL 3, ELIMINA EL "RASTRO" DE LA PLATAFORMA MOVIL, PARA QUE CUANDO EL USUARIO REGRESE AL JUEGO ESE RASTRO NO SIGA EN PANTALLA.
-                capa.setCell(posicionXplataforma - 1, 1, null);
-                capa.setCell(posicionXplataforma, 1, null);
-                capa.setCell(posicionXplataforma + 1, 1, null);
-                capa.setCell(posicionXplataforma + 2, 1, null);
+                eliminarRasttroPlataformasMoviles();
             }
 
             plataforma.setScreen(new PantallaGameOver(plataforma,this.numeroNivel)); //nos regresa a la pantalla principal.
@@ -890,10 +1003,7 @@ public class PantallaJuego implements Screen{
         if (hataku.getY()<-50){
             if(numeroNivel==3) {
                 //SI SE ESTA JUGANDO EL NIVEL 3, ELIMINA EL "RASTRO" DE LA PLATAFORMA MOVIL, PARA QUE CUANDO EL USUARIO REGRESE AL JUEGO ESE RASTRO NO SIGA EN PANTALLA.
-                capa.setCell(posicionXplataforma - 1, 1, null);
-                capa.setCell(posicionXplataforma, 1, null);
-                capa.setCell(posicionXplataforma + 1, 1, null);
-                capa.setCell(posicionXplataforma + 2, 1, null);
+                eliminarRasttroPlataformasMoviles();
             }
 
             plataforma.setScreen(new PantallaGameOver(plataforma,this.numeroNivel)); //nos regresa a la pantalla principal.
@@ -1261,10 +1371,7 @@ public class PantallaJuego implements Screen{
             else if(btnMenu.contiene(x,y) &&  banderaBotonMenu && estadoJuego == EstadosJuego.PAUSA){
                 if(numeroNivel==3) {
                     //SI SE ESTA JUGANDO EL NIVEL 3, ELIMINA EL "RASTRO" DE LA PLATAFORMA MOVIL, PARA QUE CUANDO EL USUARIO REGRESE AL JUEGO ESE RASTRO NO SIGA EN PANTALLA.
-                    capa.setCell(posicionXplataforma - 1, 1, null);
-                    capa.setCell(posicionXplataforma, 1, null);
-                    capa.setCell(posicionXplataforma + 1, 1, null);
-                    capa.setCell(posicionXplataforma + 2, 1, null);
+                    eliminarRasttroPlataformasMoviles();
                 }
 
                 btnMenu.setAlfa(.7f);
