@@ -224,6 +224,8 @@ public class PantallaGameOver implements Screen {
         texturaBtnContinue.dispose();
         texturaBtnMenu.dispose();
         texturaFondo.dispose();
+        this.efectoMuerteNinja.dispose();
+        this.efectoClick.dispose();
     }
 }
 

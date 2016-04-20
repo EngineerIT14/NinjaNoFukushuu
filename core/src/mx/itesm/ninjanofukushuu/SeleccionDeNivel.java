@@ -272,5 +272,6 @@ public class SeleccionDeNivel implements  Screen{
         texturaN2.dispose();
         texturaN3.dispose();
         texturaFondo.dispose();
+        this.efectoClick.dispose();
     }
 }

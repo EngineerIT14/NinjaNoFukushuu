@@ -187,6 +187,7 @@ public class PantallaInstrucciones implements Screen {
         batch.dispose();
         texturaRegresar.dispose();
         texturaFondo.dispose();
+        this.efectoClick.dispose();
 
     }
 

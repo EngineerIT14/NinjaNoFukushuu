@@ -188,5 +188,7 @@ public class PantallaWinner implements Screen {
         batch.dispose();
         texturaBtnContinue.dispose();
         texturaFondo.dispose();
+        this.efectoWin.dispose();
+        this.efectoClick.dispose();
     }
 }

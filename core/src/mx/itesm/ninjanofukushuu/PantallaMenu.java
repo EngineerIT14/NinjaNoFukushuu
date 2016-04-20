@@ -422,6 +422,7 @@ public class PantallaMenu implements Screen {
         texturaLogo.dispose();
         //sonido
         efectoClick.dispose();
+        this.efectoTrucoActivado.dispose();
         //texturas
         texturaBtnSonido.dispose();
         texturaMute.dispose();
