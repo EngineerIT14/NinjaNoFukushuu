@@ -116,7 +116,7 @@ public class PantallaInstrucciones implements Screen {
 
             if (btnRegresar.contiene(x,y)){
                 btnRegresar.setAlfa(.5f);
-                btnRegresar.setTamanio(anchoBoton - 80, altoBoton - 78); //Lo hago más pequeño
+                btnRegresar.setTamanio(anchoBoton - 90, altoBoton - 98); //Lo hago más pequeño
                 this.banderaBotonRegresar = true;
             }
 
@@ -141,7 +141,7 @@ public class PantallaInstrucciones implements Screen {
                 if(banderaBotonRegresar) {
                     banderaBotonRegresar = false;
                     btnRegresar.setAlfa(1);
-                    btnRegresar.setTamanio(anchoBoton - 80, altoBoton - 80); //tamaño orginal
+                    btnRegresar.setTamanio(anchoBoton - 90, altoBoton - 90); //tamaño orginal
                 }
             }
             return true;    // Indica que ya procesó el evento
