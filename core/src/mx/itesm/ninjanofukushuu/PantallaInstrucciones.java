@@ -72,8 +72,8 @@ public class PantallaInstrucciones implements Screen {
         fondo = new Fondo(texturaFondo);
 
         btnRegresar = new Boton(texturaRegresar);
-        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8 +60 , Principal.ALTO_MUNDO * 1 / 5 -130);
-        btnRegresar.setTamanio(anchoBoton-80, altoBoton -80);
+        btnRegresar.setPosicion(Principal.ANCHO_MUNDO * 7 / 8 +72 , Principal.ALTO_MUNDO * 1 / 5 -130);
+        btnRegresar.setTamanio(anchoBoton-90, altoBoton -90);
         //Batch
         fondo.getSprite().setCenter(Principal.ANCHO_MUNDO / 2, Principal.ALTO_MUNDO / 2);
         fondo.getSprite().setOrigin(1500 / 2, 1500 / 2);
