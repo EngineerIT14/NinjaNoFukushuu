@@ -503,7 +503,7 @@ public class PantallaJuego implements Screen{
 
     @Override
     public void render(float delta) { // delta es el tiempo entre frames (Gdx.graphics.getDeltaTime())
-        // Leer entradas
+        // Leer entrada
         //Gdx.app.log("",hataku.getY()+"");
 
         if(estadoJuego == EstadosJuego.JUGANDO) {
