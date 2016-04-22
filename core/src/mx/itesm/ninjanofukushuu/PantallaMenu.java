@@ -27,7 +27,7 @@ public class PantallaMenu implements Screen {
     private Viewport vista;
     private static SpriteBatch batch;
 
-    //Se utiliza static para que sea solamente 1 copia en memoria.
+    //Se utiliza static para que sea solamente 1 copia en la memoria.
     //Fondo
     private static Fondo fondo;
     private static Fondo fondo1; //este rota
