@@ -68,7 +68,7 @@ public class PantallaInstrucciones implements Screen {
         texturaRegresar = assetManager.get("return.png");
         efectoClick = assetManager.get("sonidoVentana.wav");
 
-        //Crear fondo
+        //Crear fondos
         fondo = new Fondo(texturaFondo);
 
         btnRegresar = new Boton(texturaRegresar);
