@@ -390,7 +390,7 @@ public class PantallaCargando implements Screen
                 //Textura enemigo
                 assetManager.load("seleccionNivel/recursosNivelFuego/Enemigo3.png", Texture.class);
                 //Textura templo
-                assetManager.load("seleccionNivel/recursosNivelFuego/temploRojo.png", Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelTierra/temploVerde.png", Texture.class);
                 //caritaVida
                 assetManager.load("seleccionNivel/recursosNivelFuego/lifeFuego.png", Texture.class);
                 //sonidos
@@ -485,7 +485,7 @@ public class PantallaCargando implements Screen
                     break;
                 case 7:
                     //LO QUE SE HA COMENTADO HA SIDO PORQUE AUN NO ESTAN LISTAS LAS IMAGENES DE HISTORIA FUEGO, POR AHORA TE LLEVA A JUGAR..
-                    plataforma.setScreen(new PantallaJuego(plataforma,3)); //nivel de agua..
+                    plataforma.setScreen(new PantallaJuego(plataforma, 3)); //nivel de agua..
                     //plataforma.setScreen(new PantallaImagen(this.plataforma,6)); //nivel de fuego... se  va a mostrar las imagenes de la historia..
                     break;
                 default:

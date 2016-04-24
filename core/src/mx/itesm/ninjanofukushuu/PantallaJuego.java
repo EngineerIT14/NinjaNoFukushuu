@@ -426,7 +426,7 @@ public class PantallaJuego implements Screen{
             //Textura Objetos que estan en la pantalla
             this.texturaEN1 = assetManager.get("seleccionNivel/recursosNivelFuego/Enemigo3.png");
             this.texturaAtaque = assetManager.get("seleccionNivel/items/ataque3.png");
-            this.texturaTemplo = assetManager.get("seleccionNivel/recursosNivelFuego/temploRojo.png");
+            this.texturaTemplo = assetManager.get("seleccionNivel/recursosNivelTierra/temploVerde.png");
 
             this.texturaVidas = assetManager.get("seleccionNivel/recursosNivelFuego/lifeFuego.png");
 
@@ -485,7 +485,7 @@ public class PantallaJuego implements Screen{
             }
 
             this.temploElemental  = new ObjetosJuego(this.texturaTemplo);
-            this.temploElemental.setPosicion(20, 1000); //temploFuego
+            this.temploElemental.setPosicion(20, 1008); //temploFuego
             this.temploElemental.setTamanio(60, 90);
 
             //Objetos que representan las vidas, son las caras del ninja que estan en el HUD
