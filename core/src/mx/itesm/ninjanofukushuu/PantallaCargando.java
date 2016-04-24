@@ -479,10 +479,14 @@ public class PantallaCargando implements Screen
                     plataforma.setScreen(new PantallaImagen(this.plataforma,4)); //nivel de tierra... se  va a mostrar las imagenes de la historia..
                     break;
                 case 6:
-                    plataforma.setScreen(new PantallaImagen(this.plataforma,5)); //nivel de agua... se  va a mostrar las imagenes de la historia..
+                   //LO QUE SE HA COMENTADO HA SIDO PORQUE AUN NO ESTAN LISTAS LAS IMAGENES DE HISTORIA AGUA, POR AHORA TE LLEVA A JUGAR..
+                    plataforma.setScreen(new PantallaJuego(plataforma,2)); //nivel de agua..
+                   // plataforma.setScreen(new PantallaImagen(this.plataforma,5)); //nivel de agua... se  va a mostrar las imagenes de la historia..
                     break;
                 case 7:
-                    plataforma.setScreen(new PantallaImagen(this.plataforma,6)); //nivel de fuego... se  va a mostrar las imagenes de la historia..
+                    //LO QUE SE HA COMENTADO HA SIDO PORQUE AUN NO ESTAN LISTAS LAS IMAGENES DE HISTORIA FUEGO, POR AHORA TE LLEVA A JUGAR..
+                    plataforma.setScreen(new PantallaJuego(plataforma,3)); //nivel de agua..
+                    //plataforma.setScreen(new PantallaImagen(this.plataforma,6)); //nivel de fuego... se  va a mostrar las imagenes de la historia..
                     break;
                 default:
                     plataforma.setScreen(new PantallaMenu(this.plataforma,this.banderaMusicaFondo));

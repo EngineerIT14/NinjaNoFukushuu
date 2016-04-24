@@ -659,7 +659,7 @@ public class PantallaImagen implements Screen {
                     principal.setScreen(new PantallaJuego(principal,2)); //nivel de agua..
                 }
                 else if(indicadorImagenes==6){
-                    principal.setScreen(new PantallaJuego(principal,3)); //nivel de agua..
+                    principal.setScreen(new PantallaJuego(principal,3)); //nivel de fuego..
                 }
             }
 
