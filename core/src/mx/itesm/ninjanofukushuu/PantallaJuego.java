@@ -331,7 +331,7 @@ public class PantallaJuego implements Screen{
             fondo = new Fondo(texturaFondo);
 
             //Textura Objetos que estan en la pantalla
-            this.texturaEN1 = assetManager.get("seleccionNivel/recursosNivelAgua/aguaE.png");
+            this.texturaEN1 = assetManager.get("seleccionNivel/recursosNivelAgua/AguaE.png");
             this.texturaAtaque = assetManager.get("seleccionNivel/items/ataque2.png");
             this.texturaTemplo = assetManager.get("seleccionNivel/recursosNivelTierra/temploVerde.png"); /*LUIS! NO LE MUEVAS, EN LA TABLETA NO CARGA TEMPLOAZUL.. */
 

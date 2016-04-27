@@ -329,7 +329,7 @@ public class PantallaCargando implements Screen
                 assetManager.load("seleccionNivel/items/ataque2.png", Texture.class);
 
                 //Textura enemigo
-                assetManager.load("seleccionNivel/recursosNivelAgua/aguaE.png", Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelAgua/AguaE.png", Texture.class);
                 //Textura templo
                 assetManager.load("seleccionNivel/recursosNivelTierra/temploVerde.png", Texture.class);
                 //caritaVida
