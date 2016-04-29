@@ -209,7 +209,7 @@ public class PantallaCargando implements Screen
                     assetManager.load("imagenesGaleriaArte/arteTierra/fondoArteTierra.png",Texture.class);
 
                     //ArteNivelAgua
-                    assetManager.load("imagenesGaleriaArte/arteAgua/aguaE.png",Texture.class);
+                    assetManager.load("imagenesGaleriaArte/arteAgua/AguaE.png",Texture.class);
                     assetManager.load("imagenesGaleriaArte/arteAgua/arteFondo.jpg",Texture.class);
                     assetManager.load("imagenesGaleriaArte/arteAgua/arteMenu2.jpg",Texture.class);
                     assetManager.load("seleccionNivel/fondoSeleccionNivel.jpg",Texture.class);
