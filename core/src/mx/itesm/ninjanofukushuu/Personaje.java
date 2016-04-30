@@ -54,7 +54,7 @@ public class Personaje
         // Inicia el timer que contará tiempo para saber qué frame se dibuja
         timerAnimacion = 0;
         // Crea el sprite cuando para el personaje quieto (idle)
-        sprite = new Sprite(texturaPersonajeCorriendo[0][0]);    // quieto sprite del mario quieto..
+        sprite = new Sprite(texturaPersonajeCorriendo[0][0]);
         estadoMovimiento = EstadoMovimiento.INICIANDO;
         estadoSalto = EstadoSalto.EN_PISO;
         estado = Estado.SIN_DANIO;
