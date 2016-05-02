@@ -348,11 +348,14 @@ public class PantallaCargando implements Screen
                 //se cargan los recursos para mostrar la historia...
                 assetManager.load("botonPlay.png", Texture.class); // boton play...
                 //son 5 imagenes para explicar la historia...
-                assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua1.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua1.jpg",Texture.class);
                 assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua2.jpg",Texture.class);
-                assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua3.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua3.jpg",Texture.class);
                 assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua4.jpg",Texture.class);
                 assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua5.jpg",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua6.jpg",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelAgua/historiaAgua7.jpg",Texture.class);
+
 
                 //Para el gameOver
                 assetManager.load("seleccionNivel/recursosPerdiste/gameOver.png",Texture.class);
@@ -480,9 +483,9 @@ public class PantallaCargando implements Screen
                     plataforma.setScreen(new PantallaImagen(this.plataforma,4)); //nivel de tierra... se  va a mostrar las imagenes de la historia..
                     break;
                 case 6:
-                   //LO QUE SE HA COMENTADO HA SIDO PORQUE AUN NO ESTAN LISTAS LAS IMAGENES DE HISTORIA AGUA, POR AHORA TE LLEVA A JUGAR..
-                    plataforma.setScreen(new PantallaJuego(plataforma,2)); //nivel de agua..
-                   // plataforma.setScreen(new PantallaImagen(this.plataforma,5)); //nivel de agua... se  va a mostrar las imagenes de la historia..
+
+                   // plataforma.setScreen(new PantallaJuego(plataforma,2)); //nivel de agua..
+                    plataforma.setScreen(new PantallaImagen(this.plataforma,5)); //nivel de agua... se  va a mostrar las imagenes de la historia..
                     break;
                 case 7:
                     //LO QUE SE HA COMENTADO HA SIDO PORQUE AUN NO ESTAN LISTAS LAS IMAGENES DE HISTORIA FUEGO, POR AHORA TE LLEVA A JUGAR..
