@@ -523,8 +523,7 @@ public class PantallaJuego implements Screen{
             // Dibujar
             borrarPantalla();
 
-            // Para verificar si el usuario ya tomo los 3 pergaminos y liberar el boton de galeria de arte...
-            liberarArte();
+
 
             //Para verificar si el usuario ya perdio...
             perderJuego();
@@ -862,7 +861,8 @@ public class PantallaJuego implements Screen{
         //temploTierra
         if(258 == hataku.getX() &&  512 <= hataku.getY() && this.numeroNivel == 1){ //258  y 512 es la posicion del templo, lo identifique con el system.out.println
 
-
+            // Para verificar si el usuario ya tomo los 3 pergaminos y liberar el boton de galeria de arte...
+            liberarArte();
             this.efectoPuertaTemplo.play(PantallaMenu.volumen);
             PantallaCargando.partidaGuardada.putBoolean("nivelAgua", true); //se guarda el progreso y se desbloquea el nivel de agua...
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
@@ -878,7 +878,8 @@ public class PantallaJuego implements Screen{
         else if( 44 == hataku.getX() && 1164  <= hataku.getY() && this.numeroNivel == 2){
 
 
-
+// Para verificar si el usuario ya tomo los 3 pergaminos y liberar el boton de galeria de arte...
+            liberarArte();
             this.efectoPuertaTemplo.play(PantallaMenu.volumen);
             PantallaCargando.partidaGuardada.putBoolean("nivelFuego", true); //se guarda el progreso y se desbloquea el nivel de agua...
             PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
@@ -895,6 +896,9 @@ public class PantallaJuego implements Screen{
             //SI SE ESTA JUGANDO EL NIVEL 3, ELIMINA EL "RASTRO" DE LA PLATAFORMA MOVIL, PARA QUE CUANDO EL USUARIO REGRESE AL JUEGO ESE RASTRO NO SIGA EN PANTALLA.
             eliminarRasttroPlataformasMoviles();
             //this.numeroNivel = 3;
+
+            // Para verificar si el usuario ya tomo los 3 pergaminos y liberar el boton de galeria de arte...
+            liberarArte();
             marcadorPergaminos = 0;
             this.efectoPuertaTemplo.play(PantallaMenu.volumen);
             //PantallaCargando.partidaGuardada.putBoolean("nivelFuego", true); //se guarda el progreso y se desbloquea el nivel de agua...
