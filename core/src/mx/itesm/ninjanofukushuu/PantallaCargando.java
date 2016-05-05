@@ -110,9 +110,9 @@ public class PantallaCargando implements Screen
 
     private void cargarImagenCargando() {
         if(!this.banderaMusicaFondo) { //si la banderaMusica es falsa, lo que nos quiere decir es que por primera vez se carga la pantalla, entonces se esta iniciando la APP, por lo que debe de mostrar el logo del tec.. recordar que apartir de la pantalllaMenu es donde se manda true  como argumentos..
-            assetManager.load("logoRocket.jpg", Texture.class);
+            assetManager.load("logoTec.png", Texture.class);
             assetManager.finishLoading();
-            texturaCargando = assetManager.get("logoRocket.jpg");
+            texturaCargando = assetManager.get("logoTec.png");
         }
         else{
             assetManager.load("fondoCargando.png", Texture.class);
@@ -410,10 +410,10 @@ public class PantallaCargando implements Screen
                 //se cargan los recursos para mostrar la historia...
                 assetManager.load("botonPlay.png", Texture.class); // boton play...
                 //son 5 imagenes para explicar la historia...
-                assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego1.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego1.jpg",Texture.class);
                 assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego2.jpg",Texture.class);
                 assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego3.jpg",Texture.class);
-                assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego4.png",Texture.class);
+                assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego4.jpg",Texture.class);
                 assetManager.load("seleccionNivel/recursosNivelFuego/historiaFuego5.jpg",Texture.class);
 
                 //Para el gameOver
@@ -488,9 +488,9 @@ public class PantallaCargando implements Screen
                     plataforma.setScreen(new PantallaImagen(this.plataforma,5)); //nivel de agua... se  va a mostrar las imagenes de la historia..
                     break;
                 case 7:
-                    //LO QUE SE HA COMENTADO HA SIDO PORQUE AUN NO ESTAN LISTAS LAS IMAGENES DE HISTORIA FUEGO, POR AHORA TE LLEVA A JUGAR..
-                    plataforma.setScreen(new PantallaJuego(plataforma, 3)); //nivel de agua..
-                    //plataforma.setScreen(new PantallaImagen(this.plataforma,6)); //nivel de fuego... se  va a mostrar las imagenes de la historia..
+                    //se ha comentado lo que te manda directamente a jugar, ahorita te muestra la historia de fuego...
+                    //plataforma.setScreen(new PantallaJuego(plataforma, 3)); //nivel de fuego..
+                    plataforma.setScreen(new PantallaImagen(this.plataforma,6)); //nivel de fuego... se  va a mostrar las imagenes de la historia..
                     break;
                 default:
                     plataforma.setScreen(new PantallaMenu(this.plataforma,this.banderaMusicaFondo));

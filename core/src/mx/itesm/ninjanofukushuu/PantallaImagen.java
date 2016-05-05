@@ -123,7 +123,7 @@ public class PantallaImagen implements Screen {
                 texturaImagen = assetManager.get("seleccionNivel/recursosNivelAgua/historiaAgua1.jpg");
                 break;
             case 6:
-                texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego1.png");
+                texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego1.jpg");
                 break; //primer imagen de la historia de nivel del fuego
         }
 
@@ -411,7 +411,7 @@ public class PantallaImagen implements Screen {
                             case 6: //historia de nivel de fuego
                                 switch(numeroImagen){
                                     case 1:
-                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego1.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego1.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 2:
@@ -423,7 +423,7 @@ public class PantallaImagen implements Screen {
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 4:
-                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego4.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego4.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     default:break;
@@ -657,7 +657,7 @@ public class PantallaImagen implements Screen {
                             case 6: //historia de nivel de fuego
                                 switch(numeroImagen){
                                     case 1:
-                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego1.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego1.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 2:
@@ -669,7 +669,7 @@ public class PantallaImagen implements Screen {
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 4:
-                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego4.png");
+                                        texturaImagen = assetManager.get("seleccionNivel/recursosNivelFuego/historiaFuego4.jpg");
                                         imagen.cambiarFondo(texturaImagen);
                                         break;
                                     case 5:
