@@ -384,7 +384,7 @@ public class PantallaMenu implements Screen {
         PantallaCargando.partidaGuardada.putBoolean("arteFuego", true); //se guarda el progreso y se desbloquea la galeria de arte de fuego// ,,
         PantallaCargando.partidaGuardada.flush(); //se guardan los cambios
 
-        //El sonido suena, aun si el usuario quito el sonido
+        //El sonido suena, aun si el usuario quito .el sonido
         /*//EL CELULAR VIBRA PARA INDICAR QUE EL TRUCO SE HA ACTIVADO (SE HA COMENTADO YA  QUE HAY QUE REVISAR LO DE LOS PERMISOS DE ANDROID....)
         Gdx.input.vibrate(4000); //4 SEGUNDOS....*/
         efectoTrucoActivado.play();
