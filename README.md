@@ -19,7 +19,7 @@ https://creativecommons.org/licenses/by-nc/3.0/
 
 # Trailer
 
-![Trailer](http://img.youtube.com/vi/d38QsDuZHYA/0.jpg)](https://www.youtube.com/watch?v=d38QsDuZHYA)
+[![Trailer](http://img.youtube.com/vi/d38QsDuZHYA/0.jpg)](https://www.youtube.com/watch?v=d38QsDuZHYA)
 
 # Download the game!
 
