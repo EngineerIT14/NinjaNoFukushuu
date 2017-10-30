@@ -16,3 +16,12 @@ LICENSE: Attribution-NonCommercial 3.0
 https://creativecommons.org/licenses/by-nc/3.0/
 
 ![](https://cloud.githubusercontent.com/assets/12177670/14578636/d19cbb5c-0352-11e6-8a0d-88418d6caa2f.PNG)
+
+# Trailer
+<iframe width="854" height="480" src="https://www.youtube.com/watch?v=d38QsDuZHYA" frameborder="0" allowfullscreen></iframe>
+
+
+# Download the game!
+
+• App Store: https://itunes.apple.com/mx/app/ninjanf/id1108491920?mt=8
+• Google Play Store: https://play.google.com/store/apps/details?id=mx.itesm.ninjanofukushuu
