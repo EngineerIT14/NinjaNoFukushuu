@@ -23,5 +23,5 @@ https://creativecommons.org/licenses/by-nc/3.0/
 
 # Download the game!
 
-• App Store: https://itunes.apple.com/mx/app/ninjanf/id1108491920?mt=8
-• Google Play Store: https://play.google.com/store/apps/details?id=mx.itesm.ninjanofukushuu
+* App Store: https://itunes.apple.com/mx/app/ninjanf/id1108491920?mt=8
+* Google Play Store: https://play.google.com/store/apps/details?id=mx.itesm.ninjanofukushuu
