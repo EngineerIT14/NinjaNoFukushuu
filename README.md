@@ -18,7 +18,3 @@ https://creativecommons.org/licenses/by-nc/3.0/
 ![](https://cloud.githubusercontent.com/assets/12177670/14578636/d19cbb5c-0352-11e6-8a0d-88418d6caa2f.PNG)
 
 
-# Download the game!
-
-* App Store: https://itunes.apple.com/mx/app/ninjanf/id1108491920?mt=8
-* Google Play Store: https://play.google.com/store/apps/details?id=mx.itesm.ninjanofukushuu
